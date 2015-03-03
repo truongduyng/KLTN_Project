@@ -1,0 +1,34 @@
+<form id="form1" name="form1" ng-controller="authCtrl">
+  <table width="100%" border="0" class="table-login">
+    <tbody>
+      <tr>
+        <td align="right"><label for="textfield">Email:</label></td>
+        <td colspan="2"><input name="textfield" type="text" class="form-control" id="textfield" ng-model="user.email"/></td>
+      </tr>
+      <tr>
+        <td align="right"><label for="textfield2">Password:</label></td>
+        <td colspan="2"><input name="textfield2" type="password" class="form-control" id="textfield2" ng-model="user.password" /></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td align="left"><input
+          ng-click="login()" 
+          type="button" value="Login" class="btn btn-theme" /></td>
+        <td align="right"><input id="signup-on-login" type="button" value="Sign up" class="btn btn-theme" /></td>
+      </tr>
+
+      <tr>
+        <td>&nbsp;</td>
+        <td colspan="2"><a id="forget-password-on-login"
+         href="#forget-password-modal" data-toggle="modal">Forget password</a></td>
+      </tr>
+
+      <tr>
+        <td>&nbsp;</td>
+        <td><a href="#">Login with facebook</a></td>
+        <td align="right"><a href="#">Login with google</a></td>
+      </tr>
+    </tbody>
+  </table>
+  &nbsp;
+</form>
