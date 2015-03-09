@@ -1,34 +1,87 @@
-<form id="form1" name="form1" ng-controller="authCtrl">
-  <table width="100%" border="0" class="table-login">
-    <tbody>
-      <tr>
-        <td align="right"><label for="textfield">Email:</label></td>
-        <td colspan="2"><input name="textfield" type="text" class="form-control" id="textfield" ng-model="user.email"/></td>
-      </tr>
-      <tr>
-        <td align="right"><label for="textfield2">Password:</label></td>
-        <td colspan="2"><input name="textfield2" type="password" class="form-control" id="textfield2" ng-model="user.password" /></td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-        <td align="left"><input
-          ng-click="login()" 
-          type="button" value="Login" class="btn btn-theme" /></td>
-        <td align="right"><input id="signup-on-login" type="button" value="Sign up" class="btn btn-theme" /></td>
-      </tr>
 
-      <tr>
-        <td>&nbsp;</td>
-        <td colspan="2"><a id="forget-password-on-login"
-         href="#forget-password-modal" data-toggle="modal">Forget password</a></td>
-      </tr>
+<div id="login-modal"  class="modal fade" ng-controller="authCtrl">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close"
+        data-dismiss="modal"
+        aria-hidden="true">&times;</button>
+        <h1>LOGIN</h1>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div>
+        <form  class="form-horizontal" role="form" name="login_form">
+            <!-- Email -->
+            <div class="form-group" >
+              <label class="control-label col-sm-2" for="email">Email:</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Nhap email" ng-model="user.email" required  ensure-unique-data="{{user.email}}" >
+                <div class="has-error" data-ng-show="login_form.email.$dirty && login_form.email.$invalid">
+                    <span class="help-block" ng-show="login_form.email.$error.required">Vui long nhap email</span>
+                    <span class="help-block" ng-show="login_form.email.$error.email">Dia chi email khong hop le</span>
+                    
+                </div>
+              </div>
+            </div>
+            <!-- Password -->
+            <div class="form-group" >
+              <label class="control-label col-sm-2" for="password">Password:</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Nhap password" ng-model="user.password" required ng-minlength=8 ng-maxlength=20>
+                <div class="has-error" data-ng-show="login_form.password.$dirty && login_form.password.$invalid">
+                    <span class="help-block" ng-show="login_form.password.$error.required">Vui long nhap password</span>
+                    <span class="help-block" ng-show="login_form.password.$error.minlength">Password it nhat 8 ki tu</span>
+                    <span class="help-block" ng-show="login_form.password.$error.maxlength">Password nhieu nhat 20 ki tu</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-2">
+                <button type="submit" ng-click="login()" class="btn btn-theme" ng-disabled="login_form.$invalid">Dang nhap</button>
+              </div>
+              <div class="col-sm-2">
+                <button id="login-on-register" type="submit" class="btn btn-theme">Dang ki</button>
+              </div>
+            </div>
+        </form>
+<!-- 
+          <form id="form1" name="form1" ng-controller="authCtrl">
+              <table width="100%" border="0" class="table-login">
+                <tbody>
+                  <tr>
+                    <td align="right"><label for="textfield">Email:</label></td>
+                    <td colspan="2"><input name="textfield" type="text" class="form-control" id="textfield" ng-model="user.email"/></td>
+                  </tr>
+                  <tr>
+                    <td align="right"><label for="textfield2">Password:</label></td>
+                    <td colspan="2"><input name="textfield2" type="password" class="form-control" id="textfield2" ng-model="user.password" /></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td align="left"><input
+                      ng-click="login()" 
+                      type="button" value="Login" class="btn btn-theme" /></td>
+                    <td align="right"><input id="signup-on-login" type="button" value="Sign up" class="btn btn-theme" /></td>
+                  </tr>
 
-      <tr>
-        <td>&nbsp;</td>
-        <td><a href="#">Login with facebook</a></td>
-        <td align="right"><a href="#">Login with google</a></td>
-      </tr>
-    </tbody>
-  </table>
-  &nbsp;
-</form>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td colspan="2"><a id="forget-password-on-login"
+                     href="#forget-password-modal" data-toggle="modal">Forget password</a></td>
+                  </tr>
+
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td><a href="#">Login with facebook</a></td>
+                    <td align="right"><a href="#">Login with google</a></td>
+                  </tr>
+                </tbody>
+              </table>
+          &nbsp;
+        </form> -->
+
+      </div>
+    </div>
+  </div>
+</div>
+

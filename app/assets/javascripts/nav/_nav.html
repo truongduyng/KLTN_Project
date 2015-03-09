@@ -10,6 +10,8 @@
   <li ng-hide="signedIn()"><a href="#register-modal"  data-toggle="modal">Đăng ký</a></li>
   <li ng-hide="signedIn()"><a href="#login-modal" data-toggle="modal">Đăng nhập</a></li>
   
-  <li ng-show="signedIn()"><a href="/admin"  data-toggle="modal">{{user.username}}</a></li>
+  <li ng-show="signedIn()"><a href="/admin" data-toggle="modal">{{user.username}}</a></li>
   <li ng-show="signedIn()"><a href="" ng-click="logout()" data-toggle="modal">Thoát</a></li>
+  <button class="btn btn-large" ng-click="onTestClick()">onTestClick</button>
 </ul>
+

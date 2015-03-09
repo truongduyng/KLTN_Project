@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'check/username' => 'user#check_username'
+  get 'check/email' => 'user#check_email'
   devise_for :users
   get 'admin' => 'admin#index' 
   root 'application#angular'

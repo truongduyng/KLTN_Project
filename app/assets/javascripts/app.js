@@ -15,5 +15,6 @@ app.config(['$stateProvider', '$urlRouterProvider'
 	// 	controller: 'authCtrl',
 	// });
 	
+	//Khoi phuc
 	$urlRouterProvider.otherwise('/');
 }]);

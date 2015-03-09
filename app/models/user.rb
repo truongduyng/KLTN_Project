@@ -5,6 +5,15 @@ class User
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  #callback
+  before_create :set_default_role
+  private
+    def set_default_role
+      self.role ||= Role.where(name: 'user').first
+    end
+
+  #relationships
+  belongs_to :role  
   #My field
   field :firstname, type: String
   field :lastname, type: String
@@ -41,12 +50,4 @@ class User
   # field :failed_attempts, type: Integer, default: 0 # Only if lock strategy is :failed_attempts
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
-
-  class << self
-    def serialize_from_session(key, salt)
-      record = to_adapter.get(key[0]['$oid'])
-      record if record && record.authenticatable_salt == salt
-    end
-  end
-  
 end

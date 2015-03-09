@@ -1,11 +1,14 @@
 app.controller('authCtrl', ['$scope', 'Auth', '$state',
  function($scope, Auth, $state){
+ 	
+ 	$scope.user = {};
+ 	
  	$scope.login = function(){
  		Auth.login($scope.user).then(function(){
 	 		$('#login-modal').modal('toggle');
-	 		//$state.go('home');
+	 		$scope.error = "";
 	 	}, function(){
-	 		alert("error");
+	 		$scope.error = "Email hoac password khong hop le";
 	 	});
  	};
 
@@ -18,7 +21,6 @@ app.controller('authCtrl', ['$scope', 'Auth', '$state',
 	 	});
   	};
   	
-
 
  	$scope.reloadPage = function(){
  		$state.reload();

@@ -1975,3 +1975,17 @@ article img.pull-right, article .align-right{
 @media (max-width: 360px) {
 
 }
+
+/* My style*/
+  table.table-login tr.space > td{
+    padding-bottom: 1em;
+  }
+  table.table-login tr.error > td{  
+  	color: red;
+  }
+  /*input.ng-invalid {
+   border: 1px solid red;
+  }
+  input.ng-valid {
+   border: 1px solid green;
+ }*/
