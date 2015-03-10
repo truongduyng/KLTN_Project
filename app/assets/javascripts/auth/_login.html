@@ -1,4 +1,5 @@
-<form id="form1" name="form1" ng-controller="authCtrl">
+<form id="form1" name="form1" ng-controller="authCtrl" ng-submit="login()">
+
   <table width="100%" border="0" class="table-login">
     <tbody>
       <tr>
@@ -11,14 +12,15 @@
       </tr>
       <tr>
         <td>&nbsp;</td>
-        <td align="left"><input
-          ng-click="login()" 
-          type="button" value="Login" class="btn btn-theme" /></td>
+        <td align="left"><button
+          type="submit" class="btn btn-theme" >Login</button></td>
+
         <td align="right"><input id="signup-on-login" type="button" value="Sign up" class="btn btn-theme" /></td>
       </tr>
 
       <tr>
         <td>&nbsp;</td>
+
         <td colspan="2"><a id="forget-password-on-login"
          href="#forget-password-modal" data-toggle="modal">Forget password</a></td>
       </tr>

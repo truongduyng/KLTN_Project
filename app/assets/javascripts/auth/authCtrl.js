@@ -1,5 +1,6 @@
-app.controller('authCtrl', ['$scope', 'Auth', '$state',
- function($scope, Auth, $state){
+angular.module('sportApp')
+.controller('authCtrl', ['$scope', 'Auth',
+ function($scope, Auth){
  	$scope.login = function(){
  		Auth.login($scope.user).then(function(){
 	 		$('#login-modal').modal('toggle');
@@ -18,14 +19,4 @@ app.controller('authCtrl', ['$scope', 'Auth', '$state',
 	 	});
   	};
   	
-
-
- 	$scope.reloadPage = function(){
- 		$state.reload();
- 		alert("reload");
- 	};
-
- 	$scope.scrollToTop = function(){
-
- 	};
 }]);

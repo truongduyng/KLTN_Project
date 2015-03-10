@@ -13,6 +13,7 @@ class User
   validates :username, presence: true, uniqueness: true
   validates :firstname, presence: true
   validates :lastname, presence: true
+  
   ## Database authenticatable
   field :email,              type: String, default: ""
   field :encrypted_password, type: String, default: ""
@@ -42,11 +43,11 @@ class User
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
 
-  class << self
-    def serialize_from_session(key, salt)
-      record = to_adapter.get(key[0]['$oid'])
-      record if record && record.authenticatable_salt == salt
-    end
-  end
+  # class << self
+  #   def serialize_from_session(key, salt)
+  #     record = to_adapter.get(key[0]['$oid'])
+  #     record if record && record.authenticatable_salt == salt
+  #   end
+  # end
   
 end

@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+.container .row .left {
+	width:20%;
+	border:#A2A2A2 thin solid;
+	min-height:500px;
+	float:left;
+	padding:0px 12px;
+}
+.container .row .right {
+	width:80%;
+	border:#A2A2A2 thin solid;
+	min-height:500px;
+	float:right;
+}
+.row .left #date-picker {
+	line-height:20px;
+}
+.item .btn.btn-primary .caret.my-caret {
+	margin-right: 11px;
+}
+.list-price-table .item .btn.btn-choose-field {
+	display: block;
+	margin-top: 0px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 12px;
+	
+}
+.row .right #list-hour-table {
+	text-align: center;
+}
+tbody tr .reserved {
+	background-color: #E0282B;
+
+}
