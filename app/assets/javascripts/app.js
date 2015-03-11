@@ -1,5 +1,4 @@
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise']);
-
 app.config(['$stateProvider', '$urlRouterProvider'
 ,function($stateProvider, $urlRouterProvider) {
 	

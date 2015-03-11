@@ -1,5 +1,5 @@
 class AdminController < ActionController::Base
-	layout 'admin'
 	def index
+		render 'layouts/admin'
 	end
 end

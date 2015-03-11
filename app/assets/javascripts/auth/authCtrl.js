@@ -6,7 +6,7 @@ app.controller('authCtrl', ['$scope', 'Auth', '$state',
  	$scope.login = function(){
  		Auth.login($scope.user).then(function(){
 	 		$('#login-modal').modal('toggle');
-	 		$scope.error = "";
+	 		$scope.error = "";	
 	 	}, function(){
 	 		$scope.error = "Email hoac password khong hop le";
 	 	});

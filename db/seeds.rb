@@ -18,3 +18,24 @@
 # 	u.lastname = 'trung'
 	
 # end
+
+#Khoi tao information for user
+# user = User.first
+# user.create_information(job: 'Thiet ke web', phone: '06824562')
+
+#Gan role system admin for first user
+# user = User.first
+# user.role = Role.where(name: 'bussiness admin').first
+# user.save
+
+#Them du lieu cho assests_category
+bussiness = Bussiness.first
+AssestCategory.create(name: 'San 5 nguoi', bussiness_id: bussiness.id) do |ac|
+	ac.fees << Fee.new(begin_time: Time.now, end_time: Time.now, price: 150)
+	ac.fees << Fee.new(begin_time: Time.now, end_time: Time.now, price: 250)
+end
+
+AssestCategory.create(name: 'San 10 nguoi', bussiness_id: bussiness.id) do |ac|
+	ac.fees << Fee.new(begin_time: Time.now, end_time: Time.now, price: 250)
+	ac.fees << Fee.new(begin_time: Time.now, end_time: Time.now, price: 450)
+end

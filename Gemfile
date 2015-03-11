@@ -44,4 +44,5 @@ end
 gem 'angular-rails-templates'
 gem 'angular_rails_csrf'
 gem 'devise'
-
+# #for strong parameters with complex object
+# gem 'strong_parameters'

@@ -13,7 +13,9 @@ class User
     end
 
   #relationships
-  belongs_to :role  
+  belongs_to :role 
+  embeds_one :information 
+  has_one :bussiness
   #My field
   field :firstname, type: String
   field :lastname, type: String
