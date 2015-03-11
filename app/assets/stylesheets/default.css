@@ -182,8 +182,9 @@ ul.clients li:hover {
 .icon-circled:hover {
     background-color: #68A4C4;
 }
+
 [class^="icon-"].active,
-[class*=" icon-"].active {
+[class*="icon-"].active {
     background-color: #68A4C4;
 }
 
