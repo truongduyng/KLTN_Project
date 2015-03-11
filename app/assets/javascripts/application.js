@@ -18,4 +18,6 @@
 //= require angular-rails-templates
 //= require angular-devise
 //= require initModule
+//= require jquery-timepicker-jt
+//= require jquery-timepicker-jt/lib/bootstrap-datepicker
 //= require_tree .

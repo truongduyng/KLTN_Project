@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  resources 'assest_categories'
+  resources 'assest_categories' do
+    resources 'fees'
+  end
   post 'bussinesses/new' => 'bussinesses#new'
   put 'bussinesses/update' => 'bussinesses#update'
   get 'bussinesses/show' => 'bussinesses#show'

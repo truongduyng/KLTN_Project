@@ -1,5 +1,4 @@
-var bussinessAdmin = angular.module('sportaBussinessAdmin', 
-	["ui.router", 'templates', 'Devise', 'sporta.services', 'sporta.directives', 'sporta.filters']);
+var bussinessAdmin = angular.module('sportaBussinessAdmin', ["ui.router", 'templates', 'Devise', 'sporta.services', 'sporta.directives', 'sporta.filters']);
 
 bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
@@ -14,7 +13,7 @@ bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($statePr
 					return Auth.currentUser();
 				}
 			],
-			bussiness: ['bussinessService', function(bussinessSerivce){
+			bussiness: ['bussinessService', function(bussinessSerivce) {
 				console.log("in resolve bussiness");
 				return bussinessSerivce.get();
 			}],
@@ -25,8 +24,9 @@ bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($statePr
 		url: "/quan-ly-loai-san",
 		templateUrl: "bussinessAdmin/quanlyloaisan/_index.html",
 		controller: 'assestCategoryCtrl',
-		resolve:{
-			assestCateogires: ['assestCategoryService', function(assestCategoryService){
+		resolve: {
+			assestCateogires: ['assestCategoryService', function(assestCategoryService) {
+				console.log("new resolve");
 				return assestCategoryService.index();
 			}],
 		},
@@ -36,8 +36,23 @@ bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($statePr
 		url: "/quan-ly-loai-san/them-moi",
 		templateUrl: "bussinessAdmin/quanlyloaisan/_new.html",
 		controller: 'assestCategoryCtrl',
+
 	});
-	
+
+	$stateProvider.state("editAssestCategory", {
+		url: "/quan-ly-loai-san/chinh-sua/{id}",
+		templateUrl: "bussinessAdmin/quanlyloaisan/edit/_edit.html",
+		controller: 'editAssestCategoryCtrl',
+		resolve: {
+			assestCategory: ['$stateParams', 'assestCategoryService'
+			, function( $stateParams, assestCategoryService) {
+				console.log("on resolve editAssestCategory");
+				console.log($stateParams.id);
+				return assestCategoryService.show($stateParams.id);
+			}],
+		}
+	});
+
 	// $stateProvider.state("quanlyloaisan", {
 	// 	url: "/quan-ly-loai-san",
 	// 	templateUrl: 'bussinessAdmin/quanlyloaisan/_index.html',

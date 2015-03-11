@@ -8,23 +8,44 @@ bussinessAdmin
 		$scope.toogleModalDeleteCategory = function() {
 			$scope.showDeleteCategoryModal = !$scope.showDeleteCategoryModal;
 		};
-		$scope.toogleAddPriceModel = function() {
+		$scope.toogleAddPriceModel = function(assestCategory) {
 			$scope.showAddPriceModal = !$scope.showAddPriceModal;
+			console.log(assestCategory.name);
+			$scope.myTitle = assestCategory.name;
+		
 		};
 		$scope.toogleDeletePriceModal = function() {
 			$scope.showDeletePriceModel = !$scope.showDeletePriceModel;
 		};
 
+
 		$scope.categories = assestCategoryService.categories;
-		
-		$scope.newCategory = {};
+		$scope.newCategory = {
+			fees: [],
+		};
+
 		$scope.createAssestCategory = function(){
 			assestCategoryService
-				.create(newCategory)
+				.create($scope.newCategory)
 				.then(function(){
 					$state.go("quanlyloaisan");
 				});
 		};
+
+
+		$scope.deleteAssestCategory = function(assestCategory){
+			assestCategoryService
+				.destroy(assestCategory)
+				.then(function(){
+					var index = $scope.categories.indexOf(assestCategory);
+					$scope.categories.splice(index, 1);
+				});
+		};
+
+		$scope.goBack = function(){
+			$state.go("quanlyloaisan");
+		};
+
 		// $scope.createAssestCategory = function(){
 		// 	assestCategoryService.create({
 		// 		name: 'San 15 nguoi',

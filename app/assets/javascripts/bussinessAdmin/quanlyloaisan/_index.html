@@ -34,25 +34,28 @@
                 <th>#</th>
                 <th><i class="icon_profile"></i> Danh sách các loại sân</th>
                 <th><i class="icon_calendar"></i> Giá</th>
+               
                 <th><i class="icon_cogs"></i> </th>
               </tr>
             </thead>
             <tbody >
               
-             <tr ng-repeat-start="(categoryIndex, category) in categories" data-ng-click="category.collapseRows = !category.collapseRows">
-                <td><span class="tbltree-expander" data-ng-class="{'tbltree-expander-collapsed': !category.collapseRows, 'tbltree-expander-expanded': category.collapseRows}"></span>{{categoryIndex}}</td>
+             <tr ng-repeat-start="(categoryIndex, category) in categories">
+
+                <td style="cursor: pointer" data-ng-click="category.collapseRows = !category.collapseRows"><span class="tbltree-expander" data-ng-class="{'tbltree-expander-collapsed': !category.collapseRows, 'tbltree-expander-expanded': category.collapseRows}"></span>{{categoryIndex}}</td>
                 <td>{{category.name}}</td>
-                <td></td>
+                <td>{{category.short_desc}}</td>
+
                 <td align="center" style="vertical-align:middle; max-width:100px;">
                   <div class="btn-group" > 
-                        <a data-ng-click="toogleAddPriceModel()"  class="btn btn-primary">Them gia</a>
-                        <a href="" class="btn btn-success">Sua loai san</a>
-                         <a data-ng-click="toogleModalDeleteCategory()"  class="btn btn-danger">Xoa</a>
+                        <a data-ng-click="toogleAddPriceModel(category)"  class="btn btn-primary">Them gia</a>
+                        <a href="bussiness-admin#/quan-ly-loai-san/chinh-sua/{{category._id.$oid}}" class="btn btn-success">Sua loai san</a>
+                         <a  data-ng-click="toogleModalDeleteCategory()" class="btn btn-danger">Xoa</a>
                      </div>
                 </td>
               </tr>
 
-              <tr ng-repeat-end ng-repeat="(feeIndex, fee) in category.fees" row-id="{{categoryIndex+1}}.{{feeIndex+1}}" parent-id="{{categoryIndex+1}}" data-ng-show="category.collapseRows" >
+              <tr ng-repeat-end ng-repeat="(feeIndex, fee) in category.fees"  data-ng-show="category.collapseRows" >
                 <td>Từ </td>
                 <td  align="center">{{fee.begin_time | date:'shortTime'}} => {{fee.end_time | date:'shortTime'}}</td>
                 <td>{{fee.price | vnd}}</td>
@@ -74,10 +77,11 @@
   <!-- page end--> 
 </section>
 
+<!-- Giai phap modal them xoa sua di voi moi moi item -->
 <!-- Modal -->
 <section class="modals">
   <!-- Modal cho them gia -->
-  <modal title="Thêm giá cho loại sân xxxx ?" visible="showAddPriceModal">
+  <modal title="Thêm giá cho loại sân {{$scope.myTitle}}" visible="showAddPriceModal">
       <form class="form-horizontal" style="margin:0 15px;">
           <div class="form-group">
               <table width="100%">

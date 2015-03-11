@@ -5,5 +5,6 @@ class Fee
 	field :end_time, type: Time
 	field :price, type: Float
 
+	validates :price, presence: true
 	embedded_in :assest_category
 end

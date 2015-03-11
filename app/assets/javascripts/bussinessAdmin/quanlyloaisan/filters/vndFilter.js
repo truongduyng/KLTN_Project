@@ -1,5 +1,10 @@
 filters.filter("vnd", [function(){
 	return function(price){
-		return price.toString() + ".000" + " VND"
+		if(price){
+			return price.toString() + ".000" + " VND"
+		}else{
+			return "0.000 VND";
+		}
+		
 	};
 }]);
