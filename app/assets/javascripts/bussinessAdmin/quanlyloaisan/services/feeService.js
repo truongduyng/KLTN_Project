@@ -5,21 +5,24 @@ bussinessAdmin.factory('feeService', ['$http', function($http) {
 	
 	o.create = function(assest_category_id,fee) {
 		return $http.post("/assest_categories/" + assest_category_id + "/fees.json", fee)
-			.then(function(response) {
-				console.log(response);
-			}, function(response) {
-				console.log(response);
-			});;
+			.success(function(data){
+				console.log(data);
+			})
+			.error(function(error){
+				console.log(error);
+			});
 	};
 
+
 	o.destroy = function(assest_category_id, id){
-		return $http.delete("/assest_categories/" + assest_category_id + "/fees/" + id + ".json", fee)
-			.then(function(response) {
-				console.log(response);
-			}, function(response) {
-				console.log(response);
-			});;
+		return $http.delete("/assest_categories/" + assest_category_id + "/fees/" + id + ".json")
+			.success(function(data){
+				console.log(data);
+			})
+			.error(function(error){
+				console.log(error);
+			});
 	};
-	
+
 	return o;
-}])
+}]);

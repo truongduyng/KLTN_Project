@@ -19,7 +19,7 @@
   <!-- Panel tổng quát-->
   <section class="panel">
     <header class="panel-heading"> Thêm mới loại sân
-      <div style="float:right"> <a data-ng-click="createAssestCategory()" class="btn btn-success" style="padding-right:40px;"><span class="icon_floppy"></span> Lưu</a> <a data-ng-click="goBack()" class="btn btn-danger"><span class="icon_trash"></span> Quay về</a> <a href="#" class="btn btn-success"><span class="icon_question"></span> Trợ giúp</a> </div>
+      <div style="float:right"> <a data-ng-disabled="assestCategoryForm.$invalid" data-ng-click="createAssestCategory()" class="btn btn-success" style="padding-right:40px;"><span class="icon_floppy"></span> Lưu</a> <a  data-ng-click="goBack()" class="btn btn-danger"><span class="icon_trash"></span> Quay về</a> <a href="#" class="btn btn-success"><span class="icon_question"></span> Trợ giúp</a> </div>
       <div style="clear:both; margin-bottom:2px;"></div>
     </header>
     <div class="panel-body">
@@ -34,7 +34,10 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">Tên loại*</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" data-ng-model="newCategory.name">
+                <input name="name" type="text" class="form-control" data-ng-model="newCategory.name" required>
+                <div data-ng-show="assestCategoryForm.name.$dirty && assestCategoryForm.name.$invalid">
+                    <span ng-show="assestCategoryForm.name.$error.required" class="help-block error">Vui lòng nhập tên loại hạng</span>  
+                </div>
               </div>
             </div>
            

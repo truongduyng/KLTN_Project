@@ -20,4 +20,5 @@
 //= require initModule
 //= require jquery-timepicker-jt
 //= require jquery-timepicker-jt/lib/bootstrap-datepicker
+//= require angular-flash
 //= require_tree .

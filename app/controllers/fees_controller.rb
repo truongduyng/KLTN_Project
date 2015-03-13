@@ -5,7 +5,20 @@ class FeesController < ApplicationController
 	#chua test
 	#POST assest_category/:assest_category_id/fees.json
 	def create
-		fee = @assest_category.fees.create(fees_params)
+		fee = @assest_category.fees.create() do |fee|
+			if(fees_params.has_key?(:begin_time))
+				fee.begin_time = Time.parse(fees_params[:begin_time])
+			end
+			
+			if(fees_params.has_key?(:end_time))
+				fee.end_time = Time.parse(fees_params[:end_time])
+			end
+
+			if(fees_params.has_key?(:price))
+				fee.price = fees_params[:price]
+			end
+		end
+
 		if fee.errors.blank?
 			render json: fee, status: :created
 		else
@@ -19,8 +32,8 @@ class FeesController < ApplicationController
 		begin
 			@assest_category.fees.find(params[:id]).destroy
 			render json: {}, status: :ok
-		rescue Mongoid::Errors:DocumentNotFound
-			render json: {}, status: :not_found
+		rescue Mongoid::Errors::DocumentNotFound
+			render nothing: true, status: :not_found, content_type: 'application/json'
 		end
 	end
 
@@ -33,8 +46,10 @@ class FeesController < ApplicationController
 					render json: {}, status: :not_found
 				end
 			rescue Mongoid::Errors::DocumentNotFound
-				render json: "DocumentNotFound", status: :not_found
+				render nothing: true, status: :not_found, content_type: 'application/json'
 			end
+
+			
 		end
 
 		def fees_params

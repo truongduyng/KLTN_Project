@@ -67,12 +67,12 @@ class AssestCategoriesController < ApplicationController
 	#/assest_categories/:id.(:format)
 	def destroy
 		#cho nay xet chuyen san sang loai hang khac
-		@assest_category.destroy_all
-		render json: "deleted", status: :ok
+		@assest_category.destroy
+		render nothing: true, status: :ok, content_type: 'application/json'
 	end
 
+
 	private 
-		
 		def assest_category_params
 			# params.require(:assest_category)
 			# .permit(:name, :short_desc, :description, {fees: [:begin_time, :end_time, :price]})
@@ -95,7 +95,7 @@ class AssestCategoriesController < ApplicationController
 				bussiness_id = current_user.bussiness.id
 				@assest_category = current_user.bussiness.assest_categories.find(params[:id])
 			rescue Mongoid::Errors::DocumentNotFound
-				render json: "DocumentNotFound", status: :not_found
+				render nothing: true, status: :not_found, content_type: 'application/json'
 			end
 		end
 end

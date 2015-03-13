@@ -12,11 +12,11 @@ services.factory('assestCategoryService', ['$http', function($http) {
 
 	o.create = function(assest_category) {
 		return $http.post('/assest_categories.json', assest_category)
-			.then(function(response) {
-
-				console.log(response);
-			}, function(response) {
-				console.log(response);
+			.success(function(data){
+				console.log(data);
+			})
+			.error(function(error){
+				console.log(error);
 			});
 	};
 
@@ -24,8 +24,6 @@ services.factory('assestCategoryService', ['$http', function($http) {
 		return $http.get("/assest_categories/" + id + ".json")
 			.then(function(response) {
 				return response.data;
-				console.log(response);
-			}, function(response) {
 				console.log(response);
 			});
 	};
@@ -35,20 +33,22 @@ services.factory('assestCategoryService', ['$http', function($http) {
 		console.log(assestCategory);
 
 		return $http.put("/assest_categories/" + id + ".json", assestCategory)
-			.then(function(response) {
-				console.log(response);
-			}, function(response) {
-				console.log(response);
+			.success(function(data){
+				console.log(data);
+			})
+			.error(function(error){
+				console.log(error);
 			});
 	}
 
 	o.destroy = function(assestCategory) {
 		var id = assestCategory._id.$oid;
-		return $http.delete("/assest_categories/" + id + ".json", assestCategory)
-			.then(function(response) {
-				console.log(response);
-			}, function(response) {
-				console.log(response);
+		return $http.delete("/assest_categories/" + id + ".json")
+			.success(function(data){
+				console.log(data);
+			})
+			.error(function(error){
+				console.log(error);
 			});
 
 	};

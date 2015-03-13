@@ -1,4 +1,17 @@
-var bussinessAdmin = angular.module('sportaBussinessAdmin', ["ui.router", 'templates', 'Devise', 'sporta.services', 'sporta.directives', 'sporta.filters']);
+var bussinessAdmin = angular.module('sportaBussinessAdmin', ["ui.router", 'templates', 'Devise', 'angular-flash.flash-alert-directive', 'sporta.services', 'sporta.directives', 'sporta.filters']);
+bussinessAdmin.config(function(flashProvider) {
+
+	// Support bootstrap 3.0 "alert-danger" class with error flash types
+	flashProvider.errorClassnames.push('alert-danger');
+	/**
+	 * Also have...
+	 *
+	 * flashProvider.warnClassnames
+	 * flashProvider.infoClassnames
+	 * flashProvider.successClassnames
+	 */
+
+});
 
 bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
@@ -44,8 +57,7 @@ bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($statePr
 		templateUrl: "bussinessAdmin/quanlyloaisan/edit/_edit.html",
 		controller: 'editAssestCategoryCtrl',
 		resolve: {
-			assestCategory: ['$stateParams', 'assestCategoryService'
-			, function( $stateParams, assestCategoryService) {
+			assestCategory: ['$stateParams', 'assestCategoryService', function($stateParams, assestCategoryService) {
 				console.log("on resolve editAssestCategory");
 				console.log($stateParams.id);
 				return assestCategoryService.show($stateParams.id);
