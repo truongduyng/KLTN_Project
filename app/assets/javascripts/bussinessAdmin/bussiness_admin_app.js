@@ -33,6 +33,8 @@ bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($statePr
 		}
 	});
 
+
+
 	$stateProvider.state("quanlyloaisan", {
 		url: "/quan-ly-loai-san",
 		templateUrl: "bussinessAdmin/quanlyloaisan/_index.html",
@@ -65,6 +67,70 @@ bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($statePr
 		}
 	});
 
+
+
+	//Quan ly san
+	$stateProvider.state("quanLySan", {
+		url: "/quan-ly-san",
+		templateUrl: "bussinessAdmin/quanLySan/home/_index.html",
+		controller: 'assestCtrl',
+		resolve: {
+			assestsByCategory: ['assestService', function(assestService) {
+				console.log("on quanLySan resolve");
+				return assestService.getAssestsByCategory();
+			}],
+		}
+	});
+
+	$stateProvider.state("themMoiSan", {
+		url: "/quan-ly-san/them-moi",
+		templateUrl: "bussinessAdmin/quanLySan/new/_new.html",
+		controller: 'newAssestCtrl',
+		resolve: {
+			branches: ['branchService', function(branchService) {
+				var promise = branchService.index().then(function(response) {
+					return response.data;
+				});
+				return promise;
+			}],
+			categories: ['assestCategoryService', function(assestCategoryService) {
+				var promise = assestCategoryService.index().then(function(response) {
+					return response.data;
+				});
+				return promise;
+			}],
+		}
+	});
+
+	$stateProvider.state("chinhSuaSan", {
+		url: "/quan-ly-san/chinh-sua/{id}",
+		templateUrl: "bussinessAdmin/quanLySan/edit/_edit.html",
+		controller: 'editAssestCtrl',
+		resolve: {
+			assest: ['assestService', '$stateParams', function(assestService, $stateParams) {
+				console.log("in assest resolve");
+				return assestService.show($stateParams.id)
+					.then(function(response) {
+						var assest = response.data;
+						assest.branch_id = assest.branch._id.$oid;
+						assest.assest_category_id = assest.assest_category._id.$oid;
+						return assest;
+					});
+			}],
+			branches: ['branchService', function(branchService) {
+				var promise = branchService.index().then(function(response) {
+					return response.data;
+				});
+				return promise;
+			}],
+			categories: ['assestCategoryService', function(assestCategoryService) {
+				var promise = assestCategoryService.index().then(function(response) {
+					return response.data;
+				});
+				return promise;
+			}],
+		}
+	});
 	// $stateProvider.state("quanlyloaisan", {
 	// 	url: "/quan-ly-loai-san",
 	// 	templateUrl: 'bussinessAdmin/quanlyloaisan/_index.html',

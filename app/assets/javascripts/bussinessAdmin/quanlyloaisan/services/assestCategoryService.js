@@ -4,9 +4,10 @@ services.factory('assestCategoryService', ['$http', function($http) {
 
 	};
 	o.index = function() {
-		$http.get('/assest_categories.json')
+		return $http.get('/assest_categories.json')
 			.then(function(response) {
 				angular.copy(response.data, o.categories);
+				return response;
 			});
 	};
 
@@ -23,8 +24,9 @@ services.factory('assestCategoryService', ['$http', function($http) {
 	o.show = function(id) {
 		return $http.get("/assest_categories/" + id + ".json")
 			.then(function(response) {
-				return response.data;
 				console.log(response);
+				return response.data;
+				
 			});
 	};
 

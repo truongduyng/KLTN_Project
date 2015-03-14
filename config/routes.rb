@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  resources 'branches'
+  resources 'assests' do
+    collection do
+      get 'get-assests-by-category'
+    end
+  end
+
   resources 'assest_categories' do
     resources 'fees'
   end

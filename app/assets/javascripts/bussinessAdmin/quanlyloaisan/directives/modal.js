@@ -27,11 +27,6 @@ directives.directive('modal', function() {
 
       $(element).on('shown.bs.modal', function() {
         scope.$apply(function() {
-          //???
-        console.log("on shown.bs.modal");
-        console.log(scope);
-        console.log(scope.$parent);
-        console.log(scope.$parent[attrs.visible]);
           scope.$parent[attrs.visible] = true;
         });
       });
@@ -40,6 +35,53 @@ directives.directive('modal', function() {
         //Bat su kien modal hidden va set scope.visible = false
         scope.$apply(function() {
           scope.$parent[attrs.visible] = false;
+        });
+      });
+    }
+  };
+});
+
+
+directives.directive('internalModal', function() {
+  return {
+    template: '<div class="modal fade">' +
+      '<div class="modal-dialog">' +
+      '<div class="modal-content">' +
+      '<div class="modal-header">' +
+      '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
+      '<h4 class="modal-title">{{ title }}: {{item}}</h4>' +
+      '</div>' +
+      '<div class="modal-body" ng-transclude></div>' +
+      '</div>' +
+      '</div>' +
+      '</div>',
+    restrict: 'E',
+    transclude: true,
+    replace: true,
+    scope: {
+      title: "@",
+      visible: "=",
+      item: "="
+    },
+    link: function postLink(scope, element, attrs) {
+      scope.$watch('visible', function(newValue, oldValue, scope) {
+        var value = newValue;
+        if (value == true)
+          $(element).modal('show');
+        else
+          $(element).modal('hide');
+
+      });
+      $(element).on('shown.bs.modal', function() {
+        scope.$apply(function() {
+          scope.visible = true;
+        });
+      });
+
+      $(element).on('hidden.bs.modal', function() {
+        //Bat su kien modal hidden va set scope.visible = false
+        scope.$apply(function() {
+          scope.visible = false;
         });
       });
     }

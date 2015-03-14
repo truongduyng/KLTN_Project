@@ -6,7 +6,9 @@ class AssestCategory
 	
 	belongs_to :bussiness
 	embeds_many :fees
-	accepts_nested_attributes_for :fees
+	has_many :assests
+
+	validates :name, presence: true, length: {maximum: 1000}
 end
 
 #assest_category.fees << Fee.new
