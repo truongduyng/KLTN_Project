@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  from: 
-  to: 
-  fee: 9.99
+  begin_time: MyString
+  Time: MyString
+  end_time: 
+  fee: 1.5
 
 two:
-  from: 
-  to: 
-  fee: 9.99
+  begin_time: MyString
+  Time: MyString
+  end_time: 
+  fee: 1.5

@@ -3,6 +3,5 @@ class Bussiness
   field :name, type: String
   field :description, type: String
   field :address, type: String
-  field :longitude, type: Float
-  field :latitude, type: Float
+  embeds_many: branches
 end
