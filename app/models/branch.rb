@@ -2,6 +2,7 @@ class Branch
 	include Mongoid::Document
 	field :name, type: String
 	field :address, type: String
+	field :phone, type: String
 	field :latitude, type: Float
 	field :longtitude, type: Float
 
