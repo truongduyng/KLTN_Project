@@ -1,12 +1,4 @@
 class Bussiness
-<<<<<<< HEAD
-  include Mongoid::Document
-  field :name, type: String
-  field :description, type: String
-  field :address, type: String
-  embeds_many: branches
-end
-=======
 	include Mongoid::Document
 	field :name, type: String
 	#address bo thay the boi address cua branch
@@ -20,4 +12,3 @@ end
 	has_many :assest_categories
 	has_many :branches
 end
->>>>>>> master

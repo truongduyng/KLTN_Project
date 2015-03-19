@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html ng-app="sportApp">
 <head>
   <meta charset="utf-8">
@@ -16,10 +15,10 @@
 </head>
 <body>
 
-  <footer data-ng-include="'appJS/header/_header.html'"></footer>
+  <header data-ng-include="'appJS/header/_header.html'"></header>
 
   <!-- CONTENT HERE -->
-  <div class="container" style="margin-top:50px;">
+  <div class="container">
     <ui-view></ui-view>
   </div>
   <!-- END CONTENT -->
@@ -55,7 +54,6 @@
       $('#forget-password-on-login').click(function(e) {
         $('#login-modal').modal('toggle');
       });
-
     });
   </script>
 </body>

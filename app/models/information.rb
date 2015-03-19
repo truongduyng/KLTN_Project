@@ -20,11 +20,11 @@ class Information
   before_save :update_updated_at
   
   private 
-  	def init_created_at
-  		self.created_at = Time.now
-  		self.updated_at = self.created_at
-  	end
-  	def update_updated_at
-  		self.updated_at = Time.now
-  	end
+  def init_created_at
+    self.created_at = Time.now
+    self.updated_at = self.created_at
+  end
+  def update_updated_at
+    self.updated_at = Time.now
+  end
 end
