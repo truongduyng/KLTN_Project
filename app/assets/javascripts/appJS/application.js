@@ -9,14 +9,17 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-//
 //= require underscore
 //= require gmaps/google
 //= require jquery
 //= require jquery_ujs
 //= require angular
-//= require angular-devise
-//= require angular-rails-templates
-//= require angular-ui-router
 //= require bootstrap/dist/js/bootstrap
-//= require_tree ../appJS
+//= require angular-ui-router
+//= require angular-rails-templates
+//= require angular-devise
+//= require initModule
+//= require jquery-timepicker-jt
+//= require jquery-timepicker-jt/lib/bootstrap-datepicker
+//= require angular-flash
+//= require_tree .

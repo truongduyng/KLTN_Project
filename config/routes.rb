@@ -1,7 +1,26 @@
 Rails.application.routes.draw do
 
+  resources 'branches'
+  resources 'assests' do
+    collection do
+      get 'get-assests-by-category'
+    end
+  end
+
+  resources 'assest_categories' do
+    resources 'fees'
+  end
+  post 'bussinesses/new' => 'bussinesses#new'
+  put 'bussinesses/update' => 'bussinesses#update'
+  get 'bussinesses/show' => 'bussinesses#show'
+
+  post 'infomations/edit' => 'informations#edit'
+  get 'informations/show' => 'informations#show'
+  # resources :informations
+  get 'check/username' => 'user#check_username'
+  get 'check/email' => 'user#check_email'
   devise_for :users
-  get 'admin' => 'admin#index' 
+  get 'bussiness-admin' => 'admin#index' 
   root 'application#angular'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

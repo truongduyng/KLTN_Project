@@ -4,7 +4,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
     respond_to :json
   
+  #before_action :authenticate_user!
+  
   def angular
+    puts '------------------------------------------------------------------------------------------------------------------------------------------'
+    puts current_user
+    puts '------------------------------------------------------------------------------------------------------------------------------------------'
+
     render 'layouts/application'
   end
 
@@ -18,6 +24,6 @@ class ApplicationController < ActionController::Base
   protected
 	def configure_permitted_parameters
 	    devise_parameter_sanitizer.for(:sign_up) << [:username, :firstname, :lastname]
-	  devise_parameter_sanitizer.for(:account_update) << [:username, :firstname, :lastname]
+	    devise_parameter_sanitizer.for(:account_update) << [:username, :firstname, :lastname]
 	end
 end

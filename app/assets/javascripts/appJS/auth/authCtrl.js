@@ -1,12 +1,14 @@
-angular.module('sportApp')
-.controller('authCtrl', ['$scope', 'Auth',
- function($scope, Auth){
+app.controller('authCtrl', ['$scope', 'Auth', '$state',
+ function($scope, Auth, $state){
+ 	
+ 	$scope.user = {};
+ 	
  	$scope.login = function(){
  		Auth.login($scope.user).then(function(){
 	 		$('#login-modal').modal('toggle');
-	 		//$state.go('home');
+	 		$scope.error = "";	
 	 	}, function(){
-	 		alert("error");
+	 		$scope.error = "Email hoac password khong hop le";
 	 	});
  	};
 

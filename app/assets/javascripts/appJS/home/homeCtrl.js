@@ -1,4 +1,5 @@
-angular.module("sportApp")
-.controller('homeCtrl', ['$scope', function($scope){
+
+app.controller('homeCtrl', ['$scope', '$http', function($scope, $http){
 	$scope.message = "This is message";
 }]);
+

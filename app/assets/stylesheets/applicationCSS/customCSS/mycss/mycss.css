@@ -1,0 +1,147 @@
+@charset "utf-8";
+
+/*Begin For post form*/
+.panel-body{
+	padding:0px;
+}
+.post-form{
+	width:100%;
+	//border: solid thin #ABABAB;
+	border:none;
+	border-radius:5px;
+	display:block;
+	overflow:hidden;
+	
+}
+.post-form .post-form-header{
+}
+.post-form-header span {
+}
+
+.post-form .post-form-header a{
+	border-radius:5px;
+}
+.post-form .post-form-content textarea {
+	width: 100%;
+	min-height:100px;
+	border:none;
+	resize: none;
+	overflow: hidden;
+	display:block;
+	
+}
+.post-form .post-form-images{
+}
+
+.post-form .post-form-images span{
+	position:relative;
+	margin: 5px;
+	display:inline-block;
+}
+.post-form .post-form-images span button.close{
+	position:absolute;
+	right:5px;
+	top:2px;
+	z-index:1000;
+	color:#FFFFFF;
+	opacity: 0.8;
+}
+
+.post-form .post-form-images span button.close:hover{
+	opacity: 1;
+}
+.post-form .post-form-images span img{
+	cursor:pointer;
+}
+.post-form-bottom{
+	background-color: #E8E9EB;
+	overflow:hidden;
+	
+}
+.post-form-bottom button{
+	float:right;
+	min-width:100px;
+	
+}
+
+/*End For post form*/
+
+
+/*Begin list post in trang chủ*/
+.post-item{
+	height:620px;
+	overflow:hidden;
+}
+.post-item .content p{
+	height: 285px;
+	overflow:hidden;
+}
+.post-item .title{
+display:block; font-weight:600; font-size:1.4em; padding-bottom:5px; color:#4cae4c;
+text-decoration:none;
+
+}
+.post-item a.title:hover{
+	text-decoration:none;
+	opacity:0.8;
+}
+
+.post-item .images{
+	text-align:center;
+}
+
+.post-item .bottom{
+	overflow:hidden; margin-top:10px;
+}
+
+.post-item .post-owner{
+	border-top:solid thin #E1DBDB; overflow:hidden;margin-top:5px; margin-left:-10px; margin-right:-10px; padding-top:10px; margin-bottom:-10px;
+}
+.post-item .post-owner .post-owner-image{
+	float:left;
+}
+
+.post-item .post-owner .post-owner-info{
+	float:left;padding-left:15px;
+}
+/*End list post in trang chủ*/
+
+/*BEGIN NAVBAR */
+.navbar-form .form-group input{
+	width:300px;
+}
+/*END NAVBAR */
+
+
+
+/*BEGIN FOR NOTIFICATION*/
+.notifications{
+	border-top-left-radius: 4px;
+}
+.notifications ul.list-notifications{
+	min-height:200px;
+	list-style-type:none; padding:10px 10px; max-height:500px; overflow-y:auto; overflow-x:hidden;
+	padding:0px;
+
+}
+.notifications ul.list-notifications li{
+	padding-bottom:10px;
+	padding-top:10px;
+	border-bottom:1px solid #B8B8B8;
+}
+
+.notifications ul.list-notifications li:hover{
+	background-color: #F0F0F0;
+}
+
+.notifications ul.list-notifications li.watched{
+	background-color:#F0F0F0;
+}
+
+.notifications ul.list-notifications li .notification-item{
+	width:400px; overflow:hidden; height:50px;
+}
+
+.notifications .see-all{
+}
+/*END FOR NOTIFICATION*/
