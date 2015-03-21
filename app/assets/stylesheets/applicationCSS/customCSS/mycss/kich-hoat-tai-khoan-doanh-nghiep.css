@@ -1,0 +1,6 @@
+img.help-icon{
+	cursor: pointer;
+}
+img.help-icon:hover{
+	opacity: 0.8;
+}

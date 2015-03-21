@@ -1,130 +1,63 @@
-
-<!-- MAP HERE -->
-<div class="row">
-  <div class="col-sm-12">
-    <div class="map"> 
-      <iframe src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Kuningan,+Jakarta+Capital+Region,+Indonesia&amp;aq=3&amp;oq=kuningan+&amp;sll=37.0625,-95.677068&amp;sspn=37.410045,86.572266&amp;ie=UTF8&amp;hq=&amp;hnear=Kuningan&amp;t=m&amp;z=14&amp;ll=-6.238824,106.830177&amp;output=embed"> </iframe> 
-      
-    </div>
+ {{message}}
+<!--  <div>
+        <input type="file" nv-file-select uploader="uploader"/><br/>
+        <ul>
+            <li ng-repeat="item in uploader.queue">
+                Name: <span ng-bind="item.file.name"></span><br/>
+                <button ng-click="item.upload()">upload</button>
+            </li>
+        </ul>
+  </div> -->
+<!--   <div>
+     watching model:
+    <div class="button" ng-file-select ng-model="files">Upload using model $watch</div>
+    <div class="button" ng-file-select ng-file-change="upload($files)">Upload on file change</div>
+    Drop File:
+    <div ng-file-drop ng-model="files" class="drop-box" 
+        drag-over-class="dragover" ng-multiple="true" allow-dir="true"
+        accept=".jpg,.png,.pdf">Drop Images or PDFs files here</div>
+    <div ng-no-file-drop>File Drag/Drop is not supported for this browser</div>
+</div>
+ -->
+<!--  <button class="btn btn-primary" ng-file-select ng-multiple="true" accept=".jpg,.png," ng-model="files">Chose file</button>
+<button class="btn btn-success" ng-click="upload()">Upload</button>
+<hr>
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{width}}%">
+    {{width}}%
   </div>
 </div>
-<!--END  MAP-->
+<style type="text/css">
+.button {
+    -moz-appearance: button;
+    /* Firefox */
+    -webkit-appearance: button;
+    /* Safari and Chrome */
+    padding: 10px;
+    margin: 10px;
+    width: 70px;
+}
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 65px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+.dragover {
+    border: 5px dashed blue;
+}
+</style> -->
 
-<!-- LIST POST HERE -->
-<div class="row">
-  <!-- GROUP -->
-  <div class="col-sm-2">
-    <div class="groups">
-      <span class="header" style="font-weight:bold; font-size:1.2em; padding:5px;  display:block;">Nhóm</span>
-      <ul class="link-list">
-        <li><a href="#"><span class="glyphicon glyphicon-leaf
-"></span> Hội đá bóng nguy hiểm</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-leaf
-"></span> Hội đá bóng nguy hiểm</a></li>
-<li><a href="#"><span class="glyphicon glyphicon-leaf
-"></span> Hội tán gãu thể thao</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-leaf
-"></span> Hội đá bóng</a></li>
-      </ul>
-      <button style="margin-top:10px;" type="button" class="btn btn-block btn-success"><span class="glyphicon glyphicon-plus"></span> Tạo nhóm</button>
-    </div>
-  </div>
-  <!-- END GROUP -->
+<div class="btn btn-primary" ng-file-select ng-model="file">Chose file</div>
+<form name="post-form">
+    <input type="text" ng-model="post.title">
+    <textarea data-ng-model="post.body"></textarea>
+    <button ng-click="onPost()">Post</button>
+</form>
 
-
-  <div class="col-sm-10">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Chia sẽ điều bạn nghĩ với chúng tôi</h3>
-          </div>
-          <div class="panel-body">
-            <form class="post-form">
-              <div class="post-form-header">
-                <input style="border:none; border-bottom:solid thin #F0EBEB; border-radius:0px;" type="text" class="form-control" placeholder="Tiêu để">
-              </div>
-              <div class="post-form-content">
-                <textarea style="border:none;padding: 6px 12px;display:block;" placeholder="Nội dung bài viết" ></textarea>
-                
-                <div class="post-form-images">
-                    <span class="image">
-                        <button type="button" class="close"
-                                                    aria-hidden="true">&times;</button>
-                        <img src="/assets/application/myimg/01.jpg" width="100px" height="100px"> 
-                    </span> 
-                    <span class="image">
-                        <button type="button" class="close"
-                                                    aria-hidden="true">&times;</button>
-                        <img src="/assets/application/myimg/01.jpg" width="100px" height="100px"> 
-                    </span> 
-
-                </div>
-              </div>
-
-              <div class="post-form-bottom">
-                <div class="btn-group" role="group" aria-label="... " style="float:right; margin: 5px 5px;">
-                  <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Thêm ảnh</button>
-                  <button type="button" class="btn btn-success"> Đăng </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <div class="well post-item" > <a href="#" class="title"><span>Kinh nghiệm chơi bóng đá. Phần 1</span></a>
-          <div class="content">
-            <p> I no longer have patience for certain things, not because I’ve become arrogant, but simply because I reached a point in my life where I do not want to waste more time with what displeases me or hurts me. I have no patience for cynicism, excessive criticism and demands of any nature I no longer have patience for certain things, not because I’ve become arrogant, but simply because I reached a point in my life where I do not want to waste more time with what displeases me or hurts me. I have no patience for cynicism, excessive criticism and demands of any nature </p>
-            <div class="images"> <img src="/assets/application/myimg/01.jpg" class="img-thumbnail" width="120px" height="120px"> <img src="/assets/application/myimg/01.jpg" class="img-thumbnail"  width="120px" height="120px"> </div>
-          </div>
-          <div class="bottom">
-            <button class="btn btn-success pull-right">Xem chi tiết</button>
-          </div>
-          <div class="post-owner">
-            <div class="post-owner-image"><img class="img-thumbnail" src="/assets/application/myimg/01.jpg" width="60px" height="60px"></div>
-            <div class="post-owner-info" > <span style="font-size:1.2em; font-style:bold; display:block;"><b>Nguyễn Hữu Trung</b></span> <span>10/3/2014</span> </div>
-          </div>
-        </div>
-      </div>
-
-     <div class="col-md-4">
-        <div class="well post-item" > <a href="#" class="title"><span>Kinh nghiệm chơi bóng đá. Phần 1</span></a>
-          <div class="content">
-            <p> I no longer have patience for certain things, not because I’ve become arrogant, but simply because I reached a point in my life where I do not want to waste more time with what displeases me or hurts me. I have no patience for cynicism, excessive criticism and demands of any nature I no longer have patience for certain things, not because I’ve become arrogant, but simply because I reached a point in my life where I do not want to waste more time with what displeases me or hurts me. I have no patience for cynicism, excessive criticism and demands of any nature </p>
-            <div class="images"> <img src="<%= image_path('application/myimg/01.jpg')%>" class="img-thumbnail" width="120px" height="120px"> <img src="<%= image_path('application/myimg/01.jpg')%>" class="img-thumbnail"  width="120px" height="120px"> </div>
-          </div>
-          <div class="bottom">
-            <button class="btn btn-success pull-right">Xem chi tiết</button>
-          </div>
-          <div class="post-owner">
-            <div class="post-owner-image"><img class="img-thumbnail" src="<%= image_path('application/myimg/01.jpg')%>" width="60px" height="60px"></div>
-            <div class="post-owner-info" > <span style="font-size:1.2em; font-style:bold; display:block;"><b>Nguyễn Hữu Trung</b></span> <span>10/3/2014</span> </div>
-          </div>
-        </div>
-      </div>
-
-      
-       <div class="col-md-4">
-        <div class="well post-item" > <a href="#" class="title"><span>Kinh nghiệm chơi bóng đá. Phần 1</span></a>
-          <div class="content">
-            <p> I no longer have patience for certain things, not because I’ve become arrogant, but simply because I reached a point in my life where I do not want to waste more time with what displeases me or hurts me. I have no patience for cynicism, excessive criticism and demands of any nature I no longer have patience for certain things, not because I’ve become arrogant, but simply because I reached a point in my life where I do not want to waste more time with what displeases me or hurts me. I have no patience for cynicism, excessive criticism and demands of any nature </p>
-            <div class="images"> <img src="<%= image_path('application/myimg/01.jpg')%>" class="img-thumbnail" width="120px" height="120px"> <img src="<%= image_path('application/myimg/01.jpg')%>" class="img-thumbnail"  width="120px" height="120px"> </div>
-          </div>
-          <div class="bottom">
-            <button class="btn btn-success pull-right">Xem chi tiết</button>
-          </div>
-          <div class="post-owner">
-            <div class="post-owner-image"><img class="img-thumbnail" src="<%= image_path('application/myimg/01.jpg')%>" width="60px" height="60px"></div>
-            <div class="post-owner-info" > <span style="font-size:1.2em; font-style:bold; display:block;"><b>Nguyễn Hữu Trung</b></span> <span>10/3/2014</span> </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div data-ng-repeat="photo in post.photos">
+    <img width="50px" height="50px" src="{{photo.image}}">
 </div>
-
-<!-- END LIST POST  -->

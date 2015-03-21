@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+
+  post 'posts/add_photo' => 'posts#add_photo'
+  delete 'posts/delete_photo/:id' => 'posts#delete_photo'
+  
+  resources 'photos'
+  resources 'posts'
+
   resources 'branches'
   resources 'assests' do
     collection do

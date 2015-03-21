@@ -46,3 +46,9 @@ gem 'angular_rails_csrf'
 gem 'devise'
 # #for strong parameters with complex object
 # gem 'strong_parameters'
+#for upload file
+gem 'angularjs-file-upload-rails', '~> 1.1.6'
+# gem 'carrierwave'
+gem 'mongoid-grid_fs', github: 'ahoward/mongoid-grid_fs'
+gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+gem 'mini_magick'

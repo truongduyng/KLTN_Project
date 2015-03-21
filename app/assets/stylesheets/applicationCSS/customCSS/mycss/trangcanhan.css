@@ -1,0 +1,194 @@
+
+.groups{
+	margin-bottom: 20px;
+}
+.detail-main-column{
+	margin-bottom: 20px;
+}
+.baiviet .baiviet-left{
+	width: 64px;
+}
+/*BEGIN FOR BAI VIET MAIN COLUMN*/
+.bai-viet{
+	border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    /*margin: 0px -10px;*/
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    position: relative;
+    
+}
+.bai-viet > .row > .col-xs-2{
+	width: 64px;
+	margin-right: 10px;
+}
+.bai-viet .owner-bai-viet{
+	font-size: 1.2em;
+	font-weight: 600;
+	color:	#337ab7;
+	display: block;
+}
+.bai-viet .tua-de-bai-viet{
+	font-size: 1.4em;
+	font-weight: 600;
+	color:	#337ab7;
+	display: block;
+	padding-bottom: 5px;
+}
+.bai-viet  .noi-dung-bai-viet{
+	padding-top: 10px;
+}
+.bai-viet  .noi-dung-bai-viet .mo-ta-bai-viet{
+	height: 80px;
+	overflow: hidden;
+}
+.bai-viet .edit-button{
+	margin-right: 5px;
+}
+.bai-viet .label{
+	display: block;
+	font-size: 1em;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+/*END  FOR BAI VIET MAIN COLUMN*/
+
+/*BEGIN FOR TIM KIEM BAI VIET*/
+.form-tim-kiem .col-form-tim-kiem{
+	padding: 0px 2px;
+}
+
+.form-tim-kiem .col-form-tim-kiem:first-child{
+	padding-left:15px;
+}
+
+.form-tim-kiem .col-form-tim-kiem:last-child{
+	padding-right:15px;
+}
+.form-tim-kiem .col-form-tim-kiem .btn-tim-kiem{
+	width: 100%;
+}
+/*END FOR TIM KIEM BAI VIET*/
+
+/*BEGIN FOR DANH SACH THONG BAO*/
+ul.danh-sach-thong-bao{
+	list-style-type: none;
+	overflow: hidden;
+	margin: 0px;
+	padding: 0px;
+}
+ul.danh-sach-thong-bao li{
+	overflow: hidden;
+	padding: 10px 0px;
+	border-bottom: 1px solid #e5e5e5;
+	position: relative;
+	padding-right: 25px;
+
+}
+ul.danh-sach-thong-bao li img.new-icon{
+	position: absolute;
+	top: 5px;
+	right: 0px;
+}
+/*END FOR DANH SACH THONG BAO*/
+
+
+/*BEGIN FOR MOBILE*/
+/*BEGIN FOR NAV*/
+@media screen and (max-width: 767px){
+	.navbar-header{
+		margin-top: -10px;
+	}
+	.navbar-header .navbar-toggle{
+		margin-top: 20px;
+	}
+	.navbar-fixed-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
+	    max-height: 360px;
+	    overflow:auto;
+	}
+	.notifications ul.list-notifications li .notification-item{
+		width: 100%;
+	}
+	/*BEGIN For form search*/
+	.navbar-form .form-group input {
+	    width: 100%;
+	}
+	.navbar-form button{
+		width: 100%;
+	}
+	/*END For form search*/
+	
+}
+@media screen and (max-width: 420px){
+	.notifications ul.list-notifications li .notification-item img{
+		width: 40px;
+		height: 40px;
+	}
+}
+
+
+
+/*END FOR NAV*/
+/*BEGIN FOR CONTAINER*/
+@media screen and (max-width: 1200px){
+	.main-content-container{
+		margin-top: 50px;
+	}
+}
+@media screen and (max-width: 768px){
+	.main-content-container{
+		margin-top: 20px;
+	}
+	
+}
+/*END FOR CONTAINER*/
+
+@media screen and (max-width: 475px){
+	.bai-viet > .row > .col-xs-2{
+		width: 44px;
+		margin-right: 10px;
+	}
+	.bai-viet > .row > .col-xs-2 > img{
+		width: 44px;
+		height: 44px;
+	}
+
+	.baiviet .baiviet-left{
+		width: 44px;
+	}
+	.baiviet .baiviet-left > img{
+		width: 44px;
+		height: 44px;
+	}
+
+
+}
+
+/*BEGIN FOR TIM KIEM BAI VIET*/
+@media screen and (max-width: 500px){
+	.form-tim-kiem .col-form-tim-kiem{
+		width: 100%;
+		padding: 5px 15px;
+	}
+
+}
+/*END FOR TIM KIEM BAI VIET*/
+
+
+/*BEGIN FOR DANH SACH THONG BAO*/
+@media screen and (max-width: 550px){
+	ul.danh-sach-thong-bao li .picture-profile{
+		min-width: 44px;
+		min-height: 44px;
+	}
+}
+
+/*END FOR DANH SACH THONG BAO*/
+
+
+
+/*END FOR MOBILE*/

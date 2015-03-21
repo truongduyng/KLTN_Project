@@ -1,0 +1,299 @@
+/*
+Nhom de ben trai
+Bai viet moi nhat de ben duoi
+Bai viet cua doanh nghiep, tin khuyen mai doanh nghiep de ben phai
+Facebook de ben phai
+*/
+
+/*Y tuong 2*/
+/*
+gom 3 cot: 3, 6,3;
+cot ben trai la: group, bai viet moi nhat, bai viet doanh nghiep, facebook
+Cot giua la noi dung chinh
+Cot ben phai la: thanh search de tim kiem: bai viet moi nhat, bai viet doanh nghiep, group. Cai dat tim kiem async, go gi tim ma ko load trang;
+Vi du:http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/;
+Tim hieu tag de lam cai gi
+Su dung box-shadow vs inset de tao 3d
+Module bai viet moi nhat giong: http://www.xaluan.com/modules.php?name=News&file=article&sid=1112048;
+*/
+/*body{
+	background-color: #FFFFFF;
+	margin-bottom: 0px;
+}
+.detail-main-column{
+	padding-top: 10px;
+	background-color: #F5F5F5;
+	overflow: hidden;
+	border-radius: 5px;
+	border-top-right-radius: 0px;
+	border-top-left-radius: 0px;
+
+}
+*/
+
+/*.media{
+		border: 1px solid #E2E2E2;
+}*/
+/*.media-list{
+	border: 1px solid #E2E2E2;
+	padding: 10px 10px;
+	padding-right: 0px;
+}
+.list-comments{
+	border: 1px solid #E2E2E2;
+	border-right: none;
+	padding: 10px 10px;
+
+}*/
+
+
+/*BEGIN MAIN COLUM*/
+.detail-main-column{
+	/*border:thin solid #e5e5e5;
+	border-top: none;*/
+	/*-webkit-box-shadow: 10px 14px 82px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 14px 82px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 14px 82px 0px rgba(0,0,0,0.75);*/
+/*-webkit-box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
+-moz-box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
+box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);*/
+}
+.media{
+	overflow: hidden;
+}
+.media-left{
+	float: left;
+	width: 15%;
+	display: block;
+	vertical-align: none;
+
+}
+.media-body{
+	float: left;
+	width: 85%;
+	box-sizing:border-box;
+	padding-left: 10px;
+	/*padding-bottom: 30px;
+*/
+}
+
+
+.detail-post-images img{
+	margin-bottom: 5px;
+}
+
+.profile-picture{
+	box-shadow: 2px 2px 2px #888888;
+}
+
+.comment-box{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-right: 10px;
+	/*border: 1px solid #DBDBDB;*/
+	border-bottom: 1px solid #F5F5F5;
+	/*border-radius: 5px;*/
+	/*background-color: #F5F5F5;
+	  -webkit-box-shadow: 0 8px 6px -6px black;
+     -moz-box-shadow: 0 8px 6px -6px black;
+          box-shadow: 0 8px 6px -6px black;*/
+}
+.comment-box .comment-image{
+	width: 15%;
+	float:left;
+	padding-right: 10px;
+	box-sizing: border-box;
+}
+
+.comment-box .comment-textarea{
+	width: 85%;
+	float: left;
+	 box-sizing: border-box;
+}
+
+.comment-box .comment-textarea textarea{
+	resize:none;
+
+}
+.likes{
+	background-color: #F5F5F5;
+	border-bottom: 2px solid #DBDBDB;
+	margin-top: 30px;
+	padding: 10px 10px;
+	overflow: hidden;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	/*margin-bottom: -20px;*/
+}
+.likes .like-icon {
+	margin-left: 5px;
+	margin-top: 10px;
+    transform:scale(2.0,2.0);
+    -ms-transform:scale(2.0,2.0); /* IE 9 */
+    -moz-transform:scale(2.0,2.0); /* Firefox */
+    -webkit-transform:scale(2.0,2.0); /* Safari and Chrome */
+    -o-transform:scale(2.0,2.0); /* Opera */
+    color: #07A0FF;
+    cursor: pointer;
+}
+.likes .unlike-icon{
+	margin-left: 5px;
+	margin-top: 10px;
+    transform:scale(2.0,2.0);
+    -ms-transform:scale(2.0,2.0); /* IE 9 */
+    -moz-transform:scale(2.0,2.0); /* Firefox */
+    -webkit-transform:scale(2.0,2.0); /* Safari and Chrome */
+    -o-transform:scale(2.0,2.0); /* Opera */
+    color: #FF0400;
+    cursor: pointer;
+}
+.likes button{
+	float:right;
+
+}
+p.text-tooltip{
+	margin: 0px;
+	padding: 0px;
+	padding: 1px 5px;
+}
+
+.person-like{
+	border-bottom: 1px solid #e5e5e5;
+	padding-top: 12px;
+	overflow: hidden;
+}
+.person-like .person-info{
+	vertical-align: center;
+	margin-top: 20px;
+}
+
+
+/*Cho chinh sua va xoa*/
+.media-body-header{
+	overflow: hidden;
+}
+.media-body-header .media-heading{
+	float:left;
+}
+.media-body-header .edit-delete{
+	float:right;
+	
+}
+.media-body-header .edit-delete{
+	visibility: hidden;
+}
+
+.media-body-container:hover .media-body-header .edit-delete{
+	visibility: visible;
+}
+/*End Cho chinh sua va xoa*/
+
+/*Begin like cho comment*/
+
+.hr-no-margin-top{
+	margin-top: 0px;
+}
+.comment-likes{
+	background-color: #F5F5F5;
+	border-bottom: 2px solid #DBDBDB;
+	margin-top: 10px;
+	padding: 10px 10px;
+	overflow: hidden;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	/*margin-bottom: -20px;*/
+}
+.comment-likes .like-icon {
+	margin-left: 5px;
+	margin-top: 10px;
+    transform:scale(2.0,2.0);
+    -ms-transform:scale(2.0,2.0); /* IE 9 */
+    -moz-transform:scale(2.0,2.0); /* Firefox */
+    -webkit-transform:scale(2.0,2.0); /* Safari and Chrome */
+    -o-transform:scale(2.0,2.0); /* Opera */
+    color: #07A0FF;
+    cursor: pointer;
+}
+.comment-likes .unlike-icon{
+	margin-left: 5px;
+	margin-top: 10px;
+    transform:scale(2.0,2.0);
+    -ms-transform:scale(2.0,2.0); /* IE 9 */
+    -moz-transform:scale(2.0,2.0); /* Firefox */
+    -webkit-transform:scale(2.0,2.0); /* Safari and Chrome */
+    -o-transform:scale(2.0,2.0); /* Opera */
+    color: #FF0400;
+    cursor: pointer;
+}
+.comment-likes button{
+	float:right;
+
+}
+/*End like cho comment*/
+
+
+
+/*Begin comment box to reply*/
+.list-reply-comments .comment-box{
+	margin-top: -20px;
+}
+.list-reply-comments .comment-box .comment-textarea textarea{
+	margin-left:10px;
+
+}
+/*End comment box to reply*/
+
+/* BEGIN EDIT COMMENT BOX */
+.edit-comment-box textarea{
+	resize:none;
+}
+/* END EDIT COMMENT BOX */
+
+
+/*END BEGIN MAIN COLUM*/
+
+
+/*BEGIN TIM KIEM BAI VIET NHANH*/
+/*.groups{
+	-webkit-box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
+-moz-box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
+box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
+}
+.panel{
+	-webkit-box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
+-moz-box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
+box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
+}*/
+.danhsachbaiviet{
+	overflow-y: auto;
+	min-height: 100px;
+	max-height: 450px;
+
+}
+.danhsachbaiviet .baiviet{
+	overflow: hidden;
+	height: 150px;
+	border-bottom: 1px solid #e5e5e5;
+	padding-top: 10px;
+
+}
+.danhsachbaiviet .baiviet:last-child{
+	border-bottom: none;
+}
+.danhsachbaiviet .baiviet .baiviet-left{
+	padding-top:5px;
+	margin-left: -10px;	
+}
+.danhsachbaiviet .baiviet .baiviet-right{
+	padding-left: 30px;
+	padding-right: 0px;
+}
+.danhsachbaiviet .baiviet .baiviet-right .title{
+	font-weight: 600;
+	font-size: 1.1em;
+}
+.danhsachbaiviet .baiviet .baiviet-right .title a{
+	text-decoration: none;
+}
+
+/*END TIM KIEM BAI VIET NHANH*/

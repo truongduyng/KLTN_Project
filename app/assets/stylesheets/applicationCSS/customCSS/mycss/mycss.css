@@ -38,6 +38,16 @@
 	margin: 5px;
 	display:inline-block;
 }
+.post-form .post-form-images span:hover button.close{
+	position:absolute;
+	right:5px;
+	top:2px;
+	z-index:1000;
+	color:#FFFFFF;
+	opacity: 0.8;
+	display: block;
+}
+
 .post-form .post-form-images span button.close{
 	position:absolute;
 	right:5px;
@@ -45,6 +55,7 @@
 	z-index:1000;
 	color:#FFFFFF;
 	opacity: 0.8;
+	display: none;
 }
 
 .post-form .post-form-images span button.close:hover{
@@ -52,7 +63,19 @@
 }
 .post-form .post-form-images span img{
 	cursor:pointer;
+	z-index: 10;
 }
+
+.post-form .post-form-images .image .progress{
+	position: relative;
+	top: -50px;
+	left: 0px;
+	height: 10px;
+	margin-bottom: 0px;
+	z-index: 200;
+
+}
+
 .post-form-bottom{
 	background-color: #E8E9EB;
 	overflow:hidden;
@@ -145,3 +168,7 @@ text-decoration:none;
 .notifications .see-all{
 }
 /*END FOR NOTIFICATION*/
+
+.my-hide{
+  display: none;
+}
