@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   resources 'assest_categories' do
     resources 'fees'
   end
-  post 'bussinesses/new' => 'bussinesses#new'
+  get 'dang-ky-doanh-nghiep' => 'bussinesses#new'
+  post 'dang-ky-doanh-nghiep' => 'bussinesses#create'
   put 'bussinesses/update' => 'bussinesses#update'
   get 'bussinesses/show' => 'bussinesses#show'
 

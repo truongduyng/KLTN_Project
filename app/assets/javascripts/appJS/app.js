@@ -1,19 +1,18 @@
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise']);
-app.config(['$stateProvider', '$urlRouterProvider'
-,function($stateProvider, $urlRouterProvider) {
-	
-	$stateProvider.state("home", {
-		url: "/",
+app.config(['$stateProvider', '$urlRouterProvider',
+	function($stateProvider, $urlRouterProvider) {
+	$stateProvider
+	.state('home', {
+		url: '',
 		templateUrl: 'appJS/home/_home.html',
-		controller: 'homeCtrl',
+		controller: 'homeCtrl'
+	})
+	
+	.state('createbussiness', {
+		url: '/dang-ky-doanh-nghiep',
+		templateUrl: 'appJS/createbussiness/_createbussiness.html',
+		controller: 'createbussinessCtrl'
 	});
-	
-	// $stateProvider.state("register", {
-	// 	url: "/register",
-	// 	templateUrl: 'auth/_register.html',
-	// 	controller: 'authCtrl',
-	// });
-	
 	//Khoi phuc
-	$urlRouterProvider.otherwise('/');
-}]);
+	$urlRouterProvider.otherwise('');
+}])

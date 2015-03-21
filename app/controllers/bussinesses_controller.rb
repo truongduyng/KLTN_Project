@@ -2,15 +2,21 @@ class BussinessesController < ApplicationController
 	before_action :authenticate_user!
 	
 	#before for check role is bussissness admin
-	before_action :check_role_bussiness_admin, only: [:new, :update]
+	before_action :check_role_bussiness_admin, only: [:update]
 	
 	def show
 		render json: current_user.bussiness
 	end
 
-	#khi nang cap thanh role system admin thi tao ra 1 bussiness
+	#khi nang cap thanh role bussiness admin thi tao ra 1 bussiness
 	#Chua test
-	def new 
+
+	def new
+		#nothing here, just for creating a url
+		render 'layouts/application'
+	end
+
+	def create 
 		bussiness = Bussiness.new(bussiness_params)
 		bussiness.user_id = current_user.id
 		if bussiness.save

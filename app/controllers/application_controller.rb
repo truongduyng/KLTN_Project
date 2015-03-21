@@ -14,10 +14,6 @@ class ApplicationController < ActionController::Base
     render 'layouts/application'
   end
 
-  def angular_admin
-    render 'layouts/admin'
-  end
-
   #for devise
   before_action :configure_permitted_parameters, if: :devise_controller?
 
