@@ -16,13 +16,13 @@ class BussinessesController < ApplicationController
 		render 'layouts/application'
 	end
 
-	def create 
-		bussiness = Bussiness.new(bussiness_params)
-		bussiness.user_id = current_user.id
-		if bussiness.save
-			render json: bussiness, status: :created
+	def create
+		@bussiness = Bussiness.new(bussiness_params.merge(user_id: current_user.id))
+		if @bussiness.save
+			# render json: bussiness, status: :created
+			respond_with @bussiness, status: :created, location: "/bussiness-admin#/" 
 		else
-			render json: bussiness.errors, status: :unprocessable_entity
+			render json: @bussiness.errors, status: :unprocessable_entity
 		end
 	end
 
@@ -37,8 +37,7 @@ class BussinessesController < ApplicationController
 
 	private 
 		def bussiness_params
-			params.require(:bussiness)
-			.permit(:name, :address, :phone, :category, :short_desc, :description)
+			params.require(:bussiness).permit(:name, :category, :description)
 		end
 
 		#Da test

@@ -6,8 +6,6 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', function($scope, Auth, $ht
 		.then(function(user) {
 			$scope.user = user;
 		}, function(error) {
-			console.log("My error");
-			console.log(error);
 		});
 
 	$scope.$on('devise:new-session', function(e, user) {

@@ -1,4 +1,4 @@
-var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise']);
+var app = angular.module("sportApp", ['ui.router', 'templates', 'Devise']);
 app.config(['$stateProvider', '$urlRouterProvider',
 	function($stateProvider, $urlRouterProvider) {
 	$stateProvider
@@ -15,4 +15,4 @@ app.config(['$stateProvider', '$urlRouterProvider',
 	});
 	//Khoi phuc
 	$urlRouterProvider.otherwise('');
-}])
+}]);

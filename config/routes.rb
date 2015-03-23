@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   resources 'branches'
+  get 'search(/:search)' => 'branches#search'
+
   resources 'assests' do
     collection do
       get 'get-assests-by-category'
@@ -10,8 +12,9 @@ Rails.application.routes.draw do
   resources 'assest_categories' do
     resources 'fees'
   end
+
   get 'dang-ky-doanh-nghiep' => 'bussinesses#new'
-  post 'dang-ky-doanh-nghiep' => 'bussinesses#create'
+  post 'bussiness-create' => 'bussinesses#create'
   put 'bussinesses/update' => 'bussinesses#update'
   get 'bussinesses/show' => 'bussinesses#show'
 
