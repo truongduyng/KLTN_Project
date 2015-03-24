@@ -10,5 +10,6 @@ json.comments @post.comments do |comment|
 	json.updated_at comment.updated_at
 	json.user comment.user
 	json.likes comment.likes
-	json.replies comment.replies, :_id, :content, :created_at, :updated_at, :user, :likes
+	json.reply_count comment.replies.count
+	# json.replies comment.replies, :_id, :content, :created_at, :updated_at, :user, :likes
 end

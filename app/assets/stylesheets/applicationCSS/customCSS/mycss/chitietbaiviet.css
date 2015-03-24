@@ -73,8 +73,12 @@ box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);*/
 	width: 85%;
 	box-sizing:border-box;
 	padding-left: 10px;
+	/*margin-bottom: -20px;*/
 	/*padding-bottom: 30px;
 */
+}
+.comment-media-body{
+	margin-bottom: -20px;
 }
 
 
@@ -297,3 +301,13 @@ box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
 }
 
 /*END TIM KIEM BAI VIET NHANH*/
+
+/*BEGIN CHO LOADING MORE REPLIES*/
+.loading-more-replies{
+/*	background-image: url("/assets/application/placeholder/spinner_loading.gif");
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 64px;
+	height: 64px;*/
+}
+/*END CHO LOADING MORE REPLIES*/

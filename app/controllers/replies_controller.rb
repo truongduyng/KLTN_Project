@@ -1,15 +1,21 @@
 class RepliesController < ApplicationController
 
 	before_action :authenticate_user!, only: [:create, :update, :destroy]
-	before_action :find_comment, only: [:create]
+	before_action :find_comment, only: [:index, :create]
 	before_action :find_reply, only: [:destroy, :update]
 	
+	#GET /comments/comment_id/replies.json
+	def index
+		sleep(5);
+		@replies =  @comment.replies.all
+	end
+
 	#POST /comments/comment_id/replies
 	def create
 		
 		@reply = Reply.new(reply_params)
 		@reply.user = current_user
-		@reply.comment = @commment
+		@reply.comment = @comment
 		
 		if @reply.save 
 			render 'show.json.jbuilder', status: :created
@@ -43,7 +49,7 @@ class RepliesController < ApplicationController
 
 		def find_comment
 			begin
-				@commment = Comment.find(params[:comment_id])
+				@comment = Comment.find(params[:comment_id])
 			rescue Mongoid::Errors::DocumentNotFound
 				render nothing: true, status: :not_found, content_type: 'application/json'
 			end

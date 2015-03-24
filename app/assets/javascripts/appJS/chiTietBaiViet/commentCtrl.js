@@ -1,5 +1,7 @@
-app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userService',
-	function($scope, postDetailService, Flash, userService) {
+app.controller('commentCtrl', ['$scope', 'postDetailService',
+	'Flash', 'userService', 'replyService',
+	function($scope, postDetailService, Flash, userService, replyService) {
+
 
 
 		$scope.currentUser = userService.currentUser;
@@ -7,7 +9,8 @@ app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userServ
 		$scope.comment = {};
 		$scope.isCommenting = false;
 		$scope.isEditing = false;
-		
+
+
 		$scope.addComment = function() {
 			$scope.isCommenting = true;
 			postDetailService.addComment($scope.comment)
@@ -30,13 +33,23 @@ app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userServ
 
 		$scope.editComment = function(comment) {
 			$scope.isEditing = true;
-			postDetailService.editComment(comment).success(function(){
-				comment.isEdit =false;
+			postDetailService.editComment(comment).success(function() {
+				comment.isEdit = false;
 				$scope.isEditing = false;
 			});
 		};
 
 
+		$scope.loadReply = function(comment) {
+			comment.isLoadingReply  = true;
+			replyService.index(comment).success(function(){
+				comment.isLoadingReply  = false;
+				comment.isRepliesLoaded = true;
+			}).error(function(){
+				comment.isLoadingReply  = false;
+				comment.isRepliesLoaded = false;
+			});
+		};
 
 		$scope.onTestCurrentUser = function() {
 			console.log("currentUser on commentCtrl", $scope.currentUser);
