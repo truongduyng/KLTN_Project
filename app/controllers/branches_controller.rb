@@ -9,11 +9,7 @@ class BranchesController < ApplicationController
 	end
 
 	def search
-		if params[:search].present?
-			@branches = Branch.search(params[:search])
-		else
-			@branches = Branch.all
-		end
+		@branches = Branch.search(params[:search])
 		@hash = Gmaps4rails.build_markers(@branches) do |branch, marker|
 			marker.lat branch.coordinates[1]
 			marker.lng branch.coordinates[0]

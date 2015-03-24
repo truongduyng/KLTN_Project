@@ -16,11 +16,14 @@ class Branch
 	validates :address, presence: true, length: {maximum: 1000}
 
 	index({ coordinates: "2d" }, { min: -200, max: 200 })
+
+	# def address
+	# 	return self.street + self.district + self.city
+	# end
+
 	def self.search(param)
 		if param
-			return Branch.near(param)
-		else
-			self.all
+			return Branch.near(param, 1.5, :order => "distance") + Branch.where(name: param)
 		end
 	end
 end
