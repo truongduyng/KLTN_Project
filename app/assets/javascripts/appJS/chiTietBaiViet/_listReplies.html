@@ -1,0 +1,85 @@
+<!-- BEGIN REPLY COMMENTS -->
+<div class="list-reply-comments">
+    
+    <!-- BEGIN TEXTAREA CHO TRA LOI COMMENT -->
+    <div  class="comment-box" ng-show="comment.isReply">
+      <a href="#" class="comment-image">
+        <img class="img-circle" class="media-object" src="/assets/application/myimg/01.jpg" 
+      alt="Generic placeholder image" width="64px" height="64px">
+      </a>
+      <div class="comment-textarea" style="width: 70%;">
+          <textarea placeholder="Trả lời bình luận" class="form-control" style="width:100%; min-height: 64px;" ng-model="reply.content"></textarea>
+      </div>
+    
+      <div style="float:right; width:10%;"><button data-ng-disabled="isReplying || !reply.content" ng-click="addReply(comment)" style=" height:64px; width:100%;" class="btn btn-primary pull-right"> Gửi </button></div>
+      <div class="clearfix"></div>
+    </div>
+     <!-- END TEXTAREA CHO TRA LOI COMMENT -->
+
+
+    <!-- BEGIN DANH SACH CAC REPLIES CUA 1 COMMENT -->
+     <div class="media" ng-repeat-start="reply in comment.replies | orderBy: '-created_at'">
+        <div class="media-left">
+          <a href="#">
+           <img class="img-circle" class="media-object" src="/assets/application/myimg/01.jpg" 
+           alt="Generic placeholder image" width="64px" height="64px">
+          </a>
+        </div>
+        <div class="media-body">
+              <div class="media-body-container">
+                <!-- Neu ma edit thi .for-display style="display:none;" -->
+                      <div  class="for-display" ng-hide="reply.isEdit" >
+                          <div class="media-body-header">
+                              <h5  class="media-heading">{{reply.user.username}}</h5>
+                              <div class="edit-delete" ng-show="currentUser._id.$oid == reply.user._id.$oid">
+                                  <a ng-init="reply.isEdit=false" ng-click="reply.isEdit =  true" class="btn btn-xs">Sửa</a>
+                                  <a confirmed-click="deleteReply(comment, reply)" ng-confirm-click="Bạn có muốn xóa hay không ?" class="btn btn-xs">Xóa</a>
+                              </div>
+                          </div>
+                          <div class="media-body-content">
+                            {{reply.content}}
+                          </div>
+                          <div class="comment-likes">
+                            <!-- like su dung glyphicon glyphicon-thumbs-up va .like-icon, unlike thi su dung glyphicon glyphicon-thumbs-down va unlike-icon -->
+                            <span class="glyphicon glyphicon-thumbs-down unlike-icon"></span>
+                            <a href="#" id="list-people-like" data-target="#myModal2" data-toggle="tooltip" data-html="true"  data-original-title="<p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p>" style="margin-left: 10px;">52 người thích</a>
+                          </div>
+                      </div>
+                      
+                      <!-- Khung hien ra khi chinh sua comment, binh thuong thi ko hien thi -->
+                      <div ng-show="reply.isEdit" class="for-edit edit-comment-box" >
+                        <div class="comment-textarea" style="width: 85%; float:left">
+                            <textarea placeholder="Trả lời bình luận" class="form-control" style="width:100%; min-height: 64px;" ng-model="reply.content"></textarea>
+                        </div>
+                      
+                        <div style="float:right; width:13%;"><button data-ng-disabled="isEditing || !reply.content" ng-click="editReplay(comment, reply)" style=" height:64px; width:100%;" class="btn btn-primary pull-right"> Gửi </button></div>
+                            <!-- <div class="comment-textarea">
+                              <textarea class="form-control" style="width:100%; min-height: 64px;"></textarea>
+                            </div> -->
+                            <div class="clearfix"></div>
+                      </div>
+              </div>
+        </div>
+     </div>
+     <hr ng-repeat-end class="hr-no-margin-top">
+
+   
+</div>
+  <!-- END DANH SACH CAC REPLIES CUA 1 COMMENT -->
+
+<script type="text/javascript">
+     autosize(document.querySelectorAll('textarea'));
+
+     $(document).ready(function() {
+       $('[data-toggle="tooltip"]').tooltip({
+         placement: 'top'
+       });
+     });
+
+     //For modal
+     $(document).ready(function() {
+       $("#list-people-like").click(function() {
+         $('#myModal2').modal('toggle');
+       });
+     });
+</script>

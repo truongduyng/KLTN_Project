@@ -26,26 +26,6 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService','Flash' , 'c
 	});
 
 
- 	// $scope.addComment = function(){
- 	// 	// $scope.comment.content = "this is comment 1";
- 	// 	// postDetailService.addComment($scope.comment);
- 	// 	// console.log("post: ", $scope.post);
- 	// 	$scope.isCommenting = true;
- 	// 	postDetailService.addComment($scope.comment)
- 	// 		.success(function(){
- 	// 			$scope.comment.content = '';
- 	// 			$scope.isCommenting = false;
- 	// 		}).error(function(){
- 	// 			$scope.isCommenting = false;
- 	// 		});
- 	// };
-
- 	// $scope.deleteComment = function(comment){
- 	// 	postDetailService.deleteComment(comment).success(function(){
- 	// 		var index = $scope.post.comments.indexOf(comment);
- 	// 		$scope.post.comments.splice(index, 1);
- 	// 	});
- 	// };
-
-
 }]);
+
+//Xu ly truong hop vao chi tiet bai viet ma bai viet do chua dc duyet hay chua dc publish

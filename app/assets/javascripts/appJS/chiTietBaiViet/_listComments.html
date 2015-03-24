@@ -22,7 +22,7 @@
 
 
  <!-- BEGIN COMMENT 2 -->
-  <div class="media" ng-repeat="comment in comments | orderBy: '-created_at'">
+  <div class="media" ng-repeat-start="comment in comments | orderBy: '-created_at'">
     <div class="media-left">
       <a href="#">
        <img class="img-circle" class="media-object" src="assets/application/myimg/01.jpg" 
@@ -48,10 +48,10 @@
                   <!-- like su dung glyphicon glyphicon-thumbs-up va .like-icon, unlike thi su dung glyphicon glyphicon-thumbs-down va unlike-icon -->
                   <span class="glyphicon glyphicon-thumbs-down unlike-icon"></span>
                   <a href="#" id="list-people-like" data-target="#myModal2" data-toggle="tooltip" data-html="true"  data-original-title="<p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p>" style="margin-left: 10px;">52 người thích</a>
-                   <button class="btn btn-success">Trả lời</button>
+                   <button ng-init="comment.isReply = false" ng-click="comment.isReply =!comment.isReply" class="btn btn-success">Trả lời</button>
               </div>
           </div>
-          <!-- Khung hien ra khi chinh sua comment, binh thuong thi ko hien thi -->
+          <!-- BEGIN Khung hien ra khi chinh sua comment, binh thuong thi ko hien thi -->
           <div class="for-edit edit-comment-box" ng-show="comment.isEdit">
               <div class="comment-textarea" style="width: 88%; float:left">
                   <textarea placeholder="Bình luận tại đây" class="form-control" style="width:100%; min-height: 64px;" ng-model="comment.content"></textarea>
@@ -60,9 +60,13 @@
               <div style="float:right; width:10%;"><button data-ng-disabled="isEditing || !comment.content" ng-click="editComment(comment)" style=" height:64px; width:100%;" class="btn btn-primary pull-right"> Gửi </button></div>
               <div class="clearfix"></div>
           </div>
+          <hr class="hr-no-margin-top">
+          <section id="listReplies" ng-include="'appJS/chiTietBaiViet/_listReplies.html'" ng-controller="replyCtrl"></section>
+          <!--END  Khung hien ra khi chinh sua comment, binh thuong thi ko hien thi -->
         </div>
     </div>
   </div>
+  <hr ng-repeat-end class="hr-no-margin-top">
  <!-- END COMMENT 2 -->
  
 </div>

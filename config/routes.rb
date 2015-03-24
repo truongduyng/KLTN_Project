@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
 
+  resources :comments do
+    resources :replies
+  end
+
   resources 'posts' do
     member do
       post 'add_photo'

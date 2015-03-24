@@ -7,6 +7,7 @@ app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userServ
 		$scope.comment = {};
 		$scope.isCommenting = false;
 		$scope.isEditing = false;
+		
 		$scope.addComment = function() {
 			$scope.isCommenting = true;
 			postDetailService.addComment($scope.comment)
@@ -34,6 +35,7 @@ app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userServ
 				$scope.isEditing = false;
 			});
 		};
+
 
 
 		$scope.onTestCurrentUser = function() {
