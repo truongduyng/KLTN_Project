@@ -1,15 +1,4 @@
-json.extract! @post, :_id, :title, :body
-json.photos do 
-	json.array!(@post.photos) do |photo|
-		json.extract! photo, :image
-	end
-end
-# {
-# 	_id:,
-# 	title:,
-# 	photos: [{
+json.extract! @post, :_id, :title, :body, :photos, :likes, :created_at, :updated_at, :user
+json.comments @post.comments, :_id, :content, :created_at, :updated_at, :user, :likes, :replies
 
-# 	}]
-# }
-
-# json.extract! @post, :_id, :title, :body, :photos
+# json.extract! @assest, :_id, :name, :quantity, :branch_id, :assest_category_id

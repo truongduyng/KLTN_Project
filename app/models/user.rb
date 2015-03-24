@@ -20,6 +20,9 @@ class User
   field :firstname, type: String
   field :lastname, type: String
   field :username, type: String
+  field :avatar, type: String
+  #Carrier wave
+  mount_uploader :avatar, ImageUploader
   #My validation
   validates :username, presence: true, uniqueness: true
   validates :firstname, presence: true

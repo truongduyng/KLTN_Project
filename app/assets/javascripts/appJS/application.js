@@ -21,5 +21,8 @@
 //= require jquery-timepicker-jt
 //= require jquery-timepicker-jt/lib/bootstrap-datepicker
 //= require angular-flash
-//= require ng-file-upload
+//= require angular-file-upload
+//= require angular-unsavedChanges/dist/unsavedChanges
+//= require angular-flash-alert
+//= require angular-cookies
 //= require_tree .

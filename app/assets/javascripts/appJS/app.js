@@ -1,5 +1,6 @@
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angularFileUpload',
-	'angular-flash.service', 'angular-flash.flash-alert-directive'
+	'angular-flash.service', 'angular-flash.flash-alert-directive', 'unsavedChanges', 'sporta.directives',
+	'sporta.services', 'sporta.filters', 'flash','ngCookies'
 ]);
 
 //For flash service
@@ -30,6 +31,25 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		controller: 'dangBaiCtrl',
 	});
 
+	$stateProvider.state("chiTietBaiViet", {
+		url: '/chi-tiet-bai-viet/{id}',
+		templateUrl: 'appJS/chiTietBaiViet/_chiTietBaiViet.html',
+		controller: 'chiTietBaiVietCtrl',
+		resolve:{
+			post: ['postDetailService', '$stateParams', function(postDetailService, $stateParams){
+				return postDetailService.show($stateParams.id);
+			}],
+			currentUser: ['Auth', function(Auth) {
+				return Auth.currentUser().then(function(user){
+					return user;
+				}, function() {
+					return {
+					};
+				});
+			}],
+		}
+	});
+	
 	// $stateProvider.state("register", {
 	// 	url: "/register",
 	// 	templateUrl: 'auth/_register.html',
@@ -37,5 +57,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	// });
 
 	//Khoi phuc
-	$urlRouterProvider.otherwise('/');
+	//$urlRouterProvider.otherwise('/');
 }]);
+

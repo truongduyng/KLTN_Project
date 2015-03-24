@@ -3,7 +3,7 @@ app.directive('ensureUnique', ['$http', function($http) {
     require: 'ngModel',
     link: function(scope, ele, attrs, c) {
 
-      var checkUsername = function() {
+      var checkUnique = function() {
         if (attrs.ensureUnique == '') {
           c.$setValidity('unique', true);
         } else {
@@ -21,32 +21,11 @@ app.directive('ensureUnique', ['$http', function($http) {
         }
       };
 
-      scope.$watch(attrs.ngModel, checkUsername);
+      scope.$watch(attrs.ngModel, checkUnique);
     }
   }
 }]);
 
-// app.directive('confirmationPassword', [function() {
-//   return {
-//     require: 'ngModel',
-//     restrict: 'A',
-//     scope: {
-//       orginalPassword: "="
-//     },
-//     link: function(scope, iElement, iAttrs, ctrl) {
-    
-//       scope.$watch(iAttrs.ngModel, function(newValue, oldValue, scope) {
-//         alert("changed");
-//         alert(newValue);
-//         if (newValue == scope.orginalPassword) {
-//           ctrl.$setValidity('confirmation_password', true);
-//         } else {
-//           ctrl.$setValidity('confirmation_password', false);
-//         };
-//       });
-//     }
-//   };
-// }])
 
 app.directive('confirmationPassword', [function() {
   return {

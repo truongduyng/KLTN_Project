@@ -1,14 +1,17 @@
 class PhotosController < ApplicationController
 	before_action :find_photo, only: [:destroy]
 	def create
-		sleep(3)
 		@photo = Photo.new()
-		@photo.image = params[:file]
-		if @photo.save
-			render 'create.json.jbuilder'
+		if params.has_key?(:file) && params[:file]
+			@photo.image = params[:file]
+			if @photo.save
+				render 'create.json.jbuilder'
+			else
+				render 'errors.json.jbuilder', status: :bad_request
+			end
 		else
 			render 'errors.json.jbuilder', status: :bad_request
-		end
+		end	
 	end
 
 	def destroy

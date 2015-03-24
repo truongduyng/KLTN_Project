@@ -52,3 +52,6 @@ gem 'angularjs-file-upload-rails', '~> 1.1.6'
 gem 'mongoid-grid_fs', github: 'ahoward/mongoid-grid_fs'
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'mini_magick'
+
+#for paranoia
+gem 'mongoid_paranoia'

@@ -68,8 +68,7 @@
 
         <!-- MODALS HERE -->
         <div class="modals">
-               <div data-ng-include="'appJS/auth/_login.html'"></div>
-              <div data-ng-include="'appJS/auth/_register.html'"></div>
+              <div data-ng-include="'appJS/auth/_loginRegisterModal.html'"></div>
               <div data-ng-include="'appJS/auth/_forget_password.html'">
         </div>
         <!-- END MODALS -->
@@ -77,22 +76,22 @@
         <script>
           /*For textarea*/
           autosize(document.querySelectorAll('textarea'));
-          $(document).ready(function(e) {
-            $('#login-on-register').click(function(e) {
-              $('#register-modal').modal('toggle');
-              $('#login-modal').modal('toggle');
-            });
+          // $(document).ready(function(e) {
+          //   $('#login-on-register').click(function(e) {
+          //     $('#register-modal').modal('toggle');
+          //     $('#login-modal').modal('toggle');
+          //   });
 
-            $('#signup-on-login').click(function(e) {
-              $('#register-modal').modal('toggle');
-              $('#login-modal').modal('toggle');
-            });
+          //   $('#signup-on-login').click(function(e) {
+          //     $('#register-modal').modal('toggle');
+          //     $('#login-modal').modal('toggle');
+          //   });
 
-            $('#forget-password-on-login').click(function(e) {
-              $('#login-modal').modal('toggle');
-            });
+          //   $('#forget-password-on-login').click(function(e) {
+          //     $('#login-modal').modal('toggle');
+          //   });
 
-          });
+          // });
         </script>
 </body>
 </html>
