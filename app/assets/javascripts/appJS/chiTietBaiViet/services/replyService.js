@@ -56,7 +56,7 @@ app.factory('replyService', ['$http', function($http) {
 	o.like = function(comment, reply) {
 		var comment_id = comment._id.$oid;
 		var id = reply._id.$oid;
-		var url = "/comments/" + comment_id  + '/replies/' + id + "/like.json";
+		var url = "/comments/" + comment_id + '/replies/' + id + "/like.json";
 		return $http.put(url).success(function(data) {
 			if (reply.likes == null) {
 				reply.likes = [];
@@ -69,7 +69,7 @@ app.factory('replyService', ['$http', function($http) {
 	o.unlike = function(comment, reply) {
 		var comment_id = comment._id.$oid;
 		var id = reply._id.$oid;
-		var url = "/comments/" + comment_id  + '/replies/' + id + "/unlike.json";
+		var url = "/comments/" + comment_id + '/replies/' + id + "/unlike.json";
 		return $http.put(url).success(function(data) {
 			if (reply.likes == null) {
 				reply.likes = [];
@@ -80,5 +80,17 @@ app.factory('replyService', ['$http', function($http) {
 		});
 	};
 
+
+
+	o.getKFirstLike = function(comment, reply, k) {
+		var comment_id = comment._id.$oid;
+		var id = reply._id.$oid;
+		var url = "/comments/" + comment_id + '/replies/' + id + "/get_k_first_like/" + k + '.json';
+		return $http.get(url).success(function(data) {
+			reply.likes = data.likes;
+			reply.number_of_remains = data.number_of_remains;
+			reply.like_count = reply.likes.length + reply.number_of_remains;
+		});
+	};
 	return o;
 }]);

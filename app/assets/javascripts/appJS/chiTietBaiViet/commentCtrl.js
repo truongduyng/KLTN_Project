@@ -67,6 +67,30 @@ app.controller('commentCtrl', ['$scope', 'postDetailService',
 			});
 		};
 
+
+		
+		$scope.getKFirstLikes = function(comment){
+
+			comment.likesHtml = "<p>Đang tải...</p>";
+			//Tai du lieu khi chua tai
+			commentService.getKFirstLike(comment, 5).success(function(){
+				//Tao ra html de hien thi nhieu nhat la 5 nguoi va so luong nguoi khac
+				var likesHtmlTmp ="";
+				comment.likes.forEach(function(like){
+					var p = "<p class='text-tooltip'>" + like.user.username  + "</p>";
+					likesHtmlTmp = likesHtmlTmp + p;
+				});
+				if(comment.number_of_remains >= 1){
+					likesHtmlTmp = likesHtmlTmp  + 'và ' + comment.number_of_remains + " người khác";
+				}
+				comment.likesHtml = likesHtmlTmp;
+				
+				//comment.likesHtml = likesHtmlTmp;
+				console.log("comment.likesHtml", comment.likesHtml);
+			});
+		};
+
+		
 	}
 ]);
 

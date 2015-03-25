@@ -27,5 +27,17 @@ app.factory('commentService', ['$http', function($http) {
 			comment.like_count--;
 		});
 	};
+
+
+	o.getKFirstLike = function(comment, k){
+		var id = comment._id.$oid;
+		var url = "/comments/" + id + "/get_k_first_like/" + k +  ".json";
+		return $http.get(url).success(function(data){
+			comment.likes = data.likes;
+			comment.number_of_remains = data.number_of_remains;
+			comment.like_count = comment.likes.length + comment.number_of_remains;
+		});
+	};
+
 	return o;
 }]);

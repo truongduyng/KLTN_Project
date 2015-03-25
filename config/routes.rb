@@ -1,25 +1,31 @@
 Rails.application.routes.draw do
 
+  get '/posts/:id/get_k_first_like/:number' => 'posts#get_k_first_like'
+  get '/comments/:id/get_k_first_like/:number' => 'comments#get_k_first_like'
+  get '/comments/:comment_id/replies/:id/get_k_first_like/:number' => 'replies#get_k_first_like'
+  
   resources :comments do
     resources :replies do
         member do
             put 'like'
             put 'unlike'
+            get 'get_k_first_like'
         end
     end
   end
 
   resources 'posts' do
-
     member do
       post 'add_photo'
       put 'like'
       put 'unlike'
+      # get 'get_k_first_like'
     end
     resources :comments do
       member do
         put 'like'
         put 'unlike'
+        get 'get_k_first_like'
       end
     end
   end

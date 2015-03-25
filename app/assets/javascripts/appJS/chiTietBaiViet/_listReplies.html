@@ -44,7 +44,7 @@
                                 <!-- like su dung glyphicon glyphicon-thumbs-up va .like-icon, unlike thi su dung glyphicon glyphicon-thumbs-down va unlike-icon -->
                                 <span data-toggle="tooltip" data-original-title="Thích" ng-hide="reply.isLiked" class="glyphicon glyphicon-thumbs-up like-icon" ng-click="like(comment, reply)"></span>
                                 <span data-toggle="tooltip" data-original-title="Bỏ thích" ng-show="reply.isLiked" class="glyphicon glyphicon-thumbs-down unlike-icon" ng-click="unlike(comment, reply)"></span>
-                                <a href="#" id="list-people-like" data-target="#myModal2" data-toggle="tooltip" data-html="true"  data-original-title="<p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p>" style="margin-left: 10px;">{{reply.like_count}} người thích</a>
+                                <a ng-init="reply.likesHtml = '<p>Đang tải...</p>';" ng-mouseenter="getKFirstLikes(comment, reply)" id="list-people-like" data-target="#myModal2" tooltip-html-unsafe="{{reply.likesHtml}}" style="cursor: pointer; margin-left: 10px;">{{reply.like_count}} người thích</a>
                               </div>
                           </div>
                           

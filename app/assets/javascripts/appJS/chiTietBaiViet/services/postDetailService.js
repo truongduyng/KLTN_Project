@@ -68,6 +68,15 @@ app.factory('postDetailService', ['$http', function($http) {
 		});
 	};
 
+	o.getKFirstLike = function(k){
+		var id = o.post._id.$oid;
+		var url = "/posts/" + id + "/get_k_first_like/" + k +  ".json";
+		return $http.get(url).success(function(data){
+			o.post.likes = data.likes;
+			o.post.number_of_remains = data.number_of_remains;
+			o.post.like_count = o.post.likes.length + o.post.number_of_remains;
+		});
+	};
 
 	return o;
 }]);

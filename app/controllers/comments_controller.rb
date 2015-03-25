@@ -57,6 +57,22 @@ class CommentsController < ApplicationController
 		end		
 	end
 
+	# /comments/:id/get_k_first_like/:number.json
+	def get_k_first_like
+		sleep(1)
+		begin
+			@comment = Comment.find(params[:id])
+		rescue Mongoid::Errors::DocumentNotFound
+				render nothing: true, status: :not_found, content_type: 'application/json'
+		end
+		if params.has_key?(:number)
+			@likes = @comment.likes.limit(params[:number].to_i).to_a
+			render 'k_first_like.json.jbuilder', status: :ok
+		else
+			render nothing: true, status: :bad_request, content_type: 'application/json'
+		end
+	end
+
 
 	private 
 	

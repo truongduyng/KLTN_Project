@@ -59,6 +59,26 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash',
 			});
 
 		};
+		
+		$scope.likesHtml = "<p>Đang tải...</p>";
+		$scope.getKFirstLikes = function(){
+			$scope.likesHtml = "<p>Đang tải...</p>";
+			//Tai du lieu khi chua tai
+			postDetailService.getKFirstLike(5).success(function(){
+				//Tao ra html de hien thi nhieu nhat la 5 nguoi va so luong nguoi khac
+				var likesHtmlTmp ="";
+				$scope.post.likes.forEach(function(like){
+					var p = "<p class='text-tooltip'>" + like.user.username  + "</p>";
+					likesHtmlTmp = likesHtmlTmp + p;
+				});
+				if($scope.post.number_of_remains >= 1){
+					likesHtmlTmp = likesHtmlTmp + 'và ' +   $scope.post.number_of_remains + " người khác";
+				}
+				$scope.likesHtml = likesHtmlTmp;
+			});
+		};
+
+
 	}
 ]);
 
@@ -93,3 +113,8 @@ app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interva
 	}
 ]);
 //Xu ly truong hop vao chi tiet bai viet ma bai viet do chua dc duyet hay chua dc publish
+//Lay 5 ket qua dau tien va so luong
+//Dugn filter dua vao danh sach likes, so luong like con lai va chuyen no thanh html de tai su dung code
+//De hien thi tat ca like thi them thuoc tinh all like vao post va load no trong resolve cua modal
+//Lam directive cho onerror cua anh va chuyen no thanh anh placeholder tuong ung (avater thi thanh logo cua sporta, anh khac hien thi anh bi hong ma dep)
+//tooltip dismiss after display
