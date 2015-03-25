@@ -23,7 +23,9 @@ class Branch
 
 	def self.search(param)
 		if param
-			return Branch.near(param, 1.5, :order => "distance") + Branch.where(name: param)
+			return Branch.near(param, 2, :order => "distance") + Branch.where(name: param)
+		else
+			Branch.all
 		end
 	end
 end

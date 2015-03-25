@@ -18,7 +18,7 @@ class BranchesController < ApplicationController
 				width:  96,
 				height: 96
 				})
-			marker.infowindow branch.name
+			marker.infowindow branch.name + branch.address
 		end
 		render json: @hash
 	end
