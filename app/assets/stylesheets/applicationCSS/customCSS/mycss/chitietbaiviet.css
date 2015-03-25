@@ -327,3 +327,24 @@ box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
 	display:inline-block; padding-left: 5px;
 }
 
+
+.my-modal-image{
+	position: relative;
+	padding: 5px;
+}
+ /*<!-- Arrow Navigator Skin Begin -->*/
+.jssora02l, .jssora02r
+{
+    position: absolute;
+    cursor: pointer;
+    display: block;
+    background: url(/assets/application/myimg/a02.png) no-repeat;
+    overflow:hidden;
+     height: 55px;
+     width: 55px; 
+     vertical-align: middle;
+}
+.jssora02l { background-position: -3px -33px; }
+.jssora02r { background-position: -63px -33px; }
+.jssora02l:hover { background-position: -123px -33px; }
+.jssora02r:hover { background-position: -183px -33px; }
