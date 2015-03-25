@@ -1,15 +1,27 @@
 Rails.application.routes.draw do
 
-
   resources :comments do
-    resources :replies
+    resources :replies do
+        member do
+            put 'like'
+            put 'unlike'
+        end
+    end
   end
 
   resources 'posts' do
+
     member do
       post 'add_photo'
+      put 'like'
+      put 'unlike'
     end
-    resources :comments
+    resources :comments do
+      member do
+        put 'like'
+        put 'unlike'
+      end
+    end
   end
 
   resources 'branches'

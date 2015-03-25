@@ -53,5 +53,32 @@ app.factory('replyService', ['$http', function($http) {
 	};
 
 
+	o.like = function(comment, reply) {
+		var comment_id = comment._id.$oid;
+		var id = reply._id.$oid;
+		var url = "/comments/" + comment_id  + '/replies/' + id + "/like.json";
+		return $http.put(url).success(function(data) {
+			if (reply.likes == null) {
+				reply.likes = [];
+			}
+			reply.likes.splice(0, 0, data);
+			reply.like_count++;
+		});
+	};
+
+	o.unlike = function(comment, reply) {
+		var comment_id = comment._id.$oid;
+		var id = reply._id.$oid;
+		var url = "/comments/" + comment_id  + '/replies/' + id + "/unlike.json";
+		return $http.put(url).success(function(data) {
+			if (reply.likes == null) {
+				reply.likes = [];
+			}
+			var index = reply.likes.indexOf(data);
+			reply.likes.splice(index, 1, data);
+			reply.like_count--;
+		});
+	};
+
 	return o;
-}])
+}]);

@@ -2,6 +2,7 @@
 
 <button ng-click="addComment()">Add comment</button>
 <div class="row" style="margin-top:-15px;">
+
     <!-- BEGIN LEFT COLUMN -->
     <div class="col-md-2">
       <section ng-include="'appJS/modules/_groupModule.html'"></section>
@@ -11,6 +12,7 @@
     <!-- BEGIN MAIN COLUMN -->
     <div class="col-md-6 detail-main-column">
           <span style="border: 1px solid #337AB7; display:block;margin:0px -15px; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>CHI TIẾT BÀI VIẾT</strong></span>
+
           <ul class="media-list">
                <li class="media">
                   <div class="media-left">
@@ -22,7 +24,7 @@
                   
                   <div class="media-body">
                     <h5 class="media-heading">{{post.user.username}}</h5>
-                     <h4 class="media-heading">{{post.title}} <small>1 giờ trước</small></h4>
+                     <h4 class="media-heading">{{post.title}} <small>{{post.created_at}}</small></h4>
                      <div>{{post.body}}</div>
                       <div class="detail-post-images">
 
@@ -32,8 +34,9 @@
                       </div>
                     <div class="likes">
                       <!-- like su dung glyphicon glyphicon-thumbs-up va .like-icon, unlike thi su dung glyphicon glyphicon-thumbs-down va unlike-icon -->
-                      <span class="glyphicon glyphicon-thumbs-down unlike-icon"></span>
-                      <a href="#" id="list-people-like" data-target="#myModal2" data-toggle="tooltip" data-html="true"  data-original-title="<p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p>" style="margin-left: 10px;">52 người thích</a>
+                      <span data-toggle="tooltip" data-original-title="Thích" ng-hide="post.isLiked" class="glyphicon glyphicon-thumbs-up like-icon" ng-click="likePost()"></span>
+                      <span data-toggle="tooltip" data-original-title="Bỏ thích" ng-show="post.isLiked" class="glyphicon glyphicon-thumbs-down unlike-icon" ng-click="unlikePost()"></span>
+                      <a href="#" id="list-people-like" data-target="#myModal2" data-toggle="tooltip" data-html="true"  data-original-title="<p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p>" style="margin-left: 10px;">{{post.like_count}} người thích</a>
                       <button class="btn btn-success">Lưu bài viết</button>
                     </div>
                       <section id="listComments" ng-include="'appJS/chiTietBaiViet/_listComments.html'"></section>

@@ -41,5 +41,33 @@ app.factory('postDetailService', ['$http', function($http) {
 				angular.copy(data, comment);
 			});
 	};
+
+
+	o.like = function(){
+		var id = o.post._id.$oid;
+		var url = "/posts/" + id + "/like.json";
+		return $http.put(url).success(function(data){
+			if(o.post.likes == null){
+				o.post.likes = [];
+			}
+			o.post.likes.splice(0, 0, data);
+			o.post.like_count++;
+		});
+	};
+
+	o.unlike = function(){
+		var id = o.post._id.$oid;
+		var url = "/posts/" + id + "/unlike.json";
+		return $http.put(url).success(function(data){
+			if(o.post.likes == null){
+				o.post.likes = [];
+			}
+			var index = o.post.likes.indexOf(data);
+			o.post.likes.splice(index, 1, data);
+			o.post.like_count--;
+		});
+	};
+
+
 	return o;
 }]);

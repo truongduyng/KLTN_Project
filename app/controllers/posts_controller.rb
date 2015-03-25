@@ -49,8 +49,8 @@
 
 
 class PostsController < ApplicationController
-	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo]
-	before_action :find_published_post, only: [:show]
+	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo, :like, :unlike]
+	before_action :find_published_post, only: [:show, :like, :unlike]
 	before_action :find_and_check_post_with_user, only: [:add_photo]
 
 	def show	
@@ -76,6 +76,29 @@ class PostsController < ApplicationController
 		rescue Exception
 			render nothing: true, status: :bad_request, content_type: 'application/json'
 		end
+	end
+
+	# /posts/:id/like
+	def like
+
+		if @post.likes.where('user_id' => current_user.id).first
+			render nothing: true, status: :bad_request, content_type: 'application/json'
+		else
+			@post.likes.create(user: current_user)
+			render nothing: true, status: :created, content_type: 'application/json'
+		end
+		
+	end
+
+	#/posts/:id/unlike
+	def unlike
+		like = @post.likes.where('user_id' => current_user.id).first
+		if like
+			like.destroy
+			render nothing: true, status: :ok, content_type: 'application/json'
+		else
+			render nothing: true, status: :bad_request, content_type: 'application/json'
+		end		
 	end
 
 

@@ -25,4 +25,7 @@
 //= require angular-unsavedChanges/dist/unsavedChanges
 //= require angular-flash-alert
 //= require angular-cookies
+//= require moment
+//= require angular-moment
+//= require moment/locale/vi.js
 //= require_tree .

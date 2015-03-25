@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
-	before_action :authenticate_user!, only: [:create, :update, :destroy]
+	before_action :authenticate_user!, only: [:create, :update, :destroy, :like, :unlike]
 	before_action :find_comment, only: [:destroy, :update]
+	before_action :find_comment_for_like_and_unlike, only: [:like, :unlike]
 	
 	def show
 	end
@@ -33,23 +34,67 @@ class CommentsController < ApplicationController
 		render nothing: true, status: :ok, content_type: 'application/json'	
 	end
 
+
+	#PUT /posts/post_id/comments/:id/like
+	def like
+		if @comment.likes.where('user_id' => current_user.id).first
+			render nothing: true, status: :bad_request, content_type: 'application/json'
+		else
+			@comment.likes.create(user: current_user)
+			render nothing: true, status: :created, content_type: 'application/json'
+		end
+		
+	end
+
+	#PUT /posts/post_id/comments/:id/unlike
+	def unlike
+		like = @comment.likes.where('user_id' => current_user.id).first
+		if like
+			like.destroy
+			render nothing: true, status: :ok, content_type: 'application/json'
+		else
+			render nothing: true, status: :bad_request, content_type: 'application/json'
+		end		
+	end
+
+
 	private 
 	
 		def comment_params
 			params.require(:comment).permit(:content)
 		end
 
+		#tim comment cho  xoa sua
 		def find_comment
 			begin 
 				post = Post.find(params[:post_id])
-			    @comment = post.comments.find(params[:id])
-			    if @comment.user != current_user
+				if post.published
+					@comment = post.comments.find(params[:id])
+				    if @comment.user != current_user
+						render nothing: true, status: :not_found, content_type: 'application/json'
+					end
+				else
+					render nothing: true, status: :not_found, content_type: 'application/json'
+				end
+			    
+			rescue Mongoid::Errors::DocumentNotFound
+				render nothing: true, status: :not_found, content_type: 'application/json'
+			end
+
+		end
+
+		#tim comment cho like va unlike
+		def find_comment_for_like_and_unlike
+			begin 
+				post = Post.find(params[:post_id])
+				if post.published
+					 @comment = post.comments.find(params[:id])
+				else
 					render nothing: true, status: :not_found, content_type: 'application/json'
 				end
 			rescue Mongoid::Errors::DocumentNotFound
 				render nothing: true, status: :not_found, content_type: 'application/json'
 			end
-
 		end
 
 		def check_comment_with_user

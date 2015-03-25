@@ -1,7 +1,41 @@
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angularFileUpload',
 	'angular-flash.service', 'angular-flash.flash-alert-directive', 'unsavedChanges', 'sporta.directives',
-	'sporta.services', 'sporta.filters', 'flash','ngCookies'
+	'sporta.services', 'sporta.filters', 'flash','ngCookies', 'angularMoment'
 ]);
+
+
+//For angularjs moment
+app.run(function(amMoment) {
+    amMoment.changeLocale('vi');
+});
+
+app.constant('angularMomentConfig', {
+    preprocess: 'unix', // optional
+    timezone: 'Europe/London' // optional
+});
+
+
+//For intercept $http
+app.factory('myHttpInterceptor', ['$q', '$rootScope',function($q, $rootScope) {
+
+	var responseIntercepter = {
+		responseError: function(rejection){
+			if(rejection.config.url.startsWith("/users/sign_in.json")){
+			}else{
+				if(rejection.status == 401){
+					$rootScope.$emit("onRequireLogin");
+				}
+			}
+			return $q.reject(rejection);
+		}
+	};
+
+	return responseIntercepter;
+}]);
+
+app.config(['$httpProvider', function($httpProvider) {
+	$httpProvider.interceptors.push('myHttpInterceptor');
+}]);
 
 //For flash service
 app.config(function(flashProvider) {

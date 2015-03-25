@@ -151,6 +151,17 @@ box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);*/
     color: #FF0400;
     cursor: pointer;
 }
+.likes .like-icon{
+	margin-left: 5px;
+	margin-top: 10px;
+    transform:scale(2.0,2.0);
+    -ms-transform:scale(2.0,2.0); /* IE 9 */
+    -moz-transform:scale(2.0,2.0); /* Firefox */
+    -webkit-transform:scale(2.0,2.0); /* Safari and Chrome */
+    -o-transform:scale(2.0,2.0); /* Opera */
+    color: #337ab7;
+    cursor: pointer;
+}
 .likes button{
 	float:right;
 

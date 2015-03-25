@@ -1,6 +1,6 @@
 app.controller('commentCtrl', ['$scope', 'postDetailService',
-	'Flash', 'userService', 'replyService',
-	function($scope, postDetailService, Flash, userService, replyService) {
+	'Flash', 'userService', 'replyService', 'commentService',
+	function($scope, postDetailService, Flash, userService, replyService, commentService) {
 
 
 
@@ -54,6 +54,19 @@ app.controller('commentCtrl', ['$scope', 'postDetailService',
 		$scope.onTestCurrentUser = function() {
 			console.log("currentUser on commentCtrl", $scope.currentUser);
 		};
+
+		$scope.likePost = function(comment){
+			commentService.like($scope.post, comment).success(function(){
+				comment.isLiked = true;
+			});
+		};
+
+		$scope.unlikePost = function(comment){
+			commentService.unlike($scope.post, comment).success(function(){
+				comment.isLiked = false;
+			});
+		};
+
 	}
 ]);
 

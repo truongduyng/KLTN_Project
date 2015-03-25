@@ -44,8 +44,9 @@
 
                <div class="comment-likes">
                   <!-- like su dung glyphicon glyphicon-thumbs-up va .like-icon, unlike thi su dung glyphicon glyphicon-thumbs-down va unlike-icon -->
-                  <span class="glyphicon glyphicon-thumbs-down unlike-icon"></span>
-                  <a href="#" id="list-people-like" data-target="#myModal2" data-toggle="tooltip" data-html="true"  data-original-title="<p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p>" style="margin-left: 10px;">52 người thích</a>
+                  <span data-toggle="tooltip" data-original-title="Thích" ng-hide="comment.isLiked" class="glyphicon glyphicon-thumbs-up like-icon" ng-click="likePost(comment)"></span>
+                  <span data-toggle="tooltip" data-original-title="Bỏ thích" ng-show="comment.isLiked" class="glyphicon glyphicon-thumbs-down unlike-icon" ng-click="unlikePost(comment)"></span>
+                  <a href="#" id="list-people-like" data-target="#myModal2" data-toggle="tooltip" data-html="true"  data-original-title="<p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p><p class='text-tooltip'>Nguyễn Hữu Trung</p>" style="margin-left: 10px;">{{comment.like_count}} người thích</a>
                    <button ng-init="comment.isReply = false" ng-click="comment.isReply =!comment.isReply" class="btn btn-success">Trả lời</button>
 
               </div>
