@@ -4,8 +4,8 @@
   <!-- BEGIN COMMENT BOX -->
   <div class="comment-box">
     <a href="#" class="comment-image">
-      <img class="img-circle img-responsive" class="media-object" src="assets/application/myimg/01.jpg" 
-    alt="Generic placeholder image" width="64px" height="64px" style="min-width: 44px; min-height: 44px;">
+      <img class="img-circle img-responsive" class="media-object" src="{{currentUser.avatar.thumb.url | logo}}" 
+    alt="Generic placeholder image" width="64px" height="64px" style="min-width: 64px; min-height: 64px;">
     </a>
     <div class="comment-textarea" style="width: 73%;">
       <textarea placeholder="Bình luận tại đây" class="form-control" style="width:100%; min-height: 64px;" ng-model="comment.content"></textarea>
@@ -18,11 +18,11 @@
   <!-- END COMMENT BOX -->
 
 
- <!-- BEGIN COMMENT 2 -->
+ <!-- BEGIN COMMENT -->
   <div class="media" ng-repeat-start="comment in comments | orderBy: '-created_at'">
     <div class="media-left">
       <a href="#">
-       <img class="img-circle" class="media-object" src="assets/application/myimg/01.jpg" 
+       <img class="img-circle" class="media-object" src="{{comment.user.avatar.url | logo}}" 
        alt="Generic placeholder image" width="64px" height="64px">
       </a>
     </div>

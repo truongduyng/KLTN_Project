@@ -1,7 +1,7 @@
 //5510dcd56875751cdb030000
 app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash',
- 'currentUser', 'userService', '$state',
-	function($scope, postDetailService, Flash, currentUser, userService, $state) {
+	'currentUser', 'userService', '$state', '$modal',
+	function($scope, postDetailService, Flash, currentUser, userService, $state, $modal) {
 
 		angular.copy(currentUser, userService.currentUser);
 
@@ -30,18 +30,51 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash',
 		});
 
 
-		$scope.likePost = function(){
-			postDetailService.like().success(function(){
+		$scope.likePost = function() {
+			postDetailService.like().success(function() {
 				$scope.post.isLiked = true;
 			});
 		};
 
-		$scope.unlikePost = function(){
-			postDetailService.unlike().success(function(){
+		$scope.unlikePost = function() {
+			postDetailService.unlike().success(function() {
 				$scope.post.isLiked = false;
 			});
+		};
+
+
+		$scope.showImage = function(photo) {
+			var modalInstance = $modal.open({
+				templateUrl: 'showImageModal.html',
+				controller: 'showImageModalCtrl',
+				size: 'lg',
+				resolve:{
+					photo: function(){
+						return photo;
+					},
+					listPhotos: function(){
+						return $scope.post.photos;
+					}
+				}
+			});
+
 		};
 	}
 ]);
 
+
+//Cho modal show anh
+app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interval',
+ function($scope, listPhotos, photo , $interval) {
+	$scope.listPhotos = listPhotos;
+	$scope.photo = photo;
+	console.log("listPhotos", listPhotos);
+	var currentIndex = $scope.listPhotos.indexOf(photo);
+	$interval(function() {
+		
+		currentIndex++;
+		$scope.photo =  $scope.listPhotos[currentIndex];
+		// angular.copy($scope.listPhotos[currentIndex], $scope.photo);
+	}, 1000);
+}]);
 //Xu ly truong hop vao chi tiet bai viet ma bai viet do chua dc duyet hay chua dc publish

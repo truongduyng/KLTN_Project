@@ -1,8 +1,7 @@
 <!-- <div ng-controller="commentCtrl">This is comment controller</div> -->
 
-<button ng-click="addComment()">Add comment</button>
 <div class="row" style="margin-top:-15px;">
-
+<img src="http://wp-types.com/wp-content/uploads/2012/07/previous.png" class="previousimage"/>
     <!-- BEGIN LEFT COLUMN -->
     <div class="col-md-2">
       <section ng-include="'appJS/modules/_groupModule.html'"></section>
@@ -17,7 +16,7 @@
                <li class="media">
                   <div class="media-left">
                     <a href="#">
-                     <img class="img-circle img-responsive profile-picture" class="media-object" src="/assets/application/myimg/01.jpg" 
+                     <img class="img-circle img-responsive profile-picture" class="media-object" ng-src="{{post.user.avatar.thumb.url | logo}}" 
                      alt="Generic placeholder image" width="64px" height="64px" style="min-width: 44px; min-height: 44px;">
                     </a>
                   </div>
@@ -26,11 +25,8 @@
                     <h5 class="media-heading">{{post.user.username}}</h5>
                      <h4 class="media-heading">{{post.title}} <small>{{post.created_at}}</small></h4>
                      <div>{{post.body}}</div>
-                      <div class="detail-post-images">
-
-                          <a href="#" data-toggle="modal" data-target="#myModal" ng-repeat="photo in post.photos"><img src="{{photo.image.large_thumb.url}}" width="150px" height="150px"></a>
-
-                        <!--   <a href="#" data-toggle="modal" data-target="#myModal"><img src="gallery/01.jpg" width="31%"></a>-->
+                      <div class="detail-post-images" style="text-align: center; margin-top: 20px;">
+                          <a ng-click="showImage(photo)" ng-repeat="photo in post.photos"><img src="{{photo.image.url | logo}}" width="220px" height="220px"></a>
                       </div>
                     <div class="likes">
                       <!-- like su dung glyphicon glyphicon-thumbs-up va .like-icon, unlike thi su dung glyphicon glyphicon-thumbs-down va unlike-icon -->
@@ -45,11 +41,6 @@
                </li>
             </ul>
 
-
-
-
-
-
     </div>
       <!-- END MAIN COLUMN -->
 
@@ -63,20 +54,16 @@
 
 <!-- De cho chua khoang trong duoi day -->
     <div style="margin-bottom: 100px;"></div>
-    <div class="modals">
-      <!-- Modal cho image -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
-       aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-               <div class="modal-body"  style="padding: 0px;">
-                  <img src="gallery/01.jpg" width="100%">
-               </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal -->
-      </div>
-      <!-- End modal cho image -->
 
+    <!-- BEGIN MODAL HIEN THI HINH ANH -->
+    <script type="text/ng-template" id="showImageModal.html">
+            <div class="modal-body">
+                  <img src="{{photo.image.url}}" width="100%">
+            </div>
+    </script>
+     <!-- BEGIN MODAL HIEN THI HINH ANH -->
+
+    <div class="modals">
       <!-- Begin modal cho danh sach nguoi thich bai viet  -->
      <div  class="modal fade" id="myModal2" tabindex="-1" role="dialog" 
        aria-labelledby="myModalLabel" aria-hidden="true">
@@ -112,8 +99,6 @@
           </div><!-- /.modal -->
       </div>
       <!-- End modal cho danh sach nguoi thich bai viet  -->
-
-
 
 
 </div>

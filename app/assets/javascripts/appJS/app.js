@@ -1,6 +1,6 @@
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angularFileUpload',
 	'angular-flash.service', 'angular-flash.flash-alert-directive', 'unsavedChanges', 'sporta.directives',
-	'sporta.services', 'sporta.filters', 'flash','ngCookies', 'angularMoment'
+	'sporta.services', 'sporta.filters', 'flash','ngCookies', 'angularMoment', 'ui.bootstrap'
 ]);
 
 

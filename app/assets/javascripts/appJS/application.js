@@ -12,8 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require_tree ../extendJavascript
 //= require angular
 //= require bootstrap/dist/js/bootstrap
+//= require angular-bootstrap
 //= require angular-ui-router
 //= require angular-rails-templates
 //= require angular-devise
@@ -28,4 +30,5 @@
 //= require moment
 //= require angular-moment
 //= require moment/locale/vi.js
+//= require_tree ../angularJSComponents
 //= require_tree .
