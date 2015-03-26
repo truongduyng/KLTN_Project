@@ -39,5 +39,13 @@ app.factory('commentService', ['$http', function($http) {
 		});
 	};
 
+
+	o.getAllLikes = function(post, comment){
+		var post_id = post._id.$oid;
+		var id = comment._id.$oid;
+		var url = "/posts/" + post_id  + '/comments/' + id + "/get_all_likes.json";
+		return $http.get(url);
+	};
+
 	return o;
 }]);

@@ -92,5 +92,13 @@ app.factory('replyService', ['$http', function($http) {
 			reply.like_count = reply.likes.length + reply.number_of_remains;
 		});
 	};
+
+	o.getAllLikes = function(comment, reply){
+		var comment_id = comment._id.$oid;
+		var id = reply._id.$oid;
+		var url = "/comments/" + comment_id + '/replies/' + id + "/get_all_likes.json";
+		return $http.get(url);
+	};
+
 	return o;
 }]);

@@ -16,14 +16,18 @@
                <li class="media">
                   <div class="media-left">
                     <a href="#">
-                     <img class="img-circle img-responsive profile-picture" class="media-object" ng-src="{{post.user.avatar.thumb.url | logo}}" 
+                     <img fallback-src="sportaLogo"  class="img-circle img-responsive profile-picture" class="media-object" ng-src="{{post.user.avatar.thumb.url | logo}}" 
                      alt="Generic placeholder image" width="64px" height="64px" style="min-width: 44px; min-height: 44px;">
                     </a>
                   </div>
                   
                   <div class="media-body">
-                    <h5 class="media-heading">{{post.user.username}}</h5>
-                     <h4 class="media-heading">{{post.title}} <small>{{post.created_at}}</small></h4>
+                    <div>
+                      <h5 class="media-heading pull-left">{{post.user.username}}</h5>
+                      <small class="pull-right" style="font-weight: 600;">{{post.created_at | timeago}}</small>
+                    </div>
+                    <div class="clearfix"></div>
+                     <h4 class="media-heading">{{post.title}}</h4>
                      <div>{{post.body}}</div>
                       <div class="detail-post-images" style="text-align: center; margin-top: 20px;">
                           <a ng-click="showImage(photo)" ng-repeat="photo in post.photos"><img src="{{photo.image.url | logo}}" width="220px" height="220px"></a>
@@ -33,7 +37,7 @@
                       <span tooltip="Thích" ng-hide="post.isLiked" class="glyphicon glyphicon-thumbs-up like-icon" ng-click="likePost()"></span>
                       <span tooltip="Bỏ thích" ng-show="post.isLiked" class="glyphicon glyphicon-thumbs-down unlike-icon" ng-click="unlikePost()"></span>
                       
-                      <a tooltip-animation="false" tooltip-append-to-body="false" ng-mouseenter="getKFirstLikes()"  id="list-people-like" data-target="#myModal2" tooltip-html-unsafe="{{likesHtml}}" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>
+                      <a  ng-mouseenter="getKFirstLikes()"  tooltip-html-unsafe="{{likesHtml}}" ng-click="showAllLikes()" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>
 
                       <button class="btn btn-success">Lưu bài viết</button>
                     </div>
@@ -71,14 +75,11 @@
     </script>
      <!-- BEGIN MODAL HIEN THI HINH ANH -->
 
-    <div class="modals">
-      <!-- Begin modal cho danh sach nguoi thich bai viet  -->
-     <div  class="modal fade" id="myModal2" tabindex="-1" role="dialog" 
-       aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
 
-            <div class="modal-content">
-                <div class="modal-header">
+     <!-- TAI SU DUNG CHO COMMENT REPLIES -->
+     <!-- BEGIN MODAL HIEN THI DANH SACH NGUOI THICH -->
+     <script type="text/ng-template" id="showAllLikesModal.html">
+              <div class="modal-header">
                   <button type="button" class="close" 
                      data-dismiss="modal" aria-hidden="true">
                         &times;
@@ -86,27 +87,26 @@
                   <h4 class="modal-title" id="myModalLabel">
                      Danh sách thành viên thích bài viết
                   </h4>
-                </div>
-                <div class="modal-body">
-                  <div  class="person-like">
-                    <img src="gallery/01.jpg" class="pull-left img-circle" width="64px" height="64px">
-                    <div class="pull-left person-info">
-                      <strong>Nguyễn Hữu Trung</strong>
+              </div>
+              <div class="modal-body">
+                 <span ng-show="isLoading" style="display: block;margin: 10px auto; width:30px;">
+                  <img width="22px" height="22px" src="/assets/application/placeholder/spinner_loading.gif">
+                 </span>
+                 <h5 style="text-align: center;" ng-if="allLikes.length == 0">Chưa có ai thích bài viết này</h5>
+                  <div class="list-person-like" style="max-height:500px; overflow-y: auto;">
+                     <div  class="person-like" ng-repeat="like in allLikes">
+                          <img src="{{like.user.avatar.thumb.url | logo}}" class="pull-left img-circle" width="64px" height="64px">
+                          <div class="pull-left person-info">
+                            <strong>{{like.user | displayName}}</strong>
+                          </div>
                     </div>
+                 
                   </div>
-                  <div  class="person-like">
-                    <img src="gallery/01.jpg" class="pull-left img-circle" width="64px" height="64px">
-                    <div class="pull-left person-info">
-                      <strong>Nguyễn Hữu Trung</strong>
-                    </div>
-                  </div>
-              
-                  
-                </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal -->
-      </div>
-      <!-- End modal cho danh sach nguoi thich bai viet  -->
+
+            </div>
+     </script>
+     <!-- END MODAL HIEN THI DANH SACH NGUOI THICH -->
+   
 
 
 </div>

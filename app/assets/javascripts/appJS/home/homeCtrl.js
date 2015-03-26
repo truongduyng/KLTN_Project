@@ -1,5 +1,8 @@
 app.controller('homeCtrl', ['$scope', '$http', 'FileUploader', '$interval', '$state',
  function($scope, $http, FileUploader, $interval, $state) {
+
+
+  
     $scope.message = "This is message";
 
     // $state.go("chiTietBaiViet");

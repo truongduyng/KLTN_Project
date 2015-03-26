@@ -78,5 +78,11 @@ app.factory('postDetailService', ['$http', function($http) {
 		});
 	};
 
+	o.getAllLikes = function(){
+		var id = o.post._id.$oid;
+		var url = "/posts/" + id + "/get_all_likes.json";
+		return $http.get(url);
+	};
+
 	return o;
 }]);

@@ -1,5 +1,5 @@
-app.controller('replyCtrl', ['$scope', 'replyService',
-	function($scope, replyService) {
+app.controller('replyCtrl', ['$scope', 'replyService', '$modal',
+	function($scope, replyService, $modal) {
 
 		$scope.reply = {};
 
@@ -65,5 +65,35 @@ app.controller('replyCtrl', ['$scope', 'replyService',
 				reply.likesHtml = likesHtmlTmp;
 			});
 		};
+
+		///Hien thi modal show like cua post
+		$scope.showAllLikes = function(comment, reply) {
+			var modalInstance = $modal.open({
+				templateUrl: 'showAllLikesModal.html',
+				controller: 'showAllLikesReplyCtrl',
+				size: '',
+				resolve: {
+					comment: function(){
+						return comment;
+					},
+					reply: function(){
+						return reply;
+					}
+				}
+			});
+		};
 	}
 ]);
+
+app.controller('showAllLikesReplyCtrl', ['$scope', 'comment', 'reply', 'replyService'
+	, function($scope, comment, reply, replyService) {
+	$scope.isLoading = true;
+	replyService.getAllLikes(comment, reply).success(function(data){
+		$scope.allLikes = data;
+		$scope.isLoading = false;
+
+	}).error(function(data){
+		$scope.isLoading = false;
+	});
+}]);
+

@@ -31,4 +31,5 @@
 //= require angular-moment
 //= require moment/locale/vi.js
 //= require_tree ../angularJSComponents
+//= require ng-timeago
 //= require_tree .

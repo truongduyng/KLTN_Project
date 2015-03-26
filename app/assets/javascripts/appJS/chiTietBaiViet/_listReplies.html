@@ -4,7 +4,7 @@
     <!-- BEGIN TEXTAREA CHO TRA LOI COMMENT -->
     <div  class="comment-box" ng-show="comment.isReply">
       <a href="#" class="comment-image">
-        <img class="img-circle" class="media-object" src="{{currentUser.avatar.thumb.url | logo}}" 
+        <img class="img-circle" class="media-object" src="{{currentUser.avatar.thumb.url | logo}}" fallback-src="sportaLogo"
       alt="Generic placeholder image" width="64px" height="64px">
       </a>
       <div class="comment-textarea" style="width: 70%;">
@@ -22,7 +22,7 @@
          <div class="media" ng-repeat-start="reply in comment.replies | orderBy: '-created_at'">
             <div class="media-left">
               <a href="#">
-               <img class="img-circle" class="media-object" src="{{reply.user.avatar.thumb.url | logo}}" 
+               <img class="img-circle" class="media-object" src="{{reply.user.avatar.thumb.url | logo}}" fallback-src="sportaLogo"
                alt="Generic placeholder image" width="64px" height="64px">
               </a>
             </div>
@@ -44,8 +44,10 @@
                                 <!-- like su dung glyphicon glyphicon-thumbs-up va .like-icon, unlike thi su dung glyphicon glyphicon-thumbs-down va unlike-icon -->
                                 <span data-toggle="tooltip" data-original-title="Thích" ng-hide="reply.isLiked" class="glyphicon glyphicon-thumbs-up like-icon" ng-click="like(comment, reply)"></span>
                                 <span data-toggle="tooltip" data-original-title="Bỏ thích" ng-show="reply.isLiked" class="glyphicon glyphicon-thumbs-down unlike-icon" ng-click="unlike(comment, reply)"></span>
-                                <a ng-init="reply.likesHtml = '<p>Đang tải...</p>';" ng-mouseenter="getKFirstLikes(comment, reply)" id="list-people-like" data-target="#myModal2" tooltip-html-unsafe="{{reply.likesHtml}}" style="cursor: pointer; margin-left: 10px;">{{reply.like_count}} người thích</a>
+                                <a ng-click="showAllLikes(comment, reply)" ng-init="reply.likesHtml = '<p>Đang tải...</p>';" ng-mouseenter="getKFirstLikes(comment, reply)" id="list-people-like" data-target="#myModal2" tooltip-html-unsafe="{{reply.likesHtml}}" style="cursor: pointer; margin-left: 10px;">{{reply.like_count}} người thích</a>
+                                <small class="pull-right" style="margin-top: 7px; margin-right:10px; ">{{reply.updated_at | timeago}}</small>
                               </div>
+
                           </div>
                           
                           <!-- Khung hien ra khi chinh sua comment, binh thuong thi ko hien thi -->

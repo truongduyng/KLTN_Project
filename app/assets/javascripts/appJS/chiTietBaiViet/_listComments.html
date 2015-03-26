@@ -4,7 +4,7 @@
   <!-- BEGIN COMMENT BOX -->
   <div class="comment-box">
     <a href="#" class="comment-image">
-      <img class="img-circle img-responsive" class="media-object" src="{{currentUser.avatar.thumb.url | logo}}" 
+      <img class="img-circle img-responsive" class="media-object" src="{{currentUser.avatar.thumb.url | logo}}"  fallback-src="sportaLogo"
     alt="Generic placeholder image" width="64px" height="64px" style="min-width: 64px; min-height: 64px;">
     </a>
     <div class="comment-textarea" style="width: 73%;">
@@ -22,7 +22,7 @@
   <div class="media" ng-repeat-start="comment in comments | orderBy: '-created_at'">
     <div class="media-left">
       <a href="#">
-       <img class="img-circle" class="media-object" src="{{comment.user.avatar.url | logo}}" 
+       <img class="img-circle" class="media-object" src="{{comment.user.avatar.url | logo}}" fallback-src="sportaLogo"
        alt="Generic placeholder image" width="64px" height="64px">
       </a>
     </div>
@@ -43,11 +43,14 @@
               </div>
 
                <div class="comment-likes">
+
                   <!-- like su dung glyphicon glyphicon-thumbs-up va .like-icon, unlike thi su dung glyphicon glyphicon-thumbs-down va unlike-icon -->
                   <span data-toggle="tooltip" data-original-title="Thích" ng-hide="comment.isLiked" class="glyphicon glyphicon-thumbs-up like-icon" ng-click="likePost(comment)"></span>
                   <span data-toggle="tooltip" data-original-title="Bỏ thích" ng-show="comment.isLiked" class="glyphicon glyphicon-thumbs-down unlike-icon" ng-click="unlikePost(comment)"></span>
-                  <a ng-init="comment.likesHtml = '<p>Đang tải...</p>';" ng-mouseenter="getKFirstLikes(comment)" id="list-people-like" data-target="#myModal2" tooltip-html-unsafe="{{comment.likesHtml}}" style="cursor: pointer; margin-left: 10px;">{{comment.like_count}} người thích</a>
+                  <a ng-click="showAllLikes(comment)" ng-init="comment.likesHtml = '<p>Đang tải...</p>';" ng-mouseenter="getKFirstLikes(comment)" id="list-people-like" data-target="#myModal2" tooltip-html-unsafe="{{comment.likesHtml}}" style="cursor: pointer; margin-left: 10px;">{{comment.like_count}} người thích</a>
+
                    <button ng-init="comment.isReply = false" ng-click="comment.isReply =!comment.isReply" class="btn btn-success">Trả lời</button>
+                   <small class="pull-right" style="margin-top: 7px; margin-right:10px; ">{{comment.updated_at | timeago}}</small>
 
               </div>
               <button  ng-init="comment.isLoadingReply = false;comment.isRepliesLoaded = false; " ng-disabled="comment.isLoadingReply" ng-hide="comment.isRepliesLoaded || comment.reply_count == 0" ng-click="loadReply(comment)" class="btn btn-primary btn-block" ><span ng-hide="comment.isLoadingReply">{{comment.reply_count}} phản hồi</span><span ng-show="comment.isLoadingReply"><img src="/assets/application/placeholder/spinner_loading.gif" width="22px" height="22px"></span></button>

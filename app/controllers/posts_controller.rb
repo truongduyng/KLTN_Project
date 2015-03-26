@@ -50,7 +50,7 @@
 
 class PostsController < ApplicationController
 	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo, :like, :unlike]
-	before_action :find_published_post, only: [:show, :like, :unlike, :get_k_first_like]
+	before_action :find_published_post, only: [:show, :like, :unlike, :get_k_first_like, :get_all_likes]
 	before_action :find_and_check_post_with_user, only: [:add_photo]
 
 	def show	
@@ -103,13 +103,18 @@ class PostsController < ApplicationController
 
 	# /posts/:id/get_k_first_like.json
 	def get_k_first_like
-		sleep(1)
 		if params.has_key?(:number)
 			@likes = @post.likes.limit(params[:number].to_i).to_a
 			render 'k_first_like.json.jbuilder', status: :ok
 		else
 			render nothing: true, status: :bad_request, content_type: 'application/json'
 		end
+	end
+
+	#/posts/:id/get_all_likes.json
+	def get_all_likes
+		@likes = @post.likes.all
+		render 'get_all_likes.json.jbuilder', status: :ok
 	end
 
 	private

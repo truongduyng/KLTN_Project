@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
 	before_action :authenticate_user!, only: [:create, :update, :destroy, :like, :unlike]
 	before_action :find_comment, only: [:destroy, :update]
-	before_action :find_comment_for_like_and_unlike, only: [:like, :unlike]
+	before_action :find_comment_for_like_and_unlike, only: [:like, :unlike, :get_all_likes]
 	
 	def show
 	end
@@ -59,7 +59,6 @@ class CommentsController < ApplicationController
 
 	# /comments/:id/get_k_first_like/:number.json
 	def get_k_first_like
-		sleep(1)
 		begin
 			@comment = Comment.find(params[:id])
 		rescue Mongoid::Errors::DocumentNotFound
@@ -71,6 +70,12 @@ class CommentsController < ApplicationController
 		else
 			render nothing: true, status: :bad_request, content_type: 'application/json'
 		end
+	end
+
+	#/posts/post_id/comments/:id/get_all_likes.json
+	def get_all_likes
+		@likes = @comment.likes.all
+		render 'posts/get_all_likes.json.jbuilder', status: :ok
 	end
 
 

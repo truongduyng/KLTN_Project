@@ -1,6 +1,6 @@
 app.controller('commentCtrl', ['$scope', 'postDetailService',
-	'Flash', 'userService', 'replyService', 'commentService',
-	function($scope, postDetailService, Flash, userService, replyService, commentService) {
+	'Flash', 'userService', 'replyService', 'commentService', '$modal',
+	function($scope, postDetailService, Flash, userService, replyService, commentService, $modal) {
 
 
 
@@ -90,9 +90,40 @@ app.controller('commentCtrl', ['$scope', 'postDetailService',
 			});
 		};
 
+		///Hien thi modal show like cua post
+		$scope.showAllLikes = function(comment) {
+			var modalInstance = $modal.open({
+				templateUrl: 'showAllLikesModal.html',
+				controller: 'showAllLikesCommentCtrl',
+				size: '',
+				resolve: {
+					post: function(){
+						return $scope.post;
+					},
+					comment: function(){
+						return comment;
+					}
+				}
+			});
+		};
+		
 		
 	}
 ]);
+
+
+app.controller('showAllLikesCommentCtrl', ['$scope', 'post', 'comment', 'commentService'
+	, function($scope, post, comment, commentService) {
+	$scope.isLoading = true;
+	commentService.getAllLikes(post, comment).success(function(data){
+		$scope.allLikes = data;
+		$scope.isLoading = false;
+
+	}).error(function(data){
+		$scope.isLoading = false;
+	});
+}]);
+
 
 //Hien thi time ago cho comment
 //Lam tuong tu cho reply

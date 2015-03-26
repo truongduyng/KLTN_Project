@@ -10,6 +10,7 @@ Rails.application.routes.draw do
             put 'like'
             put 'unlike'
             get 'get_k_first_like'
+            get 'get_all_likes'
         end
     end
   end
@@ -19,6 +20,7 @@ Rails.application.routes.draw do
       post 'add_photo'
       put 'like'
       put 'unlike'
+      get 'get_all_likes'
       # get 'get_k_first_like'
     end
     resources :comments do
@@ -26,6 +28,7 @@ Rails.application.routes.draw do
         put 'like'
         put 'unlike'
         get 'get_k_first_like'
+        get 'get_all_likes'
       end
     end
   end
