@@ -7,7 +7,12 @@ Rails.application.routes.draw do
   get '/comments/:id/get_k_first_like/:number' => 'comments#get_k_first_like'
   get '/comments/:comment_id/replies/:id/get_k_first_like/:number' => 'replies#get_k_first_like'
   
-  resources :custom_users
+  resources :custom_users do
+    collection do
+      put 'change_password'
+    end
+  end
+
   resources :comments do
     resources :replies do
         member do

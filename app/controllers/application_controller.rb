@@ -23,9 +23,22 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   protected
     	def configure_permitted_parameters
-    	    devise_parameter_sanitizer.for(:sign_up) << [:username, :firstname, :lastname]
-    	    devise_parameter_sanitizer.for(:account_update) << [:username, :firstname, :lastname]
+    	    # render json: params, status: :ok
+          devise_parameter_sanitizer.for(:sign_up) << [:username, :firstname, :lastname]
+    	    
+          devise_parameter_sanitizer.for(:account_update) << [:username, :firstname, :lastname]
+          
+          # #for change password
+          # devise_parameter_sanitizer.for(:account_update) { |u| 
+          #   u.permit(:password, :password_confirmation, :current_password) 
+          # }
+          
+          #  devise_parameter_sanitizer.for(:account_update) << [:password, :password_confirmation, :current_password, :username, :firstname, :lastname]
+          
+          # # #for change password
+          # # devise_parameter_sanitizer.for(:account_update) { |u| 
+          # #   u.permit(:password, :password_confirmation, :current_password) 
+          # # }
     	end
-
     
 end

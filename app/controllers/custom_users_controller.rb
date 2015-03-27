@@ -1,5 +1,5 @@
 class CustomUsersController < ApplicationController
-	before_action :authenticate_user!, only: [:update]
+	before_action :authenticate_user!, only: [:update, :change_password]
 	before_action :find_user_and_check_with_current_user, only: [:update]
 	
 	#get /custom_users/:username.json
@@ -23,6 +23,19 @@ class CustomUsersController < ApplicationController
 		else
 			render json: @user.errors, status: :bad_request
 		end
+	end
+
+	# /custom_users/change_password.json
+	def change_password
+		@user = User.find(current_user.id)
+		new_password_params = params.required(:custom_user).permit(:current_password,:password, :password_confirmation)
+	    if @user.update_with_password(new_password_params)
+	      # Sign in the user by passing validation in case their password changed
+	      sign_in @user, :bypass => true
+	      render json: @user, status: :ok
+	    else
+	      render json: @user.errors, status: :bad_request
+	    end
 	end
 
 

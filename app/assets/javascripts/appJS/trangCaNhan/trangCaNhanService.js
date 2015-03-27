@@ -15,5 +15,12 @@ app.factory('trangCaNhanService', ['$http', function($http) {
 		return $http.put(url, user);
 	};
 
+	//password la doi tuong gom current_password, new_password va password_confirmation
+	o.changePassword = function(password){
+		var url = "/custom_users/change_password.json";
+		var promise = $http.put(url, password);
+		return promise;
+	};
+
 	return o;
 }])
