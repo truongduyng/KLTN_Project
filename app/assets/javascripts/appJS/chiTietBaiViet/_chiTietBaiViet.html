@@ -11,7 +11,7 @@
     <!-- BEGIN MAIN COLUMN -->
     <div class="col-md-6 detail-main-column">
           <span style="border: 1px solid #337AB7; display:block;margin:0px -15px; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>CHI TIẾT BÀI VIẾT</strong></span>
-
+          <div flash-message="5000"></div>
           <ul class="media-list">
                <li class="media">
                   <div class="media-left">
@@ -35,10 +35,10 @@
                       <div section-id="for-not-published" ng-if="!post.published">
                           <div class="likes">
                             <div role="group" class="btn-group pull-left">  
-                                                        <a class="btn btn-default" href="#"><span class="glyphicon glyphicon-edit"></span> Sửa bài viết</a>
+                                                        <a class="btn btn-default" ui-sref="editPost({id: post._id.$oid})"><span class="glyphicon glyphicon-edit"></span> Sửa bài viết</a>
                                                         <a class="btn btn-default" href="#"><span class="glyphicon glyphicon-trash"></span> Xóa bài viết</a>
                             </div>
-                            <span class="label label-danger pull-right" style="font-size: 1em; font-weight: 500; display:inline-block ;margin-top: 5px;">Chưa duyệt</span>
+                            <span class="label label-danger pull-right" style="font-size: 1em; font-weight: 500; display:inline-block ;margin-top: 5px;">{{post.status.name}}</span>
                           </div>
                       </div>
 

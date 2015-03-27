@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo, :like, :unlike, :edit, :update]
+	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo, :like, :unlike, :edit, :update, :get_posts_by_current_user]
 	before_action :find_published_post, only: [:like, :unlike, :get_k_first_like, :get_all_likes]
 	before_action :find_and_check_post_with_user, only: [:add_photo]
 	before_action :find_post_for_show, only: [:show]
@@ -30,11 +30,13 @@ class PostsController < ApplicationController
 			#Lay mang danh sach id cua cac anh da bi xoa
 			deleted_photos = params.permit(:deleted_photos => [])
 			#Tien hanh xoa no
-			deleted_photos[:deleted_photos].each do |photo_id|
-				begin
-					photo = @post.photos.find(photo_id)
-					photo.destroy	
-				rescue Mongoid::Errors::DocumentNotFound
+			if deleted_photos[:deleted_photos]
+				deleted_photos[:deleted_photos].each do |photo_id|
+					begin
+						photo = @post.photos.find(photo_id)
+						photo.destroy	
+					rescue Mongoid::Errors::DocumentNotFound
+					end
 				end
 			end
 			render :show, status: :ok, location: @post
@@ -104,6 +106,45 @@ class PostsController < ApplicationController
 		@likes = @post.likes.all
 		render 'get_all_likes.json.jbuilder', status: :ok
 	end
+
+
+
+	#cho trang profile
+	#Lay tat ca nhung post boi username
+	# #GET /posts/get_posts_by_username/:username
+	# def get_posts_by_username 
+	# 	@posts = User.where(username: )
+	# end
+
+	#tra ve tat ca post cho nguoi dung hien tai
+	#GET /posts/get_posts_by_current_user.json
+	def get_posts_by_current_user
+		@all_posts = current_user.posts.all
+		render 'get_posts_by_current_user.json.jbuilder', status: :ok
+	end
+
+	#GET /posts/:username/get_posts_by_username.json
+	# def get_posts_by_username
+	# 	user = User.where(username: params[:username]).first
+	# 	if user
+	# 		@all_posts = user.posts.all
+	# 		render 'get_posts_by_username.json.jbuilder', status: :ok
+	# 	else
+	# 		render nothing: true, status: :not_found, content_type: 'application/json'
+	# 	end
+	
+	# end
+	def get_posts_by_username
+		user = User.where(username: params[:username]).first
+		if user
+			@all_posts = user.posts.desc(:updated_at).limit(10)
+			render 'get_posts_by_username.json.jbuilder', status: :ok
+		else
+			render nothing: true, status: :not_found, content_type: 'application/json'
+		end
+	
+	end
+
 
 	private
 		def post_params

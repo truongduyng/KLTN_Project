@@ -1,5 +1,6 @@
-app.controller('dangBaiCtrl', ['$scope', 'postService', 'flash', '$q', 'FileUploader', 'Flash','$http','$cookies',
-	function($scope, postService, flash, $q, FileUploader, Flash, $http, $cookies) {
+app.controller('dangBaiCtrl', ['$scope', 'postService', 'flash', '$q', 'FileUploader',
+ 'Flash','$http','$cookies', '$state',
+	function($scope, postService, flash, $q, FileUploader, Flash, $http, $cookies, $state) {
 
 		$scope.post = {};
 		$scope.uploader = new FileUploader();
@@ -15,7 +16,6 @@ app.controller('dangBaiCtrl', ['$scope', 'postService', 'flash', '$q', 'FileUplo
 		$scope.onPost = function() {
 			postService.create($scope.post)
 				.success(function(data) {
-					
 					$scope.post.id = data._id.$oid;
 					if (!$scope.uploader.queue || $scope.uploader.queue.length == 0) {
 						onPostComplete();
@@ -41,6 +41,9 @@ app.controller('dangBaiCtrl', ['$scope', 'postService', 'flash', '$q', 'FileUplo
 			$scope.uploader.clearQueue();
 			Flash.create("success", "Bài viết của bạn đã được đăng thành công, chúng tôi sẽ duyệt và thông báo tới bạn sớm nhất có thể");
 			Flash.pause();
+			$state.go("chiTietBaiViet", {
+				id: $scope.post.id,
+			})
 		};
 
 		$scope.uploader.onBeforeUploadItem = function(file) {

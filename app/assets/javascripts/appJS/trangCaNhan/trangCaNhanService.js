@@ -9,6 +9,8 @@ app.factory('trangCaNhanService', ['$http', function($http) {
 			angular.copy(data, o.user);
 		});
 	};
+
+	
 	o.editProfile = function(user) {
 		var id = user._id.$oid;
 		var url = "/custom_users/" + id + ".json";

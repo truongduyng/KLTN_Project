@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  get '/posts/:username/get_posts_by_username' => 'posts#get_posts_by_username'
+  
   get 'custom_users/:username' => 'custom_users#get_user_by_username'
   
   get '/posts/:id/get_k_first_like/:number' => 'posts#get_k_first_like'
@@ -33,6 +35,11 @@ Rails.application.routes.draw do
       get 'get_all_likes'
       # get 'get_k_first_like'
     end
+
+    collection do
+      get 'get_posts_by_current_user'
+    end
+    
     resources :comments do
       member do
         put 'like'

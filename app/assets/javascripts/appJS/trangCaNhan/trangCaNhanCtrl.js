@@ -1,13 +1,11 @@
 app.controller('trangCaNhanCtrl', ['$scope', 'Auth', '$modal', 'trangCaNhanService'
 	, function($scope, Auth, $modal, trangCaNhanService) {
 
-	// Auth.currentUser()
-	// 	.then(function(user) {
-	// 		$scope.currentUser = user;
-	// 	}, function(error) {});
 
+	//User hien dang dc xem thong tin, authenticatedUser la user chung thuc
 	$scope.currentUser = trangCaNhanService.user;
 	console.log("currentUser", $scope.currentUser);
+	
 	$scope.showEditProfileModal = function() {
 
 		var modalInstance = $modal.open({

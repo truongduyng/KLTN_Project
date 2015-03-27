@@ -71,27 +71,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		}
 	});
 
-
-	// $stateProvider.state("chiTietBaiViet", {
-	// 	url: '/chi-tiet-bai-viet/{id}',
-	// 	templateUrl: 'appJS/chiTietBaiViet/_chiTietBaiViet.html',
-	// 	controller: 'chiTietBaiVietCtrl',
-	// 	resolve:{
-	// 		post: ['postDetailService', '$stateParams', function(postDetailService, $stateParams){
-	// 			return postDetailService.show($stateParams.id);
-	// 		}],
-	// 		currentUser: ['Auth', function(Auth) {
-	// 			return Auth.currentUser().then(function(user){
-	// 				return user;
-	// 			}, function() {
-	// 				return {
-	// 				};
-	// 			});
-	// 		}],
-	// 	}
-	// });
-
-
 	//Moi chinh lai chua biet dung sai
 	$stateProvider.state("chiTietBaiViet", {
 		url: '/chi-tiet-bai-viet/{id}',
@@ -100,11 +79,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		resolve: {
 			post: ['postDetailService', '$stateParams', function(postDetailService, $stateParams) {
 				return postDetailService.show($stateParams.id);
-			}],
-			currentUser: ['Auth', function(Auth) {
-				return Auth.currentUser().then(function(user) {
-					return user;
-				});
 			}],
 		}
 	});
@@ -134,17 +108,14 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		controller: 'trangCaNhanCtrl',
 		resolve: {
 			user: ['trangCaNhanService', '$stateParams', function(trangCaNhanService, $stateParams) {
-				console.log("resolve", $stateParams.username);
 				return trangCaNhanService.show($stateParams.username);
 			}],
+			posts: ['baiVietCaNhanService', '$stateParams', function(baiVietCaNhanService,$stateParams){
+				console.log("resolve", $stateParams.username);
+				return baiVietCaNhanService.index($stateParams.username);		
+			}]
 		}
 	})
-
-	// $stateProvider.state("register", {
-	// 	url: "/register",
-	// 	templateUrl: 'auth/_register.html',
-	// 	controller: 'authCtrl',
-	// });
 
 	//Khoi phuc
 	$urlRouterProvider.otherwise('/');

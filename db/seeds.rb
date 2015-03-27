@@ -65,3 +65,9 @@
 # 	post.post_status = @published_status
 # 	post.save
 # end
+
+# #Chuyen post vs id 5510dcd56875751cdb030000 thanh chua duyet de test
+# post = Post.find('5510dcd56875751cdb030000')
+# status = PostStatus.where(name: 'Chưa duyệt').first
+# post.post_status = status
+# post.save

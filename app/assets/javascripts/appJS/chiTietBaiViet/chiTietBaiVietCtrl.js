@@ -1,13 +1,13 @@
 //5510dcd56875751cdb030000
-app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash',
-	'currentUser', 'userService', '$state', '$modal', '$rootScope',
-	function($scope, postDetailService, Flash, currentUser, userService, $state, $modal, $rootScope) {
+app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'userService', '$state', '$modal', '$rootScope','Auth',
+	function($scope, postDetailService, Flash, userService, $state, $modal, $rootScope, Auth) {
 
-		angular.copy(currentUser, userService.currentUser);
-
-		$scope.currentUser = userService.currentUser;
+		Auth.currentUser().then(function(user){
+			angular.copy(user, userService.currentUser);
+			$scope.currentUser = userService.currentUser;
+		});
+		
 		$scope.post = postDetailService.post;
-
 
 		//Update tinh trang user de xet cac quyen them xoa sua
 		$scope.$on('devise:new-session', function(e, user) {

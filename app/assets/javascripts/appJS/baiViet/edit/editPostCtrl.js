@@ -17,6 +17,7 @@ app.controller('editPostCtrl', ['$scope', 'editPostService', 'FileUploader', 'Fl
 		$scope.onPost = function() {
 			editPostService.update($scope.post, $scope.deletedPhotos)
 				.success(function(data) {
+					$scope.post.id = data._id.$oid;
 					if (!$scope.uploader.queue || $scope.uploader.queue.length == 0) {
 						onPostComplete();
 					}
@@ -40,6 +41,9 @@ app.controller('editPostCtrl', ['$scope', 'editPostService', 'FileUploader', 'Fl
 			$scope.uploader.clearQueue();
 			Flash.create("success", "Bài viết của bạn đã được cập nhật thành công, chúng tôi sẽ duyệt và thông báo tới bạn sớm nhất có thể");
 			Flash.pause();
+			$state.go("chiTietBaiViet", {
+				id: $scope.post.id,
+			})
 		};
 
 		$scope.uploader.onBeforeUploadItem = function(file) {
