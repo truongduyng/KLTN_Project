@@ -7,22 +7,27 @@ class User
 
   #callback
   before_create :set_default_role
-  private
-    def set_default_role
-      self.role ||= Role.where(name: 'user').first
-    end
+  before_save :check_gender
+  
 
   #relationships
   belongs_to :role 
-  embeds_one :information 
+  #embeds_one :information 
   has_one :bussiness
+  
   #My field
   field :firstname, type: String
   field :lastname, type: String
   field :username, type: String
   field :avatar, type: String
+  field :gender, type: String #can cho nam hoac nu
+  field :address, type: String
+  field :phone, type: String
+  field :description, type: String
+
   #Carrier wave
   mount_uploader :avatar, ImageUploader
+  
   #My validation
   validates :username, presence: true, uniqueness: true
   validates :firstname, presence: true
@@ -55,4 +60,17 @@ class User
   # field :failed_attempts, type: Integer, default: 0 # Only if lock strategy is :failed_attempts
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
+
+  private
+    def set_default_role
+      self.role ||= Role.where(name: 'user').first
+    end
+
+    def check_gender
+      #Gender phai la nam hoac nu
+      if !self.gender.nil? && (!self.gender.strip || self.gender != 'Nam' || self.gender != 'Nữ')
+        self.gender = '';
+      end 
+
+    end
 end

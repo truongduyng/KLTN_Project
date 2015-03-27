@@ -1,0 +1,70 @@
+<div class="modal-header">
+    <button type="button" class="close" 
+       data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()">
+          &times;
+    </button>
+    <h4 class="modal-title" id="myModalLabel">
+       Chỉnh sửa tài khoản
+    </h4>
+</div>
+<div class="modal-body">
+        <form novalidate name="editProfileForm" class="form-horizontal" role="form">
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="firstname">Họ:</label>
+              <div class="col-sm-10">
+                <input ng-model="user.firstname" required name="firstname" type="text" class="form-control" id="firstname" placeholder="Họ">
+                <div ng-show="editProfileForm.firstname.$dirty && editProfileForm.firstname.$invalid">
+                   <span style="color: 'red';" class="help-block" ng-show="editProfileForm.firstname.$error.required">Tên không được trống</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="lastname">Tên:</label>
+              <div class="col-sm-10">
+                <input ng-model="user.lastname" required name="lastname" type="text" class="form-control" id="lastname" placeholder="Tên">
+                <div ng-show="editProfileForm.lastname.$dirty && editProfileForm.lastname.$invalid">
+                   <span style="color: 'red';" class="help-block" ng-show="editProfileForm.lastname.$error.required">Tên không được trống</span>
+                </div>
+               
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="gender">Giới tính:</label>
+              <div  class="col-sm-10">
+                <!-- <select ng-model="user.gender" ng-options="item as item for item in gender"  name="gender" class="form-control"></select> -->
+                <select ng-model="user.gender" name="gender" class="form-control">
+                  <option value="Nam" data-ng-selected="user.gender =='Nam'">Nam</option>
+                  <option value="Nữ"  data-ng-selected="user.gender == 'Nữ'">Nữ</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="address">Địa chỉ:</label>
+              <div class="col-sm-10">
+                <input ng-model="user.address" name="address" type="text" class="form-control" id="address" placeholder="Địa chỉ">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="phone">Điện thoại:</label>
+              <div class="col-sm-10">
+                <input ng-model="user.phone" name="phone" type="text" class="form-control" id="phone" placeholder="Điện thoại">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="description">Giới thiệu:</label>
+              <div class="col-sm-10">
+                <textarea ng-model="user.description" name="description" style="min-height: 100px;" class="form-control" placeholder="Giới thiệu"></textarea> 
+              </div>
+            </div>
+      </form>
+</div>
+
+<div class="modal-footer">
+      <button ng-click="update()" ng-disabled="editProfileForm.$invalid" type="button" class="btn btn-success">
+         Lưu
+      </button>
+      <button ng-click="cancel()" type="button" class="btn btn-danger" 
+         data-dismiss="modal">Thoát
+      </button>
+      
+</div>

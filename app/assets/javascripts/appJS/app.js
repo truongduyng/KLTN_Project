@@ -1,30 +1,17 @@
-
 //Loai bo angularMoment, ngFileUpload
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angularFileUpload',
 	'angular-flash.service', 'angular-flash.flash-alert-directive', 'unsavedChanges', 'sporta.directives',
-	'sporta.services', 'sporta.filters', 'flash','ngCookies', 'angularMoment', 'ui.bootstrap', 'ngtimeago'
+	'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago'
 ]);
 
-
-//For angularjs moment
-app.run(function(amMoment) {
-    amMoment.changeLocale('vi');
-});
-
-app.constant('angularMomentConfig', {
-    preprocess: 'unix', // optional
-    timezone: 'Europe/London' // optional
-});
-
-
 //For intercept $http
-app.factory('myHttpInterceptor', ['$q', '$rootScope',function($q, $rootScope) {
+app.factory('myHttpInterceptor', ['$q', '$rootScope', function($q, $rootScope) {
 
 	var responseIntercepter = {
-		responseError: function(rejection){
-			if(rejection.config.url.startsWith("/users/sign_in.json")){
-			}else{
-				if(rejection.status == 401){
+		responseError: function(rejection) {
+			if (rejection.config.url.startsWith("/users/sign_in.json")) {} else {
+				//KIem tra tinh loi, neu ma loi chua chung thuc thi hien form login, ko can load lai trang
+				if (rejection.status == 401) {
 					$rootScope.$emit("onRequireLogin");
 				}
 			}
@@ -38,6 +25,8 @@ app.factory('myHttpInterceptor', ['$q', '$rootScope',function($q, $rootScope) {
 app.config(['$httpProvider', function($httpProvider) {
 	$httpProvider.interceptors.push('myHttpInterceptor');
 }]);
+
+
 
 //For flash service
 app.config(function(flashProvider) {
@@ -67,25 +56,89 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		controller: 'dangBaiCtrl',
 	});
 
+	$stateProvider.state("editPost", {
+		url: "/chinh-sua-bai-viet/{id}",
+		templateUrl: 'appJS/baiViet/edit/_editPost.html',
+		controller: 'editPostCtrl',
+		resolve: {
+			post: ['editPostService', '$stateParams', '$q', function(editPostService, $stateParams, $q) {
+				console.log("in resolve editPostService");
+				return editPostService.edit($stateParams.id);
+			}],
+		},
+		access: {
+			free: false,
+		}
+	});
+
+
+	// $stateProvider.state("chiTietBaiViet", {
+	// 	url: '/chi-tiet-bai-viet/{id}',
+	// 	templateUrl: 'appJS/chiTietBaiViet/_chiTietBaiViet.html',
+	// 	controller: 'chiTietBaiVietCtrl',
+	// 	resolve:{
+	// 		post: ['postDetailService', '$stateParams', function(postDetailService, $stateParams){
+	// 			return postDetailService.show($stateParams.id);
+	// 		}],
+	// 		currentUser: ['Auth', function(Auth) {
+	// 			return Auth.currentUser().then(function(user){
+	// 				return user;
+	// 			}, function() {
+	// 				return {
+	// 				};
+	// 			});
+	// 		}],
+	// 	}
+	// });
+
+	//Moi chinh lai chua biet dung sai
 	$stateProvider.state("chiTietBaiViet", {
 		url: '/chi-tiet-bai-viet/{id}',
 		templateUrl: 'appJS/chiTietBaiViet/_chiTietBaiViet.html',
 		controller: 'chiTietBaiVietCtrl',
-		resolve:{
-			post: ['postDetailService', '$stateParams', function(postDetailService, $stateParams){
+		resolve: {
+			post: ['postDetailService', '$stateParams', function(postDetailService, $stateParams) {
 				return postDetailService.show($stateParams.id);
 			}],
 			currentUser: ['Auth', function(Auth) {
-				return Auth.currentUser().then(function(user){
+				return Auth.currentUser().then(function(user) {
 					return user;
-				}, function() {
-					return {
-					};
 				});
 			}],
 		}
 	});
-	
+
+	$stateProvider.state('notFound', {
+		url: '/khong-tim-thay-ket-qua',
+		templateUrl: 'appJS/notFound/_notFound.html',
+	});
+
+	$stateProvider.state('login', {
+		url: '/login',
+		templateUrl: 'appJS/auth/_login.html',
+		controller: 'authCtrl',
+	});
+
+	$stateProvider.state('register', {
+		url: '/register',
+		templateUrl: 'appJS/auth/_register.html',
+		controller: 'authCtrl',
+
+	});
+
+	//access:free
+	$stateProvider.state('trangCaNhan', {
+		url: '/trang-ca-nhan/{username}',
+		templateUrl: 'appJS/trangCaNhan/_trangCaNhan.html',
+		controller: 'trangCaNhanCtrl',
+		resolve: {
+			user: ['trangCaNhanService', '$stateParams', function(trangCaNhanService, $stateParams) {
+				console.log("resolve", $stateParams.username);
+				return trangCaNhanService.show($stateParams.username);
+			}],
+		}
+	})
+
 	// $stateProvider.state("register", {
 	// 	url: "/register",
 	// 	templateUrl: 'auth/_register.html',
@@ -93,6 +146,5 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	// });
 
 	//Khoi phuc
-	//$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/');
 }]);
-

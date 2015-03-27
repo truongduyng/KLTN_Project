@@ -3,20 +3,10 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash',
 	'currentUser', 'userService', '$state', '$modal', '$rootScope',
 	function($scope, postDetailService, Flash, currentUser, userService, $state, $modal, $rootScope) {
 
-
-	$rootScope.$on('$stateChangeStart', function() {
-		console.log('showImageModalCtrl routeChangeStart');
-	});
-	$rootScope.$on('$stateChangeSuccess', function() {
-		console.log('showImageModalCtrl stateChangeSuccess');
-	});
-
-
 		angular.copy(currentUser, userService.currentUser);
 
 		$scope.currentUser = userService.currentUser;
 		$scope.post = postDetailService.post;
-
 
 
 		//Update tinh trang user de xet cac quyen them xoa sua

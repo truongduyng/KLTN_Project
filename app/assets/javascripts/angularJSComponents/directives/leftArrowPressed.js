@@ -1,4 +1,3 @@
-console.log("header leftArrowPressed");
 directives.directive('leftArrowPressed', [function() {
 	return {
 		restrict: 'A',

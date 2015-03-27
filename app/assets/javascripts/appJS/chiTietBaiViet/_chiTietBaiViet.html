@@ -32,17 +32,31 @@
                       <div class="detail-post-images" style="text-align: center; margin-top: 20px;">
                           <a ng-click="showImage(photo)" ng-repeat="photo in post.photos"><img src="{{photo.image.url | logo}}" width="220px" height="220px"></a>
                       </div>
-                    <div class="likes">
-                      <!-- like su dung glyphicon glyphicon-thumbs-up va .like-icon, unlike thi su dung glyphicon glyphicon-thumbs-down va unlike-icon -->
-                      <span tooltip="Thích" ng-hide="post.isLiked" class="glyphicon glyphicon-thumbs-up like-icon" ng-click="likePost()"></span>
-                      <span tooltip="Bỏ thích" ng-show="post.isLiked" class="glyphicon glyphicon-thumbs-down unlike-icon" ng-click="unlikePost()"></span>
-                      
-                      <a  ng-mouseenter="getKFirstLikes()"  tooltip-html-unsafe="{{likesHtml}}" ng-click="showAllLikes()" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>
+                      <div section-id="for-not-published" ng-if="!post.published">
+                          <div class="likes">
+                            <div role="group" class="btn-group pull-left">  
+                                                        <a class="btn btn-default" href="#"><span class="glyphicon glyphicon-edit"></span> Sửa bài viết</a>
+                                                        <a class="btn btn-default" href="#"><span class="glyphicon glyphicon-trash"></span> Xóa bài viết</a>
+                            </div>
+                            <span class="label label-danger pull-right" style="font-size: 1em; font-weight: 500; display:inline-block ;margin-top: 5px;">Chưa duyệt</span>
+                          </div>
+                      </div>
 
-                      <button class="btn btn-success">Lưu bài viết</button>
+                      <div section-id="for-published" ng-if="post.published">
+                          <div class="likes">
+                                <!-- like su dung glyphicon glyphicon-thumbs-up va .like-icon, unlike thi su dung glyphicon glyphicon-thumbs-down va unlike-icon -->
+                                <span tooltip="Thích" ng-hide="post.isLiked" class="glyphicon glyphicon-thumbs-up like-icon" ng-click="likePost()"></span>
+                                <span tooltip="Bỏ thích" ng-show="post.isLiked" class="glyphicon glyphicon-thumbs-down unlike-icon" ng-click="unlikePost()"></span>
+                                
+                                <a  ng-mouseenter="getKFirstLikes()"  tooltip-html-unsafe="{{likesHtml}}" ng-click="showAllLikes()" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>
+
+                                <button class="btn btn-success">Lưu bài viết</button>
+                          </div>
+                          <section id="listComments" ng-include="'appJS/chiTietBaiViet/_listComments.html'"></section>
+                      </div>
+
                     </div>
-                      <section id="listComments" ng-include="'appJS/chiTietBaiViet/_listComments.html'"></section>
-                    </div>
+                
                     
                </li>
             </ul>
@@ -81,7 +95,7 @@
      <script type="text/ng-template" id="showAllLikesModal.html">
               <div class="modal-header">
                   <button type="button" class="close" 
-                     data-dismiss="modal" aria-hidden="true">
+                     data-dismiss="modal" aria-hidden="true" ng-click="$close()">
                         &times;
                   </button>
                   <h4 class="modal-title" id="myModalLabel">
@@ -130,5 +144,6 @@
 
 
 <style type="text/css">
+
 
 </style>

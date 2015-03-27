@@ -1,4 +1,4 @@
-<div class="panel panel-default panel-primary" style="border-top-left-radius: 0px;border-top-right-radius: 0px; border-color: #e5e5e5; border: 2px solid #e5e5e5">
+<div ng-controller="postSearchCtrl"  class="panel panel-default panel-primary" style="border-top-left-radius: 0px;border-top-right-radius: 0px; border-color: #e5e5e5; border: 2px solid #e5e5e5">
   <div class="panel-heading" style="border-top-left-radius: 0px;border-top-right-radius: 0px; padding-bottom: 13px; text-align: center;">
     <h3 class="panel-title">
       <strong>TÌM KIẾM BÀI VIẾT NHANH</strong>
@@ -8,7 +8,7 @@
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Tìm kiếm bài viết nhanh...">
         <span class="input-group-btn">
-          <button class="btn btn-default" type="button">Tìm kiếm</button>
+          <button ng-click="onClick()" class="btn btn-default" type="button">Tìm kiếm</button>
         </span>
       </div><!-- /input-group -->
       <hr style="margin-top: 10px; margin-bottom: 0px;">

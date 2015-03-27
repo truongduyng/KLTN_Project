@@ -1,0 +1,428 @@
+<div class="row" style="margin-top:-15px;">
+    <!-- BEGIN LEFT COLUMN -->
+    <div class="col-md-2">
+      <section ng-include="'appJS/modules/_groupModule.html'"></section>
+    </div>
+    <!-- END LEFT COLUMN -->
+
+    <!-- BEGIN MAIN COLUMN -->
+    <div class="col-md-6 detail-main-column">
+		      
+
+
+          <span style="border: 1px solid #337AB7; display:block;margin:0px -15px; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>TRANG CÁ NHÂN</strong></span>
+          <!-- BEGIN THONG TIN CA NHAN -->
+          <div class="well" style="overflow: hidden; margin: 0px -15px;">
+                <div class="row">
+                    <!-- BEGIN COL FOR INFO PICTURE -->
+                    <div class="col-xs-3">
+                      <img fallback-src="sportaLogo" src="{{currentUser.avatar.large_thumb.url | logo}}" class="img-responsive center-block img-circle profile-picture">
+                      
+                      <!-- FOR CHANGE PROFILE PICTURE -->
+                      <!-- <div style="text-align: center; margin-top: 48px;">
+                        <a href="#" class="btn btn-primary" data-toggle="tooltip" data-original-title="Thay ảnh đại diện"><span class="glyphicon glyphicon-edit"></span></a>
+                      </div> -->
+                      
+                    </div>
+                    <!-- END COL FOR INFO PICTURE -->
+                    <!-- BEGIN COL FOR INFORMATION -->
+                    <div class="col-xs-9" style="margin-left: -5px;">
+                        <div class="row profile-info">
+                          <div class="col-sm-12">
+                            <p>Tên: <span class="fullname"><strong><span>{{currentUser.firstname}} </span><span>{{currentUser.lastname}}</span></strong></span></p>
+                            <p>Giới tính: <span class="fullname">{{currentUser.gender | notKnow}}</span></p>
+                            <p>Email: <span class="email">{{currentUser.email}}</span></p>
+                            <p>Địa chỉ: <span class="address">{{currentUser.address | notKnow}}</span></p>
+                            <p>Điện thoại : <span class="phone">{{currentUser.phone | notKnow}}</span></p>
+                            <a ng-click="showEditProfileModal()" class="btn btn-success" >Chỉnh sửa tài khoản</a>
+                            <a ng-click="showChangePasswordModal()" class="btn btn-success">Đổi mật khẩu</a>
+                          </div>
+                        </div>
+                    </div>
+                <!-- END COL FOR INFORMATION -->
+                </div>
+                <hr>
+                <!-- BEGIN ROW FOR INTRODUCE -->
+                <div class="row">
+                  <div class="col-sm-12">
+                     <p>Giới thiệu: <span class="introduce">{{currentUser.description | notKnow}}</span></p>
+                  </div>
+                </div>
+                <!-- END ROW FOR INTRODUCE -->
+          </div>
+          <hr>
+          <div class="well" style="overflow: hidden; margin: 0px -15px;">
+             <div class="row">
+              <div class="col-sm-12">
+                     <ul id="tabs" class="nav nav-tabs nav-pills" data-tabs="tabs">
+                        <li class="active"><a href="#bai-viet-ca-nhan" data-toggle="tab">Bài viết cá nhân</a></li>
+                        <li><a href="#bai-viet-yeu-thich" data-toggle="tab">Bài viết yêu thích</a></li>
+                        <li><a href="#thong-bao" data-toggle="tab">Thông báo</a></li>
+                        <li><a href="#quan-ly-ve" data-toggle="tab">Quản lý vé</a></li>
+                      </ul>
+                      <!-- BEGIN QUAN LY CAC NOI DUNG TAB -->
+                      <div id="my-tab-content" class="tab-content">
+                              <!-- BEGIN BAT DAU BAI VIET CA NHAN -->
+                              <div class="tab-pane active" id="bai-viet-ca-nhan">
+                                  <h2></h2>
+                                  <div class="row">
+                                    <form class="form-tim-kiem">
+                                      <div class="col-xs-6 col-form-tim-kiem">
+                                         <input type="text" class="form-control" id="email" placeholder="Tìm kiếm...">
+                                      </div>
+                                      <div class="col-xs-3 col-form-tim-kiem">
+                                         <select class="form-control">
+                                                  <option>Tên bài viết</option>
+                                                  <option>Nội dung bài viết</option>
+                                                  <option>Người sở hữu</option>
+                                                </select>
+                                      </div>
+                                      <div class="col-xs-3 col-form-tim-kiem">
+                                         <button type="submit" class="btn btn-primary btn-tim-kiem">Tìm kiếm</button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                  
+                                  <h1></h1>
+                                  <div class="row">
+                                      <div class="col-sm-12 danh-sach-bai-viet">
+                                            <div class="bai-viet">
+                                                  <div class="row">
+                                                    <div class="col-xs-2">
+                                                      <img src="gallery/01.jpg" class="img-circle" width="64px" height="64px">
+                                                    </div>
+                                                    <div class="col-xs-10">
+                                                      <span class="owner-bai-viet">Nguyễn Hữu Trung</span>
+                                                      <span>18:30am,  30 tháng 12 năm 2014</span>
+                                                      <span class="label label-success pull-right">Đã duyệt</span>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row noi-dung-bai-viet" >
+                                                    <div class="col-xs-12">
+                                                          <span class="tua-de-bai-viet">
+                                                            <a href="#">Chia sẻ kinh nghiệm đi đá bóng tập 1</a>
+                                                          </span>
+                                                          <div class="mo-ta-bai-viet">
+                                                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi 
+                                                          </div>
+                                                          <p></p>
+                                                          <div class="btn-group pull-right" role="group" aria-label="...">  
+                                                              <a href="#" class="btn btn-default" data-toggle="tooltip" data-original-title="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
+                                                              <a href="#" class="btn btn-default" data-toggle="tooltip" data-original-title="Chỉnh sửa bài viết"><span class="glyphicon glyphicon-edit"></span></a>
+                                                          </div>
+                                                         
+                                                          
+                                                    </div>
+                                              </div>
+                                            </div>
+                                             <div class="bai-viet">
+                                                  <div class="row">
+                                                    <div class="col-xs-2">
+                                                      <img src="gallery/01.jpg" class="img-circle" width="64px" height="64px">
+                                                    </div>
+                                                    <div class="col-xs-10">
+                                                      <span class="owner-bai-viet">Nguyễn Hữu Trung</span>
+                                                      <span>18:30am,  30 tháng 12 năm 2014</span>
+                                                      <span class="label label-danger pull-right">Bị chặn</span>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row noi-dung-bai-viet" >
+                                                    <div class="col-xs-12">
+                                                          <span class="tua-de-bai-viet">
+                                                            <a href="#">Chia sẻ kinh nghiệm đi đá bóng tập 1</a>
+                                                          </span>
+                                                          <div class="mo-ta-bai-viet">
+                                                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi 
+                                                          </div>
+                                                          <p></p>
+                                                          <div class="btn-group pull-right" role="group" aria-label="...">  
+                                                              <a href="#" class="btn btn-default" data-toggle="tooltip" data-original-title="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
+                                                              <a href="#" class="btn btn-default" data-toggle="tooltip" data-original-title="Chỉnh sửa bài viết"><span class="glyphicon glyphicon-edit"></span></a>
+                                                          </div>
+                                                         
+                                                    </div>
+                                              </div>
+                                            </div>
+                                          
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-xs-12" style="text-align: center;">
+                                      <nav>
+                                            <ul class="pagination">
+                                              <li>
+                                                <a href="#" aria-label="Previous">
+                                                  <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                              </li>
+                                              <li><a href="#">1</a></li>
+                                              <li><a href="#">2</a></li>
+                                              <li><a href="#">3</a></li>
+                                              <li><a href="#">4</a></li>
+                                              <li><a href="#">5</a></li>
+                                              <li>
+                                                <a href="#" aria-label="Next">
+                                                  <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                              </li>
+                                            </ul>
+                                      </nav>
+                                    </div>
+                                  </div>
+                              </div>
+                              <!-- END BAT DAU BAI VIET CA NHAN -->
+                              <!-- BEGIN BAI VIET YEU THICH -->
+                              <div class="tab-pane" id="bai-viet-yeu-thich">
+                                         <h2></h2>
+                                        <div class="row">
+                                          <form class="form-tim-kiem">
+                                            <div class="col-xs-6 col-form-tim-kiem">
+                                               <input type="text" class="form-control" id="email" placeholder="Tìm kiếm...">
+                                            </div>
+                                            <div class="col-xs-3 col-form-tim-kiem">
+                                               <select class="form-control">
+                                                        <option>Tên bài viết</option>
+                                                        <option>Nội dung bài viết</option>
+                                                        <option>Người sở hữu</option>
+                                                      </select>
+                                            </div>
+                                            <div class="col-xs-3 col-form-tim-kiem">
+                                               <button type="submit" class="btn btn-primary btn-tim-kiem">Tìm kiếm</button>
+                                            </div>
+                                          </form>
+                                        </div>
+                                         <h1></h1>
+                                        <div class="row">
+                                            <div class="col-sm-12 danh-sach-bai-viet">
+                                                  <div class="bai-viet">
+                                                        <div class="row">
+                                                          <div class="col-xs-2">
+                                                            <img src="gallery/01.jpg" class="img-circle" width="64px" height="64px">
+                                                          </div>
+                                                          <div class="col-xs-10">
+                                                            <span class="owner-bai-viet">Nguyễn Hữu Trung</span>
+                                                            <span>18:30am,  30 tháng 12 năm 2014</span>
+                                                          </div>
+                                                        </div>
+                                                        <div class="row noi-dung-bai-viet" >
+                                                          <div class="col-xs-12">
+                                                                <span class="tua-de-bai-viet">
+                                                                  <a href="#">Chia sẻ kinh nghiệm đi đá bóng tập 1</a>
+                                                                </span>
+                                                                <div class="mo-ta-bai-viet">
+                                                                  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi 
+                                                                </div>
+                                                                <p></p>
+                                                                <div class="btn-group pull-right" role="group" aria-label="...">  
+                                                                    <a href="#" class="btn btn-success" data-toggle="tooltip" data-original-title="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
+                                                                    <a  href="#" class="btn btn-danger" data-toggle="tooltip" data-original-title="Bỏ lưu bài viết"><span class="glyphicon glyphicon-trash"></span></a>
+                                                                    <a style="display:none;" href="#" class="btn btn-primary" data-toggle="tooltip" data-original-title="Hoàn tác"><span class="glyphicon glyphicon-refresh"></span></a>
+                                                                </div>
+
+                                                                
+                                                          </div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="bai-viet">
+                                                        <div class="row">
+                                                          <div class="col-xs-2">
+                                                            <img src="gallery/01.jpg" class="img-circle" width="64px" height="64px">
+                                                          </div>
+                                                          <div class="col-xs-10">
+                                                            <span class="owner-bai-viet">Nguyễn Hữu Trung</span>
+                                                            <span>18:30am,  30 tháng 12 năm 2014</span>
+                                                          </div>
+                                                        </div>
+                                                        <div class="row noi-dung-bai-viet" >
+                                                          <div class="col-xs-12">
+                                                                <span class="tua-de-bai-viet">
+                                                                  <a href="#">Chia sẻ kinh nghiệm đi đá bóng tập 1</a>
+                                                                </span>
+                                                                <div class="mo-ta-bai-viet">
+                                                                  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi 
+                                                                </div>
+                                                                <p></p>
+                                                                 <div class="btn-group pull-right" role="group" aria-label="...">  
+                                                                    <a href="#" class="btn btn-success" data-toggle="tooltip" data-original-title="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
+                                                                    <a  href="#" class="btn btn-danger" data-toggle="tooltip" data-original-title="Bỏ lưu bài viết"><span class="glyphicon glyphicon-trash"></span></a>
+                                                                    <a style="display:none;" href="#" class="btn btn-primary" data-toggle="tooltip" data-original-title="Hoàn tác"><span class="glyphicon glyphicon-refresh"></span></a>
+                                                                </div>
+                                                                
+                                                          </div>
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="col-xs-12" style="text-align: center;">
+                                            <nav>
+                                                  <ul class="pagination">
+                                                    <li>
+                                                      <a href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                      </a>
+                                                    </li>
+                                                    <li><a href="#">1</a></li>
+                                                    <li><a href="#">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                    <li><a href="#">5</a></li>
+                                                    <li>
+                                                      <a href="#" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                      </a>
+                                                    </li>
+                                                  </ul>
+                                            </nav>
+                                          </div>
+                                        </div>
+                              </div>
+                              <!-- END BAI VIET YEU THICH -->
+                              <!-- BEGIN THONG BAO -->
+                              <div class="tab-pane" id="thong-bao">
+                                 
+                                  <ul class="danh-sach-thong-bao">
+                                    <li>
+                                        <a href="#">
+                                            <div class="col-xs-2">
+                                              <img src="gallery/01.jpg" width="64px" height="64px" class="img-circle img-responsive picture-profile">
+                                            </div>
+                                            <div class="col-xs-10">
+                                              <p class="noi-dung-thong-bao">Nguyễn Hữu Trung đã thích bài viết của bạn</p>
+                                              <small class="time-ago">Khoảng 1 giờ trước</small>
+                                            </div>
+                                        </a>
+                                        <img class="new-icon" src="myimg/new-icon.png">
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="col-xs-2">
+                                              <img src="gallery/01.jpg" width="64px" height="64px" class="img-circle img-responsive picture-profile">
+                                            </div>
+                                            <div class="col-xs-10">
+                                              <p class="noi-dung-thong-bao">Nguyễn Hữu Trung đã thích bài viết của bạn</p>
+                                              <small class="time-ago">Khoảng 1 giờ trước</small>
+                                            </div>
+                                        </a>
+                                        <img class="new-icon" src="myimg/new-icon.png" style="display:none;">
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="col-xs-2">
+                                              <img src="gallery/01.jpg" width="64px" height="64px" class="img-circle img-responsive picture-profile">
+                                            </div>
+                                            <div class="col-xs-10">
+                                              <p class="noi-dung-thong-bao">Nguyễn Hữu Trung đã thích bài viết của bạn</p>
+                                              <small class="time-ago">Khoảng 1 giờ trước</small>
+                                            </div>
+                                        </a>
+                                        <img class="new-icon" src="myimg/new-icon.png">
+                                    </li>
+                                  </ul>
+                                  <p></p>
+                                  <button class="btn btn-primary btn-block">Xem thêm</button>
+                              </div>
+                              <!-- END THONG BAO -->
+                              <!-- BEGIN QUAN LY VE -->
+                              <div class="tab-pane" id="quan-ly-ve">
+                                  <h2></h2>
+                                  <div class="row">
+                                          <div>
+                                              <form class="form-tim-kiem">
+                                                  <div class="col-xs-3 col-form-tim-kiem">
+                                                     <input type="text" class="form-control" id="email" placeholder="Từ ngày...">
+                                                  </div>
+                                                  <div class="col-xs-3 col-form-tim-kiem">
+                                                     <input type="text" class="form-control" id="email" placeholder="Tới ngày...">
+                                                  </div>
+                                                  <div class="col-xs-3 col-form-tim-kiem">
+                                                     <select class="form-control">
+                                                              <option>Chưa thanh toán</option>
+                                                              <option>Đã thanh toán</option>
+                                                      </select>
+                                                  </div>
+                                                  <div class="col-xs-3 col-form-tim-kiem">
+                                                     <button type="submit" class="btn btn-primary btn-tim-kiem">Tìm kiếm</button>
+                                                  </div>
+                                            </form>
+                                          </div>
+                                  </div>
+                                  <h2></h2>
+                                  <div class="row">
+                                          <div class="col-sm-12">
+                                                <table class="table table-striped table-bordered table-hover">
+                                                  <thead>
+                                                    <th>Mã số vé</th>
+                                                    <th>Thời gian</th>
+                                                    <th><i class="icon_mail_alt"></i> Sân đặt</th>
+                                                     <th><i class="icon_mobile"></i> Chi tiết</th>
+                                                  </thead>
+                                                  <tbody>
+                                                      <tr>
+                                                           <td>1243456</td>
+                                                           <td>Thứ 7 24/10/2014, từ 8h00 đến 10h00</td>
+                                                           <td>Sân bóng đá sporta, sân 2</td>
+                                                           <td style="text-align: center;"><a href="#" class="btn btn-default" data-toggle="tooltip" data-original-title="Chi tiết vé"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                                                      </tr>
+                                                       <tr>
+                                                           <td>1243456</td>
+                                                           <td>Thứ 7 24/10/2014, từ 8h00 đến 10h00</td>
+                                                           <td>Sân bóng đá sporta, sân 2</td>
+                                                           <td style="text-align: center;"><a href="#" class="btn btn-default" data-toggle="tooltip" data-original-title="Chi tiết vé"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                                                      </tr>
+                                                      
+                                                  </tbody>
+                                                </table>
+                                          </div>
+                                  </div>
+                                  <div class="row">
+                                          <div class="col-xs-12" style="text-align: center;">
+                                            <nav>
+                                                  <ul class="pagination">
+                                                    <li>
+                                                      <a href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                      </a>
+                                                    </li>
+                                                    <li><a href="#">1</a></li>
+                                                    <li><a href="#">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                    <li><a href="#">5</a></li>
+                                                    <li>
+                                                      <a href="#" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                      </a>
+                                                    </li>
+                                                  </ul>
+                                            </nav>
+                                          </div>
+                                  </div>
+
+                                  
+                              </div>
+                              <!-- END QUAN LY VE -->
+                      </div> 
+                       <!-- END QUAN LY CAC NOI DUNG TAB -->
+              </div>
+          </div>
+         
+
+
+          </div>
+          <!-- END THONG TIN CA NHAN -->
+
+
+
+
+    </div>
+     <!-- END MAIN COLUMN -->
+
+      <!-- BEGIN RIGHT COLUMN -->
+      <div class="col-md-4">  
+        <section ng-include="'appJS/modules/postSearchModules/_postSearchModule.html'"></section>
+      </div>
+      <!-- END RIGHT COLUMN -->
+</div>
+

@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
 
+
+  get 'custom_users/:username' => 'custom_users#get_user_by_username'
+  
   get '/posts/:id/get_k_first_like/:number' => 'posts#get_k_first_like'
   get '/comments/:id/get_k_first_like/:number' => 'comments#get_k_first_like'
   get '/comments/:comment_id/replies/:id/get_k_first_like/:number' => 'replies#get_k_first_like'
   
+  resources :custom_users
   resources :comments do
     resources :replies do
         member do
@@ -18,6 +22,7 @@ Rails.application.routes.draw do
   resources 'posts' do
     member do
       post 'add_photo'
+      put 'delete_photo'
       put 'like'
       put 'unlike'
       get 'get_all_likes'
