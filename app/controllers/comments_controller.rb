@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
 	before_action :authenticate_user!, only: [:create, :update, :destroy, :like, :unlike]
 	before_action :find_comment, only: [:destroy, :update]
 	before_action :find_comment_for_like_and_unlike, only: [:like, :unlike, :get_all_likes]
-	
+	before_action :check_post_published, only: [:create]
 	def show
 	end
 
@@ -120,5 +120,12 @@ class CommentsController < ApplicationController
 
 		def check_comment_with_user
 			
+		end
+
+		def check_post_published
+			post = Post.find(params[:post_id])
+			if !post.published
+				render nothing: true, status: :not_found, content_type: 'application/json'
+			end
 		end
 end

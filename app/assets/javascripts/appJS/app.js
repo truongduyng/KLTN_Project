@@ -91,6 +91,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	// 	}
 	// });
 
+
 	//Moi chinh lai chua biet dung sai
 	$stateProvider.state("chiTietBaiViet", {
 		url: '/chi-tiet-bai-viet/{id}',

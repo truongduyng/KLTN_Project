@@ -15,6 +15,7 @@
 # end
 
 json.extract! @post, :_id, :title, :body, :photos, :created_at, :updated_at, :user
+json.published @post.published
 if user_signed_in? && @post.likes.where('user_id' => current_user.id).first
 	json.isLiked true
 else

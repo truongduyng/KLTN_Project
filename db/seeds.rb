@@ -51,3 +51,17 @@
 # first_branch = bussiness.branches.first
 # first_branch.assests << Assest.new(name: 'San bong da nho', quantity: 10, assest_category_id: assest_category.id )
 # puts first_branch.assests.first.inspect
+
+
+# #Khoi tao post status
+# PostStatus.create(name: 'Chưa duyệt')
+# PostStatus.create(name: 'Đã duyệt')
+# PostStatus.create(name: 'Từ chối')
+
+
+# #Chuyen cac post trong csdl thanh tinh trang da duyet
+# @published_status = PostStatus.where(name: 'Đã duyệt').first
+# Post.all.to_a.each do |post|
+# 	post.post_status = @published_status
+# 	post.save
+# end

@@ -6,8 +6,7 @@
 app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', function($scope, $rootScope, $state, Auth, Flash) {
 
 	$rootScope.$on('$stateChangeStart',
-		function(event, toState, toParams, fromState, fromParams) {
-			
+		function(event, toState, toParams, fromState, fromParams) {			
 			//Kiem tra trang thai cua route hay page co yeu cau login hay ko
 			//Sau do goi form login, va dua vao thuoc tinh co load lai trang hay de biet cach load trang
 			if (toState.access != null && !toState.access.free && !Auth.isAuthenticated()) {
