@@ -49,7 +49,8 @@ bussiness.branches << Branch.new(name: 'Chi nhanh 4', address: '30 khuong viet, 
 bussiness.branches << Branch.new(name: 'Chi nhanh 5', address: '429 au co, phu trung, tan phu, thanh pho Ho Chi Minh')
 bussiness.branches << Branch.new(name: 'Chi nhanh 6', address: '100 khuong viet, phu trung, tan phu, thanh pho Ho Chi Minh')
 bussiness.branches << Branch.new(name: 'Chi nhanh 7', address: '120 khuong viet, phu trung, tan phu, thanh pho Ho Chi Minh')
-bussiness.branches << Branch.new(name: 'Chi nhanh 7', address: '120 nguyen van cu')
+bussiness.branches << Branch.new(name: 'Chi nhanh 8', address: '120 nguyen van cu')
+bussiness.branches << Branch.new(name: 'Chi nhanh 9', address: '36 D3, Binh Thanh, thanh pho Ho Chi Minh')
 
 
 ## add assest to bussiness's branch

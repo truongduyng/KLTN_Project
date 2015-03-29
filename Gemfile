@@ -29,7 +29,6 @@ gem 'font-awesome-sass'
 gem 'angular-rails-templates'
 gem 'angular_rails_csrf'
 gem 'devise'
-gem 'gmaps4rails'
 gem 'geocoder'
 
 group :development, :test do

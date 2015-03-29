@@ -10,17 +10,18 @@ class BranchesController < ApplicationController
 
 	def search
 		@branches = Branch.search(params[:search])
-		@hash = Gmaps4rails.build_markers(@branches) do |branch, marker|
-			marker.lat branch.coordinates[1]
-			marker.lng branch.coordinates[0]
-			marker.picture({
-				url: "http://i.imgur.com/r0L47hQ.png",
-				width:  96,
-				height: 96
-				})
-			marker.infowindow branch.name + branch.address
+		result = []
+		(@branches).each do |branch|
+			result << {
+				lat: branch.coordinates[1],
+				lng: branch.coordinates[0],
+				picture:  "http://i.imgur.com/BBk3iBl.png",
+				name: branch.name,
+				address: branch.address,
+				url: "link to branch"
+			}
 		end
-		render json: @hash
+		render json: result
 	end
 
 	private 

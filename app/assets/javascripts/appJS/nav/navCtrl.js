@@ -2,11 +2,10 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', function($scope, Auth, $ht
 	$scope.signedIn = Auth.isAuthenticated;
 	$scope.logout = Auth.logout;
 
-	Auth.currentUser()
-		.then(function(user) {
-			$scope.user = user;
-		}, function(error) {
-		});
+	Auth.currentUser().then(function(user) {
+		$scope.user = user;
+	}, function(error) {
+	});
 
 	$scope.$on('devise:new-session', function(e, user) {
 		$scope.user = user;
@@ -23,46 +22,4 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', function($scope, Auth, $ht
 	$scope.$on('devise:logout', function(e, user) {
 		$scope.user = {};
 	});
-
-	$scope.onTestClick = function(){
-		// $http.post("/check/trungnguyen1huu.json",{}, {
-		// 	params: {
-		// 		firstname: 'trung',
-		// 		lastname: 'huu',
-		// 		email: 'trung_nh93@yahoo.com'
-		// 	}
-		// }).success(function(data, status, header, config) {
-		// 	alert(data.isUnique + ", " + status);
-		// }).error(function(data, static) {
-		// 	alert("error");
-		// });
-		
-		
-		// $http({
-		// 	method: 'PUT',
-		// 	url: '/check/trungnguyen1huu.json',
-		// 	data:{
-		// 		firstname: 'trung',
-		// 		lastname: 'huu',
-		// 		email: 'trung_nh93@yahoo.com'
-		// 	}
-		// });
-
-		// $http({
-		// 	method: 'PUT',
-		// 	url: '/check/trungnguyen1huu.json',
-		// 	data: {userss: {
-		// 		hi: {
-		// 			user:{
-		// 				name: 'trung',
-		// 				age: 21,
-		// 			},
-
-		// 		},
-		// 		age: 10,
-		// 	}
-		// 	}
-		// });
-	};
-
 }]);

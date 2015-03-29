@@ -5,7 +5,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
 	.state('home', {
 		url: '',
 		templateUrl: 'appJS/home/_home.html',
-		controller: 'homeCtrl'
+		controller: 'mapCtrl'
 	})
 	
 	.state('createbussiness', {
