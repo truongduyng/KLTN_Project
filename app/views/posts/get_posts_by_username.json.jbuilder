@@ -14,4 +14,4 @@ json.posts @all_posts do |post|
 	json.status post.post_status
 	json.published post.published
 end
-json.total Post.count
+json.total @total

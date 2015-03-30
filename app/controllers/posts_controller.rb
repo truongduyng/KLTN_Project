@@ -123,29 +123,22 @@ class PostsController < ApplicationController
 		render 'get_posts_by_current_user.json.jbuilder', status: :ok
 	end
 
-	#GET /posts/:username/get_posts_by_username.json
-	# def get_posts_by_username
-	# 	user = User.where(username: params[:username]).first
-	# 	if user
-	# 		@all_posts = user.posts.all
-	# 		render 'get_posts_by_username.json.jbuilder', status: :ok
-	# 	else
-	# 		render nothing: true, status: :not_found, content_type: 'application/json'
-	# 	end
-	
-	# end
-
 
 	def get_posts_by_username
+		sleep(2);
 		user = User.where(username: params[:username]).first
 		page = params[:page]
 		per_page = params[:per_page]
 		if user
+			#Nguoi dung dang nhap chinh la nguoi dung dang xem lay tat cac post
 			if user_signed_in? && user == current_user
 				@all_posts = user.posts.desc(:updated_at).paginate(page: page, per_page: per_page)
+				@total = user.posts.count
 			else
-				#can thay doi cho day de load bai cho phu hop
-				@all_posts = user.posts.desc(:updated_at).paginate(page: page, per_page: per_page)
+				#lay chi nhung post da publish
+				publishedStatus = PostStatus.publishedStatus
+				@all_posts = user.posts.where(post_status_id: publishedStatus.id).desc(:updated_at).paginate(page: page, per_page: per_page)
+				@total = user.posts.where(post_status_id: publishedStatus.id).count
 			end
 			render 'get_posts_by_username.json.jbuilder', status: :ok
 		else
@@ -168,6 +161,31 @@ class PostsController < ApplicationController
 	end
 
 	
+	#/posts/:username/search_by_title.json?title="textSearch"
+	# def search_by_title
+	# 	user = User.where(username: params[:username]).first
+	# 	if user
+	# 		#Nguoi dung dang nhap chinh la nguoi dung dang xem lay tat cac post
+	# 		if user_signed_in? && user == current_user
+	# 			@all_posts = user.posts.desc(:updated_at).paginate(page: page, per_page: per_page)
+	# 			@total = user.posts.count
+	# 		else
+	# 			#lay chi nhung post da publish
+	# 			publishedStatus = PostStatus.publishedStatus
+	# 			@all_posts = user.posts
+	# 							.where(post_status_id: publishedStatus.id)
+	# 							.where(title:)
+	# 									.desc(:updated_at).paginate(page: page, per_page: per_page)
+
+	# 			@total = user.posts.where(post_status_id: publishedStatus.id).count
+	# 		end
+	# 		render 'get_posts_by_username.json.jbuilder', status: :ok
+	# 	else
+	# 		render nothing: true, status: :not_found, content_type: 'application/json'	
+	# 	end
+	# end
+
+
 	private
 		def post_params
 			params.require(:post).permit(:title, :body)

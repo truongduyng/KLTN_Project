@@ -13,6 +13,8 @@ class Post
 	has_many :comments
 	embeds_many :likes, as: :likeable
 
+	#scope
+	
 	#validate
 	validates :title, presence: true
 	validates :body, presence: true

@@ -1,20 +1,19 @@
 <div data-ng-controller="baiVietCaNhanCtrl">
-<button ng-click="reload()">RELOAD </button>
-<h2></h2>
+<h2 id="baiVietCaNhan"></h2>
 <div class="row">
-  <form class="form-tim-kiem">
+  <form novalidate name="searchPostForm" class="form-tim-kiem">
     <div class="col-xs-6 col-form-tim-kiem">
-       <input type="text" class="form-control" id="email" placeholder="Tìm kiếm...">
+       <input ng-model="textSearch" type="text" class="form-control" id="name" placeholder="Tìm kiếm...">
     </div>
     <div class="col-xs-3 col-form-tim-kiem">
-       <select class="form-control">
+       <select ng-model="searchType" class="form-control" name="searchType">
                 <option>Tên bài viết</option>
                 <option>Nội dung bài viết</option>
-                <option>Người sở hữu</option>
-              </select>
+                 <option>Hiển thị tất cả</option>
+        </select>
     </div>
     <div class="col-xs-3 col-form-tim-kiem">
-       <button type="submit" class="btn btn-primary btn-tim-kiem">Tìm kiếm</button>
+       <button ng-click="search()" ng-disabled="searchPostForm.$invalid" type="submit" class="btn btn-primary btn-tim-kiem">Tìm kiếm</button>
     </div>
   </form>
 </div>
@@ -23,7 +22,8 @@
 <h1></h1>
 <div class="row">
   <div class="col-sm-12 danh-sach-bai-viet">
-        <div class="bai-viet" ng-repeat="post in posts | orderBy: '-updated_at'">
+       
+        <div class="bai-viet" ng-repeat="post in posts | orderBy: '-updated_at'" >
               <div class="row">
                 <div class="col-xs-2">
                   <img fallback-src="sportaLogo" src="{{post.user.avatar.large_thumb.url |logo}}" class="img-circle" width="64px" height="64px">
@@ -51,6 +51,7 @@
                 </div>
           </div>
         </div>
+         <span ng-show="isLoading" ><img style="display:block;margin:0px auto;" src="/assets/application/placeholder/spinner_loading.gif" width="22px" height="22px"></span>
   </div>
 </div>
 

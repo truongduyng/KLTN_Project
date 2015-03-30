@@ -102,39 +102,102 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	});
 
 	//access:free
+	// $stateProvider.state('trangCaNhan', {
+	// 	url: '/trang-ca-nhan/{username}',
+	// 	templateUrl: 'appJS/trangCaNhan/_trangCaNhan.html',
+	// 	controller: 'trangCaNhanCtrl',
+	// 	resolve: {
+	// 		user: ['trangCaNhanService', '$stateParams',  function(trangCaNhanService, $stateParams) {
+	// 			return trangCaNhanService.show($stateParams.username);
+	// 		}],
+
+	// 		posts: ['baiVietCaNhanService', '$stateParams', '$rootScope', '$location',
+	// 		 function(baiVietCaNhanService,$stateParams, $rootScope, $location){
+	// 		 	var searchObj = $location.search();
+	// 		 	var page = 1;
+	// 		 	if(searchObj.page && (searchObj.module == null || searchObj.module == 'bai-viet-ca-nhan')){
+	// 		 		page = searchObj.page;
+	// 		 	}
+	// 			return baiVietCaNhanService.index($stateParams.username, page, $rootScope.rootPageConfig.pageSize);		
+	// 		}],
+
+	// 		favoritePosts: ['baiVietYeuThichService', '$stateParams', '$rootScope', '$location',
+	// 		 function(baiVietYeuThichService,$stateParams, $rootScope, $location){
+	// 		 	var searchObj = $location.search();
+	// 		 	var page = 1;
+	// 		 	if(searchObj.page && searchObj.module == 'bai-viet-yeu-thich'){
+	// 		 		page = searchObj.page;
+	// 		 	}
+	// 			return baiVietYeuThichService.get($stateParams.username, page, $rootScope.rootPageConfig.pageSize);		
+	// 		}],
+
+	// 		authenUser: ['Auth', function(Auth){
+	// 			return Auth.currentUser().then(function(user){
+	// 				return user;
+	// 			}, function(response){
+	// 				return null;
+	// 			})
+	// 		}]
+	// 	}
+	// })
+
+
+	// $stateProvider.state('trangCaNhan', {
+	// 	url: '/trang-ca-nhan/{username}',
+	// 	templateUrl: 'appJS/trangCaNhan/_trangCaNhan.html',
+	// 	controller: 'trangCaNhanCtrl',
+	// 	resolve: {
+	// 		user: ['trangCaNhanService', '$stateParams', function(trangCaNhanService, $stateParams) {
+	// 			return trangCaNhanService.show($stateParams.username);
+	// 		}],
+
+	// 		posts: ['baiVietCaNhanService', '$stateParams', '$rootScope',
+	// 			function(baiVietCaNhanService, $stateParams, $rootScope) {
+	// 				return baiVietCaNhanService.index($stateParams.username, 1, $rootScope.rootPageConfig.pageSize);
+	// 			}
+	// 		],
+
+	// 		favoritePosts: ['baiVietYeuThichService', '$stateParams', '$rootScope',
+	// 			function(baiVietYeuThichService, $stateParams, $rootScope) {
+	// 				return baiVietYeuThichService.get($stateParams.username, 1, $rootScope.rootPageConfig.pageSize);
+	// 			}
+	// 		],
+
+	// 		authenUser: ['Auth', function(Auth) {
+	// 			return Auth.currentUser().then(function(user) {
+	// 				return user;
+	// 			}, function(response) {
+	// 				return null;
+	// 			})
+	// 		}]
+	// 	}
+	// })
+
 	$stateProvider.state('trangCaNhan', {
 		url: '/trang-ca-nhan/{username}',
 		templateUrl: 'appJS/trangCaNhan/_trangCaNhan.html',
 		controller: 'trangCaNhanCtrl',
 		resolve: {
-			user: ['trangCaNhanService', '$stateParams',  function(trangCaNhanService, $stateParams) {
+			user: ['trangCaNhanService', '$stateParams', function(trangCaNhanService, $stateParams) {
 				return trangCaNhanService.show($stateParams.username);
 			}],
 
-			posts: ['baiVietCaNhanService', '$stateParams', '$rootScope', '$location',
-			 function(baiVietCaNhanService,$stateParams, $rootScope, $location){
-			 	var searchObj = $location.search();
-			 	var page = 1;
-			 	if(searchObj.page && (searchObj.module == null || searchObj.module == 'bai-viet-ca-nhan')){
-			 		page = searchObj.page;
-			 	}
-				return baiVietCaNhanService.index($stateParams.username, page, $rootScope.rootPageConfig.pageSize);		
-			}],
+			posts: ['baiVietCaNhanService', '$stateParams', '$rootScope',
+				function(baiVietCaNhanService, $stateParams, $rootScope) {
+					return baiVietCaNhanService.index($stateParams.username, 1, $rootScope.rootPageConfig.pageSize).promise;
+				}
+			],
 
-			favoritePosts: ['baiVietYeuThichService', '$stateParams', '$rootScope', '$location',
-			 function(baiVietYeuThichService,$stateParams, $rootScope, $location){
-			 	var searchObj = $location.search();
-			 	var page = 1;
-			 	if(searchObj.page && searchObj.module == 'bai-viet-yeu-thich'){
-			 		page = searchObj.page;
-			 	}
-				return baiVietYeuThichService.get($stateParams.username, page, $rootScope.rootPageConfig.pageSize);		
-			}],
+			favoritePosts: ['baiVietYeuThichService', '$stateParams', '$rootScope',
+				function(baiVietYeuThichService, $stateParams, $rootScope) {
+					return baiVietYeuThichService.get($stateParams.username, 1, $rootScope.rootPageConfig.pageSize);
+				}
+			],
 
-			authenUser: ['Auth', function(Auth){
-				return Auth.currentUser().then(function(user){
+			authenUser: ['Auth', function(Auth) {
+				return Auth.currentUser().then(function(user) {
 					return user;
-				}, function(response){
+				}, function(response) {
 					return null;
 				})
 			}]

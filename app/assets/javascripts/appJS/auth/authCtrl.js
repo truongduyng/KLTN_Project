@@ -8,6 +8,7 @@ app.controller('authCtrl', ['$scope', 'Auth', '$state', '$rootScope', 'Flash',
 			Auth.login($scope.user).then(function() {
 				$scope.showLoginModal = false;
 				$scope.error = "";
+				$state.reload();
 				//Neu login truc tiep tren trang, ko dung modal thi tro ve trang home
 				if($state.current.name == "login"){
 					$state.go("home");
