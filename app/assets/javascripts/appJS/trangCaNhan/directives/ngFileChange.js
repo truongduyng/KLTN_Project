@@ -4,6 +4,11 @@ app.directive('ngFileChange', [function() {
 		link: function(scope, iElement, iAttrs) {
 			$(iElement).bind('change', function(evt) {
 				var file = evt.currentTarget.files[0];
+				//Gan name cua file cho scope.fileName 
+				scope.$apply(function(){
+					scope[iAttrs.fileName] = file.name;
+				});
+				console.log("scope", scope);
 				var reader = new FileReader();
 				reader.onload = function(evt) {
 					scope.$apply(function($scope) {

@@ -15,11 +15,12 @@ app.controller('changeAvatarCtrl', ['$scope', 'FileUploader', '$cookies', '$moda
 	};
 
 	//Callback duoc goi truoc khi upload
-	$scope.uploader.onBeforeUploadItem = function(file) {
-		file.headers = {
+	$scope.uploader.onBeforeUploadItem = function(item) {
+		item.headers = {
 			'X-CSRF-TOKEN': $cookies['XSRF-TOKEN'],
 		};
-		file.url = "/custom_users/change_avatar.json";
+		item.file.name = $scope.fileName;
+		item.url = "/custom_users/change_avatar.json";
 	};
 
 	//Neu loi la ko chung thuc thi hien form login
