@@ -6,7 +6,7 @@
 app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', function($scope, $rootScope, $state, Auth, Flash) {
 
 	$rootScope.$on('$stateChangeStart',
-		function(event, toState, toParams, fromState, fromParams) {			
+		function(event, toState, toParams, fromState, fromParams) {
 			//Kiem tra trang thai cua route hay page co yeu cau login hay ko
 			//Sau do goi form login, va dua vao thuoc tinh co load lai trang hay de biet cach load trang
 			if (toState.access != null && !toState.access.free && !Auth.isAuthenticated()) {
@@ -15,13 +15,13 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', f
 					return; // no need to redirect anymore 
 				}
 				event.preventDefault(); // stop current execution
-				Flash.create("danger","Bạn cần đăng nhập để truy cập trang này");
+				Flash.create("danger", "Bạn cần đăng nhập để truy cập trang này");
 				$state.go("login");
 			}
 			//Kiem tra neu da chung thuc thi ko the toi 2 trang login va register
-			if(Auth.isAuthenticated()){
+			if (Auth.isAuthenticated()) {
 				console.log("is Authenticated");
-				if(toState.name == 'login' || toState.name == 'register'){
+				if (toState.name == 'login' || toState.name == 'register') {
 					event.preventDefault();
 					$state.go("home");
 				}
@@ -45,6 +45,21 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', f
 		// 	$rootScope.$emit("onRequireLoginWithReload");
 		// }
 	});
+
+
+	$rootScope.pageConfig = {
+		currentPage: 1,
+		pageSize: 5,
+		total: 0,
+		adjacent: 2,
+		dots: '...',
+		'scroll-top': true,
+		'hide-if-empty': true,
+		'ul-class': 'pagination',
+		'active-class': 'active',
+		'disabled-class': 'disabled',
+		'show-prev-next': true,
+	};
 
 }]);
 

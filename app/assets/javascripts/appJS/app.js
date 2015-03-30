@@ -1,7 +1,7 @@
 //Loai bo angularMoment, ngFileUpload
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angularFileUpload',
 	'angular-flash.service', 'angular-flash.flash-alert-directive', 'unsavedChanges', 'sporta.directives',
-	'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago'
+	'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging'
 ]);
 
 //For intercept $http
@@ -107,12 +107,18 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		templateUrl: 'appJS/trangCaNhan/_trangCaNhan.html',
 		controller: 'trangCaNhanCtrl',
 		resolve: {
-			user: ['trangCaNhanService', '$stateParams', function(trangCaNhanService, $stateParams) {
+			user: ['trangCaNhanService', '$stateParams',  function(trangCaNhanService, $stateParams) {
 				return trangCaNhanService.show($stateParams.username);
 			}],
-			posts: ['baiVietCaNhanService', '$stateParams', function(baiVietCaNhanService,$stateParams){
-				console.log("resolve", $stateParams.username);
-				return baiVietCaNhanService.index($stateParams.username);		
+
+			posts: ['baiVietCaNhanService', '$stateParams', '$rootScope', '$location',
+			 function(baiVietCaNhanService,$stateParams, $rootScope, $location){
+			 	var searchObj = $location.search();
+			 	var page = 1;
+			 	if(searchObj.page){
+			 		page = searchObj.page;
+			 	}
+				return baiVietCaNhanService.index($stateParams.username, page, $rootScope.pageConfig.pageSize);		
 			}]
 		}
 	})

@@ -1,7 +1,7 @@
 app.controller('trangCaNhanCtrl', ['$scope', 'Auth', '$modal', 'trangCaNhanService'
 	, function($scope, Auth, $modal, trangCaNhanService) {
 
-
+	
 	//User hien dang dc xem thong tin, authenticatedUser la user chung thuc
 	$scope.currentUser = trangCaNhanService.user;
 	console.log("currentUser", $scope.currentUser);

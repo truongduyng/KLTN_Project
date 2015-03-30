@@ -134,15 +134,23 @@ class PostsController < ApplicationController
 	# 	end
 	
 	# end
+
+
 	def get_posts_by_username
+		#render json: params, status: :ok
 		user = User.where(username: params[:username]).first
 		if user
-			@all_posts = user.posts.desc(:updated_at).limit(10)
+			if user_signed_in? && user == current_user
+				page = params[:page]
+				per_page = params[:per_page]
+				@all_posts = user.posts.desc(:updated_at).paginate(page: page, per_page: per_page)
+			else
+				#@all_posts = user.posts.where()
+			end
 			render 'get_posts_by_username.json.jbuilder', status: :ok
 		else
-			render nothing: true, status: :not_found, content_type: 'application/json'
+			render nothing: true, status: :not_found, content_type: 'application/json'	
 		end
-	
 	end
 
 
