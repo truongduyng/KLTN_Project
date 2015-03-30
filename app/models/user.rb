@@ -14,8 +14,9 @@ class User
   belongs_to :role 
   #embeds_one :information 
   has_one :bussiness
-  #
   has_many :posts
+  has_many :favorite_posts
+  
   
   #My field
   field :firstname, type: String

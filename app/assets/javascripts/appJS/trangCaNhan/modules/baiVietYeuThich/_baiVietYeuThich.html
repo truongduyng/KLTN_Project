@@ -84,24 +84,20 @@
 
 <div class="row">
   <div class="col-xs-12" style="text-align: center;">
-    <nav>
-          <ul class="pagination">
-            <li>
-              <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li>
-              <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-    </nav>
+       <paging
+              class="small"
+              page="pageConfig.currentPage" 
+              page-size="pageConfig.pageSize" 
+              total="pageConfig.total"
+              adjacent="{{pageConfig.adjacent}}"
+              dots="{{pageConfig.dots}}"
+              scroll-top="{{pageConfig.scrollTop}}" 
+              hide-if-empty="{{pageConfig.hideIfEmpty}}"
+              ul-class="{{pageConfig.ulClass}}"
+              active-class="{{pageConfig.activeClass}}"
+              disabled-class="{{pageConfig.disabledClass}}"
+              show-prev-next="{{pageConfig.showPrevNext}}"
+              paging-action="onPageSelected('Paging Clicked', page)">
+      </paging> 
   </div>
 </div>

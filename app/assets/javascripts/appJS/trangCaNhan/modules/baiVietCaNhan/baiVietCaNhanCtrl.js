@@ -1,19 +1,17 @@
 app.controller('baiVietCaNhanCtrl', ['$scope', 'baiVietCaNhanService','$state', '$location', '$stateParams',
 	function($scope, baiVietCaNhanService, $state, $location, $stateParams) {
 
+		//Lay cau hinh page tu rootScope
 		$scope.pageConfig = $scope.$root.pageConfig;
-
-		var searchObj = $location.search();
-		if(searchObj.page){
-			$scope.pageConfig.currentPage = searchObj.page;
+		//Lay trang hien tai tu tham so query
+		if($scope.searchObj.page){
+			$scope.pageConfig.currentPage = $scope.searchObj.page;
 		}
 		$scope.pageConfig.total = baiVietCaNhanService.total;
-		
+	
 		$scope.onPageSelected = function(data, page){
-			console.log("on page selected", page);
-			$location.search({
-				page: page,
-			});
+			$scope.searchObj.page = page;
+			$location.search($scope.searchObj);
 			baiVietCaNhanService.index($stateParams.username, page, $scope.pageConfig.pageSize);
 		};
 

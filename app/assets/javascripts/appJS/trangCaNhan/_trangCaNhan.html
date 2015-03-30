@@ -8,8 +8,6 @@
     <!-- BEGIN MAIN COLUMN -->
     <div class="col-md-6 detail-main-column">
 		      
-
-
           <span style="border: 1px solid #337AB7; display:block;margin:0px -15px; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>TRANG CÁ NHÂN</strong></span>
           <!-- BEGIN THONG TIN CA NHAN -->
           <div class="well" style="overflow: hidden; margin: 0px -15px;">
@@ -34,8 +32,8 @@
                             <p>Email: <span class="email">{{currentUser.email}}</span></p>
                             <p>Địa chỉ: <span class="address">{{currentUser.address | notKnow}}</span></p>
                             <p>Điện thoại : <span class="phone">{{currentUser.phone | notKnow}}</span></p>
-                            <a ng-click="showEditProfileModal()" class="btn btn-success" >Chỉnh sửa tài khoản</a>
-                            <a ng-click="showChangePasswordModal()" class="btn btn-success">Đổi mật khẩu</a>
+                            <a ng-if="permission.all" ng-click="showEditProfileModal()" class="btn btn-success" >Chỉnh sửa tài khoản</a>
+                            <a ng-if="permission.all" ng-click="showChangePasswordModal()" class="btn btn-success">Đổi mật khẩu</a>
                           </div>
                         </div>
                     </div>
@@ -54,19 +52,17 @@
           <div class="well" style="overflow: hidden; margin: 0px -15px;">
              <div class="row">
               <div class="col-sm-12">
-
-                    <tabset>
-                        <tab heading="Bài viết cá nhân">
-
+                     <tabset>
+                        <tab select="onTabSelect('bai-viet-ca-nhan')" active="isBaiVietCaNhanModule" heading="Bài viết cá nhân">
                           <section ng-include="'appJS/trangCaNhan/modules/baiVietCaNhan/_baiVietCaNhan.html'"></section>
                         </tab>
-                        <tab heading="Bài viết yêu thích">
-                          <section ng-include="'appJS/trangCaNhan/modules/_baiVietYeuThich.html'"></section>
+                        <tab select="onTabSelect('bai-viet-yeu-thich')" active="isBaiVietYeuThichModule" heading="Bài viết yêu thích">
+                          <section ng-include="'appJS/trangCaNhan/modules/baiVietYeuThich/_baiVietYeuThich.html'"></section>
                         </tab>
-                        <tab heading="Thông báo">
+                        <tab ng-if="permission.all" select="onTabSelect('thong-bao')" active="isThongBaoModule" heading="Thông báo">
                           <section ng-include="'appJS/trangCaNhan/modules/_thongBao.html'"></section>
                         </tab>
-                        <tab heading="Quản lý vé">
+                        <tab ng-if="permission.all" select="onTabSelect('quan-ly-ve')" active="isQuanLyVeModule" heading="Quản lý vé">
                           <section ng-include="'appJS/trangCaNhan/modules/_quanLyVe.html'"></section>
                         </tab>
                     </tabset>

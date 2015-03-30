@@ -45,7 +45,7 @@
                       <p></p>
                       <div class="btn-group pull-right" role="group" aria-label="...">  
                           <a ui-sref="chiTietBaiViet({id: post._id.$oid})" class="btn btn-default" tooltip="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
-                          <a ng-if="!post.published" ui-sref="editPost({id: post._id.$oid})" class="btn btn-default" tooltip="Chỉnh sửa bài viết"><span class="glyphicon glyphicon-edit"></span></a>
+                          <a  ng-if="!post.published && permission.all" ui-sref="editPost({id: post._id.$oid})" class="btn btn-default" tooltip="Chỉnh sửa bài viết"><span class="glyphicon glyphicon-edit"></span></a>
                       </div>
                      
                 </div>

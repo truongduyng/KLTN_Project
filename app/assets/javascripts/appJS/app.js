@@ -119,6 +119,14 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			 		page = searchObj.page;
 			 	}
 				return baiVietCaNhanService.index($stateParams.username, page, $rootScope.pageConfig.pageSize);		
+			}],
+
+			authenUser: ['Auth', function(Auth){
+				return Auth.currentUser().then(function(user){
+					return user;
+				}, function(response){
+					return null;
+				})
 			}]
 		}
 	})
