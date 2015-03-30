@@ -2,6 +2,7 @@
     <!-- BEGIN LEFT COLUMN -->
     <div class="col-md-2">
       <section ng-include="'appJS/modules/_groupModule.html'"></section>
+      <section ng-include="'appJS/modules/_vietBaiModule.html'"></section>
     </div>
     <!-- END LEFT COLUMN -->
 
@@ -52,6 +53,7 @@
           <div class="well" style="overflow: hidden; margin: 0px -15px;">
              <div class="row">
               <div class="col-sm-12">
+                    <div flash-message=""></div>
                      <tabset>
                         <tab select="onTabSelect('bai-viet-ca-nhan')" active="isBaiVietCaNhanModule" heading="Bài viết cá nhân">
                           <section ng-include="'appJS/trangCaNhan/modules/baiVietCaNhan/_baiVietCaNhan.html'"></section>

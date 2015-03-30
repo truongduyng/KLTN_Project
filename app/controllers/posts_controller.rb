@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
 	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo, :like, :unlike, :edit, :update, :get_posts_by_current_user]
+	before_action :authenticate_user!, only: [:destroy]
 	before_action :find_published_post, only: [:like, :unlike, :get_k_first_like, :get_all_likes]
-	before_action :find_and_check_post_with_user, only: [:add_photo]
+	before_action :find_and_check_post_with_user, only: [:add_photo, :destroy]
 	before_action :find_post_for_show, only: [:show]
 	before_action :find_post_for_edit, only: [:edit, :delete_photo, :update]
 
@@ -43,6 +44,12 @@ class PostsController < ApplicationController
 		else
 			render json: @post.errors, status: :unprocessable_entity
 		end
+	end
+
+	#/DELETE posts/:id.json
+	def destroy
+		@post.destroy
+		render nothing: true, status: :ok, content_type: 'application/json' 
 	end
 
 	#/posts/:id/add_photo
@@ -148,6 +155,7 @@ class PostsController < ApplicationController
 
 
 	def get_favorite_posts_by_username
+		sleep(2)
 		user = User.where(username: params[:username]).first
 		page = params[:page]
 		per_page = params[:per_page]

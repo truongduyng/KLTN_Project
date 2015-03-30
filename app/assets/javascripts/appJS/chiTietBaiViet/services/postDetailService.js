@@ -101,5 +101,10 @@ app.factory('postDetailService', ['$http', function($http) {
 		});
 	};
 
+	o.destroy = function(){
+		var id = o.post._id.$oid;
+		var url = "/posts/" + id + ".json";
+		return $http.delete(url);
+	};
 	return o;
 }]);

@@ -43,4 +43,10 @@ app.controller('baiVietYeuThichCtrl', ['$scope', 'baiVietYeuThichService', '$sta
 		});
 	};
 
+	$scope.unfavorite = function(post){
+		baiVietYeuThichService.unfavorite(post).success(function(){
+			$scope.pageConfig.total = baiVietYeuThichService.total;
+		});
+	};
+
 }]);

@@ -10,7 +10,7 @@ class Post
 	
 	embeds_many :photos
 	belongs_to :user
-	has_many :comments
+	has_many :comments, dependent: :destroy
 	embeds_many :likes, as: :likeable
 
 	#scope

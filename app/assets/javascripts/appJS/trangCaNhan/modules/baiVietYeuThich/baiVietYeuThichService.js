@@ -26,5 +26,16 @@ app.factory('baiVietYeuThichService', ['$http', '$q', function($http, $q) {
 		};
 	};
 
+	o.unfavorite = function(post) {
+		var id = post._id.$oid;
+		var url = "/favorite_posts/" + id + "/remove.json";
+		return $http.put(url).success(function() {
+			var index = o.posts.indexOf(post);
+			o.posts.splice(index, 1);
+			o.total--;
+		});
+	};
+
+
 	return o;
 }]);

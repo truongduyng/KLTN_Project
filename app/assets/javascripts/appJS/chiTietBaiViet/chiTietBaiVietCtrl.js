@@ -98,6 +98,15 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 			postDetailService.unfavorite();
 		};
 
+		//Xoa bai viet
+		$scope.delete = function(){
+			postDetailService.destroy().success(function(){
+				Flash.create("success", "Bạn đó xóa thành công bài viết");
+				 $state.go("trangCaNhan", {
+				 	username: $scope.currentUser.username,
+				 });
+			});
+		};
 
 	}
 ]);

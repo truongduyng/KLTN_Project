@@ -36,7 +36,7 @@
                           <div class="likes">
                             <div role="group" class="btn-group pull-left">  
                                                         <a class="btn btn-default" ui-sref="editPost({id: post._id.$oid})"><span class="glyphicon glyphicon-edit"></span> Sửa bài viết</a>
-                                                        <a class="btn btn-default" href="#"><span class="glyphicon glyphicon-trash"></span> Xóa bài viết</a>
+                                                        <a ng-confirm-click="Bạn có muốn xóa bài viết hay không ?" confirmed-click="delete()" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Xóa bài viết</a>
                             </div>
                             <span class="label label-danger pull-right" style="font-size: 1em; font-weight: 500; display:inline-block ;margin-top: 5px;">{{post.status.name}}</span>
                           </div>
