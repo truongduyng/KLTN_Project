@@ -137,8 +137,6 @@ class PostsController < ApplicationController
 
 
 	def get_posts_by_username
-		sleep(2)
-		#render json: params, status: :ok
 		user = User.where(username: params[:username]).first
 		page = params[:page]
 		per_page = params[:per_page]
@@ -156,23 +154,18 @@ class PostsController < ApplicationController
 	end
 
 
-	# def get_favorite_posts_by_username
-	# 	#render json: params, status: :ok
-	# 	user = User.where(username: params[:username]).first
-	# 	page = params[:page]
-	# 	per_page = params[:per_page]
-	# 	if user
-	# 		if user_signed_in? && user == current_user
-	# 			@all_posts = user.posts.desc(:updated_at).paginate(page: page, per_page: per_page)
-	# 		else
-	# 			#can thay doi cho day de load bai cho phu hop
-	# 			@all_posts = user.posts.desc(:updated_at).paginate(page: page, per_page: per_page)
-	# 		end
-	# 		render 'get_posts_by_username.json.jbuilder', status: :ok
-	# 	else
-	# 		render nothing: true, status: :not_found, content_type: 'application/json'	
-	# 	end
-	# end
+	def get_favorite_posts_by_username
+		user = User.where(username: params[:username]).first
+		page = params[:page]
+		per_page = params[:per_page]
+		if user
+			@favorite_posts = user.favorite_posts.desc(:updated_at).paginate(page: page, per_page: per_page)
+			@total = user.favorite_posts.count
+			render 'get_favorite_posts_by_username.json.jbuilder', status: :ok
+		else
+			render nothing: true, status: :not_found, content_type: 'application/json'	
+		end
+	end
 
 	
 	private

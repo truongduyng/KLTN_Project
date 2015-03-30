@@ -1,8 +1,9 @@
 app.controller('baiVietCaNhanCtrl', ['$scope', 'baiVietCaNhanService','$state', '$location', '$stateParams',
 	function($scope, baiVietCaNhanService, $state, $location, $stateParams) {
 
+		$scope.pageConfig = {};
 		//Lay cau hinh page tu rootScope
-		$scope.pageConfig = $scope.$root.pageConfig;
+		angular.copy($scope.$root.rootPageConfig, $scope.pageConfig);
 		//Lay trang hien tai tu tham so query
 		if($scope.searchObj.page){
 			$scope.pageConfig.currentPage = $scope.searchObj.page;

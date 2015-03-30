@@ -47,7 +47,8 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', f
 	});
 
 
-	$rootScope.pageConfig = {
+	//Cau hinh pageConfig chung 
+	$rootScope.rootPageConfig = {
 		currentPage: 1,
 		pageSize: 5,
 		total: 0,

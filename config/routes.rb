@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+ get '/posts/:username/get_favorite_posts_by_username' => 'posts#get_favorite_posts_by_username'
   get '/posts/:username/get_posts_by_username' => 'posts#get_posts_by_username'
   
   get 'custom_users/:username' => 'custom_users#get_user_by_username'

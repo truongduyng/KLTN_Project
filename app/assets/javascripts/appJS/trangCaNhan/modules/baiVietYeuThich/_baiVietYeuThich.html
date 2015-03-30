@@ -1,103 +1,104 @@
+<div ng-controller="baiVietYeuThichCtrl">
+    <h2></h2>
+    <div class="row">
+      <form class="form-tim-kiem">
+        <div class="col-xs-6 col-form-tim-kiem">
+           <input type="text" class="form-control" id="email" placeholder="Tìm kiếm...">
+        </div>
+        <div class="col-xs-3 col-form-tim-kiem">
+           <select class="form-control">
+                    <option>Tên bài viết</option>
+                    <option>Nội dung bài viết</option>
+                    <option>Người sở hữu</option>
+                  </select>
+        </div>
+        <div class="col-xs-3 col-form-tim-kiem">
+           <button type="submit" class="btn btn-primary btn-tim-kiem">Tìm kiếm</button>
+        </div>
+      </form>
+    </div>
 
-<h2></h2>
-<div class="row">
-  <form class="form-tim-kiem">
-    <div class="col-xs-6 col-form-tim-kiem">
-       <input type="text" class="form-control" id="email" placeholder="Tìm kiếm...">
-    </div>
-    <div class="col-xs-3 col-form-tim-kiem">
-       <select class="form-control">
-                <option>Tên bài viết</option>
-                <option>Nội dung bài viết</option>
-                <option>Người sở hữu</option>
-              </select>
-    </div>
-    <div class="col-xs-3 col-form-tim-kiem">
-       <button type="submit" class="btn btn-primary btn-tim-kiem">Tìm kiếm</button>
-    </div>
-  </form>
-</div>
+    <h1></h1>
+    <div class="row">
+        <div class="col-sm-12 danh-sach-bai-viet">
+              <div class="bai-viet">
+                    <div class="row">
+                      <div class="col-xs-2">
+                        <img src="gallery/01.jpg" class="img-circle" width="64px" height="64px">
+                      </div>
+                      <div class="col-xs-10">
+                        <span class="owner-bai-viet">Nguyễn Hữu Trung</span>
+                        <span>18:30am,  30 tháng 12 năm 2014</span>
+                      </div>
+                    </div>
+                    <div class="row noi-dung-bai-viet" >
+                      <div class="col-xs-12">
+                            <span class="tua-de-bai-viet">
+                              <a href="#">Chia sẻ kinh nghiệm đi đá bóng tập 1</a>
+                            </span>
+                            <div class="mo-ta-bai-viet">
+                              Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi 
+                            </div>
+                            <p></p>
+                            <div class="btn-group pull-right" role="group" aria-label="...">  
+                                <a href="#" class="btn btn-success" data-toggle="tooltip" data-original-title="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
+                                <a  href="#" class="btn btn-danger" data-toggle="tooltip" data-original-title="Bỏ lưu bài viết"><span class="glyphicon glyphicon-trash"></span></a>
+                                <a style="display:none;" href="#" class="btn btn-primary" data-toggle="tooltip" data-original-title="Hoàn tác"><span class="glyphicon glyphicon-refresh"></span></a>
+                            </div>
 
-<h1></h1>
-<div class="row">
-    <div class="col-sm-12 danh-sach-bai-viet">
-          <div class="bai-viet">
-                <div class="row">
-                  <div class="col-xs-2">
-                    <img src="gallery/01.jpg" class="img-circle" width="64px" height="64px">
-                  </div>
-                  <div class="col-xs-10">
-                    <span class="owner-bai-viet">Nguyễn Hữu Trung</span>
-                    <span>18:30am,  30 tháng 12 năm 2014</span>
-                  </div>
+                            
+                      </div>
                 </div>
-                <div class="row noi-dung-bai-viet" >
-                  <div class="col-xs-12">
-                        <span class="tua-de-bai-viet">
-                          <a href="#">Chia sẻ kinh nghiệm đi đá bóng tập 1</a>
-                        </span>
-                        <div class="mo-ta-bai-viet">
-                          Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi 
-                        </div>
-                        <p></p>
-                        <div class="btn-group pull-right" role="group" aria-label="...">  
-                            <a href="#" class="btn btn-success" data-toggle="tooltip" data-original-title="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
-                            <a  href="#" class="btn btn-danger" data-toggle="tooltip" data-original-title="Bỏ lưu bài viết"><span class="glyphicon glyphicon-trash"></span></a>
-                            <a style="display:none;" href="#" class="btn btn-primary" data-toggle="tooltip" data-original-title="Hoàn tác"><span class="glyphicon glyphicon-refresh"></span></a>
-                        </div>
-
-                        
-                  </div>
-            </div>
-          </div>
-          <div class="bai-viet">
-                <div class="row">
-                  <div class="col-xs-2">
-                    <img src="gallery/01.jpg" class="img-circle" width="64px" height="64px">
-                  </div>
-                  <div class="col-xs-10">
-                    <span class="owner-bai-viet">Nguyễn Hữu Trung</span>
-                    <span>18:30am,  30 tháng 12 năm 2014</span>
-                  </div>
+              </div>
+              <div class="bai-viet">
+                    <div class="row">
+                      <div class="col-xs-2">
+                        <img src="gallery/01.jpg" class="img-circle" width="64px" height="64px">
+                      </div>
+                      <div class="col-xs-10">
+                        <span class="owner-bai-viet">Nguyễn Hữu Trung</span>
+                        <span>18:30am,  30 tháng 12 năm 2014</span>
+                      </div>
+                    </div>
+                    <div class="row noi-dung-bai-viet" >
+                      <div class="col-xs-12">
+                            <span class="tua-de-bai-viet">
+                              <a href="#">Chia sẻ kinh nghiệm đi đá bóng tập 1</a>
+                            </span>
+                            <div class="mo-ta-bai-viet">
+                              Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi 
+                            </div>
+                            <p></p>
+                             <div class="btn-group pull-right" role="group" aria-label="...">  
+                                <a href="#" class="btn btn-success" data-toggle="tooltip" data-original-title="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
+                                <a  href="#" class="btn btn-danger" data-toggle="tooltip" data-original-title="Bỏ lưu bài viết"><span class="glyphicon glyphicon-trash"></span></a>
+                                <a style="display:none;" href="#" class="btn btn-primary" data-toggle="tooltip" data-original-title="Hoàn tác"><span class="glyphicon glyphicon-refresh"></span></a>
+                            </div>
+                            
+                      </div>
                 </div>
-                <div class="row noi-dung-bai-viet" >
-                  <div class="col-xs-12">
-                        <span class="tua-de-bai-viet">
-                          <a href="#">Chia sẻ kinh nghiệm đi đá bóng tập 1</a>
-                        </span>
-                        <div class="mo-ta-bai-viet">
-                          Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi 
-                        </div>
-                        <p></p>
-                         <div class="btn-group pull-right" role="group" aria-label="...">  
-                            <a href="#" class="btn btn-success" data-toggle="tooltip" data-original-title="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
-                            <a  href="#" class="btn btn-danger" data-toggle="tooltip" data-original-title="Bỏ lưu bài viết"><span class="glyphicon glyphicon-trash"></span></a>
-                            <a style="display:none;" href="#" class="btn btn-primary" data-toggle="tooltip" data-original-title="Hoàn tác"><span class="glyphicon glyphicon-refresh"></span></a>
-                        </div>
-                        
-                  </div>
-            </div>
-          </div>
+              </div>
+        </div>
     </div>
-</div>
 
 
-<div class="row">
-  <div class="col-xs-12" style="text-align: center;">
-       <paging
-              class="small"
-              page="pageConfig.currentPage" 
-              page-size="pageConfig.pageSize" 
-              total="pageConfig.total"
-              adjacent="{{pageConfig.adjacent}}"
-              dots="{{pageConfig.dots}}"
-              scroll-top="{{pageConfig.scrollTop}}" 
-              hide-if-empty="{{pageConfig.hideIfEmpty}}"
-              ul-class="{{pageConfig.ulClass}}"
-              active-class="{{pageConfig.activeClass}}"
-              disabled-class="{{pageConfig.disabledClass}}"
-              show-prev-next="{{pageConfig.showPrevNext}}"
-              paging-action="onPageSelected('Paging Clicked', page)">
-      </paging> 
-  </div>
+    <div class="row">
+      <div class="col-xs-12" style="text-align: center;">
+           <paging
+                  class="small"
+                  page="pageConfig.currentPage" 
+                  page-size="pageConfig.pageSize" 
+                  total="pageConfig.total"
+                  adjacent="{{pageConfig.adjacent}}"
+                  dots="{{pageConfig.dots}}"
+                  scroll-top="{{pageConfig.scrollTop}}" 
+                  hide-if-empty="{{pageConfig.hideIfEmpty}}"
+                  ul-class="{{pageConfig.ulClass}}"
+                  active-class="{{pageConfig.activeClass}}"
+                  disabled-class="{{pageConfig.disabledClass}}"
+                  show-prev-next="{{pageConfig.showPrevNext}}"
+                  paging-action="onPageSelected('Paging Clicked', page)">
+          </paging> 
+      </div>
+    </div>
 </div>

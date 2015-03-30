@@ -115,10 +115,20 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			 function(baiVietCaNhanService,$stateParams, $rootScope, $location){
 			 	var searchObj = $location.search();
 			 	var page = 1;
-			 	if(searchObj.page){
+			 	if(searchObj.page && (searchObj.module == null || searchObj.module == 'bai-viet-ca-nhan')){
 			 		page = searchObj.page;
 			 	}
-				return baiVietCaNhanService.index($stateParams.username, page, $rootScope.pageConfig.pageSize);		
+				return baiVietCaNhanService.index($stateParams.username, page, $rootScope.rootPageConfig.pageSize);		
+			}],
+
+			favoritePosts: ['baiVietYeuThichService', '$stateParams', '$rootScope', '$location',
+			 function(baiVietYeuThichService,$stateParams, $rootScope, $location){
+			 	var searchObj = $location.search();
+			 	var page = 1;
+			 	if(searchObj.page && searchObj.module == 'bai-viet-yeu-thich'){
+			 		page = searchObj.page;
+			 	}
+				return baiVietYeuThichService.get($stateParams.username, page, $rootScope.rootPageConfig.pageSize);		
 			}],
 
 			authenUser: ['Auth', function(Auth){
