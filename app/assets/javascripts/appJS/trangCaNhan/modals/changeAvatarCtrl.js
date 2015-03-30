@@ -1,5 +1,5 @@
-app.controller('changeAvatarCtrl', ['$scope', 'FileUploader', '$cookies', '$modalInstance'
-	, function($scope, FileUploader, $cookies, $modalInstance) {
+app.controller('changeAvatarCtrl', ['$scope', 'FileUploader', '$cookies', '$modalInstance', '$rootScope'
+	, function($scope, FileUploader, $cookies, $modalInstance, $rootScope) {
 	//Cho anh avatar
 	$scope.uploader = new FileUploader();
 	$scope.myImage = '';
@@ -20,6 +20,13 @@ app.controller('changeAvatarCtrl', ['$scope', 'FileUploader', '$cookies', '$moda
 			'X-CSRF-TOKEN': $cookies['XSRF-TOKEN'],
 		};
 		file.url = "/custom_users/change_avatar.json";
+	};
+
+	//Neu loi la ko chung thuc thi hien form login
+	$scope.uploader.onErrorItem = function(item, response, status, headers) {
+		if (status == 401) {
+			$rootScope.$emit("onRequireLogin");
+		}
 	};
 	//Callback khi upload hoan tat
 	$scope.uploader.onSuccessItem  = function(item, data, status, headers){

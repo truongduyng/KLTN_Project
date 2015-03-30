@@ -3,7 +3,8 @@
 //do do de lang nghe su kien $stateChangeError thi ta phai tao mainCtrl la controller cha 
 //cho tat ca controller va lang nghe su kien do
 
-app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', function($scope, $rootScope, $state, Auth, Flash) {
+app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash'
+	, function($scope, $rootScope, $state, Auth, Flash) {
 
 	$rootScope.$on('$stateChangeStart',
 		function(event, toState, toParams, fromState, fromParams) {

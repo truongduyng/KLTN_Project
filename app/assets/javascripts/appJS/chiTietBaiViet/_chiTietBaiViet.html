@@ -15,15 +15,15 @@
           <ul class="media-list">
                <li class="media">
                   <div class="media-left">
-                    <a href="#">
-                     <img fallback-src="sportaLogo"  class="img-circle img-responsive profile-picture" class="media-object" ng-src="{{post.user.avatar.thumb.url | logo}}" 
+                    <a ui-sref="trangCaNhan({username: post.user.username})">
+                     <img fallback-src="sportaLogo"  class="img-circle img-responsive profile-picture" class="media-object" ng-src="{{post.user.avatar.url | logo}}" 
                      alt="Generic placeholder image" width="64px" height="64px" style="min-width: 44px; min-height: 44px;">
                     </a>
                   </div>
                   
                   <div class="media-body">
                     <div>
-                      <h5 class="media-heading pull-left">{{post.user.username}}</h5>
+                      <a ui-sref="trangCaNhan({username: post.user.username})"><h5  style="color:#337ab7;"  class="media-heading pull-left">{{post.user.username}}</h5></a>
                       <small class="pull-right" style="font-weight: 600;">{{post.created_at | timeago}}</small>
                     </div>
                     <div class="clearfix"></div>
@@ -110,10 +110,13 @@
                  <h5 style="text-align: center;" ng-if="allLikes.length == 0">Chưa có ai thích bài viết này</h5>
                   <div class="list-person-like" style="max-height:500px; overflow-y: auto;">
                      <div  class="person-like" ng-repeat="like in allLikes">
-                          <img src="{{like.user.avatar.thumb.url | logo}}" class="pull-left img-circle" width="64px" height="64px">
+                          <a ui-sref="trangCaNhan({username:like.user.username})">
+                             <img src="{{like.user.avatar.url | logo}}" class="pull-left img-circle" width="64px" height="64px">
                           <div class="pull-left person-info">
                             <strong>{{like.user | displayName}}</strong>
                           </div>
+                          </a>
+                         
                     </div>
                  
                   </div>

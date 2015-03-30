@@ -25,7 +25,7 @@
           <div class="bai-viet" ng-repeat="post in posts | orderBy: '-updated_at'" >
               <div class="row">
                 <div class="col-xs-2">
-                  <img fallback-src="sportaLogo" src="{{post.user.avatar.large_thumb.url |logo}}" class="img-circle" width="64px" height="64px">
+                  <img fallback-src="sportaLogo" ng-src="{{post.user.avatar.url |logo}}" class="img-circle profile-picture" width="64px" height="64px">
                 </div>
                 <div class="col-xs-10">
                   <span class="owner-bai-viet">{{post.user.firstname| fullname: currentUser.lastname}}</span>

@@ -14,10 +14,10 @@
                 <div class="row">
                     <!-- BEGIN COL FOR INFO PICTURE -->
                     <div class="col-xs-3">
-                      <img width="128px" fallback-src="sportaLogo" ng-src="{{currentUser.avatar.url}}" class="img-responsive center-block img-circle profile-picture">
+                      <img width="128px" fallback-src="sportaLogo" ng-src="{{currentUser.avatar.url|logo}}" class="img-responsive center-block img-circle profile-picture">
                       
                       <!-- FOR CHANGE PROFILE PICTURE -->
-                      <div style="text-align: center; margin-top: 48px;">
+                      <div ng-if="permission.all" style="text-align: center; margin-top: 48px;">
                         <a ng-click="showChangeAvatarModal()" class="btn btn-primary" tooltip="Thay ảnh đại diện"><span class="glyphicon glyphicon-edit"></span></a>
                       </div>
                       
