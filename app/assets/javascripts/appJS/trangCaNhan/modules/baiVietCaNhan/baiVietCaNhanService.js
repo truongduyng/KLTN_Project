@@ -24,7 +24,7 @@ app.factory('baiVietCaNhanService', ['$http', '$q', function($http, $q) {
 
 	//get all tat ca bai  viet
 	o.index = function(username, page, per_page) {
-		
+
 		var url = "/posts/" + username + "/get_posts_by_username.json";
 		var query = "?page=" + page + "&per_page=" + per_page;
 
@@ -38,8 +38,7 @@ app.factory('baiVietCaNhanService', ['$http', '$q', function($http, $q) {
 		}).success(function(data) {
 			angular.copy(data.posts, o.posts);
 			o.total = data.total;
-		}).error(function(data){
-		});
+		}).error(function(data) {});
 
 		return {
 			promise: promise,
@@ -47,5 +46,14 @@ app.factory('baiVietCaNhanService', ['$http', '$q', function($http, $q) {
 		};
 	};
 
+	o.deletePost = function(post) {
+		var id = post._id.$oid;
+		var url = "/posts/" + id + '.json';
+		return $http.delete(url).success(function() {
+			var index = o.posts.indexOf(post);
+			o.posts.splice(index,1);
+			o.total--;
+		});
+	}
 	return o;
 }])

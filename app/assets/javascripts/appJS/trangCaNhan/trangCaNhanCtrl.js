@@ -95,6 +95,7 @@
 app.controller('trangCaNhanCtrl', ['$scope', 'Auth', '$modal', 'trangCaNhanService', 
  '$location','authenUser', function($scope, Auth, $modal, trangCaNhanService, $location, authenUser) {
 
+ 	
 
 	//User hien dang dc xem thong tin, authenticatedUser la user chung thuc
 	$scope.currentUser = trangCaNhanService.user;

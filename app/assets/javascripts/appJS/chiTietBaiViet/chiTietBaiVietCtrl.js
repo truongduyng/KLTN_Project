@@ -101,6 +101,7 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 		//Xoa bai viet
 		$scope.delete = function(){
 			postDetailService.destroy().success(function(){
+				Notifier.success('Bạn đó xóa thành công bài viết')
 				Flash.create("success", "Bạn đó xóa thành công bài viết");
 				 $state.go("trangCaNhan", {
 				 	username: $scope.currentUser.username,

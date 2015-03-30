@@ -89,7 +89,22 @@
           </div>
    </li>
    
-   
-  <li ng-show="signedIn()"><a href="/bussiness-admin#/">{{user.username}}</a></li>
+
+
+    <li class="dropdown" dropdown >
+       <a href class="dropdown-toggle" dropdown-toggle>
+              {{user.username}}
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a ui-sref="trangCaNhan({username: user.username})">Trang cá nhân</a>
+              </li>
+              <li>
+                <a href="/bussiness-admin#/">Trang quản trị</a>
+              </li>
+        </ul>
+    </li>
+   <!-- <li ng-show="signedIn()"><a href="/bussiness-admin#/">{{user.username}}</a></li> -->
+  <!-- <li ng-show="signedIn()"><a href="/bussiness-admin#/">{{user.username}}</a></li> -->
   <li ng-show="signedIn()"><a style="cursor:pointer;" ng-click="logout()">Thoát</a></li>
 </ul>

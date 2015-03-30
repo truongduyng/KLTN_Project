@@ -48,6 +48,8 @@ class PostsController < ApplicationController
 
 	#/DELETE posts/:id.json
 	def destroy
+		#xoa tat ca bai viet yeu thich gan voi post nay
+		FavoritePost.where(post_id: @post.id).destroy_all
 		@post.destroy
 		render nothing: true, status: :ok, content_type: 'application/json' 
 	end

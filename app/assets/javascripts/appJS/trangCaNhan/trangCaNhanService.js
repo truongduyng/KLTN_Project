@@ -24,5 +24,6 @@ app.factory('trangCaNhanService', ['$http', function($http) {
 		return promise;
 	};
 
+	
 	return o;
 }])
