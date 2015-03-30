@@ -59,4 +59,3 @@ gem 'mongoid_paranoia'
 #for paginate voi mongoid
 gem 'will_paginate_mongoid'
 gem 'will_paginate', '~> 3.0.6'
-gem 'mongoid_search'

@@ -142,36 +142,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	// })
 
 
-	// $stateProvider.state('trangCaNhan', {
-	// 	url: '/trang-ca-nhan/{username}',
-	// 	templateUrl: 'appJS/trangCaNhan/_trangCaNhan.html',
-	// 	controller: 'trangCaNhanCtrl',
-	// 	resolve: {
-	// 		user: ['trangCaNhanService', '$stateParams', function(trangCaNhanService, $stateParams) {
-	// 			return trangCaNhanService.show($stateParams.username);
-	// 		}],
-
-	// 		posts: ['baiVietCaNhanService', '$stateParams', '$rootScope',
-	// 			function(baiVietCaNhanService, $stateParams, $rootScope) {
-	// 				return baiVietCaNhanService.index($stateParams.username, 1, $rootScope.rootPageConfig.pageSize);
-	// 			}
-	// 		],
-
-	// 		favoritePosts: ['baiVietYeuThichService', '$stateParams', '$rootScope',
-	// 			function(baiVietYeuThichService, $stateParams, $rootScope) {
-	// 				return baiVietYeuThichService.get($stateParams.username, 1, $rootScope.rootPageConfig.pageSize);
-	// 			}
-	// 		],
-
-	// 		authenUser: ['Auth', function(Auth) {
-	// 			return Auth.currentUser().then(function(user) {
-	// 				return user;
-	// 			}, function(response) {
-	// 				return null;
-	// 			})
-	// 		}]
-	// 	}
-	// })
 
 	$stateProvider.state('trangCaNhan', {
 		url: '/trang-ca-nhan/{username}',
@@ -190,7 +160,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
 			favoritePosts: ['baiVietYeuThichService', '$stateParams', '$rootScope',
 				function(baiVietYeuThichService, $stateParams, $rootScope) {
-					return baiVietYeuThichService.get($stateParams.username, 1, $rootScope.rootPageConfig.pageSize);
+					return baiVietYeuThichService.get($stateParams.username, 1, $rootScope.rootPageConfig.pageSize).promise;
 				}
 			],
 

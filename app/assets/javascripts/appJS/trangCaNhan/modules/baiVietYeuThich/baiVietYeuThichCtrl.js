@@ -27,11 +27,20 @@ app.controller('baiVietYeuThichCtrl', ['$scope', 'baiVietYeuThichService', '$sta
 	//Lay trang hien tai tu tham so query
 	$scope.posts = baiVietYeuThichService.posts;
 	$scope.pageConfig.total = baiVietYeuThichService.total;
+	var request = null;
 
 	$scope.onPageSelected = function(data, page) {
-		baiVietYeuThichService.get($stateParams.username, page, $scope.pageConfig.pageSize);
+		$scope.posts.splice(0, $scope.posts.length);
+		$scope.isLoading = true;
+		//Huy request neu no chua load xong va tao request moi
+		if (request != null) {
+			request.cancel("chuyển trang");
+		}
+
+		request = baiVietYeuThichService.get($stateParams.username, page, $scope.pageConfig.pageSize);
+		request.promise.success(function() {
+			$scope.isLoading = false;
+		});
 	};
-
-
 
 }]);

@@ -87,7 +87,17 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 				size: '',
 			});
 		};
-		
+
+		//thich bai viet
+		$scope.favorite = function(){
+			postDetailService.favorite();
+		};
+
+		//bo thich bai viet
+		$scope.unfavorite = function(){
+			postDetailService.unfavorite();
+		};
+
 
 	}
 ]);

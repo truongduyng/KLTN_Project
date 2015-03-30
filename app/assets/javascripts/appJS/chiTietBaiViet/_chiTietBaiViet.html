@@ -50,7 +50,8 @@
                                 
                                 <a  ng-mouseenter="getKFirstLikes()"  tooltip-html-unsafe="{{likesHtml}}" ng-click="showAllLikes()" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>
 
-                                <button class="btn btn-success">Lưu bài viết</button>
+                                <button  ng-hide="post.isFavorited" ng-click="favorite()" class="btn btn-success"><span>Lưu bài viết</span></button>
+                                <button ng-show="post.isFavorited" ng-click="unfavorite()" class="btn btn-success"><span >Bỏ lưu</span></button>
                           </div>
                           <section id="listComments" ng-include="'appJS/chiTietBaiViet/_listComments.html'"></section>
                       </div>

@@ -49,7 +49,7 @@ app.controller('baiVietCaNhanCtrl', ['$scope', 'baiVietCaNhanService', '$state',
 			});
 		};
 
-		//Tim kiem
+		//Tim kiem (cai dat sau)
 		$scope.searchType = 'Tên bài viết';
 		$scope.search = function() {
 			console.log("in search.", $scope.textSearch, $scope.searchType);

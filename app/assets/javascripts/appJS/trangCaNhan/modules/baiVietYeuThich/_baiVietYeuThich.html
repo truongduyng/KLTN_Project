@@ -21,67 +21,43 @@
     <h1></h1>
     <div class="row">
         <div class="col-sm-12 danh-sach-bai-viet">
-              <div class="bai-viet">
-                    <div class="row">
-                      <div class="col-xs-2">
-                        <img src="gallery/01.jpg" class="img-circle" width="64px" height="64px">
-                      </div>
-                      <div class="col-xs-10">
-                        <span class="owner-bai-viet">Nguyễn Hữu Trung</span>
-                        <span>18:30am,  30 tháng 12 năm 2014</span>
-                      </div>
-                    </div>
-                    <div class="row noi-dung-bai-viet" >
-                      <div class="col-xs-12">
-                            <span class="tua-de-bai-viet">
-                              <a href="#">Chia sẻ kinh nghiệm đi đá bóng tập 1</a>
-                            </span>
-                            <div class="mo-ta-bai-viet">
-                              Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi 
-                            </div>
-                            <p></p>
-                            <div class="btn-group pull-right" role="group" aria-label="...">  
-                                <a href="#" class="btn btn-success" data-toggle="tooltip" data-original-title="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
-                                <a  href="#" class="btn btn-danger" data-toggle="tooltip" data-original-title="Bỏ lưu bài viết"><span class="glyphicon glyphicon-trash"></span></a>
-                                <a style="display:none;" href="#" class="btn btn-primary" data-toggle="tooltip" data-original-title="Hoàn tác"><span class="glyphicon glyphicon-refresh"></span></a>
-                            </div>
-
-                            
-                      </div>
+          <div class="bai-viet" ng-repeat="post in posts | orderBy: '-updated_at'" >
+              <div class="row">
+                <div class="col-xs-2">
+                  <img fallback-src="sportaLogo" src="{{post.user.avatar.large_thumb.url |logo}}" class="img-circle" width="64px" height="64px">
+                </div>
+                <div class="col-xs-10">
+                  <span class="owner-bai-viet">{{post.user.firstname| fullname: currentUser.lastname}}</span>
+                  <span>{{post.updated_at | timeago}}</span>
                 </div>
               </div>
-              <div class="bai-viet">
-                    <div class="row">
-                      <div class="col-xs-2">
-                        <img src="gallery/01.jpg" class="img-circle" width="64px" height="64px">
+              <div class="row noi-dung-bai-viet" >
+                <div class="col-xs-12">
+                      <span class="tua-de-bai-viet">
+                        <a ui-sref="chiTietBaiViet({id: post._id.$oid})">{{post.title}}</a>
+                      </span>
+                      <div class="mo-ta-bai-viet">
+                        {{post.body}}
                       </div>
-                      <div class="col-xs-10">
-                        <span class="owner-bai-viet">Nguyễn Hữu Trung</span>
-                        <span>18:30am,  30 tháng 12 năm 2014</span>
+                      <p></p>
+                      <div class="btn-group pull-right" role="group" aria-label="...">  
+                          <a ui-sref="chiTietBaiViet({id: post._id.$oid})" class="btn btn-default" tooltip="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
+                          <a  ng-if="!post.published && permission.all" ui-sref="editPost({id: post._id.$oid})" class="btn btn-default" tooltip="Chỉnh sửa bài viết"><span class="glyphicon glyphicon-edit"></span></a>
                       </div>
-                    </div>
-                    <div class="row noi-dung-bai-viet" >
-                      <div class="col-xs-12">
-                            <span class="tua-de-bai-viet">
-                              <a href="#">Chia sẻ kinh nghiệm đi đá bóng tập 1</a>
-                            </span>
-                            <div class="mo-ta-bai-viet">
-                              Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi 
-                            </div>
-                            <p></p>
-                             <div class="btn-group pull-right" role="group" aria-label="...">  
-                                <a href="#" class="btn btn-success" data-toggle="tooltip" data-original-title="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
-                                <a  href="#" class="btn btn-danger" data-toggle="tooltip" data-original-title="Bỏ lưu bài viết"><span class="glyphicon glyphicon-trash"></span></a>
+                       <div class="btn-group pull-right" role="group" aria-label="...">  
+                                <a ui-sref="chiTietBaiViet({id: post._id.$oid})" tooltip="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
+                                <a  href="#" class="btn btn-danger" tooltip="Bỏ lưu bài viết"><span class="glyphicon glyphicon-trash"></span></a>
                                 <a style="display:none;" href="#" class="btn btn-primary" data-toggle="tooltip" data-original-title="Hoàn tác"><span class="glyphicon glyphicon-refresh"></span></a>
-                            </div>
-                            
-                      </div>
+                        </div>
+                     
                 </div>
-              </div>
+          </div>
+         <span ng-show="isLoading" ><img style="display:block;margin:0px auto;" src="/assets/application/placeholder/spinner_loading.gif" width="22px" height="22px"></span>
+  
         </div>
     </div>
 
-
+   <span ng-show="isLoading" ><img style="display:block;margin:0px auto;" src="/assets/application/placeholder/spinner_loading.gif" width="22px" height="22px"></span>
     <div class="row">
       <div class="col-xs-12" style="text-align: center;">
            <paging

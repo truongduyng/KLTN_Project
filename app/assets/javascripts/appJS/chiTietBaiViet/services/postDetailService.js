@@ -84,5 +84,22 @@ app.factory('postDetailService', ['$http', function($http) {
 		return $http.get(url);
 	};
 
+
+	o.favorite = function(){
+		var id = o.post._id.$oid;
+		var url = "/favorite_posts/" + id + "/add.json";
+		return $http.put(url).success(function(){
+			o.post.isFavorited = true;
+		});
+	};
+
+	o.unfavorite = function(){
+		var id = o.post._id.$oid;
+		var url = "/favorite_posts/" + id + "/remove.json";
+		return $http.put(url).success(function(){
+			o.post.isFavorited = false;
+		});
+	};
+
 	return o;
 }]);

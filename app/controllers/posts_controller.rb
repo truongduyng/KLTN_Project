@@ -161,31 +161,6 @@ class PostsController < ApplicationController
 	end
 
 	
-	#/posts/:username/search_by_title.json?title="textSearch"
-	# def search_by_title
-	# 	user = User.where(username: params[:username]).first
-	# 	if user
-	# 		#Nguoi dung dang nhap chinh la nguoi dung dang xem lay tat cac post
-	# 		if user_signed_in? && user == current_user
-	# 			@all_posts = user.posts.desc(:updated_at).paginate(page: page, per_page: per_page)
-	# 			@total = user.posts.count
-	# 		else
-	# 			#lay chi nhung post da publish
-	# 			publishedStatus = PostStatus.publishedStatus
-	# 			@all_posts = user.posts
-	# 							.where(post_status_id: publishedStatus.id)
-	# 							.where(title:)
-	# 									.desc(:updated_at).paginate(page: page, per_page: per_page)
-
-	# 			@total = user.posts.where(post_status_id: publishedStatus.id).count
-	# 		end
-	# 		render 'get_posts_by_username.json.jbuilder', status: :ok
-	# 	else
-	# 		render nothing: true, status: :not_found, content_type: 'application/json'	
-	# 	end
-	# end
-
-
 	private
 		def post_params
 			params.require(:post).permit(:title, :body)
