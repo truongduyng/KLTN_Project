@@ -8,19 +8,18 @@
 
     <!-- BEGIN MAIN COLUMN -->
     <div class="col-md-6 detail-main-column">
-		      
           <span style="border: 1px solid #337AB7; display:block;margin:0px -15px; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>TRANG CÁ NHÂN</strong></span>
           <!-- BEGIN THONG TIN CA NHAN -->
           <div class="well" style="overflow: hidden; margin: 0px -15px;">
                 <div class="row">
                     <!-- BEGIN COL FOR INFO PICTURE -->
                     <div class="col-xs-3">
-                      <img fallback-src="sportaLogo" src="{{currentUser.avatar.large_thumb.url | logo}}" class="img-responsive center-block img-circle profile-picture">
+                      <img width="128px" fallback-src="sportaLogo" ng-src="{{currentUser.avatar.url}}" class="img-responsive center-block img-circle profile-picture">
                       
                       <!-- FOR CHANGE PROFILE PICTURE -->
-                      <!-- <div style="text-align: center; margin-top: 48px;">
-                        <a href="#" class="btn btn-primary" data-toggle="tooltip" data-original-title="Thay ảnh đại diện"><span class="glyphicon glyphicon-edit"></span></a>
-                      </div> -->
+                      <div style="text-align: center; margin-top: 48px;">
+                        <a ng-click="showChangeAvatarModal()" class="btn btn-primary" tooltip="Thay ảnh đại diện"><span class="glyphicon glyphicon-edit"></span></a>
+                      </div>
                       
                     </div>
                     <!-- END COL FOR INFO PICTURE -->
@@ -87,3 +86,11 @@
       <!-- END RIGHT COLUMN -->
 </div>
 
+ <style>
+    .cropArea {
+      background: #E4E4E4;
+      overflow: hidden;
+      width:500px;
+      height:350px;
+    }
+  </style>

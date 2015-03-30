@@ -1,5 +1,5 @@
 class CustomUsersController < ApplicationController
-	before_action :authenticate_user!, only: [:update, :change_password]
+	before_action :authenticate_user!, only: [:update, :change_password, :change_avatar]
 	before_action :find_user_and_check_with_current_user, only: [:update]
 	
 	#get /custom_users/:username.json
@@ -38,6 +38,21 @@ class CustomUsersController < ApplicationController
 	    end
 	end
 
+
+	#POST /custom_users/change_avatar.json 
+	def change_avatar
+		#Them dinh dang .png cho doi tuong blob de whilelist no la image
+		if params[:file].try(:original_filename) == 'blob'
+			params[:file].original_filename << '.png'
+		end
+		#Gan avatar bang params[:file]
+		current_user.avatar = params[:file]
+		if current_user.save
+			render json: @current_user, status: :ok
+		else
+			render json: @current_user.errors, status: :bad_request
+		end
+	end
 
 	private
 		def user_params

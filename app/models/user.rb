@@ -29,7 +29,7 @@ class User
   field :description, type: String
 
   #Carrier wave
-  mount_uploader :avatar, ImageUploader
+  mount_uploader :avatar, AvatarUploader
   
   #My validation
   validates :username, presence: true, uniqueness: true

@@ -134,7 +134,6 @@ class PostsController < ApplicationController
 
 
 	def get_posts_by_username
-		sleep(2);
 		user = User.where(username: params[:username]).first
 		page = params[:page]
 		per_page = params[:per_page]
@@ -157,7 +156,6 @@ class PostsController < ApplicationController
 
 
 	def get_favorite_posts_by_username
-		sleep(2)
 		user = User.where(username: params[:username]).first
 		page = params[:page]
 		per_page = params[:per_page]

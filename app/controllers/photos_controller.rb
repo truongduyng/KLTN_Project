@@ -1,6 +1,9 @@
 class PhotosController < ApplicationController
 	before_action :find_photo, only: [:destroy]
+	
+	#POST /photos.json
 	def create
+		# render json: params.delete :file
 		@photo = Photo.new()
 		if params.has_key?(:file) && params[:file]
 			@photo.image = params[:file]
@@ -10,7 +13,8 @@ class PhotosController < ApplicationController
 				render 'errors.json.jbuilder', status: :bad_request
 			end
 		else
-			render 'errors.json.jbuilder', status: :bad_request
+			#render 'errors.json.jbuilder', status: :bad_request
+			render json: {errors: 'not found file'}, status: :bad_request
 		end	
 	end
 
@@ -18,6 +22,8 @@ class PhotosController < ApplicationController
 		@photo.destroy
 		render nothing: true, status: :ok, content_type: 'application/json'
 	end
+
+
 
 	private
 		def find_photo

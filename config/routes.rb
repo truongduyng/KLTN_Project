@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  #test upload avatar
+  resources :my_avatars
+
 
   resources :favorite_posts do
     member do
@@ -19,6 +22,7 @@ Rails.application.routes.draw do
   resources :custom_users do
     collection do
       put 'change_password'
+      post 'change_avatar'
     end
   end
 
