@@ -14,6 +14,11 @@ class Post
 	embeds_many :likes, as: :likeable
 
 	#scope
+	#Get published post
+	scope :published, -> {
+		publishedStatus = PostStatus.publishedStatus
+		where(post_status_id: publishedStatus.id)
+	}
 	#validate
 	validates :title, presence: true
 	validates :body, presence: true
@@ -22,7 +27,7 @@ class Post
 
 	#Method
 	#check 1 post da publish chua, return true or false
-	def published
+	def published?
 		# puts 'in method'
 		self.post_status.name == 'Đã duyệt'
 	end

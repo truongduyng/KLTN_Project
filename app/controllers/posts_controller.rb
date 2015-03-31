@@ -6,6 +6,13 @@ class PostsController < ApplicationController
 	before_action :find_post_for_show, only: [:show]
 	before_action :find_post_for_edit, only: [:edit, :delete_photo, :update]
 
+	#/posts.json
+	#Get all published post for display on home
+	def index
+		@posts = Post.published.desc(:updated_at).paginate(page: params[:page], per_page: 9)
+		# render json: @posts, status: :ok
+	end
+
 	def show	
 	end
 
@@ -188,7 +195,7 @@ class PostsController < ApplicationController
 		def find_published_post
 			begin
 				@post = Post.find(params[:id])
-				if !@post.published
+				if !@post.published?
 					render nothing: true, status: :not_found, content_type: 'application/json'
 				end
 			rescue Mongoid::Errors::DocumentNotFound
@@ -201,7 +208,7 @@ class PostsController < ApplicationController
 		def find_post_for_show
 			begin
 				@post = Post.find(params[:id])
-				if !@post.published
+				if !@post.published?
 					#chua chung thuc
 					if !user_signed_in?
 						render nothing: true, status: :not_found, content_type: 'application/json'
@@ -222,7 +229,7 @@ class PostsController < ApplicationController
 			begin
 				@post = Post.find(params[:id])
 				#neu da publish thi ko cho chinh sua
-				if @post.published
+				if @post.published?
 					render nothing: true, status: :not_found, content_type: 'application/json'
 				end
 				#chi cho phep nguoi so huu post de chinh sua

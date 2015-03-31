@@ -45,11 +45,22 @@ app.config(function(flashProvider) {
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
+	// $stateProvider.state("home", {
+	// 	url: "/",
+	// 	templateUrl: 'appJS/home/_home.html',
+	// 	controller: 'homeCtrl',
+	// });
 	$stateProvider.state("home", {
 		url: "/",
 		templateUrl: 'appJS/home/_home.html',
 		controller: 'homeCtrl',
+		resolve: {
+			posts: ['listPostService', function(listPostService){
+				return listPostService.get_all(1);
+			}],
+		}
 	});
+	
 
 	$stateProvider.state("dangBai", {
 		url: "/dang-bai/",

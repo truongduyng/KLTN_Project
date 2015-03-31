@@ -172,3 +172,9 @@ text-decoration:none;
 .my-hide{
   display: none;
 }
+
+
+/*CHO POST ON HONE PAGE*/
+.post-item .my-post-header{
+  height: 470px;
+ }

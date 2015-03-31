@@ -4,6 +4,6 @@ json.posts @favorite_posts do |favorite_post|
 	json.body favorite_post.post.body
 	json.user favorite_post.post.user
 	json.status favorite_post.post.post_status
-	json.published favorite_post.post.published
+	json.published favorite_post.post.published?
 end
 json.total @total

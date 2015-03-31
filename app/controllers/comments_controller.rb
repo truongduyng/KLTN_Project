@@ -89,7 +89,7 @@ class CommentsController < ApplicationController
 		def find_comment
 			begin 
 				post = Post.find(params[:post_id])
-				if post.published
+				if post.published?
 					@comment = post.comments.find(params[:id])
 				    if @comment.user != current_user
 						render nothing: true, status: :not_found, content_type: 'application/json'
@@ -108,7 +108,7 @@ class CommentsController < ApplicationController
 		def find_comment_for_like_and_unlike
 			begin 
 				post = Post.find(params[:post_id])
-				if post.published
+				if post.published?
 					 @comment = post.comments.find(params[:id])
 				else
 					render nothing: true, status: :not_found, content_type: 'application/json'
@@ -124,7 +124,7 @@ class CommentsController < ApplicationController
 
 		def check_post_published
 			post = Post.find(params[:post_id])
-			if !post.published
+			if !post.published?
 				render nothing: true, status: :not_found, content_type: 'application/json'
 			end
 		end
