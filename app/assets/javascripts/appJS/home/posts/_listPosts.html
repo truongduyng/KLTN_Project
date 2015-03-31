@@ -1,33 +1,40 @@
-<div class="row" ng-controller="listPostCtrl">
-    <div class="col-md-4" ng-repeat="post in posts | orderBy:'-updated_at'">
-          <div class="well post-item" >
-                <div class="my-post-header">
-                    <a ui-sref="chiTietBaiViet({id: post._id.$oid})" class="title"><span>{{post.title}}</span></a>
-                    <div class="content">
-                      <!-- CAN 1 FILTER DE SHORT CONTENT THEO SO LUONG CHU CHO PHU HOP -->
-                      <p>{{post.body}}</p>
-                      <div class="images"> 
-                        <img ng-if="post.photos[0]" ng-src="{{post.photos[0].image.large_thumb.url}}" class="img-thumbnail" width="120px" height="120px">
-                        <img ng-if="post.photos[1]" ng-src="{{post.photos[1].image.large_thumb.url}}" class="img-thumbnail"  width="120px" height="120px">
-                      </div>
-                    </div>
-                </div>
 
-                   <div class="bottom">
-                      <a ui-sref="chiTietBaiViet({id: post._id.$oid})" class="btn btn-success pull-right">Xem chi tiết</a>
+ <div  ng-controller="listPostCtrl">
+    <div  infinite-scroll="loadMore()"  infinite-scroll-disabled='isBusy || isEnd' infinite-scroll-distance="1" class="row">
+        <div class="col-md-4" ng-repeat="post in posts | orderBy:'-updated_at'">
+              <div class="well post-item" >
+                    <div class="my-post-header">
+                        <a ui-sref="chiTietBaiViet({id: post._id.$oid})" class="title"><span>{{post.title}}</span></a>
+                        <div class="content">
+                          <!-- CAN 1 FILTER DE SHORT CONTENT THEO SO LUONG CHU CHO PHU HOP -->
+                          <p>{{post.body}}</p>
+                          <div class="images"> 
+                            <img ng-if="post.photos[0]" ng-src="{{post.photos[0].image.large_thumb.url}}" class="img-thumbnail" width="120px" height="120px">
+                            <img ng-if="post.photos[1]" ng-src="{{post.photos[1].image.large_thumb.url}}" class="img-thumbnail"  width="120px" height="120px">
+                          </div>
+                        </div>
                     </div>
-                  <div class="post-owner">
-                      <a ui-sref="trangCaNhan({username: post.user.username})">
-                        <div class="post-owner-image"><img class="img-thumbnail" ng-src="{{post.user.avatar.url}}" width="60px" height="60px"></div>
-                      </a>
-                      <div class="post-owner-info" ><a ui-sref="trangCaNhan({username: post.user.username})"> <span style="font-size:1.2em; font-style:bold; display:block;"><b>{{post.user.firstname | fullname: post.user.lastname}}</b></a></span> <span>{{post.updated_at |timeago}}</span> </div>
-                  </div>
-          </div>
+
+                       <div class="bottom">
+                          <a ui-sref="chiTietBaiViet({id: post._id.$oid})" class="btn btn-success pull-right">Xem chi tiết</a>
+                        </div>
+                      <div class="post-owner">
+                          <a ui-sref="trangCaNhan({username: post.user.username})">
+                            <div class="post-owner-image"><img class="img-thumbnail" ng-src="{{post.user.avatar.url}}" width="60px" height="60px"></div>
+                          </a>
+                          <div class="post-owner-info" ><a ui-sref="trangCaNhan({username: post.user.username})"> <span style="font-size:1.2em; font-style:bold; display:block;"><b>{{post.user.firstname | fullname: post.user.lastname}}</b></a></span> <span>{{post.updated_at |timeago}}</span> </div>
+                      </div>
+              </div>
+        </div>
+        <!-- CHO INFINITE SCOLLE CO THE PHAT HIEN CUOI TRANG NEU PHAN TU BEN TRONG LA FLOAT -->
+         <div style='clear: both;'></div>
+        <div style="text-align: center;"><img ng-show="isBusy && !isEnd" src="/assets/application/placeholder/spinner_loading.gif" width="22px" height="22px">
+          <p ng-show="isEnd">Không còn bài viết</p>
+        </div>
+       
     </div>
 
-
-</div>
-
+ </div>
 
 <!-- 
   <div class="col-md-4">

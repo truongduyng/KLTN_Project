@@ -30,4 +30,5 @@
 //= require_tree ../angularJSComponents
 //= require ng-timeago
 //= require angular-paging
+//= require ngInfiniteScroll
 //= require_tree .
