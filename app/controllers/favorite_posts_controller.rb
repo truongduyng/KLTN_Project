@@ -29,7 +29,7 @@ class FavoritePostsController < ApplicationController
 		def find_post_and_check_published
 			begin
 				@post = Post.find(params[:id])
-				if !@post.published
+				if !@post.published?
 					render nothing: true, status: :not_found, content_type: 'application/json'
 				end
 			rescue Mongoid::Errors::DocumentNotFound

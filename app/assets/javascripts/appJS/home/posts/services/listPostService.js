@@ -8,6 +8,7 @@ app.factory('listPostService', ['$http', function($http) {
 		var url = "/posts.json";
 		var query = "?page=" + page;
 		var promise = $http.get(url + query).success(function(data) {
+			console.log("on load sucess", data);
 			//vi load more nen giu lai du lieu cu, do do them du lieu moi vao cuoi mang
 			data.forEach(function(item){
 				o.posts.splice(o.posts.length, 0, item);
@@ -17,3 +18,10 @@ app.factory('listPostService', ['$http', function($http) {
 	};
 	return o;
 }]);
+
+//Con sai o cho luu bai viet, do chuyen published thanh published?
+// 6C:71:D9:1D:A6:2F
+// EC:55:F9:E4:B4:31
+// 78:24:AF:E9:9E:83
+// 58:94:6B:B7:93:B0	
+
