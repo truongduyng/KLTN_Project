@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+    <meta name="author" content="GeeksLabs">
+    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>Profile | Creative - Bootstrap 3 Responsive Admin Template</title>
+  	<%= stylesheet_link_tag    'adminCSS/systemAdmin/application', media: 'all'%>
+  	<%= javascript_include_tag 'adminJS/systemAdmin/application' %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body ng-app="sportaSystemAdmin" ng-controller="SAmainCtrl">
+    <!-- container section start -->
+    <section id="container">
+        <!--header start-->
+        <div ng-include="'adminJS/systemAdmin/header/_header.html'">
+        </div>
+        <!--header end-->
+
+        <!--sidebar start-->
+        <div data-ng-include="'adminJS/systemAdmin/sidebar/_sidebar.html'" scope="" onload=""></div>
+        <!--sidebar end-->
+        
+        <!--main content start-->
+        <section id="main-content">
+            <ui-view></ui-view>
+        </section>
+        
+        <!--main content end-->
+  	  
+    </section>
+
+  </body>
+</html>

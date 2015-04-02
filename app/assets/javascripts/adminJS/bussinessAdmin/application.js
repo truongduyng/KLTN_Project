@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree ../extendJavascript
+//= require_tree ../../extendJavascript
 //= require angular
 //= require bootstrap/dist/js/bootstrap
 //= require angular-ui-router
@@ -22,5 +22,5 @@
 //= require jquery-timepicker-jt
 //= require jquery-timepicker-jt/lib/bootstrap-datepicker
 //= require angular-flash
-//= require_tree ../angularJSComponents
+//= require_tree ../../angularJSComponents
 //= require_tree .

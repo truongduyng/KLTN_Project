@@ -81,7 +81,8 @@ Rails.application.routes.draw do
   get 'check/username' => 'user#check_username'
   get 'check/email' => 'user#check_email'
   devise_for :users
-  get 'bussiness-admin' => 'admin#index' 
+  get 'bussiness-admin' => 'admin#bussiness_admin' 
+  get 'system-admin' => 'admin#system_admin'
   root 'application#angular'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

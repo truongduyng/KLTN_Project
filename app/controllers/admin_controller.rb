@@ -1,5 +1,9 @@
 class AdminController < ActionController::Base
-	def index
-		render 'layouts/admin'
+	def bussiness_admin
+		render 'layouts/bussiness_admin'
+	end
+
+	def system_admin
+		render 'layouts/system_admin'
 	end
 end
