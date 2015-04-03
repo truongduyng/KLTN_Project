@@ -17,6 +17,12 @@ app.factory('SAduyetBaiVietService', ['$http', '$q', function ($http, $q) {
 		}).success(function(data){
 			angular.copy(data.posts, o.posts);
 			o.total = data.total;
+			//Neu du lieu lay ve ma ko co, nhung total >= 1, suy ra load lai tu trang 1. Xu ly 
+			//truong hop khi ma da xu ly het du lieu o trang 1, va du lieu chi con 1 trang, khi do ko the lay
+			//dc du lieu o trang 2, do du lieu trang 2 h thanh trang 1
+			if(data.posts.length == 0 && data.total >= 1){
+				o.get_posts(1, per_page);
+			}
 		});
 		return {
 			promise: promise,
