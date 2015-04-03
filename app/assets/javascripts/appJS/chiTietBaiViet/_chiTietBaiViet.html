@@ -5,6 +5,7 @@
     <!-- BEGIN LEFT COLUMN -->
     <div class="col-md-2">
       <section ng-include="'appJS/modules/_groupModule.html'"></section>
+      <section ng-include="'appJS/modules/_vietBaiModule.html'"></section>
     </div>
     <!-- END LEFT COLUMN -->
 
@@ -24,7 +25,7 @@
                   <div class="media-body">
                     <div>
                       <a ui-sref="trangCaNhan({username: post.user.username})"><h5  style="color:#337ab7;"  class="media-heading pull-left">{{post.user.username}}</h5></a>
-                      <small class="pull-right" style="font-weight: 600;">{{post.created_at | timeago}}</small>
+                      <small class="pull-right" style="font-weight: 600;">{{post.updated_at | date:'h:mm a, dd/mm/yyyy'}}</small>
                     </div>
                     <div class="clearfix"></div>
                      <h4 class="media-heading">{{post.title}}</h4>

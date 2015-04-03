@@ -67,12 +67,12 @@
                                   </tr>
                                   </thead>
                                   <tbody>
-                                        <tr ng-repeat="(index, post) in posts | orderBy: 'updated_at'">
+                                        <tr ng-repeat="(index, post) in posts | orderBy: 'created_at'">
                                           <td>{{index + 1}}</td>
                                           <td style="max-width:250px;">{{post.title}}</td>
                                           <td style="max-width:250px;">{{post.body | shortDesc}}</td>
                                           <td><a href="#">{{post.user.username}}</a></td>
-                                          <td>{{post.updated_at | timeago}}</td>
+                                          <td>{{post.updated_at | date:'dd/mm/yyyy, h:mm a'}}</td>
                                           <td>
                                               <span class="label label-danger">{{post.status.name}}</span>
                                           </td>
@@ -133,7 +133,7 @@
                         <div class="activity-body act-in"> <span class="arrow"></span>
                           <div class="text">
                             <a href="#" class="activity-img"><img class="avatar" ng-src="{{post.user.avatar.url}}" alt=""></a>
-                            <p class="attribution"><a href="#">{{post.user.username}}</a> lúc {{post.updated_at}}</p>
+                            <p class="attribution"><a href="#">{{post.user.username}}</a> lúc  {{post.updated_at | date:'h:mm a, dd/m/y'}}</p>
                             <p><a href="../system-admin/chitiet-demo.html" target="_blank" class="my-title">{{post.title}}</a></p>
                             <p>{{post.body}}
                             </p>
