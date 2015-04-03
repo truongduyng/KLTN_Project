@@ -81,6 +81,7 @@
                                               <label class="tgl-btn" data-tg-off="Thêm" data-tg-on="Bỏ" for="{{post._id.$oid}}"></label>
                                           </td>
                                         </tr>
+                                        <tr ng-if="posts.length == 0"><td style="text-align: center;" colspan="7"> Trống  </td></tr>
                                   </tbody>
                               </table>
 
@@ -128,7 +129,6 @@
                   <header class="panel-heading"> Danh sách bài viết chờ duyệt</header>
                   <div class="panel-body">
                     <div class="profile-activity">
-                      
                       <div ng-animate="'animate'" class="act-time" ng-repeat="post in addedPosts">
                         <div class="activity-body act-in"> <span class="arrow"></span>
                           <div class="text">
@@ -146,8 +146,10 @@
                                 <button ng-click="onIgnore(post)" class="btn btn-info">Bỏ qua</button>
                             </div>
                           </div>
+
                         </div>
                       </div>
+                      <div  style="text-align: center"  ng-if="addedPosts.length == 0">Trống</div>
                     </div>
                   </div>
                 </section>
