@@ -4,7 +4,9 @@ class SystemAdminPostsController < SystemAdminController
 	#GET /system_admin_posts.json
 	#Lay tat ca cac post chua dc published 
 	def index
-		@posts = Post.not_published.to_a
+		sleep(2)
+		@posts = Post.not_published.asc(:created_at).paginate(page: params[:page], per_page: params[:per_page])
+		@total = Post.not_published.count
 	end
 
 	#PUT /system_admin_posts/:id/accept.json

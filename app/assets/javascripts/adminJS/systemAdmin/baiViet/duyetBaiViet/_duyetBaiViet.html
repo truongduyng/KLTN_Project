@@ -55,40 +55,45 @@
               <!--Bài viết -->
               <div class="table-responsive">
                               <table class="table table-bordered table-hover my-table posts-table" >
-                                <thead>
-                                  <tr>
-                                   <th> #</th>
-                                   <th>Chủ đề</th>
-                                   <th>Mô tả ngắn</th>
-                                   <th>Người viết</th>
-                                   <th>Ngày</th>
-                                   <th>Tình trạng</th>
-                                   <th>Chi tiết</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                      <tr ng-repeat="(index, post) in posts | orderBy: 'updated_at'">
-                                        <td>{{index + 1}}</td>
-                                        <td style="max-width:250px;">{{post.title}}</td>
-                                        <td style="max-width:250px;">{{post.body | shortDesc}}</td>
-                                        <td><a href="#">{{post.user.username}}</a></td>
-                                        <td>{{post.updated_at | timeago}}</td>
-                                        <td>
-                                            <span class="label label-danger">{{post.status.name}}</span>
-                                        </td>
-                                        <td> 
-                                            <input ng-click="onAddPost(post)" ng-model="post.isChecked" class="tgl tgl-skewed" id="{{post._id.$oid}}" type="checkbox">
-                                            <label class="tgl-btn" data-tg-off="Thêm" data-tg-on="Bỏ" for="{{post._id.$oid}}"></label>
-                                        </td>
-                                      </tr>
-                                </tbody>
+                                  <thead>
+                                    <tr>
+                                     <th> #</th>
+                                     <th>Chủ đề</th>
+                                     <th>Mô tả ngắn</th>
+                                     <th>Người viết</th>
+                                     <th>Ngày</th>
+                                     <th>Tình trạng</th>
+                                     <th>Chi tiết</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                        <tr ng-repeat="(index, post) in posts | orderBy: 'updated_at'">
+                                          <td>{{index + 1}}</td>
+                                          <td style="max-width:250px;">{{post.title}}</td>
+                                          <td style="max-width:250px;">{{post.body | shortDesc}}</td>
+                                          <td><a href="#">{{post.user.username}}</a></td>
+                                          <td>{{post.updated_at | timeago}}</td>
+                                          <td>
+                                              <span class="label label-danger">{{post.status.name}}</span>
+                                          </td>
+                                          <td> 
+                                              <input ng-click="onAddPost(post)" ng-model="post.isChecked" class="tgl tgl-skewed" id="{{post._id.$oid}}" type="checkbox">
+                                              <label class="tgl-btn" data-tg-off="Thêm" data-tg-on="Bỏ" for="{{post._id.$oid}}"></label>
+                                          </td>
+                                        </tr>
+                                  </tbody>
                               </table>
+
                             </div>
+                            <div ng-if="isLoadingPost" style="text-align: center;">
+                              <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                            </div>
+                            
               <!-- End bài viết -->
         </section>
           <div class="col-lg-12" style="margin-top: -30px;">
               <div class="text-center">
-                <ul class="pagination">
+                <!-- <ul class="pagination">
                   <li><a href="#">«</a></li>
                   <li><a href="#">1</a></li>
                   <li><a href="#">2</a></li>
@@ -96,7 +101,22 @@
                   <li><a href="#">4</a></li>
                   <li><a href="#">5</a></li>
                   <li><a href="#">»</a></li>
-                </ul>
+                </ul> -->
+                <paging
+                        class="small"
+                        page="pageConfig.currentPage" 
+                        page-size="pageConfig.pageSize" 
+                        total="pageConfig.total"
+                        adjacent="{{pageConfig.adjacent}}"
+                        dots="{{pageConfig.dots}}"
+                        scroll-top="{{pageConfig.scrollTop}}" 
+                        hide-if-empty="{{pageConfig.hideIfEmpty}}"
+                        ul-class="{{pageConfig.ulClass}}"
+                        active-class="{{pageConfig.activeClass}}"
+                        disabled-class="{{pageConfig.disabledClass}}"
+                        show-prev-next="{{pageConfig.showPrevNext}}"
+                        paging-action="onPageSelected('Paging Clicked', page)">
+                </paging> 
               </div>
           </div>
       </div>
@@ -114,7 +134,7 @@
                           <div class="text">
                             <a href="#" class="activity-img"><img class="avatar" ng-src="{{post.user.avatar.url}}" alt=""></a>
                             <p class="attribution"><a href="#">{{post.user.username}}</a> lúc {{post.updated_at}}</p>
-                            <p><a href="../system-admin/chitiet-demo.html" target="_blank" class="my-title">{{pos.title}}</a></p>
+                            <p><a href="../system-admin/chitiet-demo.html" target="_blank" class="my-title">{{post.title}}</a></p>
                             <p>{{post.body}}
                             </p>
                             <div class="post-images">

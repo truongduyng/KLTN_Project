@@ -1,15 +1,27 @@
-app.factory('SAduyetBaiVietService', ['$http', function ($http) {
+app.factory('SAduyetBaiVietService', ['$http', '$q', function ($http, $q) {
 	var o ={
 		posts:[],
 		total: 0,
 	};
 
-	o.get_posts = function(){
+	o.get_posts = function(page, per_page){
 		var url = "/system_admin_posts.json";
-		return $http.get(url).success(function(data){
+		var query = "?page=" + page + "&per_page=" + per_page;
+
+		var canceller = $q.defer();
+		var cancel = function(reason) {
+			canceller.resolve(reason);
+		};
+		var promise = $http.get(url + query,{
+			timeout: canceller.promise
+		}).success(function(data){
 			angular.copy(data.posts, o.posts);
 			o.total = data.total;
 		});
+		return {
+			promise: promise,
+			cancel: cancel,
+		};
 	};	
 
 	//chap nhap post gan thanh published

@@ -8,4 +8,4 @@ json.posts @posts do |post|
 	json.updated_at post.updated_at
 	json.created_at post.created_at
 end
-json.total @posts.count
+json.total @total

@@ -50,8 +50,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			templateUrl: 'adminJS/systemAdmin/baiViet/duyetBaiViet/_duyetBaiViet.html',
 			controller: 'SAduyetBaiVietCtrl',
 			resolve: {
-				posts: ['SAduyetBaiVietService', function(duyetBaiVietService) {
-					return duyetBaiVietService.get_posts();
+				posts: ['SAduyetBaiVietService', '$rootScope', function(duyetBaiVietService, $rootScope) {
+					return duyetBaiVietService.get_posts(1, $rootScope.rootPageConfig.pageSize).promise;
 				}],
 			}
 		})

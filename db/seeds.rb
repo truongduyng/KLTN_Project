@@ -83,7 +83,19 @@
 
 # # Tao ra nhung post moi chua duyet
 # trungnguyenhuu = User.where(username: 'trungnguyenhuu').first
-# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 5', body: 'Body 5')
-# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 6', body: 'Body 6')
-# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 7', body: 'Body 7')
-# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 8', body: 'Body 8')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 10', body: 'Body 5')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 11', body: 'Body 6')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 12', body: 'Body 7')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 13', body: 'Body 8')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 14', body: 'Body 5')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 15', body: 'Body 6')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 16', body: 'Body 7')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 17', body: 'Body 8')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 18', body: 'Body 5')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 19', body: 'Body 6')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 20', body: 'Body 7')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 21', body: 'Body 8')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 22', body: 'Body 5')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 23', body: 'Body 6')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 24', body: 'Body 7')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 25', body: 'Body 8')

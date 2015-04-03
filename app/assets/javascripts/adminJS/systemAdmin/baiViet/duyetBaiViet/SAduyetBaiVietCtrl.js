@@ -1,6 +1,12 @@
 app.controller('SAduyetBaiVietCtrl', ['$scope', 'SAduyetBaiVietService',
 	function($scope, duyetBaiVietService) {
+		
 		$scope.posts = duyetBaiVietService.posts;
+		//Cau hinh pagination
+		$scope.pageConfig = {};
+		angular.copy($scope.$root.rootPageConfig, $scope.pageConfig);
+		$scope.pageConfig.total = duyetBaiVietService.total;
+
 		$scope.addedPosts = [];
 		$scope.posts.forEach(function(post) {
 			post.isChecked = false;
@@ -35,6 +41,21 @@ app.controller('SAduyetBaiVietCtrl', ['$scope', 'SAduyetBaiVietService',
 			duyetBaiVietService.deny(post).success(function(data){
 				var index = $scope.addedPosts.indexOf(post);
 				$scope.addedPosts.splice(index, 1);
+			});
+		};
+
+		var request = null;
+		$scope.isLoadingPost = false;
+		$scope.onPageSelected = function(content, page){
+			if(request){
+				request.cancel();
+			}
+			$scope.isLoadingPost = true;
+			request = duyetBaiVietService.get_posts(page, $scope.pageConfig.pageSize);
+			request.promise.success(function(){
+				$scope.isLoadingPost = false;
+			}).error(function(){
+				// $scope.isLoadingPost = false;
 			});
 		};
 
