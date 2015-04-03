@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
 
+  resources :system_admin_posts do
+    member do
+      put 'accept'
+      put 'deny'
+    end
+  end
   #test upload avatar
   resources :my_avatars
-
-
   resources :favorite_posts do
     member do
       put 'add'

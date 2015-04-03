@@ -28,5 +28,6 @@
 //= require ngInfiniteScroll
 //= require angular-flash
 //= require_tree ../../angularJSComponents
+//= require angular-animate
 //= require ./systemAdminApp.js
 //= require_tree .

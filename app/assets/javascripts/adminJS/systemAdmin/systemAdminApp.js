@@ -1,6 +1,6 @@
 var app = angular.module('sportaSystemAdmin', ["ui.router", 'templates', 'Devise', 'angular-flash.flash-alert-directive',
 	'sporta.services', 'sporta.directives', 'sporta.filters',
-	'angular-flash.service', 'flash', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging', 'infinite-scroll'
+	'angular-flash.service', 'flash', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging', 'infinite-scroll','ngAnimate'
 ]);
 
 // //For intercept $http
@@ -29,16 +29,7 @@ var app = angular.module('sportaSystemAdmin', ["ui.router", 'templates', 'Devise
 
 //For flash service
 app.config(function(flashProvider) {
-
-	// Support bootstrap 3.0 "alert-danger" class with error flash types
 	flashProvider.errorClassnames.push('alert-danger');
-	/**
-	 * Also have...
-	 *
-	 * flashProvider.warnClassnames
-	 * flashProvider.infoClassnames
-	 * flashProvider.successClassnames
-	 */
 });
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
@@ -54,15 +45,17 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 				}],
 			}
 		})
-		.state('duyetBaiViet',{
+		.state('duyetBaiViet', {
 			url: '/duyetBaiViet',
 			templateUrl: 'adminJS/systemAdmin/baiViet/duyetBaiViet/_duyetBaiViet.html',
 			controller: 'SAduyetBaiVietCtrl',
-			resolve:{
-
+			resolve: {
+				posts: ['SAduyetBaiVietService', function(duyetBaiVietService) {
+					return duyetBaiVietService.get_posts();
+				}],
 			}
 		})
-		
+
 	$urlRouterProvider.otherwise('/');
 
 }]);

@@ -8,6 +8,14 @@ class PostStatus
 	def self.publishedStatus
 		PostStatus.where(name: 'Đã duyệt').first
 	end
+
+	def self.not_published_status
+		PostStatus.where(name: 'Chưa duyệt').first
+	end
+
+	def self.deny_status
+		PostStatus.where(name: 'Từ chối').first
+	end
 end
 
 # Gom 3 tinh trang:

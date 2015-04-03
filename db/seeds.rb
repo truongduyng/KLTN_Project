@@ -79,3 +79,11 @@
 # trungnguyenhuu.roles << system_admin
 # bussiness_admin = Role.where(name: 'bussiness admin').first
 # trungnguyenhuu.roles << bussiness_admin
+
+
+# # Tao ra nhung post moi chua duyet
+# trungnguyenhuu = User.where(username: 'trungnguyenhuu').first
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 5', body: 'Body 5')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 6', body: 'Body 6')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 7', body: 'Body 7')
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 8', body: 'Body 8')
