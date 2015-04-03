@@ -71,3 +71,11 @@
 # status = PostStatus.where(name: 'Chưa duyệt').first
 # post.post_status = status
 # post.save
+
+
+# #Tao role system admin va bussiness admin cho trungnguyenhuu
+# trungnguyenhuu = User.where(username: 'trungnguyenhuu').first
+# system_admin = Role.where(name: 'system admin').first
+# trungnguyenhuu.roles << system_admin
+# bussiness_admin = Role.where(name: 'bussiness admin').first
+# trungnguyenhuu.roles << bussiness_admin

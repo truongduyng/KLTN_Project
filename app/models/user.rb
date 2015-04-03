@@ -11,7 +11,9 @@ class User
   
 
   #relationships
-  belongs_to :role 
+  # belongs_to :role
+  #do thay doi nen can thay check role o bussiness admin, co the dung 1 controller bussiness admin de lam dieu nay thay
+  has_and_belongs_to_many :roles 
   #embeds_one :information 
   has_one :bussiness
   has_many :posts
@@ -64,6 +66,31 @@ class User
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
 
+  #PUBLIC METHOD
+  def is_system_admin?
+      if self.roles
+         if self.roles.where(name: 'system admin').first
+            return true
+         else
+          return false
+         end
+      else
+        return false
+      end
+  end
+
+  def is_bussiness_admin?
+      if self.roles
+         if self.roles.where(name: 'bussiness admin').first
+            return true
+         else
+          return false
+         end
+      else
+        return false
+      end
+  end
+
   private
     def set_default_role
       self.role ||= Role.where(name: 'user').first
@@ -76,4 +103,6 @@ class User
       end 
 
     end
+
+   
 end

@@ -1,0 +1,2 @@
+class AdminPostsController < SystemAdminController
+end
