@@ -5,6 +5,9 @@ Rails.application.routes.draw do
       put 'accept'
       put 'deny'
     end
+    collection do
+      get 'get_accept_and_deny_posts'
+    end
   end
   #test upload avatar
   resources :my_avatars

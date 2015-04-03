@@ -46,7 +46,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			}
 		})
 		.state('duyetBaiViet', {
-			url: '/duyetBaiViet',
+			url: '/duyet-bai-viet',
 			templateUrl: 'adminJS/systemAdmin/baiViet/duyetBaiViet/_duyetBaiViet.html',
 			controller: 'SAduyetBaiVietCtrl',
 			resolve: {
@@ -55,7 +55,17 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 				}],
 			}
 		})
-
+		.state('quanLyBaiViet', {
+			url: '/quan-ly-bai-viet',
+			templateUrl: 'adminJS/systemAdmin/baiViet/quanLyBaiViet/_quanLyBaiViet.html',
+			controller: 'SAquanLyBaiVietCtrl',
+			resolve: {
+				posts: ['SAquanLyBaiVietService', '$rootScope', function(quanLyBaiVietService, $rootScope) {
+					return quanLyBaiVietService.get_posts(1, $rootScope.rootPageConfig.pageSize).promise;
+				}],
+			}
+		})
+		
 	$urlRouterProvider.otherwise('/');
 
 }]);

@@ -16,6 +16,7 @@ class PostStatus
 	def self.deny_status
 		PostStatus.where(name: 'Từ chối').first
 	end
+
 end
 
 # Gom 3 tinh trang:

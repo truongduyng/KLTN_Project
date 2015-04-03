@@ -23,6 +23,13 @@ class Post
 		not_published_status = PostStatus.not_published_status
 		where(post_status_id: not_published_status.id)
 	}
+
+	scope :accept_or_deny, ->{
+		publishedStatus = PostStatus.publishedStatus
+		deny_status = PostStatus.deny_status
+		self.any_of({post_status_id: publishedStatus.id}, {post_status_id: deny_status.id})
+	}
+	
 	#validate
 	validates :title, presence: true
 	validates :body, presence: true

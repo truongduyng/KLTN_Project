@@ -1,11 +1,14 @@
-app.controller('SAduyetBaiVietCtrl', ['$scope', 'SAduyetBaiVietService', '$modal',
-	function($scope, duyetBaiVietService, $modal) {
+//Quan ly cac bai viet da dc duyet boi admin
+//Quan ly bai viet de xem xet can nhac khi duyet lai 1 so bai viet
 
-		$scope.posts = duyetBaiVietService.posts;
+app.controller('SAquanLyBaiVietCtrl', ['$scope', 'SAquanLyBaiVietService', '$modal',
+	function($scope, quanLyBaiVietService, $modal) {
+
+		$scope.posts = quanLyBaiVietService.posts;
 		//Cau hinh pagination
 		$scope.pageConfig = {};
 		angular.copy($scope.$root.rootPageConfig, $scope.pageConfig);
-		$scope.pageConfig.total = duyetBaiVietService.total;
+		$scope.pageConfig.total = quanLyBaiVietService.total;
 
 		$scope.addedPosts = [];
 		initIsChecked();
@@ -27,7 +30,6 @@ app.controller('SAduyetBaiVietCtrl', ['$scope', 'SAduyetBaiVietService', '$modal
 			for (var i = 0; i < $scope.posts.length; i++) {
 				if ($scope.posts[i]._id.$oid == post._id.$oid) {
 					$scope.posts[i].isChecked = false;
-					console.log("title: ", $scope.posts[i].title);
 					break;
 				}
 			};
@@ -35,28 +37,29 @@ app.controller('SAduyetBaiVietCtrl', ['$scope', 'SAduyetBaiVietService', '$modal
 
 		//Post dc duyet
 		$scope.acceptPost = function(post) {
-			duyetBaiVietService.accept(post).success(function(data) {
+			quanLyBaiVietService.accept(post).success(function(data) {
 				var index = $scope.addedPosts.indexOf(post);
 				$scope.addedPosts.splice(index, 1);
 				for (var i = 0; i < $scope.posts.length; i++) {
 					if ($scope.posts[i]._id.$oid == post._id.$oid) {
+						angular.copy(data, $scope.posts[i]);
 						$scope.posts[i].isChecked = false;
-						$scope.posts.splice(i, 1);
 						break;
 					}
 				};
+
 			});
 		};
 
 		//Post ko dc duyet, bi tu choi boi admin
 		$scope.denyPost = function(post) {
-			duyetBaiVietService.deny(post).success(function(data) {
+			quanLyBaiVietService.deny(post).success(function(data) {
 				var index = $scope.addedPosts.indexOf(post);
 				$scope.addedPosts.splice(index, 1);
 				for (var i = 0; i < $scope.posts.length; i++) {
 					if ($scope.posts[i]._id.$oid == post._id.$oid) {
+						angular.copy(data, $scope.posts[i]);
 						$scope.posts[i].isChecked = false;
-						$scope.posts.splice(i, 1);
 						break;
 					}
 				};
@@ -72,7 +75,7 @@ app.controller('SAduyetBaiVietCtrl', ['$scope', 'SAduyetBaiVietService', '$modal
 				request.cancel();
 			}
 			$scope.isLoadingPost = true;
-			request = duyetBaiVietService.get_posts(page, $scope.pageConfig.pageSize);
+			request = quanLyBaiVietService.get_posts(page, $scope.pageConfig.pageSize);
 			request.promise.success(function() {
 				$scope.isLoadingPost = false;
 				//Duyet kiem tra thu nhung post moi load, post nao da co trong addedPost
@@ -86,7 +89,7 @@ app.controller('SAduyetBaiVietCtrl', ['$scope', 'SAduyetBaiVietService', '$modal
 					}
 				});
 				//Do khi duyet so bai viet da dc duyet co the giam nen phai gan lai total
-				$scope.pageConfig.total = duyetBaiVietService.total;
+				$scope.pageConfig.total = quanLyBaiVietService.total;
 			}).error(function() {
 				// $scope.isLoadingPost = false;
 			});

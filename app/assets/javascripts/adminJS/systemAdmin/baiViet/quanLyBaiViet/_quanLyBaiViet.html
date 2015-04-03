@@ -1,4 +1,3 @@
-
 <section class="wrapper"> 
     <!--overview start-->
     <div class="row">
@@ -67,14 +66,15 @@
                                   </tr>
                                   </thead>
                                   <tbody>
-                                        <tr ng-repeat="(index, post) in posts | orderBy: 'updated_at'">
+                                        <tr ng-repeat="(index, post) in posts | orderBy: '-updated_at'">
                                           <td>{{index + 1}}</td>
                                           <td style="max-width:250px;">{{post.title}}</td>
                                           <td style="max-width:250px;">{{post.body | shortDesc}}</td>
                                           <td><a href="#">{{post.user.username}}</a></td>
                                           <td>{{post.updated_at | timeago}}</td>
                                           <td>
-                                              <span class="label label-danger">{{post.status.name}}</span>
+                                              <span ng-if="post.status.name=='Từ chối'" class="label label-danger">{{post.status.name}}</span>
+                                              <span ng-if="post.status.name=='Đã duyệt'" class="label label-success">{{post.status.name}}</span>
                                           </td>
                                           <td> 
                                               <input ng-click="ontogglePost(post)" ng-model="post.isChecked" class="tgl tgl-skewed" id="{{post._id.$oid}}" type="checkbox">
@@ -94,15 +94,6 @@
         </section>
           <div class="col-lg-12" style="margin-top: -30px;">
               <div class="text-center">
-                <!-- <ul class="pagination">
-                  <li><a href="#">«</a></li>
-                  <li><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">4</a></li>
-                  <li><a href="#">5</a></li>
-                  <li><a href="#">»</a></li>
-                </ul> -->
                 <paging
                         class="small"
                         page="pageConfig.currentPage" 
@@ -126,7 +117,7 @@
     <div class="row">
          <div class="col-lg-12">
                 <section class="panel panel-success">
-                  <header class="panel-heading"> Danh sách bài viết chờ duyệt</header>
+                  <header class="panel-heading">Danh sách các bài viết hiển thị chi tiết</header>
                   <div class="panel-body">
                     <div class="profile-activity">
                       <div ng-animate="'animate'" class="act-time" ng-repeat="post in addedPosts">
@@ -141,9 +132,15 @@
                                <img style="cursor: pointer;" ng-click="showImage(post, photo)" style="margin-left: 5px;" ng-repeat="photo in post.photos" ng-src="{{photo.image.large_thumb.url}}" width="100px" height="100px">
                             </div>
                             <div class="list-control-buttons btn-group pull-right">
-                                <button ng-click="acceptPost(post)" class="btn btn-success">Duyệt</button>
-                                <button ng-click="denyPost(post)" class="btn btn-danger">Không duyệt</button>
-                                <button ng-click="onIgnore(post)" class="btn btn-info">Bỏ qua</button>
+                                <!-- THAO TAC CHO 1 BAI VIET DA DUYET -->
+                                <div ng-if="post.status.name == 'Đã duyệt'">
+                                    <button ng-click="denyPost(post)" class="btn btn-danger">Không duyệt</button>
+                                    <button ng-click="onIgnore(post)" class="btn btn-info">Bỏ qua</button>
+                                </div>
+                                <div ng-if="post.status.name == 'Từ chối'">
+                                   <button ng-click="acceptPost(post)" class="btn btn-danger">Duyệt</button>
+                                    <button ng-click="onIgnore(post)" class="btn btn-info">Bỏ qua</button>
+                                </div>    
                             </div>
                           </div>
 

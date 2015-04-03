@@ -11,8 +11,8 @@ class SystemAdminPostsController < SystemAdminController
 	#PUT /system_admin_posts/:id/accept.json
 	def accept
 		@post.post_status = PostStatus.publishedStatus
-		if @post.save
-			render json: @post, status: :ok
+		if @post.timeless.save
+			#render json: @post, status: :ok
 		else
 			render json: @post.errors, status: :bad_request
 		end
@@ -20,17 +20,32 @@ class SystemAdminPostsController < SystemAdminController
 	#PUT /system_admin_posts/:id/deny.json
 	def deny
 		@post.post_status = PostStatus.deny_status
-		if @post.save
-			render json: @post, status: :ok
+		if @post.timeless.save
+			#render json: @post, status: :ok
 		else
 			render json: @post.errors, status: :bad_request
 		end
 	end
 
+	#Get nhung post ma da qua xu ly: tu choi hoac chap nhan
+	#GET /get_accept_and_deny_posts.json
+	def get_accept_and_deny_posts
+		@posts = Post.accept_or_deny.desc(:created_at).paginate(page: params[:page], per_page: params[:per_page])
+		@total = Post.accept_or_deny.count
+	end
+
+
 	private
+		# def find_post
+		# 	begin
+		# 		@post = Post.not_published.find(params[:id])
+		# 	rescue Mongoid::Errors::DocumentNotFound
+		# 		render nothing: true, status: :not_found, content_type: 'application/json'
+		# 	end
+		# end
 		def find_post
 			begin
-				@post = Post.not_published.find(params[:id])
+				@post = Post.find(params[:id])
 			rescue Mongoid::Errors::DocumentNotFound
 				render nothing: true, status: :not_found, content_type: 'application/json'
 			end

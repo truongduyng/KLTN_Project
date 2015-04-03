@@ -5186,3 +5186,25 @@ a.my-title, a.my-title:hover{
           transform: rotateY(20deg);
 }
 /*END FOR BUTTON TOGGLE*/
+
+ /*BEGIN DAU MUI TEN CHO MODAL DUYET ANH*/
+ .my-modal-image{
+    position: relative;
+    padding: 5px;
+}
+.jssora02l, .jssora02r
+{
+    position: absolute;
+    cursor: pointer;
+    display: block;
+    background: url(/assets/application/myimg/a02.png) no-repeat;
+    overflow:hidden;
+     height: 55px;
+     width: 55px; 
+     vertical-align: middle;
+}
+.jssora02l { background-position: -3px -33px; }
+.jssora02r { background-position: -63px -33px; }
+.jssora02l:hover { background-position: -123px -33px; }
+.jssora02r:hover { background-position: -183px -33px; }
+ /*END DAU MUI TEN CHO MODAL DUYET ANH*/
