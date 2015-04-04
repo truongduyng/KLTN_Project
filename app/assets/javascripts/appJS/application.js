@@ -31,4 +31,8 @@
 //= require ng-timeago
 //= require angular-paging
 //= require ngInfiniteScroll
+//= require ngmap
+//= require ./customJS/richmarker.js
+//= require underscore
+//= require ./app.js
 //= require_tree .

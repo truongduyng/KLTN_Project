@@ -2,7 +2,7 @@
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angularFileUpload',
 	'angular-flash.service', 'angular-flash.flash-alert-directive', 'unsavedChanges', 'sporta.directives',
 	'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging',
-	'ngImgCrop', 'infinite-scroll'
+	'ngImgCrop', 'infinite-scroll', 'ngMap'
 ]);
 
 //For intercept $http
@@ -55,12 +55,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		templateUrl: 'appJS/home/_home.html',
 		controller: 'homeCtrl',
 		resolve: {
-			posts: ['listPostService', function(listPostService){
+			posts: ['listPostService', function(listPostService) {
 				return listPostService.get_all(1);
 			}],
 		}
 	});
-	
+
 
 	$stateProvider.state("dangBai", {
 		url: "/dang-bai/",
@@ -184,8 +184,23 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 				})
 			}]
 		}
-	})
+	});
 
+	$stateProvider.state('khTkDoanhNghiep', {
+		url: '/kich-hoat-tai-khoan-doanh-nghiep',
+		templateUrl: 'appJS/KhTkDoanhNghiep/_KhTkDoanhNghiep.html',
+		controller: 'KhTkDoanhNghiepCtrl',
+		resolve: {
+			currentUser: ['Auth', function(Auth) {
+				return Auth.currentUser().then(function(user) {
+					return user;
+				});
+			}]
+		},
+		// access: {
+		// 	free: false,
+		// }
+	});
 	//Khoi phuc
 	$urlRouterProvider.otherwise('/');
 }]);

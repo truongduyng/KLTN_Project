@@ -65,4 +65,15 @@ app.controller('homeCtrl', ['$scope', '$http', 'FileUploader', '$interval', '$st
         console.log("on after adding file", file);
     };
     
+    //Test google map
+    
+    $scope.$on('mapInitialized', function(event, map) {
+        $scope.map = map;
+        console.log("map: ", $scope.map);
+    });
+
+    $scope.clickMarker = function(){
+        console.log("on click marker");
+        $scope.map.markers[0].setAnimation(google.maps.Animation.BOUNCE);
+    };
 }]);
