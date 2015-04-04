@@ -1,5 +1,6 @@
 app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingService',
-	function($scope, currentUser, geocodingService) {
+	'KhTkDoanhNghiepService', 'Flash', '$state',
+	function($scope, currentUser, geocodingService, KhTkDoanhNghiepService, Flash, $state) {
 
 		$scope.currentUser = currentUser;
 		//Bat su kien load map thanh cong
@@ -11,29 +12,41 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingServic
 		$scope.address = ""; //Dia chi cho tim vi tri
 
 		$scope.onSearchPosition = function() {
+			$scope.isFinding = true;
 			geocodingService.latLngForAddress($scope.address).then(function(position) {
+				$scope.isFinding = false;
+				$scope.error = "";
 				setMarker(position);
 			}, function() {
+				$scope.isFinding = false;
 				$scope.error = "Không thể tìm kiếm vị trí bạn muốn tìm. Bạn vui lòng thử lại";
+				Flash.create("danger", "Không thể tìm kiếm vị trí bạn muốn tìm. Bạn vui lòng thử lại");
 			});
 		};
 
 		$scope.onSearchCurrentPosition = function() {
+			// $scope.isFinding = true;
 			geocodingService.currentPosition().then(function(position) {
+				//$scope.isFinding = false;
+				$scope.error = "";
 				setMarker({
 					lat: position.coords.latitude,
 					lng: position.coords.longitude,
 				});
 			}, function(error) {
+				// $scope.isFinding = false;
 				$scope.error = "Không thể lấy vị trí hiện tại của bạn";
+				Flash.create("danger", "Không thể lấy vị trí hiện tại của bạn");
 			});
 		};
 
 		function createMarker(lat, lng) {
+			// console.log(document.getElementById("customMarker").outerHTML);
 			var position = new google.maps.LatLng(lat, lng);
 			var image = $scope.currentUser.avatar.url;
-			var HtmlLayout =
-				"<div  style='position: relative; width:100px; height:100px;'>" + "<img style='display:block; left:15px; top:7px; position:absolute; z-index:10s' class='img-circle width='70px' height='70px'" + "src='" + image + "' >" + "<img style='display:block;z-index: 100;'' width='100px' height='100px'" + "src='/assets/application/placeholder/marker_layout.png'></div>";
+			// var HtmlLayout =
+			// 	"<div  style='position: relative; width:100px; height:100px;'>" + "<img style='display:block; left:15px; top:7px; position:absolute; z-index:10s' class='img-circle width='70px' height='70px'" + "src='" + image + "' >" + "<img style='display:block;z-index: 100;'' width='100px' height='100px'" + "src='/assets/application/placeholder/marker_layout.png'></div>";
+			 var HtmlLayout = document.getElementById("customMarker").innerHTML;
 			var marker = new RichMarker({
 				position: position,
 				draggable: true,
@@ -65,11 +78,29 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingServic
 			});
 		};
 
+
 		////Reserve geocoding
 		// geocodingService.addressFromLocation(10.739211296648074, 106.71831607818604).then(function(address){
 		// 	console.log("success:", address);
 		// }, function(error){
 		// 	console.log("error:", error);
 		// });
+
+
+		$scope.sendBussinessRequest = function(){
+			console.log("bussinessRequest: ", $scope.bussinessRequest);
+			KhTkDoanhNghiepService.create($scope.bussinessRequest).success(function(){
+				Flash.create("success", 'Yêu cầu kích hoạt tài khoản doanh nghiệp của bạn đã được gửi. Chúng tôi sẽ duyệt và thông báo bạn sớm nhất có thể');
+				angular.copy({}, $scope.bussinessRequest);
+				var username = $scope.currentUser.username;
+				$state.go("trangCaNhan", {
+					username: username,
+				});
+
+			}).error(function(error){
+				Flash.create("danger","Lỗi xảy ra khi gửi yêu cầu. Bạn vui lòng thử lại");
+			});
+		};
+
 	}
 ]);

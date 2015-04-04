@@ -18,6 +18,8 @@ class User
   has_one :bussiness
   has_many :posts
   has_many :favorite_posts
+  #Moi nguoi co the co nhieu yeu cau, boi vi neu 1 yeu cau ko dc chap thuan thi co the gui yeu cau khac
+  has_many :bussiness_requests
   
   
   #My field

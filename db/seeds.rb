@@ -99,3 +99,14 @@
 # trungnguyenhuu.posts << Post.new(title: 'post chua duyet 23', body: 'Body 6')
 # trungnguyenhuu.posts << Post.new(title: 'post chua duyet 24', body: 'Body 7')
 # trungnguyenhuu.posts << Post.new(title: 'post chua duyet 25', body: 'Body 8')
+
+
+
+#Tao ra cac status cho bussiness_request
+# Gom 3 tinh trang:
+# 	Chưa duyệt
+# 	Đã duyệt
+# 	Từ chối
+# BussinessRequestStatus.create(name: 'Chưa duyệt')
+# BussinessRequestStatus.create(name: 'Đã duyệt')
+# BussinessRequestStatus.create(name: 'Từ chối')
