@@ -34,5 +34,6 @@
 //= require ngmap
 //= require ./customJS/richmarker.js
 //= require underscore
+//= require ngstorage
 //= require ./app.js
 //= require_tree .
