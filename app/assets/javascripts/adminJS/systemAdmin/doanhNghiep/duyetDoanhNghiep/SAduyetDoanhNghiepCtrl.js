@@ -123,7 +123,6 @@ app.controller('SAduyetDoanhNghiepCtrl', ['$scope', 'SAduyetDoanhNghiepService',
 			var HtmlLayout =  $("#customMarker").html();
 			var marker = new RichMarker({
 				position: position,
-				draggable: true,
 				flat: true,
 				content: HtmlLayout,
 			});

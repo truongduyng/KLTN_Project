@@ -2,7 +2,7 @@ class BussinessesController < ApplicationController
 	before_action :authenticate_user!
 	
 	#before for check role is bussissness admin
-	before_action :check_role_bussiness_admin, only: [:new, :update]
+	before_action :check_role_bussiness_admin, only: [:show, :new, :update]
 	
 	def show
 		render json: current_user.bussiness

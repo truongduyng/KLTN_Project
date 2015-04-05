@@ -1,0 +1,9 @@
+1. KO hien thi module kich hoat tai khoan admin trong trang ca nhan neu nguoi do da la bussiness admin (fixed)
+2. chi hien module kich hoat tai khoan neu nguoi do vao trang cua nguoi do (fixed)
+2. Khi da la bussiness admin thi khi vao trang kich hoat tai khoan hien ban da la bussiness admin nen khong the gui 
+them yeu cau
+3. Set muc do truy cap cho tung trang: neu trang can dang nhap thi hien thi modal dang nhap, dang nhap xong thi
+load lai trang
+4. Neu vao trang ko co quyen truy cap thi chuyen toi trang not found
+5. Xu ly truong hop 3 va 4 dong thoi: tuc la chua dang nhap va vao trang ko co quyen truy cap
+6. Fix 1 so loi thay doi ten bien, du thua field nhu: bo address trong bussiness, ...

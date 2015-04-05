@@ -1,7 +1,7 @@
 app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingService',
 	'KhTkDoanhNghiepService', 'Flash', '$state',
 	function($scope, currentUser, geocodingService, KhTkDoanhNghiepService, Flash, $state) {
-
+				
 		$scope.currentUser = currentUser;
 		//Bat su kien load map thanh cong
 		$scope.$on('mapInitialized', function(event, map) {
@@ -93,9 +93,9 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingServic
 				Flash.create("success", 'Yêu cầu kích hoạt tài khoản doanh nghiệp của bạn đã được gửi. Chúng tôi sẽ duyệt và thông báo bạn sớm nhất có thể');
 				angular.copy({}, $scope.bussinessRequest);
 				var username = $scope.currentUser.username;
-				$state.go("trangCaNhan", {
-					username: username,
-				});
+				// $state.go("trangCaNhan", {
+				// 	username: username,
+				// });
 
 			}).error(function(error){
 				Flash.create("danger","Lỗi xảy ra khi gửi yêu cầu. Bạn vui lòng thử lại");

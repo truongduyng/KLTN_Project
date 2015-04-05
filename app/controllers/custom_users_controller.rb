@@ -7,7 +7,7 @@ class CustomUsersController < ApplicationController
 		if params.has_key?(:username)
 			@user = User.where(username: params[:username]).first
 			if @user
-				render json: @user, status: :ok
+				#render json: @user, status: :ok
 			else
 				render nothing: true, status: :not_found, content_type: 'application/json'
 			end		
@@ -19,7 +19,8 @@ class CustomUsersController < ApplicationController
 	#PUT /custom_users/:id.json
 	def update
 		if @user.update_attributes(user_params)
-			render json: @user, status: :ok
+			#render json: @user, status: :ok
+			render 'get_user_by_username.json.jbuilder'
 		else
 			render json: @user.errors, status: :bad_request
 		end
@@ -32,7 +33,8 @@ class CustomUsersController < ApplicationController
 	    if @user.update_with_password(new_password_params)
 	      # Sign in the user by passing validation in case their password changed
 	      sign_in @user, :bypass => true
-	      render json: @user, status: :ok
+	      #render json: @user, status: :ok
+	      render 'get_user_by_username.json.jbuilder'
 	    else
 	      render json: @user.errors, status: :bad_request
 	    end
@@ -48,7 +50,9 @@ class CustomUsersController < ApplicationController
 		#Gan avatar bang params[:file]
 		current_user.avatar = params[:file]
 		if current_user.save
-			render json: @current_user, status: :ok
+			@user = current_user
+			#render json: @current_user, status: :ok
+			render 'get_user_by_username.json.jbuilder'
 		else
 			render json: @current_user.errors, status: :bad_request
 		end
