@@ -23,4 +23,6 @@
 //= require jquery-timepicker-jt/lib/bootstrap-datepicker
 //= require angular-flash
 //= require_tree ../../angularJSComponents
+//= require ngmap
+//= require ./customJS/richmarker.js
 //= require_tree .

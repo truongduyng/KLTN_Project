@@ -65,6 +65,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 				}],
 			}
 		})
+		.state("duyetDoanhNghiep",{
+			url: '/duyet-doanh-nghiep',
+			templateUrl: 'adminJS/systemAdmin/doanhNghiep/duyetDoanhNghiep/_duyetDoanhNghiep.html',
+			controller: 'SAduyetDoanhNghiepCtrl',
+		})
 		
 	$urlRouterProvider.otherwise('/');
 
