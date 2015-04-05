@@ -1,5 +1,5 @@
-app.controller('SAduyetDoanhNghiepCtrl', ['$scope', 'SAduyetDoanhNghiepService',
-	function($scope, duyetDoanhNghiepService) {
+app.controller('SAduyetDoanhNghiepCtrl', ['$scope', 'SAduyetDoanhNghiepService', 'logoFilter',
+	function($scope, duyetDoanhNghiepService, logoFilter) {
 		$scope.message = "this is message";
 
 		$scope.bussinessRequests = duyetDoanhNghiepService.bussinessRequests;
@@ -108,5 +108,48 @@ app.controller('SAduyetDoanhNghiepCtrl', ['$scope', 'SAduyetDoanhNghiepService',
 		};
 
 
+		//Su kien khi load map thanh cong
+		$scope.$on('mapInitialized', function(event, map) {
+			var marker =createMarker(map.item.latitude, map.item.longitude, map.item.user.avatar.url);
+			marker.setMap(map);
+			map.setCenter(marker.getPosition());
+		});
+
+		function createMarker(lat, lng, image) {
+			var position = new google.maps.LatLng(lat, lng);
+			//Gan anh cho html layout cua marker
+			$("#customMarker").find('.img-avatar').attr("src", image).html();
+			//Lay html
+			var HtmlLayout =  $("#customMarker").html();
+			var marker = new RichMarker({
+				position: position,
+				draggable: true,
+				flat: true,
+				content: HtmlLayout,
+			});
+			return marker;
+		};
+
+		// var marker = null;
+
+		// function setMarker(position) {
+		// 	$scope.bussinessRequest.latitude = position.lat;
+		// 	$scope.bussinessRequest.longitude = position.lng;
+		// 	//Bo marker cu
+		// 	if (marker) {
+		// 		marker.setMap(null);
+		// 	}
+		// 	//Tao ra marker tai vi tri moi
+		// 	marker = createMarker(position.lat, position.lng);
+		// 	marker.setMap($scope.map);
+		// 	$scope.map.setCenter(marker.getPosition());
+		// 	$scope.map.setZoom(15);
+		// 	//Dang ki su kien dragend cho marker de lay vi tri moi	
+		// 	google.maps.event.addListener(marker, 'dragend', function() {
+		// 		$scope.bussinessRequest.latitude = marker.getPosition().lat();
+		// 		$scope.bussinessRequest.longitude = marker.getPosition().lng();
+		// 		console.log("bussinessRequest: ", $scope.bussinessRequest);
+		// 	});
+		// };
 	}
 ]);
