@@ -20,6 +20,22 @@ class BussinessRequest
 	validates :longitude, presence: true
 	# validates :status_id, presence: true
 
+	#Scope
+	#Danh sach cac request chua duyet
+	scope :chua_duyet, ->{
+		chua_duyet_status = BussinessRequestStatus.chua_duyet_status
+		self.where(status_id: chua_duyet_status.id)
+	}
+
+	#Method
+	#Kiem tra 1 request co dc duyet chua
+	def chua_duyet?
+		if self.status.id ==  BussinessRequestStatus.chua_duyet_status.id
+			return true
+		else
+			return false
+		end
+	end
 	#callback
 	before_create :init_status
 	private

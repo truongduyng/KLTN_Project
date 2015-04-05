@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :system_admin_bussiness_requests do
+    member do
+      put 'accept'
+      put 'deny'
+    end
+  end
+  
   resources :bussiness_requests
   resources :system_admin_posts do
     member do

@@ -15,6 +15,7 @@ class BussinessRequestsController < ApplicationController
 		end
 	end
 
+
 	private 
 		def request_params
 			params.require(:bussiness_request).permit(:name, :address, :category, :description, :latitude, :longitude)

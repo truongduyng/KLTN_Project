@@ -9,6 +9,14 @@ class BussinessRequestStatus
 	def self.chua_duyet_status
 		where(name: 'Chưa duyệt').first
 	end
+
+	def self.da_duyet_status
+		where(name: 'Đã duyệt').first
+	end
+
+	def self.tu_choi_status
+		where(name: 'Từ chối').first
+	end
 end
 # Gom 3 tinh trang:
 # 	Chưa duyệt
