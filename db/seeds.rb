@@ -110,3 +110,23 @@
 # BussinessRequestStatus.create(name: 'Chưa duyệt')
 # BussinessRequestStatus.create(name: 'Đã duyệt')
 # BussinessRequestStatus.create(name: 'Từ chối')
+
+
+#Tao yeu cau kich hoat tai khoan doanh nghiep
+# trung = User.where(username: 'trung').first
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 1', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 2', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 3', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 4', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 5', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 6', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 7', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 8', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 9', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 10', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 11', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 12', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 13', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 14', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 15', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+# trung.bussiness_requests << BussinessRequest.new(name: 'Name 16', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)

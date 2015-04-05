@@ -66,59 +66,44 @@
                               </tr>
                               </thead>
                               <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td style="max-width:250px;">Doanh nghiệp thể thao sporta</td>
-                                        <td style="max-width:250px;">Bóng đá</td>
-                                        <td>Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng </td>
-                                        <td>Nguyễn Hữu Trung</td>
-                                        <td>03/04/2015</td>
+                                    <tr ng-repeat="(index,item) in bussinessRequests | orderBy: 'created_at'">
+                                        <td>{{index + 1}}</td>
+                                        <td style="max-width:250px;">{{item.name}}</td>
+                                        <td style="max-width:250px;">{{item.category}}</td>
+                                        <td>{{item.description | shortDesc}}</td>
+                                        <td>{{item.user.username}}</td>
+                                        <td>{{item.created_at| date:'dd/mm/yyyy, h:mm a'}}</td>
                                         <td> 
-                                            <input  class="tgl tgl-skewed" id="cb3" type="checkbox">
-                                            <label class="tgl-btn" data-tg-off="Thêm" data-tg-on="Bỏ" for="cb3"></label>
+                                            <input ng-click="ontoggleBussinessRequest(item)" ng-model="item.isChecked" class="tgl tgl-skewed" id="{{item._id.$oid}}" type="checkbox">
+                                            <label class="tgl-btn" data-tg-off="Thêm" data-tg-on="Bỏ" for="{{item._id.$oid}}"></label>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td style="max-width:250px;">Doanh nghiệp thể thao sporta</td>
-                                        <td style="max-width:250px;">Bóng đá</td>
-                                        <td>Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng </td>
-                                        <td>Nguyễn Hữu Trung</td>
-                                        <td>03/04/2015</td>
-                                        <td> 
-                                            <input  class="tgl tgl-skewed" id="cb3" type="checkbox">
-                                            <label class="tgl-btn" data-tg-off="Thêm" data-tg-on="Bỏ" for="cb3"></label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td style="max-width:250px;">Doanh nghiệp thể thao sporta</td>
-                                        <td style="max-width:250px;">Bóng đá</td>
-                                        <td>Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng </td>
-                                        <td>Nguyễn Hữu Trung</td>
-                                        <td>03/04/2015</td>
-                                        <td> 
-                                            <input  class="tgl tgl-skewed" id="cb3" type="checkbox">
-                                            <label class="tgl-btn" data-tg-off="Thêm" data-tg-on="Bỏ" for="cb3"></label>
-                                        </td>
-                                    </tr>
-
+                              
                               </tbody>
                             </table>
+                          </div>
+                          <div ng-if="isLoading" style="text-align: center;">
+                              <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
                           </div>
             <!-- End bài viết -->
       </section>
         <div class="col-lg-12" style="margin-top: -30px;">
             <div class="text-center">
-              <ul class="pagination">
-                <li><a href="#">«</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">»</a></li>
-              </ul>
+                    <paging
+                        class="small"
+                        page="pageConfig.currentPage" 
+                        page-size="pageConfig.pageSize" 
+                        total="pageConfig.total"
+                        adjacent="{{pageConfig.adjacent}}"
+                        dots="{{pageConfig.dots}}"
+                        scroll-top="{{pageConfig.scrollTop}}" 
+                        hide-if-empty="{{pageConfig.hideIfEmpty}}"
+                        ul-class="{{pageConfig.ulClass}}"
+                        active-class="{{pageConfig.activeClass}}"
+                        disabled-class="{{pageConfig.disabledClass}}"
+                        show-prev-next="{{pageConfig.showPrevNext}}"
+                        paging-action="onPageSelected('Paging Clicked', page)">
+                    </paging> 
             </div>
         </div>
     </div>

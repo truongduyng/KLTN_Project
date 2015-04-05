@@ -69,8 +69,14 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			url: '/duyet-doanh-nghiep',
 			templateUrl: 'adminJS/systemAdmin/doanhNghiep/duyetDoanhNghiep/_duyetDoanhNghiep.html',
 			controller: 'SAduyetDoanhNghiepCtrl',
+			resolve: {
+				bussinessRequests: ['SAduyetDoanhNghiepService', '$rootScope', function(duyetDoanhNghiepService, $rootScope) {
+					console.log("on resolve duyetDoanhNghiep");
+					return duyetDoanhNghiepService.getBussinessRequests(1, $rootScope.rootPageConfig.pageSize).promise;
+				}],
+			}
 		})
 		
-	$urlRouterProvider.otherwise('/');
+	//$urlRouterProvider.otherwise('/');
 
 }]);

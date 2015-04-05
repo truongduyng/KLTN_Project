@@ -1,4 +1,4 @@
-json.posts @bussiness_requests do |br|
+json.bussiness_requests @bussiness_requests do |br|
 	json._id br.id
 	json.name br.name
 	json.address br.address

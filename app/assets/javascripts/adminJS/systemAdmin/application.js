@@ -27,6 +27,7 @@
 //= require angular-paging
 //= require ngInfiniteScroll
 //= require angular-flash
+//= require underscore
 //= require_tree ../../angularJSComponents
 //= require angular-animate
 //= require ngmap
