@@ -95,7 +95,9 @@ class User
 
   private
     def set_default_role
-      self.role ||= Role.where(name: 'user').first
+      #chua test cho nay
+      self.roles << Role.where(name: 'user').first
+      # self.role ||= Role.where(name: 'user').first
     end
 
     def check_gender

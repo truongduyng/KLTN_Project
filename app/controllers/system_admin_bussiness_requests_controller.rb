@@ -19,8 +19,8 @@ class SystemAdminBussinessRequestsController < SystemAdminController
 			#Neu da la bussiness_admin thi ko the nang cap, do do bo qua request do
 			#bang cach gan no bang da duyet
 			@bussiness_request.status_id =  BussinessRequestStatus.da_duyet_status.id
-			@bussiness_request.save
-			render nothing: true, status: :ok, content_type: 'application/json'
+			@bussiness_request.timeless.save
+			render json: {message: 'Đã là tài khoản doanh nghiệp'}, status: :ok, content_type: 'application/json'
 		else
 			#B1: Gan role bussiness cho thanh vien do
 			user.roles ||=[]
@@ -43,9 +43,9 @@ class SystemAdminBussinessRequestsController < SystemAdminController
 
 				if branch.save
 					@bussiness_request.status_id =  BussinessRequestStatus.da_duyet_status.id
-					@bussiness_request.save
+					@bussiness_request.timeless.save
 					#Kich hoat thanh cong
-					render nothing: true, status: :created, content_type: 'application/json'
+					render json: {message: 'Kích hoạt thành công tài khoản doanh nghiệp'}, status: :created, content_type: 'application/json'
 				else
 					render json: {
 						message: 'Lỗi xảy ra khi tạo branch',
@@ -66,9 +66,9 @@ class SystemAdminBussinessRequestsController < SystemAdminController
 	#PUT /system_admin_bussiness_requests/:id/deny.json
 	def deny
 		#Gan yeu cau thanh trang thai tu choi va ko lam gi ca
-		@bussiness_request.status_id = BussinessRequestStatus.tu_choi_status
-		@bussiness_request.save
-		render nothing: true, status: :ok, content_type: 'application/json' 
+		@bussiness_request.status_id = BussinessRequestStatus.tu_choi_status.id
+		@bussiness_request.timeless.save
+		render json: @bussiness_request, status: :ok, content_type: 'application/json' 
 	end
 
 	private

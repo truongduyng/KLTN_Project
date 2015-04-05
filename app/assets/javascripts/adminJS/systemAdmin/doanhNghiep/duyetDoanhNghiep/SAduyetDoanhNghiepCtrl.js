@@ -50,7 +50,7 @@ app.controller('SAduyetDoanhNghiepCtrl', ['$scope', 'SAduyetDoanhNghiepService',
 
 		//TU choi 1 yeu cau bussiness request
 		$scope.denyBussinessRequest = function(bussinessRequest) {
-			duyetBaiVietService.deny(bussinessRequest).success(function(data) {
+			duyetDoanhNghiepService.deny(bussinessRequest).success(function(data) {
 				var index = $scope.addedBussinessRequests.indexOf(bussinessRequest);
 				$scope.addedBussinessRequests.splice(index, 1);
 				_.find($scope.bussinessRequests, function(item, index) {
@@ -118,7 +118,7 @@ app.controller('SAduyetDoanhNghiepCtrl', ['$scope', 'SAduyetDoanhNghiepService',
 		function createMarker(lat, lng, image) {
 			var position = new google.maps.LatLng(lat, lng);
 			//Gan anh cho html layout cua marker
-			$("#customMarker").find('.img-avatar').attr("src", image).html();
+			$("#customMarker").find('.img-avatar').attr("src", logoFilter(image)).html();
 			//Lay html
 			var HtmlLayout =  $("#customMarker").html();
 			var marker = new RichMarker({

@@ -4,7 +4,7 @@ class Branch
 	field :address, type: String
 	field :phone, type: String
 	field :latitude, type: Float
-	field :longtitude, type: Float
+	field :longitude, type: Float
 
 	belongs_to :bussiness
 	has_many :assests
