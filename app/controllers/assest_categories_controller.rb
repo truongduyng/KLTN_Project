@@ -84,9 +84,8 @@ class AssestCategoriesController < ApplicationController
 
 		#Da test
 		def check_role_bussiness_admin
-			if current_user.role.name == 'bussiness admin'
-			else
-				render json: {}, status: :not_found	
+			if !current_user.is_bussiness_admin?
+				render nothing: true, status: :not_found, content_type: 'application/json'
 			end
 		end
 
