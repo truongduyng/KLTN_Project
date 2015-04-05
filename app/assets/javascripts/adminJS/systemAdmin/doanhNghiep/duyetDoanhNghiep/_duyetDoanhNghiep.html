@@ -78,7 +78,7 @@
                                             <label class="tgl-btn" data-tg-off="Thêm" data-tg-on="Bỏ" for="{{item._id.$oid}}"></label>
                                         </td>
                                     </tr>
-                              
+                                    <tr ng-if="bussinessRequests.length == 0"><td style="text-align: center;" colspan="7"> Trống  </td></tr>
                               </tbody>
                             </table>
                           </div>
@@ -113,6 +113,44 @@
               <section class="panel panel-success">
                     <header class="panel-heading"> Danh sách doanh nghiệp chờ duyệt</header>
                     <div class="panel-body">
+                              <section class="panel" ng-repeat="item in addedBussinessRequests">
+                                    <header class="panel-heading">{{item.name}}</header>
+                                    <div class="panel-body"> 
+                                          <table class="table table-hover">
+                                                <tbody><tr>
+                                                    <th>Tên doanh nghiệp</th>
+                                                    <td>{{item.name}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Lĩnh vực </th>
+                                                    <td>{{item.category}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Mô tả</th>
+                                                    <td>{{item.description}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Địa chỉ</th>
+                                                    <td>{{item.address}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Vị trí</th>
+                                                    <td>
+                                                      <div id="map" style="width: 100%; height: 300px;"></div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                          </table>
+                                          <div class="list-control-buttons btn-group pull-right">
+                                              <button class="btn btn-success">Duyệt</button>
+                                              <button class="btn btn-danger">Không duyệt</button>
+                                              <button ng-click="onIgnore(item)" class="btn btn-info">Bỏ qua</button>
+                                          </div>
+                                    </div>
+                              </section>
+                               <div  style="text-align: center"  ng-if="addedBussinessRequests.length == 0">Trống</div>
+
+<!-- 
                               <section class="panel">
                                     <header class="panel-heading"> Doanh nghiệp thể thao sporta </header>
                                     <div class="panel-body"> 
@@ -147,44 +185,7 @@
                                               <button class="btn btn-info">Bỏ qua</button>
                                           </div>
                                     </div>
-                              </section>
-
-
-                              <section class="panel">
-                                    <header class="panel-heading"> Doanh nghiệp thể thao sporta </header>
-                                    <div class="panel-body"> 
-                                          <table class="table table-hover">
-                                                <tbody><tr>
-                                                    <th>Tên doanh nghiệp</th>
-                                                    <td>Doanh nghiệp thể thao sporta</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Lĩnh vực </th>
-                                                    <td>Bóng đá</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Mô tả</th>
-                                                    <td>Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng. Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng.Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng. Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng. Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng. Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng.Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng. Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng. Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng  </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Địa chỉ</th>
-                                                    <td>127 Nguyễn Thị Thập, quận 7 thành phố hồ chí minh</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Vị trí</th>
-                                                    <td>
-                                                      <div id="map" style="width: 100%; height: 300px;"></div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                          </table>
-                                          <div class="list-control-buttons btn-group pull-right">
-                                              <button class="btn btn-success">Duyệt</button>
-                                              <button class="btn btn-danger">Không duyệt</button>
-                                              <button class="btn btn-info">Bỏ qua</button>
-                                          </div>
-                                    </div>
-                              </section>
+                              </section> -->
                     </div>
               </section>
         </div>
