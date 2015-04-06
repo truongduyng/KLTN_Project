@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree ../../extendJavascript
+//= require underscore
 //= require angular
 //= require bootstrap/dist/js/bootstrap
 //= require angular-ui-router
@@ -25,4 +26,5 @@
 //= require_tree ../../angularJSComponents
 //= require ngmap
 //= require ./customJS/richmarker.js
+//= require ./bussinessAdminApp.js
 //= require_tree .

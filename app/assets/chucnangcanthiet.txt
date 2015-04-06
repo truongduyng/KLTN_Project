@@ -1,0 +1,6 @@
+CHUC NANG THONG KE CHO SYSTEM ADMIN
+hien thi so luong nguoi dung, so luong nguoi dung moi trong ngay
+hien thi so luong bussiness
+hien thi so luong yeu cau bussiness
+hien thi so luong truy cap
+hien thi so luong bai post, so luong bai post moi trong ngay
