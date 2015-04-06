@@ -1,6 +1,6 @@
 var bussinessAdmin = angular.module('sportaBussinessAdmin', ["ui.router", 'templates', 'Devise', 
 	'angular-flash.flash-alert-directive', 'sporta.services', 
-	'sporta.directives', 'sporta.filters', 'ngMap', 'ngStorage']);
+	'sporta.directives', 'sporta.filters', 'ngMap', 'ngStorage', 'ui.bootstrap']);
 bussinessAdmin.config(function(flashProvider) {
 
 	// Support bootstrap 3.0 "alert-danger" class with error flash types

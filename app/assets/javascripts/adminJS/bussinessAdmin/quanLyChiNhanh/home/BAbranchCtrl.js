@@ -1,6 +1,6 @@
 bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'bussinessService', 'logoFilter', '$location', '$state', 
-	'BAbranchService',
-	function($scope, bussinessService, logoFilter, $location, $state, branchService) {
+	'BAbranchService', '$modal',
+	function($scope, bussinessService, logoFilter, $location, $state, branchService, $modal) {
 	$scope.branches = bussinessService.bussiness.branches;
 	console.log("branches: ", $scope.branches);
 
@@ -58,5 +58,55 @@ bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'bussinessService', 'logoFi
 		//Phuc hoi lai branch ban dau, do ko save
 		angular.copy(branch.origin, branch);
 		branch.isEdit = false;
-	}
+	};
+
+	$scope.onDeleteBranch = function(branch) {
+			var modalInstance = $modal.open({
+				templateUrl: 'deleteBranchModal.html',
+				controller: 'BAdeleteBranchCtrl',
+				size: '',
+				resolve:{
+					branch: [function(){
+						return branch;
+					}],
+					branches: [function(){
+						return _.without($scope.branches, branch);
+					}]
+				}
+			});
+			//Thanh cong thi xoa chi nhanh ra khoi hien thi
+			modalInstance.result.then(function(){
+				var index = $scope.branches.indexOf(branch);
+				$scope.branches.splice(index, 1);
+			});
+	};
+
+}]);
+
+
+bussinessAdmin.controller('BAdeleteBranchCtrl',
+ ['$scope', 'branch', 'branches', '$modalInstance', 'BAbranchService', 
+ function($scope, branch, branches, $modalInstance, branchService) {
+	$scope.branch = branch;
+	//Chuyen ds branches thanh dang name,value cho de hien thi
+	$scope.branches = _.map(branches, function(item){
+		return {
+			name: item.name,
+			value: item._id.$oid,
+		}
+	});
+	//Them tuy chon all vao danh sach chon
+	$scope.branches.splice($scope.branches.length,0, {
+		name: 'Xóa tất cả sân cùng chi nhánh',
+		value: 'all',
+	});
+	//Khoi tao gia tri mac dinh
+	$scope.selectedChoice = $scope.branches[0].value;
+	
+	//Xoa chi nhanh
+	$scope.deleteBranch = function(){
+		branchService.destroy($scope.branch, $scope.selectedChoice).success(function(){
+			 $modalInstance.close(branch);
+		});
+	};
 }]);

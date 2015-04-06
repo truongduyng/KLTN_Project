@@ -21,7 +21,7 @@
                                   <!-- BUTTON HIEN RA KHI HIEN THI -->
                                   <div class="pull-right" ng-if="!branch.isEdit">
                                       <button ng-click="onEdit(branch)" class="btn btn-primary"><span class="fa fa-edit"></span> Chỉnh sửa</button>
-                                      <button class="btn btn-danger"><span class="fa fa-trash"></span> Xóa</button>
+                                      <button ng-click="onDeleteBranch(branch)" class="btn btn-danger"><span class="fa fa-trash"></span> Xóa</button>
                                   </div>
                                   <!-- BUTTON HIEN RA KHI CHINH SUA -->
                                    <div class="pull-right" ng-if="branch.isEdit">
@@ -91,158 +91,35 @@
  </div>
 
 
-
-
-<!--  <section class="wrapper">
-      <div class="row">
-        <div class="col-lg-12">
-          <h3 class="page-header"><i class="fa fa-user-md"></i> Thông tin</h3>
-          <ol class="breadcrumb">
-            <li><i class="fa fa-home"></i><a href="index.html">Quản lý</a></li>
-            <li><i class="icon_documents_alt"></i>Chi nhánh</li>
-          </ol>
-        </div>
+<!--MODAL CHO XOA CHI NHANH -->
+<script type="text/ng-template" id="deleteBranchModal.html">
+      <div class="modal-header">
+          <button type="button" class="close" 
+             data-dismiss="modal" aria-hidden="true" ng-click="$close()">
+                &times;
+          </button>
+          <h4 class="modal-title" id="myModalLabel">
+             Bạn có muốn xóa chi nhánh: {{branch.name}}
+          </h4>
       </div>
+      <div class="modal-body">
+            <div class="radio">
+                <p>Chuyển các sân thuộc chi nhánh này vào chi nhánh:</p>
+                <select ng-model="selectedChoice" class="form-control">
+                    <option ng-selected="selectedChoice == item.value"  ng-repeat="item in branches" value="{{item.value}}">{{item.name}}</option>
+                </select>
+            </div>
+  
+      </div>
+      <div class="modal-footer">
+          <button ng-click="deleteBranch()" class="btn btn-danger" ng-click="deleteCategory()">Xóa</button>
+          <button ng-click="$dismiss()" class="btn btn-success">Thoát</button>
+      </div>
+</script>
+<!-- <modal title="Ban co muon xoa loai san da chon khong ?" visible="showDeleteCategoryModal">
       
-      <div class="row">
-        <div class="col-lg-12">
-          <section class="panel">
-            <header class="panel-heading" style="overflow:hidden;">
-             Quản lý sân
-              <div style="float:right">
-                  <a href="them-moi-san.html" class="btn btn-success"><span class="icon_plus"></span> Thêm mới</a>
-                </div>
-                <div style="clear:both; margin-bottom:2px;"></div>
-                
-            </header>
-            <div class="table-responsive">
-              <table id="table1" class="table table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th><i class="icon_profile"></i> Danh sách Chi nhánh</th>
-                    <th><i class="icon_profile"></i> Địa chỉ</th>
-                    <th><i class="icon_cogs"></i> </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Chi nhánh 1</td>
-                    <td>125 nguyễn văn cừ</td>
-                    <td align="center" style="vertical-align:middle; max-width:100px;">
-                      <div class="btn-group" > 
-                            <a data-placement="top" data-toggle="tooltip" data-original-title="Sửa"
-                                          class="btn btn-success tooltips" href="them-loai-san.html"><i class="icon_pencil-edit"></i></a>
-                             <a href="#delete-category-modal" data-toggle="modal"
-                                          data-placement="top" data-toggle="tooltip" data-original-title="Xóa"
-                                           class="btn btn-danger tooltips"><i class="icon_close_alt2"></i></a> 
-                         </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>2</td>
-                    <td>Chi nhánh 2</td>
-                    <td>130 Nguyễn thị thập, quận 7</td>
-                    <td align="center" style="vertical-align:middle; max-width:100px;">
-                      <div class="btn-group" > 
-                            <a data-placement="top" data-toggle="tooltip" data-original-title="Sửa"
-                                          class="btn btn-success tooltips" href="them-loai-san.html"><i class="icon_pencil-edit"></i></a>
-                             <a href="#delete-category-modal" data-toggle="modal"
-                                          data-placement="top" data-toggle="tooltip" data-original-title="Xóa"
-                                           class="btn btn-danger tooltips"><i class="icon_close_alt2"></i></a> 
-                         </div>
-                    </td>
-                  </tr>
-          
-
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </div>
-      </div>
       
-    </section>
-    
-    <section class="modals">
-    
-      <div id="delete-category-modal" class="modal fade" >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close"
-                            data-dismiss="modal"
-                            aria-hidden="true">&times;</button>
-              <h3>Xóa mục đã chọn xxxx ?</h3>
-            </div>
-            <div class="modal-body">
-              <div class="radio">
-                <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                  Chuyển các sân con thuộc loại sân bị xóa vào loại sân: </label>
-                  <select multiple="" class="form-control">
-                                              <option>Sân 5 người</option>
-                                              <option>Sân 10 người</option>
-                                              <option>Sân 12 người</option>
-                                              <option>Sân tự do</option>
-                                          </select>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                  Xóa toàn bộ các sân thuộc loại sân bị xóa </label>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-danger">Xóa</button>
-              <button class="btn btn-success" data-dismiss="modal">Thoát</button>
-            </div>
-          </div>
-        </div>
-       </div>
-
-        <div id="delete-item-modal" class="modal fade" >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close"
-                                data-dismiss="modal"
-                                aria-hidden="true">&times;</button>
-                  <h3>Xóa mục đã chọn ?</h3>
-                </div>
-                <div class="modal-body" style="text-align:center">
-                    <div class="alert alert-info fade in" style="margin-bottom:-20px;">
-                                  <button data-dismiss="alert" class="close close-sm" type="button">
-                                      <i class="icon-remove"></i>
-                                  </button>
-                                  <strong>Chú ý:</strong>Bạn có muốn xóa mục đã chọn không ?
-                       </div>
-                
-                </div>
-                <div class="modal-footer">
-                  <button class="btn btn-danger">Xóa</button>
-                  <button class="btn btn-success" data-dismiss="modal">Thoát</button>
-                </div>
-              </div>
-          </div>
-        </div>
-
+      <div style="text-align: right;">
+        
       </div>
-     
-    </section>
-  </section>
-<style type="text/css">
-  .modal-dialog {
-      margin: 0;
-      left: 0%;
-  }
-  .right-caret {
-    border-left: 4px solid @black;
-    border-right: 0;
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
-  }
-
-</style> -->
+</modal> -->

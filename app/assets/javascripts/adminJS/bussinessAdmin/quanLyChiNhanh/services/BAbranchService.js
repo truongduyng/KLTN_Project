@@ -17,5 +17,14 @@ bussinessAdmin.factory('BAbranchService', ['$http', function($http) {
 		return promise;
 	}
 	
+	o.destroy = function(branch, choice){
+		var id = branch._id.$oid;
+		var url ="/branches/" + id + ".json?";
+		var query = "newBranch=" + choice;
+		var promise = $http.delete(url + query).success(function(data){
+
+		});
+		return promise;
+	}
 	return o;
 }])
