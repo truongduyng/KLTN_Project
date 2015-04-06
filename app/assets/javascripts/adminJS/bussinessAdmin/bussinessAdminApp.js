@@ -17,24 +17,65 @@ bussinessAdmin.config(function(flashProvider) {
 
 bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
+	// $stateProvider.state("home", {
+	// 	url: "/",
+	// 	templateUrl: 'adminJS/bussinessAdmin/home/_home.html',
+	// 	controller: 'homeCtrl',
+	// 	resolve: {
+	// 		user: ['Auth',
+	// 			function(Auth) {
+	// 				console.log("in resolve user");
+	// 				return Auth.currentUser();
+	// 			}
+	// 		],
+	// 		bussiness: ['bussinessService', function(bussinessSerivce) {
+	// 			console.log("in resolve bussiness");
+	// 			return bussinessSerivce.get();
+	// 		}],
+	// 	}
+	// });
 	$stateProvider.state("home", {
 		url: "/",
-		templateUrl: 'adminJS/bussinessAdmin/home/_home.html',
-		controller: 'homeCtrl',
-		resolve: {
-			user: ['Auth',
-				function(Auth) {
-					console.log("in resolve user");
-					return Auth.currentUser();
+		views: {
+			'': {
+				templateUrl: 'adminJS/bussinessAdmin/home/_home.html',
+				controller: 'homeCtrl',
+				resolve: {
+					user: ['Auth',
+						function(Auth) {
+							console.log("in resolve user");
+							return Auth.currentUser();
+						}
+					],
+					bussiness: ['bussinessService', function(bussinessSerivce) {
+						console.log("in resolve bussiness");
+						return bussinessSerivce.get();
+					}],
 				}
-			],
-			bussiness: ['bussinessService', function(bussinessSerivce) {
-				console.log("in resolve bussiness");
-				return bussinessSerivce.get();
-			}],
+			},
+			'danhSachChiNhanh@home':{
+				templateUrl: 'adminJS/bussinessAdmin/quanLyChiNhanh/home/_index.html',
+				controller: 'BAbranchCtrl',
+			},
 		}
-	});
 
+	});
+		//nested view cua home page
+		$stateProvider.state("home.themMoiChiNhanh", {
+			url: "them-moi-chi-nhanh",
+			views:{
+				'themMoiChiNhanh@home':{
+					templateUrl: 'adminJS/bussinessAdmin/quanLyChiNhanh/new/_new.html',
+					controller: 'BAnewBranchCtrl',
+
+				}
+			}
+		});
+		// $stateProvider.state("home.themMoiChiNhanh", {
+		// 	url: "/them-moi-chi-nhanh",
+		// 	templateUrl: 'adminJS/bussinessAdmin/quanLyChiNhanh/new/_new.html',
+		// 	controller: 'BAnewBranchCtrl',
+		// });
 
 
 	$stateProvider.state("quanlyloaisan", {
@@ -135,19 +176,19 @@ bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($statePr
 	});
 
 
-	//Quan ly chi nhanh
-	$stateProvider.state("quanLyChiNhanh", {
-		url: "/quan-ly-chi-nhanh",
-		templateUrl: "adminJS/bussinessAdmin/quanLyChiNhanh/home/_index.html",
-		controller: 'branchCtrl',
-	});
+	// //Quan ly chi nhanh
+	// $stateProvider.state("quanLyChiNhanh", {
+	// 	url: "/quan-ly-chi-nhanh",
+	// 	templateUrl: "adminJS/bussinessAdmin/quanLyChiNhanh/home/_index.html",
+	// 	controller: 'branchCtrl',
+	// });
 
-	//Quan ly chi nhanh
-	$stateProvider.state("themMoiChiNhanh", {
-		url: "/quan-ly-chi-nhanh/them-moi",
-		templateUrl: "adminJS/bussinessAdmin/quanLyChiNhanh/new/_new.html",
-		controller: 'newBranchCtrl',
-	});
+	// //Quan ly chi nhanh
+	// $stateProvider.state("themMoiChiNhanh", {
+	// 	url: "/quan-ly-chi-nhanh/them-moi",
+	// 	templateUrl: "adminJS/bussinessAdmin/quanLyChiNhanh/new/_new.html",
+	// 	controller: 'newBranchCtrl',
+	// });
 	
 	// $stateProvider.state("quanlyloaisan", {
 	// 	url: "/quan-ly-loai-san",
