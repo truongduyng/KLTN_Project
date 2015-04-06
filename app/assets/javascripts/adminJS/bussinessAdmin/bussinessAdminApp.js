@@ -62,7 +62,7 @@ bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($statePr
 	});
 		//nested view cua home page
 		$stateProvider.state("home.themMoiChiNhanh", {
-			url: "them-moi-chi-nhanh",
+			url: "",
 			views:{
 				'themMoiChiNhanh@home':{
 					templateUrl: 'adminJS/bussinessAdmin/quanLyChiNhanh/new/_new.html',

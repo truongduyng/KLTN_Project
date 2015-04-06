@@ -86,7 +86,7 @@ bussinessAdmin.controller('BAeditBranchCtrl', ['$scope', 'geocodingService', 'lo
 		marker = createMarker(position.lat, position.lng, $scope.bussiness.avatar.url);
 		marker.setMap($scope.map);
 		$scope.map.setCenter(marker.getPosition());
-		$scope.map.setZoom(15);
+		$scope.map.setZoom(17);
 		//Dang ki su kien dragend cho marker de lay vi tri moi	
 		google.maps.event.addListener(marker, 'dragend', function() {
 			$scope.branch.latitude = marker.getPosition().lat();
