@@ -26,5 +26,6 @@
 //= require_tree ../../angularJSComponents
 //= require ngmap
 //= require ./customJS/richmarker.js
+//= require ngstorage
 //= require ./bussinessAdminApp.js
 //= require_tree .

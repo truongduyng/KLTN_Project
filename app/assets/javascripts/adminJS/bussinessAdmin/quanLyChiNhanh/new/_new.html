@@ -2,7 +2,7 @@
       <header class="panel-heading" style="padding: 10px;">
           <span>Thêm mới chi nhánh</span>
            <div class="pull-right">
-              <button class="btn btn-primary"><span class="fa fa-save"></span> Lưu</button>
+              <button ng-click="createBranch()" data-ng-disabled="newBranchForm.$invalid || !branch.latitude || !branch.longitude" class="btn btn-primary"><span class="fa fa-save"></span> Lưu  <span ng-if="isSaving" class="fa fa-spinner fa-spin"></span></button>
               <a ui-sref="home" class="btn btn-danger"><span class="fa fa-undo"></span> Hủy</a>
           </div>
       </header>
@@ -12,29 +12,36 @@
                           <section class="panel panel-success">
                               <header class="panel-heading">Thông tin chung</header>
                               <div class="panel-body">
-                                      <form class="form-horizontal " method="get">
+                                      <form name="newBranchForm" novalidate class="form-horizontal " method="get">
                                               <div class="form-group">
                                                     <label class="col-sm-2 control-label">Tên chi nhánh*</label>
                                                     <div class="col-sm-10">
-                                                      <input type="text" class="form-control">
+                                                        <input ng-model="branch.name" name="name" required type="text" class="form-control">
+                                                        <div ng-show="newBranchForm.name.$dirty && newBranchForm.name.$invalid">
+                                                          <span  style="color:#FF0000" ng-show="newBranchForm.name.$error.required">Vui lòng nhập tên của chi nhánh</span>
+                                                        </div>
                                                     </div>
+                                                   
                                               </div>
                                               <div class="form-group">
                                                     <label class="col-sm-2 control-label">Địa chỉ*</label>
                                                     <div class="col-sm-10">
-                                                      <input type="text" class="form-control">
+                                                        <input ng-model="branch.address" name="address" required type="text" class="form-control">
+                                                        <div ng-show="newBranchForm.address.$dirty && newBranchForm.address.$invalid">
+                                                          <span  style="color:#FF0000" ng-show="newBranchForm.address.$error.required">Vui lòng nhập địa chỉ của chi nhánh</span>
+                                                        </div>
                                                     </div>
                                               </div>
                                               <div class="form-group">
                                                     <label class="col-sm-2 control-label">Điện thoại</label>
                                                     <div class="col-sm-10">
-                                                      <input type="text" class="form-control">
+                                                      <input ng-model="branch.phone" name="phone" type="text" class="form-control">
                                                     </div>
                                               </div>
                                               <div class="form-group">
                                                     <label class="col-sm-2 control-label">Mô tả</label>
                                                     <div class="col-sm-10">
-                                                      <textarea class="form-control" cols="50" rows="4">                            </textarea>
+                                                      <textarea ng-model="branch.description" name="description" class="form-control" cols="50" rows="4"></textarea>
                                                     </div>
                                               </div>
                                       </form>
@@ -43,28 +50,29 @@
                     </div>
                     <div class="col-sm-6">
                           <section class="panel panel-success">
-                                  <header class="panel-heading">Vị trí</header>
+                                  <header class="panel-heading">Vị trí*</header>
                                   <div class="panel-body">
                                           <label for="description">Vị trí doanh nghiệp của bạn : <span class="fa fa-help"></span></label>
-                                          <form class="form-horizontal">
+                                          <form name="newBranchAddressForm" class="form-horizontal">
                                                 <div class="row">
                                                       <div class="col-lg-12">
                                                         <div class="input-group">
-                                                          <input type="text" class="form-control" placeholder="Địa chỉ...">
+                                                          <input  ng-model="address" name="address" type="text" class="form-control" placeholder="Địa chỉ...">
                                                           <span class="input-group-btn">
-                                                            <button class="btn btn-primary" type="button">Tìm kiếm</button>
+                                                            <button ng-click="onSearchPosition()" class="btn btn-primary" type="button">Tìm kiếm  <span ng-if="isFinding" class="fa fa-spinner fa-spin"></span></button>
                                                           </span>
                                                         </div>
                                                       </div>
+                                                      <span style="color:#FD2A00;">{{error}}</span>
                                                 </div>
                                           </form>
-                                          <label for="other-address" style="margin-top: 5px;">Ý bạn là:</label>
-                                          <select class="form-control">
-                                            <option>215 Nguyễn thị thập, quận 7</option>
-                                             <option>215 Nguyễn thị thập, quận tân phú</option>
-                                          </select>
                                           <p></p>
-                                          <div id="map2" style="width:100%; height:500px;">
+                                          <div style="width:100%; height:500px;" map-lazy-load="http://maps.google.com/maps/api/js">
+                                                <map center="10.771918,106.69834700000001" map-type-control="true" map-type-control-options="{style:'DROPDOWN_MENU', position:'RIGHT_BOTTOM'}" onstate="themMoiChiNhanh">
+                                                    <custom-control id="home" position="TOP_RIGHT" index="1" on-click="onSearchCurrentPosition()">
+                                                        <button class="btn btn-default" type="button">Vị trí hiện tại của bạn</button>
+                                                    </custom-control>
+                                                </map>
                                           </div>
                                   </div>
                           </section>

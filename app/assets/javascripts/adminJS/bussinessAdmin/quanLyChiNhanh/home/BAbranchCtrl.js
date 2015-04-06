@@ -1,9 +1,15 @@
-bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'bussinessService', 'logoFilter', function($scope, bussinessService, logoFilter) {
+bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'bussinessService', 'logoFilter', '$location', '$state', 
+	function($scope, bussinessService, logoFilter, $location, $state) {
 	$scope.branches = bussinessService.bussiness.branches;
 	console.log("branches: ", $scope.branches);
 
 	//Su kien khi load map thanh cong
 	$scope.$on('mapInitialized', function(event, map) {
+		console.log("map.onstate", map.onstate);
+		//Do su kien mapInitialized duoc goi trong nhieu nest view con nen phai xem xet cho hop ly ko thoi bi loi
+		if(map.onstate != 'home'){
+			return;
+		}
 		var marker = createMarker(map.branch.latitude, map.branch.longitude, $scope.bussiness.user.avatar.url);
 		marker.setMap(map);
 		map.setCenter(marker.getPosition());
