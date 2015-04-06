@@ -1,5 +1,6 @@
 bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'bussinessService', 'logoFilter', '$location', '$state', 
-	function($scope, bussinessService, logoFilter, $location, $state) {
+	'BAbranchService',
+	function($scope, bussinessService, logoFilter, $location, $state, branchService) {
 	$scope.branches = bussinessService.bussiness.branches;
 	console.log("branches: ", $scope.branches);
 
@@ -28,4 +29,34 @@ bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'bussinessService', 'logoFi
 		});
 		return marker;
 	};
+
+
+	//cho chinh sua
+	//Khoi tao isEdit mac dinh cho tat ca branch
+	_.each($scope.branches, function(item){
+		item.isEdit = false;
+	});
+
+	//Chinh sua 1 branch
+	$scope.onEdit = function(branch){
+		//Luu giu ban goc cua branch, neu ma ko save thi phuc hoi lai
+		branch.origin = {};
+		angular.copy(branch, branch.origin);
+		branch.isEdit = true;
+	};
+
+	//save branch
+	$scope.saveEdittedBranch = function(branch){
+		branch.iSaving = true;
+		branchService.update(branch).success(function(){
+			branch.isSaving = false;
+		});
+	};
+
+	//Bo chinh sua 1 branch
+	$scope.cancelEdit= function(branch){
+		//Phuc hoi lai branch ban dau, do ko save
+		angular.copy(branch.origin, branch);
+		branch.isEdit = false;
+	}
 }]);
