@@ -1,11 +1,11 @@
 class BussinessesController < ApplicationController
 	before_action :authenticate_user!
-	
-	#before for check role is bussissness admin
 	before_action :check_role_bussiness_admin, only: [:show, :new, :update]
 	
 	def show
-		render json: current_user.bussiness
+		@bussiness = current_user.bussiness
+		render 'bussinesses/show.json.jbuilder'
+		#render json: current_user.bussiness
 	end
 
 	#khi nang cap thanh role system admin thi tao ra 1 bussiness
