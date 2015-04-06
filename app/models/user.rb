@@ -21,6 +21,11 @@ class User
   #Moi nguoi co the co nhieu yeu cau, boi vi neu 1 yeu cau ko dc chap thuan thi co the gui yeu cau khac
   has_many :bussiness_requests
   
+  #notification system
+  #1 nguoi co nhieu thong bao
+  has_many :notifications, class_name: 'Notification', inverse_of: :target_user
+  #1 nguoi co the trigger nhieu thong bao
+  has_many :trigger_notifications, class_name: 'NotificationChange', inverse_of: :trigger_user
   
   #My field
   field :firstname, type: String

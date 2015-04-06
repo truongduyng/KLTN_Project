@@ -11,6 +11,10 @@ class BussinessRequest
 	#relationship
 	belongs_to :status, class_name: 'BussinessRequestStatus', inverse_of: :bussiness_requests
 	belongs_to :user
+	#Notification system
+	#Doi tuong nay co the co nhieu thong bao ma lien quan den no
+	has_many :notifications, as: :notificable
+
 	#Validate
 	validates :name, presence: true
 	validates :address, presence: true

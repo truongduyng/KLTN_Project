@@ -130,3 +130,24 @@
 # trung.bussiness_requests << BussinessRequest.new(name: 'Name 14', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
 # trung.bussiness_requests << BussinessRequest.new(name: 'Name 15', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
 # trung.bussiness_requests << BussinessRequest.new(name: 'Name 16', address: 'address 1', description: 'description 1', category: 'category 1', latitude: 10.737145268109922, longitude: 106.71767234802246)
+
+
+
+#TAO RA CAC LOAI NOTIFICATION VA TEMPLATE CHO CHUNG
+##Duyet bai viet thanh cong
+# NotificationCategory.create(name: 'Duyệt bài viết')
+
+##Tu choi duyet bai viet
+# n = NotificationCategory.create(name: 'Từ chối bài viết')
+# n.build_notification_template(content: 'Bài viết của bạn không được viết vì nội dung nó không phù hợp với trang web thể thao.')
+# n.save
+
+##Chap nhan yeu cau kich hoat tai khoan doanh nghiep
+# n =  NotificationCategory.create(name: 'Chấp nhận yêu cầu kích hoạt tài khoản doanh nghiệp')
+# n.build_notification_template(content: 'Yêu cầu kích hoạt tài khoản doanh nghiệp của bạn đã được chấp nhận. Bạn có làm theo hướng dẫn sau để quản lý doanh nghiệp của bạn')
+# n.save
+
+##Từ chối yêu cầu kích hoạt tài khoản doanh nghiệp
+# n =  NotificationCategory.create(name: 'Từ chối yêu cầu kích hoạt tài khoản doanh nghiệp')
+# n.build_notification_template(content: 'Yêu cầu kích hoạt tài khoản doanh nghiệp của bạn đã bị từ chối có thề vì 1 trong các nguyên nhân sau: .....')
+# n.save
