@@ -89,10 +89,13 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingServic
 
 		$scope.sendBussinessRequest = function() {
 			console.log("bussinessRequest: ", $scope.bussinessRequest);
-			KhTkDoanhNghiepService.create($scope.bussinessRequest).success(function() {
+			KhTkDoanhNghiepService.create($scope.bussinessRequest).success(function(bussinessRequest) {
 				Flash.create("success", 'Yêu cầu kích hoạt tài khoản doanh nghiệp của bạn đã được gửi. Chúng tôi sẽ duyệt và thông báo bạn sớm nhất có thể');
 				angular.copy({}, $scope.bussinessRequest);
 				var username = $scope.currentUser.username;
+				$state.go("chiTietKhTkDoanhNghiep", {
+					id: bussinessRequest._id.$oid,
+				});
 				// $state.go("trangCaNhan", {
 				// 	username: username,
 				// });

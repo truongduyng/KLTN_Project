@@ -183,7 +183,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	// })
 
 
-
 	$stateProvider.state('trangCaNhan', {
 		url: '/trang-ca-nhan/{username}',
 		templateUrl: 'appJS/trangCaNhan/_trangCaNhan.html',
@@ -215,6 +214,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		}
 	});
 
+	//Trang nay can phai yeu cau login
 	$stateProvider.state('khTkDoanhNghiep', {
 		url: '/kich-hoat-tai-khoan-doanh-nghiep',
 		templateUrl: 'appJS/KhTkDoanhNghiep/_KhTkDoanhNghiep.html',
@@ -231,20 +231,23 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		// }
 	});
 
-	// $stateProvider.state("thongBao", {
-	// 	url: '/thong-bao/{targetObjectId}/{notificationCategoryId}',
-	// 	templateUrl: 'appJS/thongBao/_thongBao.html',
-	// 	controller: 'thongBaoCtrl',
-	// 	resolve:{
-	// 		targetObject: ['thongBaoService', '$stateParams', function(thongBaoService, $stateParams){
-	// 			return thongBaoService.getTargetObject($stateParams.targetObjectId);
-	// 		}],
-	// 		notificationCategory: ['thongBaoService', '$stateParams', function(thongBaoService, $stateParams){
-	// 			return thongBaoService.getNotificationCategory($stateParams.notificationCategoryId);
-	// 		}],
-	// 	}
-	// });
+	//trang nay cung can phai yeu cau login
+	$stateProvider.state('chiTietKhTkDoanhNghiep', {
+		url: '/kich-hoat-tai-khoan-doanh-nghiep/chi-tiet/{id}',
+		templateUrl: 'appJS/KhTkDoanhNghiep/chiTietKhTkDoanhNghiep/_chiTietKhTkDoanhNghiep.html',
+		controller: 'chiTietKhTkDoanhNghiepCtrl',
+		resolve: {
+			bussinessRequest: ['KhTkDoanhNghiepService', '$stateParams',
+			 function(KhTkDoanhNghiepService, $stateParams){
+				return KhTkDoanhNghiepService.show($stateParams.id);
+			}]
+		},
+		// access: {
+		// 	free: false,
+		// }
+	});
 
+	//Trang nay can dang nhap
 	$stateProvider.state("thongBao", {
 		url: '/thong-bao/{notificationChangeId}',
 		templateUrl: 'appJS/thongBao/_thongBao.html',
