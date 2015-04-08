@@ -12,22 +12,6 @@ class SystemAdminPostsController < SystemAdminController
 	def accept
 		@post.post_status = PostStatus.publishedStatus
 		if @post.timeless.save
-			#Tim kiem nay chua test
-			# notification  = Notification.all_of(target_user_id: @post.user.id, notificable_id: @post.id).first	
-			# #Neu chua co loai notification cho doi tuong nay thi tao no
-			# if !notification
-			# 	notification = Notification.new
-			# 	notification.target_user = @post.user
-			# 	notification.notificable = @post
-			# 	notification.save
-			# end	
-			# #Tao ra notification change cho thay: ai tac dong, loai tac dong la gi	
-			# notification_change = NotificationChange.new
-			# notification_change.trigger_user = current_user
-			# notification_change.notification_category = NotificationCategory.duyet_bai_viet
-			# notification_change.notification = notification
-			# notification_change.save
-			##Tao ra notification cho duyet bai viet thanh cong
 			NotificationChange.create_notification @post.user, @post, current_user, NotificationCategory.duyet_bai_viet
 		else
 			render json: @post.errors, status: :bad_request
@@ -37,7 +21,7 @@ class SystemAdminPostsController < SystemAdminController
 	def deny
 		@post.post_status = PostStatus.deny_status
 		if @post.timeless.save
-			#render json: @post, status: :ok
+			NotificationChange.create_notification @post.user, @post, current_user, NotificationCategory.tu_choi_bai_viet
 		else
 			render json: @post.errors, status: :bad_request
 		end

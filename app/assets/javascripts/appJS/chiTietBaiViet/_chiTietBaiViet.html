@@ -33,6 +33,7 @@
                       <div class="detail-post-images" style="text-align: center; margin-top: 20px;">
                           <a ng-click="showImage(photo)" ng-repeat="photo in post.photos"><img src="{{photo.image.url | logo}}" width="220px" height="220px"></a>
                       </div>
+                      <!-- BEGIN HIEN THI CHO BAI VIET KHONG DUOC PUBLISH -->
                       <div section-id="for-not-published" ng-if="!post.published">
                           <div class="likes">
                             <div role="group" class="btn-group pull-left">  
@@ -42,7 +43,9 @@
                             <span class="label label-danger pull-right" style="font-size: 1em; font-weight: 500; display:inline-block ;margin-top: 5px;">{{post.status.name}}</span>
                           </div>
                       </div>
+                      <!-- END HIEN THI CHO BAI VIET KHONG DUOC PUBLISH -->
 
+                      <!-- BEGIN HIEN THI CHO BAI VIET DUOC PUBLISH, CHO PHEP LIKE, COMMENT, ... -->
                       <div section-id="for-published" ng-if="post.published">
                           <div class="likes">
                                 <!-- like su dung glyphicon glyphicon-thumbs-up va .like-icon, unlike thi su dung glyphicon glyphicon-thumbs-down va unlike-icon -->
@@ -56,13 +59,18 @@
                           </div>
                           <section id="listComments" ng-include="'appJS/chiTietBaiViet/_listComments.html'"></section>
                       </div>
+                      <!-- END HIEN THI CHO BAI VIET DUOC PUBLISH, CHO PHEP LIKE, COMMENT, ... -->
 
                     </div>
                 
                     
                </li>
-            </ul>
+          </ul>
 
+          <!-- BEGIN HIEN THI LY DO TAI SAO BAI VIET KHONG DUOC HIEN THI -->
+          <!-- <div ui-view="lyDo">
+          </div> -->
+          <!-- END HIEN THI LY DO TAI SAO BAI VIET KHONG DUOC HIEN THI -->
     </div>
       <!-- END MAIN COLUMN -->
 

@@ -108,7 +108,8 @@
                         </div>
                   </li>
                   <li ng-class="{watched: item.watched}" role="presentation" ng-repeat="item in notifications | orderBy: '-created_at'">
-                      <a ng-click="onWatched(item)" ng-if="item.notification_category.name = 'Duyệt bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+                      <!-- BEGIN CHO DUYET BAI VIET THANH CONG -->
+                      <a ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Duyệt bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
                         <div class="notification-item" style="">
                             <div  class="col-xs-2">
                               <img width="50px" height="50px" ng-src="{{''|logo}}">
@@ -119,6 +120,20 @@
                             </div>
                         </div>
                       </a>
+                      <!-- END CHO DUYET BAI VIET THANH CONG -->
+                      <!-- BEGIN CHO TU CHOI BAI VIET -->
+                       <a ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối bài viết'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
+                        <div class="notification-item" style="">
+                            <div  class="col-xs-2">
+                              <img width="50px" height="50px" ng-src="{{''|logo}}">
+                            </div>               
+                            <div class="col-xs-10">
+                                <div>Bài viết <b>{{item.target_object.title}}</b> của bạn không được duyệt bởi người quản trị hệ thống</div>
+                                <small>{{item.created_at | timeago}}</small>
+                            </div>
+                        </div>
+                      </a>
+                      <!-- END CHO TU CHOI BAI VIET -->
                   </li>
               </ul>
             <a ng-if="notifications.length >= 10" class="see-all" style="display:block;border-top: 1px solid #c5c5c5; text-align:center; cursor:pointer; text-decoration:none;"><strong>Xem tất cả</strong></a>
@@ -150,3 +165,10 @@ li.watched{
   background-color: #CECECE;
 }
 </style>
+
+<!-- 
+CHINH LAI MAU CHU CHO THONG BAO
+BINH THUONG MAU DEN
+KO CHAP NHAN MAU DO
+THEM TRANG HIEN THI CHI TIET YEU CAU KICH HOAT TAI KHOAN: KHI KICH HOAT XONG CHUYEN DEN TRANG DO
+TRONG TRANG THONG BAO CHI CAN DE LINK DEN CHI TIET DOI TUONG BI TAC DONG -->

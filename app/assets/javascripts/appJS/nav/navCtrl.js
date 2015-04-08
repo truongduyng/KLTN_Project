@@ -38,28 +38,8 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', fun
 	//Load notification
 	loadNofification = function() {
 		notificationService.index().success(function() {
-			//$scope.notifications = [];
-			//Chuyen notification ve dang chuan cho hien thi
-			// var notificationTmps = _.map(notificationService.notifications, function(item){
-			// 	var obj = {};
-			// 	if(item.notification_category.name == "Duyệt bài viết"){
-			// 		var post = item.notification.notificable;
-			// 		obj.message = 'Bài viết ' + post.title + " của bạn đã được duyệt và đăng.";
-			// 		obj.notification_category = "Duyệt bài viết";
-			// 		obj.target_id = post._id.$oid;
-			// 		obj.created_at = item.created_at;
-			// 	}
-			// 	return obj;
-			// });
-			// angular.copy(notificationTmps, $scope.notifications);
-			// console.log("notificationTmps: ", notificationTmps);
 			$scope.notifications = notificationService.notifications;
 			$scope.newNotificationsCount = notificationService.newNotificationsCount;
-			//Dem so luong notification moi
-			// $scope.newnotificationsCount = _.filter($scope.notifications, function(item){
-			// 	return item.is_new;
-			// }).length;
-
 		});
 	};
 

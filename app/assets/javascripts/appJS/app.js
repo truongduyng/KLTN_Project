@@ -103,6 +103,27 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		}
 	});
 
+	// //State de hien thi lydo
+	// $stateProvider.state("chiTietBaiViet.tuChoi", {
+	// 	url: '/chi-tiet-bai-viet/{id}/tu-choi',
+	// 	views: {
+	// 		'lyDo@chiTietBaiViet':{
+	// 			templateUrl: 'appJS/partials/_lyDo.html',
+	// 			controller: 'tuChoiBaiVietCtrl',
+
+	// 		}
+	// 	}
+	// 	templateUrl: 'appJS/chiTietBaiViet/_chiTietBaiViet.html',
+	// 	controller: 'chiTietBaiVietCtrl',
+	// 	resolve: {
+	// 		post: ['postDetailService', '$stateParams', function(postDetailService, $stateParams) {
+	// 			return postDetailService.show($stateParams.id);
+	// 		}],
+	// 	}
+	// });
+
+		
+
 	$stateProvider.state('notFound', {
 		url: '/khong-tim-thay-ket-qua',
 		templateUrl: 'appJS/notFound/_notFound.html',
@@ -209,6 +230,32 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		// 	free: false,
 		// }
 	});
+
+	// $stateProvider.state("thongBao", {
+	// 	url: '/thong-bao/{targetObjectId}/{notificationCategoryId}',
+	// 	templateUrl: 'appJS/thongBao/_thongBao.html',
+	// 	controller: 'thongBaoCtrl',
+	// 	resolve:{
+	// 		targetObject: ['thongBaoService', '$stateParams', function(thongBaoService, $stateParams){
+	// 			return thongBaoService.getTargetObject($stateParams.targetObjectId);
+	// 		}],
+	// 		notificationCategory: ['thongBaoService', '$stateParams', function(thongBaoService, $stateParams){
+	// 			return thongBaoService.getNotificationCategory($stateParams.notificationCategoryId);
+	// 		}],
+	// 	}
+	// });
+
+	$stateProvider.state("thongBao", {
+		url: '/thong-bao/{notificationChangeId}',
+		templateUrl: 'appJS/thongBao/_thongBao.html',
+		controller: 'thongBaoCtrl',
+		resolve:{
+			notificationChange: ['thongBaoService', '$stateParams', function(thongBaoService, $stateParams){
+				console.log("in resolve thong bao");
+				return thongBaoService.getNotificationChange($stateParams.notificationChangeId);
+			}]
+		}
+	});
 	//Khoi phuc
-	$urlRouterProvider.otherwise('/');
+	//$urlRouterProvider.otherwise('/');
 }]);
