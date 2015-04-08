@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :notifications
+  
   resources :system_admin_bussiness_requests do
     member do
       put 'accept'

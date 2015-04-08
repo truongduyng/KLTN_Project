@@ -14,7 +14,7 @@ class Post
 	embeds_many :likes, as: :likeable
 	#Notification system
 	#Doi tuong nay co the co nhieu thong bao ma lien quan den no
-	has_many :notifications, as: :notificable
+	has_one :notification, as: :notificable
 
 	#scope
 	#Get published post

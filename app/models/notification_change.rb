@@ -10,5 +10,7 @@ class NotificationChange
 	belongs_to :notification
 
 	#Da xem hay chua
-	field :watched, type: Boolean
+	field :watched, type: Boolean, default: ->{false}
+	#Cho thay da load hay chua
+	field :loaded, type: Boolean, default: ->{false}
 end

@@ -9,4 +9,19 @@ class NotificationCategory
 
 	#ko co 2 NotificationCategory cung ten
 	validates_uniqueness_of :name
+
+	#METHOD
+	def self.duyet_bai_viet
+		NotificationCategory.where(name: 'Duyệt bài viết').first
+	end
+
+	def self.tu_choi_bai_viet
+		NotificationCategory.where(name: 'Từ chối bài viết').first
+	end
 end
+
+##Gom cac loai sau:
+# 1.Duyệt bài viết
+# 2.Từ chối bài viết
+# 3.Chấp nhận yêu cầu kích hoạt tài khoản doanh nghiệp
+# 4.Từ chối yêu cầu kích hoạt tài khoản doanh nghiệp

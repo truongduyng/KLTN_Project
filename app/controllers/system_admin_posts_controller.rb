@@ -12,7 +12,21 @@ class SystemAdminPostsController < SystemAdminController
 	def accept
 		@post.post_status = PostStatus.publishedStatus
 		if @post.timeless.save
-			#render json: @post, status: :ok
+			#Tim kiem nay chua test
+			notification  = Notification.all_of(target_user_id: @post.user.id, notificable_id: @post.id).first	
+			#Neu chua co loai notification cho doi tuong nay thi tao no
+			if !notification
+				notification = Notification.new
+				notification.target_user = @post.user
+				notification.notificable = @post
+				notification.save
+			end	
+			#Tao ra notification change cho thay: ai tac dong, loai tac dong la gi	
+			notification_change = NotificationChange.new
+			notification_change.trigger_user = current_user
+			notification_change.notification_category = NotificationCategory.duyet_bai_viet
+			notification_change.notification = notification
+			notification_change.save
 		else
 			render json: @post.errors, status: :bad_request
 		end
@@ -33,7 +47,6 @@ class SystemAdminPostsController < SystemAdminController
 		@posts = Post.accept_or_deny.desc(:created_at).paginate(page: params[:page], per_page: params[:per_page])
 		@total = Post.accept_or_deny.count
 	end
-
 
 	private
 		# def find_post
