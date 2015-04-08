@@ -8,6 +8,21 @@
       <div class="col-md-6 detail-main-column">
             <span style="border: 1px solid #337AB7; display:block;margin:0px -15px; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>KÍCH HOẠT TÀI KHOẢN DOANH NGHIỆP</strong></span>
             <div class="row">
+                  <div class="ui ordered two large steps">
+                    <div class="completed step">
+                      <div class="content">
+                        <div class="title">Điền thông tin doanh nghiệp</div>
+                        <div class="description">Điền các thông tin cơ bản của doanh nghiệp bạn và gửi yêu cầu kích hoạt tài khoản doanh nghiệp</div>
+                      </div>
+                    </div>
+                    <div ng-class="{active: !isCompleted, completed: isCompleted}" class="active step">
+                      <div class="content">
+                        <div class="title">Đợi xét duyệt</div>
+                        <div class="description">Quản trị hệ thống sẽ xem sét yêu cầu bạn gửi, sẽ xét duyệt, kích hoạt tài khoản doanh nghiệp và thông báo cho bạn sớm nhất có thể</div>
+                      </div>
+                    </div>
+                  </div>
+                  <p></p>
                   <div class="alert alert-warning" role="alert">
                     <p>Với việc nâng cấp tài khoản thành viên lên tài khoản doanh nghiệp bạn có thể dàng tự do quản lý doanh nghiệp của mình và thông tin doanh nghiệp của bạn có thể được tìm kiếm bởi các thành viên của trang web</p>
                     <p>Để kích hoạt tài khoản doanh nghiệp bạn vui lòng cung cấp cho chúng tôi những thông tin theo sau để chúng tôi có thể chứng minh và xác thực doanh nghiệp của bạn. Chúng tôi chỉ tiến hành xác nhận và cấp tài khoản doanh nghiệp khi các thông tin bạn cung cấp là hợp lệ</p>
@@ -78,7 +93,7 @@
           <img style="display:block;z-index: 100;" width="100px" height="100px" src="/assets/application/placeholder/marker_layout.png">
       </div>
     </div>
-    
+
 <style type="text/css">
   #map map{
     width: 100%;

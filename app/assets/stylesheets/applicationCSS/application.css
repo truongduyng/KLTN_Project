@@ -13,6 +13,7 @@
  *= require jquery-timepicker-jt
  *= require jquery-timepicker-jt/lib/bootstrap-datepicker
  *= require applicationCSS/customCSS/style
+ *= require_tree ./customCSS/semanticUI/
  *= require_tree .
  *= require_self
  */

@@ -7,6 +7,11 @@ app.controller('chiTietKhTkDoanhNghiepCtrl', ['$scope', 'KhTkDoanhNghiepService'
 			$scope.isDanger = false;
 		}
 
+		//Cho tien trinh
+		$scope.isCompleted = false;
+		if($scope.bussinessRequest.status.name != 'Chưa duyệt'){
+			$scope.isCompleted = true;
+		}
 
 		//Su kien khi load map thanh cong
 		$scope.$on('mapInitialized', function(event, map) {
