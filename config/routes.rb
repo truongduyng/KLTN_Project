@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :notifications
+  resources :notifications do
+    member do
+      put 'watched'
+    end
+  end
   
   resources :system_admin_bussiness_requests do
     member do

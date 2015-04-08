@@ -51,14 +51,22 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	// 	controller: 'homeCtrl',
 	// });
 	$stateProvider.state("home", {
-		url: "/",
-		templateUrl: 'appJS/home/_home.html',
-		controller: 'homeCtrl',
-		resolve: {
-			posts: ['listPostService', function(listPostService) {
-				return listPostService.get_all(1);
-			}],
-		}
+				url: "/",
+				templateUrl: 'appJS/home/_home.html',
+				controller: 'homeCtrl',
+				resolve: {
+					posts: ['listPostService', function(listPostService) {
+						return listPostService.get_all(1);
+					}],
+					// currentUser: ['Auth', function(Auth) {
+					// 	Auth.currentUser()
+					// 		.then(function(user) {
+					// 			return user;
+					// 		}, function(error) {
+
+					// 		});
+					// }],
+				}
 	});
 
 

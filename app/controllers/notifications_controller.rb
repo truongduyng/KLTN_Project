@@ -1,5 +1,6 @@
 class NotificationsController < ApplicationController
 	before_action :authenticate_user!
+	before_action :find_notification, only: [:watched]
 	#GET /notifications.json
 	#Tra ve 10 notification moi nhat
 	def index
@@ -14,4 +15,32 @@ class NotificationsController < ApplicationController
 		@notification_changes = @notification_changes.desc(:created_at).limit(10)
 
 	end
+
+
+	#PUT /notifications/:id/watched.json
+	def watched
+		@notification_change.watched = true
+		@notification_change.save
+		render nothing: true, status: :ok, content_type: 'application/json'
+	end
+
+	#Khi ma click vao ul thi danh dau no du da load
+	def loaded
+
+	end
+
+	private
+		def find_notification
+			begin 
+				@notification_change = NotificationChange.find(params[:id])
+				if @notification_change.notification.target_user != current_user
+					render json: {
+						message: 'Bạn không có quyền xử lý notification này'	
+					},
+					status: :bad_request
+				end
+			rescue Mongoid::Errors::DocumentNotFound
+				render nothing: true, status: :not_found, content_type: 'application/json'
+			end
+		end
 end

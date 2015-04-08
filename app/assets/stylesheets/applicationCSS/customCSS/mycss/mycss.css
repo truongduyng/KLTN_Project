@@ -162,7 +162,7 @@ text-decoration:none;
 }
 
 .notifications ul.list-notifications li .notification-item{
-	width:400px; overflow:hidden; height:50px;
+	width:400px; overflow:hidden; height:auto;
 }
 
 .notifications .see-all{

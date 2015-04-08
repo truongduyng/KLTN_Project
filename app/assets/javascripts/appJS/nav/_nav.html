@@ -63,28 +63,57 @@
   <li ng-show="signedIn()">
     <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" >Thông báo <span class="badge">4</span></a>
         <div class="dropdown-menu notifications" role="menu" aria-labelledby="dropdownMenu1">
-             <ul class="list-notifications">
+            <!--  <ul class="list-notifications">
+                   <li role="presentation">
+                      <a role="menuitem" tabindex="-1" href="#">
+                        <div class="notification-item" style="">
+                            <div  class="col-xs-2"><img width="50px" height="50px" src="<%= image_path('application/myimg/01.jpg') %>"></div>               
+                            <div class="col-xs-10">
+                                <div>Nguyễn Hữu Trung đã thích bài viết của bạn</div>
+                                <small>Khoảng 1 giờ trước</small>
+                            </div>
+                        </div>
+                      </a>
+                  </li>
                   
-                   <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                      <div class="notification-item" style="">
-                          <div  class="col-xs-2"><img width="50px" height="50px" src="<%= image_path('application/myimg/01.jpg') %>"></div>               
-                          <div class="col-xs-10">
-                              <div>Nguyễn Hữu Trung đã thích bài viết của bạn</div>
-                              <small>Khoảng 1 giờ trước</small>
+                  <li role="presentation">
+                      <a role="menuitem" tabindex="-1" href="#">
+                          <div class="notification-item" style="">
+                              <div  class="col-xs-2"><img width="50px" height="50px" src="<%= image_path('application/myimg/01.jpg') %>"></div>               
+                              <div class="col-xs-10">
+                                  <div>Nguyễn Hữu Trung đã thích bài viết của bạn</div>
+                                  <small>Khoảng 1 giờ trước</small>
+                              </div>
                           </div>
-                      </div>
-                  </a></li>
-                  
-                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                      <div class="notification-item" style="">
-                          <div  class="col-xs-2"><img width="50px" height="50px" src="<%= image_path('application/myimg/01.jpg') %>"></div>               
-                          <div class="col-xs-10">
-                              <div>Nguyễn Hữu Trung đã thích bài viết của bạn</div>
-                              <small>Khoảng 1 giờ trước</small>
-                          </div>
-                      </div>
-                  </a></li>
-            </ul>
+                      </a>
+                  </li>
+            </ul> -->
+              <ul class="list-notifications">
+                   <!-- <li role="presentation" ng-repeat='item in notifications'>
+                      <a ng-if="item.notification_category = 'Duyệt bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_id})">
+                        <div class="notification-item" style="">
+                            <div  class="col-xs-2"><img width="50px" height="50px" src="<%= image_path('application/myimg/01.jpg') %>"></div>               
+                            <div class="col-xs-10">
+                                <div><b>{{item.message}}</b></div>
+                                <small>{{item.created_at}}</small>
+                            </div>
+                        </div>
+                      </a>
+                  </li> -->
+                  <li ng-class="{watched: item.watched}" role="presentation" ng-repeat='item in notifications'>
+                      <a ng-click="onWatched(item)" ng-if="item.notification_category.name = 'Duyệt bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+                        <div class="notification-item" style="">
+                            <div  class="col-xs-2">
+                              <img width="50px" height="50px" ng-src="{{''|logo}}">
+                            </div>               
+                            <div class="col-xs-10">
+                                <div>Bài viết <b>{{item.target_object.title}}</b> của bạn đã được duyệt và đăng bởi admin hệ thống</div>
+                                <small>{{item.created_at | timeago}}</small>
+                            </div>
+                        </div>
+                      </a>
+                  </li>
+              </ul>
             <a class="see-all" style="display:block;border-top: 1px solid #c5c5c5; text-align:center; cursor:pointer; text-decoration:none;"><strong>Xem tất cả</strong></a>
           </div>
    </li>
@@ -108,3 +137,9 @@
   <!-- <li ng-show="signedIn()"><a href="/bussiness-admin#/">{{user.username}}</a></li> -->
   <li ng-show="signedIn()"><a style="cursor:pointer;" ng-click="logout()">Thoát</a></li>
 </ul>
+
+<style type="text/css">
+li.watched{
+  background-color: #CECECE;
+}
+</style>
