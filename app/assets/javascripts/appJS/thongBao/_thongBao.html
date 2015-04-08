@@ -9,12 +9,17 @@
     <div class="col-md-6 detail-main-column">
 		      <span style="border: 1px solid #337AB7; display:block;margin:0px -15px; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>THÔNG BÁO</strong></span>
 		      <div class="row">
-    					 <div class="alert alert-success" role="alert">
+    					 <div ng-class="{alert: true, 'alert-danger': isDanger, 'alert-success':!isDanger}" role="alert">
                           <!-- PHAI XET TARGET OBJECT LA GI  -->
-                          <p>Bài viết {{targetObject.title}} của bạn bị từ chối đăng bởi người quản trị hệ thống vì những lý do sau</p>
-                          <p>
+                          <div ng-if="notificationChange.notification_category.name == 'Từ chối bài viết'">
+                               <p>Bài viết <a ui-sref="chiTietBaiViet({id: targetObject._id.$oid})" target="_blank"><b>{{targetObject.title}}</b></a> của bạn bị từ chối đăng bởi người quản trị hệ thống vì những lý do sau:</p>
+                          </div>
+                         
+                          <!-- BEGIN HIEN THI TEMPLATE CUA LOAI HANG THONG BAO -->
+                          <div>
                             {{notificationChange.notification_category.notification_template.content}}
-                          </p>
+                          </div>
+                          <!-- END HIEN THI TEMPLATE CUA LOAI HANG THONG BAO -->
       			   </div> 
 
 		      </div>

@@ -61,7 +61,7 @@
 
 
   <li ng-show="signedIn()">
-    <a ng-click="onDisplayNotifications()" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" >Thông báo <span class="badge">{{newNotificationsCount}}</span></a>
+    <a ng-click="onDisplayNotifications()" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" >Thông báo <span class="badge" ng-class="{badge: true, 'blue-badge': newNotificationsCount >= 1}">{{newNotificationsCount}}</span></a>
         <div class="dropdown-menu notifications" role="menu" aria-labelledby="dropdownMenu1">
             <!--  <ul class="list-notifications">
                    <li role="presentation">
@@ -109,26 +109,26 @@
                   </li>
                   <li ng-class="{watched: item.watched}" role="presentation" ng-repeat="item in notifications | orderBy: '-created_at'">
                       <!-- BEGIN CHO DUYET BAI VIET THANH CONG -->
-                      <a ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Duyệt bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+                      <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Duyệt bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
                         <div class="notification-item" style="">
                             <div  class="col-xs-2">
                               <img width="50px" height="50px" ng-src="{{''|logo}}">
                             </div>               
                             <div class="col-xs-10">
-                                <div>Bài viết <b>{{item.target_object.title}}</b> của bạn đã được duyệt và đăng bởi admin hệ thống</div>
+                                <div>Bài viết "<b>{{item.target_object.title}}</b>" của bạn đã được duyệt và đăng bởi admin hệ thống</div>
                                 <small>{{item.created_at | timeago}}</small>
                             </div>
                         </div>
                       </a>
                       <!-- END CHO DUYET BAI VIET THANH CONG -->
                       <!-- BEGIN CHO TU CHOI BAI VIET -->
-                       <a ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối bài viết'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
+                       <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối bài viết'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
                         <div class="notification-item" style="">
                             <div  class="col-xs-2">
                               <img width="50px" height="50px" ng-src="{{''|logo}}">
                             </div>               
                             <div class="col-xs-10">
-                                <div>Bài viết <b>{{item.target_object.title}}</b> của bạn không được duyệt bởi người quản trị hệ thống</div>
+                                <div>Bài viết "<b>{{item.target_object.title}}</b>" của bạn không được duyệt bởi người quản trị hệ thống</div>
                                 <small>{{item.created_at | timeago}}</small>
                             </div>
                         </div>
@@ -164,11 +164,11 @@
 li.watched{
   background-color: #CECECE;
 }
+.blue-badge{
+  background-color: #0084FF;
+}
 </style>
 
 <!-- 
-CHINH LAI MAU CHU CHO THONG BAO
-BINH THUONG MAU DEN
-KO CHAP NHAN MAU DO
 THEM TRANG HIEN THI CHI TIET YEU CAU KICH HOAT TAI KHOAN: KHI KICH HOAT XONG CHUYEN DEN TRANG DO
 TRONG TRANG THONG BAO CHI CAN DE LINK DEN CHI TIET DOI TUONG BI TAC DONG -->

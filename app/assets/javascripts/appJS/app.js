@@ -257,5 +257,5 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		}
 	});
 	//Khoi phuc
-	//$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/');
 }]);
