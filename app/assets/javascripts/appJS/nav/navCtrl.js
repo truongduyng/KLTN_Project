@@ -54,6 +54,12 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', fun
 			// angular.copy(notificationTmps, $scope.notifications);
 			// console.log("notificationTmps: ", notificationTmps);
 			$scope.notifications = notificationService.notifications;
+			$scope.newNotificationsCount = notificationService.newNotificationsCount;
+			//Dem so luong notification moi
+			// $scope.newnotificationsCount = _.filter($scope.notifications, function(item){
+			// 	return item.is_new;
+			// }).length;
+
 		});
 	};
 
@@ -61,9 +67,30 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', fun
 	$scope.onWatched = function(notification){
 		console.log("on watched: ", notification);
 		notificationService.watched(notification);
-		//Cho day danh dau notification da xem
+	};
+
+	//Khi clich de xem notification thi danh dau is_new = false
+	$scope.onDisplayNotifications = function(){
+
+		//Lay array notifications isnew = true;
+		 var newNotifactions = _.filter($scope.notifications, function(item){
+				return item.is_new;
+			});
+		 //Lay 1 mang id cua cac new notifications
+		 var notificationIds = _.map(newNotifactions, function(item){
+		 		return item._id.$oid;
+		 });
+		 //Chi cap nhat neu co notification moi
+		 if(notificationIds.length >= 1){
+		 	 notificationService.loaded(notificationIds).success(function(){
+		 	 	$scope.newNotificationsCount = notificationService.newNotificationsCount;
+		 	 });
+		 }
+		 console.log("on display notifications: ", notificationIds);
 	};
 
 }]);
 
 //Khi vao bam vao de xem thi set tat ca cac notification thanh loaded
+
+//Su dung multiview de resolve user khi load nav, xem nav nhu 1 ui-view

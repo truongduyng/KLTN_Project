@@ -4,6 +4,10 @@ Rails.application.routes.draw do
     member do
       put 'watched'
     end
+
+    collection do
+      put 'loaded'
+    end
   end
   
   resources :system_admin_bussiness_requests do

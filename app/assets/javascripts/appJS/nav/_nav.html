@@ -61,7 +61,7 @@
 
 
   <li ng-show="signedIn()">
-    <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" >Thông báo <span class="badge">4</span></a>
+    <a ng-click="onDisplayNotifications()" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" >Thông báo <span class="badge">{{newNotificationsCount}}</span></a>
         <div class="dropdown-menu notifications" role="menu" aria-labelledby="dropdownMenu1">
             <!--  <ul class="list-notifications">
                    <li role="presentation">
@@ -100,7 +100,14 @@
                         </div>
                       </a>
                   </li> -->
-                  <li ng-class="{watched: item.watched}" role="presentation" ng-repeat='item in notifications'>
+                  <li style="border:none;" role="presentation" ng-if="notifications == null || notifications.length == 0">
+                        <div class="notification-item" style="">
+                            <div style="text-align: center; border: none;" class="col-xs-12">
+                                Chưa có thông báo nào
+                            </div> 
+                        </div>
+                  </li>
+                  <li ng-class="{watched: item.watched}" role="presentation" ng-repeat="item in notifications | orderBy: '-created_at'">
                       <a ng-click="onWatched(item)" ng-if="item.notification_category.name = 'Duyệt bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
                         <div class="notification-item" style="">
                             <div  class="col-xs-2">
@@ -114,7 +121,7 @@
                       </a>
                   </li>
               </ul>
-            <a class="see-all" style="display:block;border-top: 1px solid #c5c5c5; text-align:center; cursor:pointer; text-decoration:none;"><strong>Xem tất cả</strong></a>
+            <a ng-if="notifications.length >= 10" class="see-all" style="display:block;border-top: 1px solid #c5c5c5; text-align:center; cursor:pointer; text-decoration:none;"><strong>Xem tất cả</strong></a>
           </div>
    </li>
    

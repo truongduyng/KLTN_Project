@@ -33,7 +33,7 @@ json.array! @notification_changes do |nc|
 	json.notification_category nc.notification_category
 	#1 so thong tin khac
 	json.watched nc.watched
-	json.loaded nc.loaded
+	json.is_new nc.is_new
 	json.created_at nc.created_at
 end
 

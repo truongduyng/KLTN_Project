@@ -24,9 +24,16 @@ class NotificationsController < ApplicationController
 		render nothing: true, status: :ok, content_type: 'application/json'
 	end
 
+	#PUT /notifications/loaded.json
 	#Khi ma click vao ul thi danh dau no du da load
 	def loaded
-
+		notification_ids = params.permit(:notification_ids => [])['notification_ids']
+		#render json: notification_ids, status: :ok
+		#Lap wa danh sach id va gan gia tri is_new = false
+		notification_ids.each do |id|
+			NotificationChange.find(id).update_attributes(is_new: false)
+		end
+		render nothing: true, status: :ok, content_type: 'application/json'
 	end
 
 	private

@@ -142,7 +142,7 @@ text-decoration:none;
 	border-top-left-radius: 4px;
 }
 .notifications ul.list-notifications{
-	min-height:200px;
+	min-height:auto;
 	list-style-type:none; padding:10px 10px; max-height:500px; overflow-y:auto; overflow-x:hidden;
 	padding:0px;
 
