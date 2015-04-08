@@ -8,5 +8,8 @@ app.controller('thongBaoCtrl', ['$scope', 'thongBaoService'
 		if($scope.notificationChange.notification_category.name == 'Từ chối bài viết'){
 			$scope.isDanger = true;
 		}
+		// if($scope.notificationChange.notification_category.name == 'Từ chối bài viết'){
+		// 	$scope.isDanger = true;
+		// }
 
 }]);

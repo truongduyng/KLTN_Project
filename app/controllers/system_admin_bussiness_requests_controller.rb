@@ -44,6 +44,8 @@ class SystemAdminBussinessRequestsController < SystemAdminController
 				if branch.save
 					@bussiness_request.status_id =  BussinessRequestStatus.da_duyet_status.id
 					@bussiness_request.timeless.save
+					#Tao ra thong bao 
+					NotificationChange.create_notification user, @bussiness_request, current_user, NotificationCategory.chap_nhan_yeu_cau_doanh_nghiep
 					#Kich hoat thanh cong
 					render json: {message: 'Kích hoạt thành công tài khoản doanh nghiệp'}, status: :created, content_type: 'application/json'
 				else

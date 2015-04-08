@@ -18,6 +18,10 @@ class NotificationCategory
 	def self.tu_choi_bai_viet
 		NotificationCategory.where(name: 'Từ chối bài viết').first
 	end
+
+	def self.chap_nhan_yeu_cau_doanh_nghiep
+		NotificationCategory.where(name: 'Chấp nhận yêu cầu kích hoạt tài khoản doanh nghiệp').first
+	end
 end
 
 ##Gom cac loai sau:

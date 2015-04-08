@@ -12,13 +12,17 @@
                     <div class="completed step">
                       <div class="content">
                         <div class="title">Điền thông tin doanh nghiệp</div>
-                        <div class="description">Điền các thông tin cơ bản của doanh nghiệp bạn và gửi yêu cầu kích hoạt tài khoản doanh nghiệp</div>
+                        <div class="description">Điền các thông tin cơ bản của doanh nghiệp bạn và gửi yêu cầu kích hoạt tài khoản doanh nghiệp
+                         <p ng-if="isCompleted" style="height:2px;"></p>
+                        </div>
                       </div>
                     </div>
-                    <div ng-class="{active: !isCompleted, completed: isCompleted}" class="active step">
+                    <div ng-class="{active: !isCompleted, completed: isCompleted}" class="step">
                       <div class="content">
                         <div class="title">Đợi xét duyệt</div>
-                        <div class="description">Quản trị hệ thống sẽ xem sét yêu cầu bạn gửi, sẽ xét duyệt, kích hoạt tài khoản doanh nghiệp và thông báo cho bạn sớm nhất có thể</div>
+                        <div class="description">Quản trị hệ thống sẽ xem sét yêu cầu bạn gửi, sẽ xét duyệt, kích hoạt tài khoản doanh nghiệp và thông báo cho bạn sớm nhất có thể
+
+                        </div>
                       </div>
                     </div>
                   </div>
