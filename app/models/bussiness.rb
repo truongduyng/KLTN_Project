@@ -17,12 +17,12 @@ class Bussiness
 	has_many :assest_categories
 	has_many :branches
 
-	before_create :init_avatar
-
-	private
-		#chua test
-		#Khoi tao avatar mac dinh
-		def init_avatar
-			self.avatar = current_user.avatar
-		end
+	# before_create :init_avatar
+	
+	# private
+	# 	#chua test
+	# 	#Khoi tao avatar mac dinh
+	# 	def init_avatar
+	# 		self.avatar = current_user.avatar
+	# 	end
 end
