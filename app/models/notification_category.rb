@@ -35,6 +35,11 @@ class NotificationCategory
 		NotificationCategory.where(name: 'Bình luận bài viết').first
 	end
 
+	def self.thich_binh_luan 
+		NotificationCategory.where(name: 'Thích bình luận').first
+	end
+
+
 end
 
 ##Gom cac loai sau:
@@ -45,3 +50,7 @@ end
 # 5.Thích bài viết
 # 6.Bình luận bài viết
 # 7.Thích bình luận
+
+
+#De giai quyet van de 1 nguoi like comment cua 1 nguoi khac trong thong bao, va gui den thong bao den chu bai viet thi
+#tao ra 1 loai thong bao chung "Hoạt động trong bài viết" va hien thi thong bao nhu la ai do tham gia vao bai viet cua ban

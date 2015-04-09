@@ -54,6 +54,11 @@ class CommentsController < ApplicationController
 			render nothing: true, status: :bad_request, content_type: 'application/json'
 		else
 			@comment.likes.create(user: current_user)
+			#Tao thong bao
+			#TH1: Ko thong bao khi nguoi do tu like binh luan cua chinh minh
+			if @comment.user != current_user
+				NotificationChange.create_notification @comment.user, @comment, current_user, NotificationCategory.thich_binh_luan
+			end
 			render nothing: true, status: :created, content_type: 'application/json'
 		end
 		
@@ -64,6 +69,8 @@ class CommentsController < ApplicationController
 		like = @comment.likes.where('user_id' => current_user.id).first
 		if like
 			like.destroy
+			#Neu thong bao do chua dc load va xem (is_new = true) thi xoa no di, con neu da dc xem rui thi coi nhu la lich su
+			NotificationChange.delete_notification_change(@comment.user, @comment, current_user, NotificationCategory.thich_binh_luan)
 			render nothing: true, status: :ok, content_type: 'application/json'
 		else
 			render nothing: true, status: :bad_request, content_type: 'application/json'

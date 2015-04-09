@@ -75,6 +75,10 @@ json.notifications do
 			if nc.notification.notificable_type == 'BussinessRequest'
 				json.name nc.notification.notificable.name
 			end
+			if nc.notification.notificable_type == 'Comment'
+				json.content nc.notification.notificable.content
+				json.post_title  nc.notification.notificable.post.title
+			end
 		end
 		#Loai tac dong
 		json.notification_category do 
