@@ -55,49 +55,81 @@ class NotificationsController < ApplicationController
 	# 	@notification_changes = @notification_changes.desc(:created_at).limit(20)
 	# end
 
+	#Get thong bao cua target_user, theo tieu chuan is_new = true || false, tra ve ket qua dang chuan
+	def get_notifications target_user, is_new 
+	end
+
+	# def index
+	# 	notification_ids = Notification.where(target_user_id: current_user.id).only(:_id).map(&:_id)
+	# 	all_notification_changes = NotificationChange.where(:notification_id.in => notification_ids)
+	# 	new_notification_changes = all_notification_changes.where(is_new: true).desc(:created_at).to_a
+	# 	#B1: Group by theo target_object va notification_category
+	# 	# {
+	# 	# 	'object 1, category': [
+	# 	# 		{},{}
+	# 	# 	],
+	# 	# 	'object 2, category': []
+	# 	# }
+	# 	new_notification_changes = new_notification_changes.group_by{ |nc| [nc.notification_id, nc.notification_category_id]} 
+	# 	#B2: chuyen ket qua sang dang mang: [[{}, {}], [{}, {}], [{}, {}, ...]]
+	# 	new_notification_changes = new_notification_changes.collect{|key, value| value}
+	# 	#B3: @results chinh la new notifications 
+	# 	# [{
+	# 	# 	target_object: {},
+	# 	# 	target_user: {},
+	# 	# 	category: {},
+	# 	# 	trigger_users: []
+	# 	# },....]
+	# 	@results = new_notification_changes.collect do |array|
+	# 		#Lay thong tin co ban nhu target_object, target_user, category
+	# 		memo = array[0].clone
+	# 		#Chuyen triiger_user thanh 1 array
+	# 		memo.trigger_users = []
+	# 		#Duyet qua cac object va gan trigger_user vao mang trigger_user
+	# 		array.each_with_object(memo) do |item|
+	# 			memo.trigger_users << item.trigger_user
+	# 		end
+	# 		#tra ve ket qua
+	# 		memo
+	# 	end
+	# 	#Luon hien thi 15 thong bao, neu no lon hon 15 thong bao, thi chi lay 15 cai
+	# 	if @results.count > 15
+	# 		@results = @results.first(15)
+	# 	else
+	# 		#Lay cho du 15 thong bao
+	# 		so_luong_con_lai = 15 - @results.count
+
+	# 	end
+	# 	# if new_notification_changes.count < 20
+	# 	# 	#Neu ma so luong notification moi nho hon 10 thi tra ve notification moi va notification cu, so luong tong la 10
+	# 	# 	@notification_changes = all_notification_changes.desc(:created_at).limit(20)
+	# 	# else
+			
+	# 	# end
+	# 	# #Khong the lay 10 cai moi nhat dc, ma phai lay tat ca cai moi nhat, is_new = true
+	# 	# @notification_changes = @notification_changes.desc(:created_at).limit(20)
+	# end
+
 
 	def index
-		notification_ids = Notification.where(target_user_id: current_user.id).only(:_id).map(&:_id)
-		all_notification_changes = NotificationChange.where(:notification_id.in => notification_ids)
-		new_notification_changes = all_notification_changes.where(is_new: true).to_a
-		#B1: Group by theo target_object va notification_category
-		# {
-		# 	'object 1, category': [
-		# 		{},{}
-		# 	],
-		# 	'object 2, category': []
-		# }
-		new_notification_changes = new_notification_changes.group_by{ |nc| [nc.notification_id, nc.notification_category_id]} 
-		#B2: chuyen ket qua sang dang mang: [[{}, {}], [{}, {}], [{}, {}, ...]]
-		new_notification_changes = new_notification_changes.collect{|key, value| value}
-		#B3: @results chinh la new notifications 
-		# [{
-		# 	target_object: {},
-		# 	target_user: {},
-		# 	category: {},
-		# 	trigger_users: []
-		# },....]
-		@results = new_notification_changes.collect do |array|
-			#Lay thong tin co ban nhu target_object, target_user, category
-			memo = array[0].clone
-			#Chuyen triiger_user thanh 1 array
-			memo.trigger_users = []
-			#Duyet qua cac object va gan trigger_user vao mang trigger_user
-			array.each_with_object(memo) do |item|
-				memo.trigger_users << item.trigger_user
-			end
-			#tra ve ket qua
-			memo
+		#Get new notifications
+		@results = NotificationChange.get_notifications(current_user, true)
+		@new_notifications_count = @results.count
+		#Luon hien thi 15 thong bao, neu no lon hon 15 thong bao, thi chi lay 15 cai
+		if @results.count > 15
+			@results = @results.first(15)
+		else
+			#Lay cho du 15 thong bao
+			so_luong_con_lai = 15 - @results.count
+			#Lay notifications cu voi dung so_luong_con_lai
+			old_notifications =  NotificationChange.get_notifications(current_user, false)
+			old_notifications = old_notifications.first(so_luong_con_lai)
+			@results = @results + old_notifications
 		end
-		# if new_notification_changes.count < 20
-		# 	#Neu ma so luong notification moi nho hon 10 thi tra ve notification moi va notification cu, so luong tong la 10
-		# 	@notification_changes = all_notification_changes.desc(:created_at).limit(20)
-		# else
-			
-		# end
-		# #Khong the lay 10 cai moi nhat dc, ma phai lay tat ca cai moi nhat, is_new = true
-		# @notification_changes = @notification_changes.desc(:created_at).limit(20)
 	end
+
+
+
 	#GET /notifications/:id.json
 	#Tra ve notificationChange voi id tuong ung
 	def show

@@ -11,8 +11,10 @@ class CommentsController < ApplicationController
 		@comment = Comment.new(comment_params) 
 		@comment.user = current_user
 		@comment.post_id = params[:post_id]
-
 		if @comment.save
+			#Tao thong bao
+			post = @comment.post
+			NotificationChange.create_notification(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
 			render 'show.json.jbuilder', status: :created
 		else
 			render json: @comment.errors, status: :bad_request

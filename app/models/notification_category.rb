@@ -26,6 +26,15 @@ class NotificationCategory
 	def self.tu_choi_cap_tai_khoan_doanh_nghiep
 		NotificationCategory.where(name: 'Từ chối yêu cầu kích hoạt tài khoản doanh nghiệp').first
 	end
+
+	def self.thich_bai_viet
+		NotificationCategory.where(name: 'Thích bài viết').first
+	end
+
+	def self.binh_luan_bai_viet 
+		NotificationCategory.where(name: 'Bình luận bài viết').first
+	end
+
 end
 
 ##Gom cac loai sau:
@@ -33,3 +42,6 @@ end
 # 2.Từ chối bài viết
 # 3.Chấp nhận yêu cầu kích hoạt tài khoản doanh nghiệp
 # 4.Từ chối yêu cầu kích hoạt tài khoản doanh nghiệp
+# 5.Thích bài viết
+# 6.Bình luận bài viết
+# 7.Thích bình luận

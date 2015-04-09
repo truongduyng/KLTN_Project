@@ -151,3 +151,10 @@
 # n =  NotificationCategory.create(name: 'Từ chối yêu cầu kích hoạt tài khoản doanh nghiệp')
 # n.build_notification_template(content: 'Yêu cầu kích hoạt tài khoản doanh nghiệp của bạn đã bị từ chối có thề vì 1 trong các nguyên nhân sau: .....')
 # n.save
+
+# ##Thích bài viết
+# NotificationCategory.create(name: 'Thích bài viết')
+# ## Bình luận bài viết
+# NotificationCategory.create(name: 'Bình luận bài viết')
+# ## Thích bình luận
+# NotificationCategory.create(name: 'Thích bình luận')

@@ -87,14 +87,14 @@ class PostsController < ApplicationController
 
 	# /posts/:id/like
 	def like
-
 		if @post.likes.where('user_id' => current_user.id).first
 			render nothing: true, status: :bad_request, content_type: 'application/json'
 		else
 			@post.likes.create(user: current_user)
+			#Tao thong bao
+			NotificationChange.create_notification @post.user, @post, current_user, NotificationCategory.thich_bai_viet
 			render nothing: true, status: :created, content_type: 'application/json'
 		end
-		
 	end
 
 	#/posts/:id/unlike

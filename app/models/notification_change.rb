@@ -35,4 +35,47 @@ class NotificationChange
 		notification_change.notification = notification
 		notification_change.save
 	end
+
+	def self.get_notifications target_user, is_new 
+		notification_ids = Notification.where(target_user_id: target_user.id).only(:_id).map(&:_id)
+		all_notification_changes = NotificationChange.where(:notification_id.in => notification_ids)
+		
+		# Vi notification cu co the so luong len rat lon nen
+		#neu lay notification cu, thi chi lay 200 notification_change la du de co the gom nhom va tao ra 15 
+		# notification duoc gom nhom theo category, target_object (neu ko du so luong thi cung cha sao)
+		if is_new == false
+			new_notification_changes = all_notification_changes.includes(:trigger_user, :notification_category, :notification).where(is_new: is_new).desc(:created_at).limit(200).to_a
+		else
+			new_notification_changes = all_notification_changes.includes(:trigger_user, :notification_category, :notification).where(is_new: is_new).desc(:created_at).to_a
+		end
+		#B1: Group by theo target_object va notification_category
+		# {
+		# 	'object 1, category': [
+		# 		{},{}
+		# 	],
+		# 	'object 2, category': []
+		# }
+		new_notification_changes = new_notification_changes.group_by{ |nc| [nc.notification_id, nc.notification_category_id]} 
+		#B2: chuyen ket qua sang dang mang: [[{}, {}], [{}, {}], [{}, {}, ...]]
+		new_notification_changes = new_notification_changes.collect{|key, value| value}
+		#B3: @results chinh la new notifications 
+		# [{
+		# 	target_object: {},
+		# 	target_user: {},
+		# 	category: {},
+		# 	trigger_users: []
+		# },....]
+		@results = new_notification_changes.collect do |array|
+			#Lay thong tin co ban nhu target_object, target_user, category
+			memo = array[0].clone
+			#Chuyen triiger_user thanh 1 array
+			memo.trigger_users = []
+			#Duyet qua cac object va gan trigger_user vao mang trigger_user
+			array.each_with_object(memo) do |item|
+				memo.trigger_users << item.trigger_user
+			end
+			#tra ve ket qua
+			memo
+		end
+	end
 end
