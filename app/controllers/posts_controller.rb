@@ -92,7 +92,10 @@ class PostsController < ApplicationController
 		else
 			@post.likes.create(user: current_user)
 			#Tao thong bao
-			NotificationChange.create_notification @post.user, @post, current_user, NotificationCategory.thich_bai_viet
+			#TH1: Ko thong bao khi nguoi do tu like bai viet cua minh
+			if @post.user != current_user
+				NotificationChange.create_notification @post.user, @post, current_user, NotificationCategory.thich_bai_viet
+			end
 			render nothing: true, status: :created, content_type: 'application/json'
 		end
 	end

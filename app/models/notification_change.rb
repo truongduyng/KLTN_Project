@@ -49,11 +49,7 @@ class NotificationChange
 
 	#Xoa 1 notification change
 	def self.delete_notification_change target_user, target_object, trigger_user, notifcation_category
-		notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first
-		if !notification
-			return
-		end
-		notification_change = NotificationChange.all_of(trigger_user_id: trigger_user.id, notification_id: notification.id, notification_category_id: notifcation_category.id).first
+		notification_change = NotificationChange.find_notification_change(target_user, target_object, trigger_user, notifcation_category)
 		#Neu co notification_change va no chua dc xem (is_new = true) thi xoa no di
 		if notification_change && notification_change.is_new 
 			notification_change.destroy
@@ -63,7 +59,6 @@ class NotificationChange
 	def self.get_notifications target_user, is_new 
 		notification_ids = Notification.where(target_user_id: target_user.id).only(:_id).map(&:_id)
 		all_notification_changes = NotificationChange.where(:notification_id.in => notification_ids)
-		
 		# Vi notification cu co the so luong len rat lon nen
 		#neu lay notification cu, thi chi lay 200 notification_change la du de co the gom nhom va tao ra 15 
 		# notification duoc gom nhom theo category, target_object (neu ko du so luong thi cung cha sao)
