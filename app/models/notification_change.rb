@@ -8,7 +8,7 @@ class NotificationChange
 	belongs_to :notification_category
 	#Thuoc 1 ve notification nao do
 	belongs_to :notification
-
+	
 	#Da xem hay chua
 	field :watched, type: Boolean, default: ->{false}
 	#Cho thay da load hay chua
@@ -101,3 +101,9 @@ class NotificationChange
 		end
 	end
 end
+
+#De gui thong bao den nhung nguoi theo doi bai viet:
+#B1: them thuoc tinh followers cho post
+#B2: Moi khi 1 nguoi tac dong den post thi them nguoi do thanh theo doi post
+#B3: moi khi 1 nguoi trigger 1 thong bao thi tao ra thong bao cho moi 
+#nguoi followers (phai tao ra loai hang thong bao phu hop: Binh luan bai post ban theo doi, thich bai post ban theo doi)

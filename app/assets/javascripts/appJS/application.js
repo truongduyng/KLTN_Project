@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree ../extendJavascript
+//= require underscore
 //= require angular
 //= require bootstrap/dist/js/bootstrap
 //= require angular-bootstrap
@@ -33,7 +34,6 @@
 //= require ngInfiniteScroll
 //= require ngmap
 //= require ./customJS/richmarker.js
-//= require underscore
 //= require ngstorage
 //= require ./app.js
 //= require_tree .

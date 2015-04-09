@@ -55,7 +55,6 @@ development:
 
     # Ensure all times are UTC in the app side. (default: false)
     # use_utc: false
-    identity_map_enabled: true
 test:
   sessions:
     default:
