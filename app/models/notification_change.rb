@@ -15,6 +15,10 @@ class NotificationChange
 	# field :loaded, type: Boolean, default: ->{false}
 	field :is_new, type: Boolean, default: ->{true}
 
+	#Attr
+	#1 mang ca trigger users
+	attr_accessor :trigger_users
+
 	def self.create_notification target_user, target_object,  trigger_user, notification_category
 		notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first	
 		#Neu chua co loai notification cho doi tuong nay thi tao no

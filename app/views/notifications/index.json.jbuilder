@@ -19,13 +19,48 @@
 # 	json.created_at nc.created_at
 # end
 
-#Phang hoa du lieu, cho no chi 1 chieu sau
-json.array! @notification_changes do |nc|
+# #Phang hoa du lieu, cho no chi 1 chieu sau
+# json.array! @notification_changes do |nc|
+# 	#Id cua notification_change
+# 	json._id nc.id
+# 	#Nguoi tac dong
+# 	json.trigger_user do
+# 		json.username nc.trigger_user.username
+# 		json.avatar nc.trigger_user.avatar
+# 	end
+# 	#Thong tin ve doi tuong bi tac dong
+# 	json.target_object nc.notification.notificable
+# 	#Loai tac dong
+# 	json.notification_category nc.notification_category
+# 	#1 so thong tin khac
+# 	json.watched nc.watched
+# 	json.is_new nc.is_new
+# 	json.created_at nc.created_at
+# end
+
+
+#Neu loai la 'Duyệt bài viết' thi hien thi Admin da chap nhan bai viet "post.title" cua ban (link toi post.id)
+#Neu loai la 'Tu choi bai viet' thi hien thi Admin da tu choi bai viet 'post.title' cua ban (link toi trang hien thi mau template bai viet bi tu choi (truyen id cua notification_category))
+
+# #Them loai hang thong bao
+# trung like bai viet cua ban
+# quyen like bai viet cua ban
+# admin duyet bai viet cua ban
+# trung comment len bai viet cua ban
+
+# [{
+	# 	target_object: {},
+	# 	target_user: {},
+	# 	category: {},
+	# 	trigger_users: []
+	# },....]
+json.array! @results do |nc|
 	#Id cua notification_change
 	json._id nc.id
-	#Nguoi tac dong
-	json.trigger_user do
-		json.username nc.trigger_user.username
+	# #Nguoi tac dong
+	json.trigger_users nc.trigger_users do |user|
+		json.username user.username
+		json.avatar user.avatar.url
 	end
 	#Thong tin ve doi tuong bi tac dong
 	json.target_object nc.notification.notificable
@@ -35,7 +70,5 @@ json.array! @notification_changes do |nc|
 	json.watched nc.watched
 	json.is_new nc.is_new
 	json.created_at nc.created_at
+	json.end '---------------'
 end
-
-#Neu loai la 'Duyệt bài viết' thi hien thi Admin da chap nhan bai viet "post.title" cua ban (link toi post.id)
-#Neu loai la 'Tu choi bai viet' thi hien thi Admin da tu choi bai viet 'post.title' cua ban (link toi trang hien thi mau template bai viet bi tu choi (truyen id cua notification_category))
