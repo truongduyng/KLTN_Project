@@ -60,6 +60,12 @@ class RepliesController < ApplicationController
 			render nothing: true, status: :bad_request, content_type: 'application/json'
 		else
 			@reply.likes.create(user: current_user)
+			#Tao thong bao
+			target_user = @reply.user
+			#TH1: Ko thong bao khi nguoi do tu like phan hoi cua chinh minh
+			if target_user != current_user
+				NotificationChange.create_notification(target_user, @reply, current_user, NotificationCategory.thich_phan_hoi)
+			end
 			render nothing: true, status: :created, content_type: 'application/json'
 		end
 		
@@ -70,6 +76,9 @@ class RepliesController < ApplicationController
 		like = @reply.likes.where('user_id' => current_user.id).first
 		if like
 			like.destroy
+			#Neu thong bao do chua dc load va xem (is_new = true) thi xoa no di, con neu da dc xem rui thi coi nhu la lich su
+			target_user = @reply.user
+			NotificationChange.delete_notification_change(target_user, @reply, current_user, NotificationCategory.thich_phan_hoi)
 			render nothing: true, status: :ok, content_type: 'application/json'
 		else
 			render nothing: true, status: :bad_request, content_type: 'application/json'

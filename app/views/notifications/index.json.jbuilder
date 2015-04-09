@@ -83,6 +83,15 @@ json.notifications do
 				json._id nc.notification.notificable.post.id
 				json.comment_id nc.notification.notificable.id
 			end
+			#Do reply la embedded trong comment nen ko fetch reply trong notificable
+			if nc.notification.notificable_type == 'Reply'
+				json.content nc.notification.reply.content
+				json.comment_content nc.notification.reply.comment.content
+				#id cua bai post chua reply
+				json._id nc.notification.reply.comment.post.id
+				#id cua reply
+				json.reply_id nc.notification.notificable_id
+			end
 		end
 		#Loai tac dong
 		json.notification_category do 
@@ -97,3 +106,6 @@ json.notifications do
 	end
 end
 json.new_notifications_count @new_notifications_count 
+
+
+#To chuc lai theo parent object cho de hieu
