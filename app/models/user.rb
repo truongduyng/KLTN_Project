@@ -25,7 +25,7 @@ class User
   #1 nguoi co nhieu thong bao
   has_many :notifications, class_name: 'Notification', inverse_of: :target_user
   #1 nguoi co the trigger nhieu thong bao
-  has_many :trigger_notifications, class_name: 'NotificationChange', inverse_of: :trigger_user
+  has_and_belongs_to_many :trigger_notifications, class_name: 'NotificationChange', inverse_of: :trigger_users
   
   #My field
   field :firstname, type: String
