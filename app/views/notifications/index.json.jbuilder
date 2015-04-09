@@ -63,9 +63,20 @@ json.array! @results do |nc|
 		json.avatar user.avatar.url
 	end
 	#Thong tin ve doi tuong bi tac dong
-	json.target_object nc.notification.notificable
+	json.target_object do
+		json._id nc.notification.notificable.id
+		if nc.notification.notificable_type == 'Post'
+			json.title nc.notification.notificable.title
+		end
+		if nc.notification.notificable_type == 'BussinessRequest'
+			json.name nc.notification.notificable.name
+		end
+	end
 	#Loai tac dong
-	json.notification_category nc.notification_category
+	json.notification_category do 
+		json._id nc.notification_category.id
+		json.name nc.notification_category.name
+	end 
 	#1 so thong tin khac
 	json.watched nc.watched
 	json.is_new nc.is_new
