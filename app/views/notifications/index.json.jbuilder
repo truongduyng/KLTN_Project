@@ -68,16 +68,21 @@ json.notifications do
 		end
 		#Thong tin ve doi tuong bi tac dong
 		json.target_object do
-			json._id nc.notification.notificable.id
+			
 			if nc.notification.notificable_type == 'Post'
 				json.title nc.notification.notificable.title
+				json._id nc.notification.notificable.id
 			end
 			if nc.notification.notificable_type == 'BussinessRequest'
 				json.name nc.notification.notificable.name
+				json._id nc.notification.notificable.id
 			end
 			if nc.notification.notificable_type == 'Comment'
 				json.content nc.notification.notificable.content
 				json.post_title  nc.notification.notificable.post.title
+				#id cua bai post chua comment
+				json._id nc.notification.notificable.post.id
+				json.comment_id nc.notification.notificable.id
 			end
 		end
 		#Loai tac dong
