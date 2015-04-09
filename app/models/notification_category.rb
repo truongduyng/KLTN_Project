@@ -39,6 +39,13 @@ class NotificationCategory
 		NotificationCategory.where(name: 'Thích bình luận').first
 	end
 
+	def self.phan_hoi_binh_luan
+		NotificationCategory.where(name: 'Phản hồi bình luận').first
+	end
+	
+	def self.thich_phan_hoi
+		NotificationCategory.where(name: 'Thích phản hồi').first
+	end
 
 end
 
@@ -50,6 +57,8 @@ end
 # 5.Thích bài viết
 # 6.Bình luận bài viết
 # 7.Thích bình luận
+# 8.Phản hồi bình luận
+# 9.Thích phản hồi
 
 
 #De giai quyet van de 1 nguoi like comment cua 1 nguoi khac trong thong bao, va gui den thong bao den chu bai viet thi

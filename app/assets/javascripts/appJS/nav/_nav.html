@@ -159,6 +159,23 @@
                       </a>
                       <!-- END CHO HIEN THI THONG BAO THICH BINH LUAN -->
 
+                      <!-- BEGIN CHO HIEN THI THONG BAO PHAN HOI BINH LUAN (REPLY COMMENT) -->
+                      <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Phản hồi bình luận'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+                        <div class="notification-item" style="">
+                            <div  class="col-xs-2">
+                              <img width="50px" height="50px" ng-src="{{item.trigger_users[0].avatar|logo}}">
+                            </div>               
+                            <div class="col-xs-10">
+                                <div ng-if="item.trigger_users.length >=2">
+                                  {{item.trigger_users[0].username}} và {{item.trigger_users.length - 1}} người đã phản hồi bình luận "<b>{{item.target_object.content | shortContent: 5}}</b>" của bạn trong bài viết "<b>{{item.target_object.post_title | shortContent: 7}}</b>"
+                                </div>
+
+                                <div ng-if="item.trigger_users.length == 1">{{item.trigger_users[0].username}} đã phản hồi bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bài viết "<b>{{item.target_object.post_title | shortContent: 7}}</b>"</div>
+                                <small>{{item.created_at | timeago}}</small>
+                            </div>
+                        </div>
+                      </a>
+                      <!-- END CHO HIEN THI THONG BAO PHAN HOI BINH LUAN (REPLY COMMENT) -->
 
                   </li>
               </ul>

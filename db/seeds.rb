@@ -158,3 +158,8 @@
 # NotificationCategory.create(name: 'Bình luận bài viết')
 # ## Thích bình luận
 # NotificationCategory.create(name: 'Thích bình luận')
+# ##Phản hồi bình luận
+# NotificationCategory.create(name: 'Phản hồi bình luận')
+
+# ##Thích phản hồi
+# NotificationCategory.create(name: 'Thích phản hồi')

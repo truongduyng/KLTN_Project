@@ -18,6 +18,15 @@ class RepliesController < ApplicationController
 		@reply.comment = @comment
 		
 		if @reply.save 
+			target_user = @reply.comment.user
+			#TH1: Neu nguoi do phan hoi tren comment cua nguoi do thi ko tao thong bao
+			if target_user != current_user
+				#TH2: Neu ma da tao ra notification change va is_new = true thi ko can tao nua (vi tao nua cung vay)
+				notification_change =  NotificationChange.find_notification_change(target_user, @reply.comment, current_user, NotificationCategory.phan_hoi_binh_luan)
+				if !notification_change || !notification_change.is_new
+					NotificationChange.create_notification(target_user, @reply.comment, current_user, NotificationCategory.phan_hoi_binh_luan)
+				end
+			end
 			render 'show.json.jbuilder', status: :created
 		else
 			render json: @reply.errors, status: :bad_request
@@ -36,6 +45,10 @@ class RepliesController < ApplicationController
 	end
 
 	def destroy
+		#Xoa thong bao neu no chua dc xem
+		target_user = @reply.comment.user
+		NotificationChange.delete_notification_change(target_user, @reply.comment, current_user, NotificationCategory.phan_hoi_binh_luan)
+		#Xoa reply
 		@reply.destroy
 		render nothing: true, status: :ok, content_type: 'application/json'
 	end
