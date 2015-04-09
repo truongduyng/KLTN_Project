@@ -128,8 +128,6 @@ class NotificationsController < ApplicationController
 		end
 	end
 
-
-
 	#GET /notifications/:id.json
 	#Tra ve notificationChange voi id tuong ung
 	def show

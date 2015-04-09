@@ -64,7 +64,7 @@
                       <!-- END CHO DUYET BAI VIET THANH CONG -->
 
                       <!-- BEGIN CHO TU CHOI BAI VIET -->
-                       <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối bài viết'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
+                       <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối bài viết'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item.notification_change_ids[0]._id.$oid})">
                         <div class="notification-item" style="">
                             <div  class="col-xs-2">
                               <img width="50px" height="50px" ng-src="{{''|logo}}">
@@ -78,7 +78,7 @@
                       <!-- END CHO TU CHOI BAI VIET -->
 
                       <!-- BEGIN CHO DUYET DOANH NGHIEP THANH CONG -->
-                      <a style="color:#00BC19;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Chấp nhận yêu cầu kích hoạt tài khoản doanh nghiệp'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
+                      <a style="color:#00BC19;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Chấp nhận yêu cầu kích hoạt tài khoản doanh nghiệp'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item.notification_change_ids[0]._id.$oid})">
                           <div class="notification-item" style="">
                               <div  class="col-xs-2">
                                 <img width="50px" height="50px" ng-src="{{''|logo}}">
@@ -92,7 +92,7 @@
                       <!-- END CHO DUYET DOANH NGHIEP THANH CONG -->
 
                       <!-- BEGIN CHO TU CHOI CAP TAI KHOAN DOANH NGHIEP -->
-                      <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối yêu cầu kích hoạt tài khoản doanh nghiệp'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
+                      <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối yêu cầu kích hoạt tài khoản doanh nghiệp'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item.notification_change_ids[0]._id.$oid})">
                           <div class="notification-item" style="">
                               <div  class="col-xs-2">
                                 <img width="50px" height="50px" ng-src="{{''|logo}}">

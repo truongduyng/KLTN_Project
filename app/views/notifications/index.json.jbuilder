@@ -57,8 +57,10 @@
 
 json.notifications do
 	json.array! @results do |nc|
-		#Id cua notification_change
-		json._id nc.id
+		#1 mang nhung notification changes dong gop tao thanh 1 notifications
+		json.notification_change_ids nc.notification_change_ids do |id|
+			json._id id
+		end
 		#Nguoi tac dong
 		json.trigger_users nc.trigger_users do |user|
 			json.username user.username

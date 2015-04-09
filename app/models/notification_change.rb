@@ -17,7 +17,7 @@ class NotificationChange
 
 	#Attr
 	#1 mang ca trigger users
-	attr_accessor :trigger_users
+	attr_accessor :trigger_users, :notification_change_ids
 
 	def self.create_notification target_user, target_object,  trigger_user, notification_category
 		notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first	
@@ -63,15 +63,18 @@ class NotificationChange
 		# 	target_object: {},
 		# 	target_user: {},
 		# 	category: {},
-		# 	trigger_users: []
+		# 	trigger_users: [],
+		#   notification_change_ids: []
 		# },....]
 		@results = new_notification_changes.collect do |array|
 			#Lay thong tin co ban nhu target_object, target_user, category
 			memo = array[0].clone
-			#Chuyen triiger_user thanh 1 array
+			#Chuyen trigger_user thanh 1 array, notification_changes thanh array id
+			memo.notification_change_ids = []
 			memo.trigger_users = []
 			#Duyet qua cac object va gan trigger_user vao mang trigger_user
 			array.each_with_object(memo) do |item|
+				memo.notification_change_ids << item.id
 				memo.trigger_users << item.trigger_user
 			end
 			#tra ve ket qua

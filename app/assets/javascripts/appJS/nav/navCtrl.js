@@ -43,6 +43,31 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', fun
 		});
 	};
 
+	////PHan Cu 
+	// $scope.onWatched = function(notification){
+	// 	console.log("on watched: ", notification);
+	// 	notificationService.watched(notification);
+	// };
+
+	// //Khi clich de xem notification thi danh dau is_new = false
+	// $scope.onDisplayNotifications = function(){
+
+	// 	//Lay array notifications isnew = true;
+	// 	 var newNotifactions = _.filter($scope.notifications, function(item){
+	// 			return item.is_new;
+	// 		});
+	// 	 //Lay 1 mang id cua cac new notifications
+	// 	 var notificationIds = _.map(newNotifactions, function(item){
+	// 	 		return item._id.$oid;
+	// 	 });
+	// 	 //Chi cap nhat neu co notification moi
+	// 	 if(notificationIds.length >= 1){
+	// 	 	 notificationService.loaded(notificationIds).success(function(){
+	// 	 	 	$scope.newNotificationsCount = notificationService.newNotificationsCount;
+	// 	 	 });
+	// 	 }
+	// 	 console.log("on display notifications: ", notificationIds);
+	// };
 
 	$scope.onWatched = function(notification){
 		console.log("on watched: ", notification);
