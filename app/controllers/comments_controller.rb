@@ -32,6 +32,10 @@ class CommentsController < ApplicationController
 
 	#DELETE /posts/post_id/comments/id.json
 	def destroy
+		#Neu co notification ma chua dc xem (trong truong lo binh luan xong xoa lien) thi xoa notification_change do
+		post = @comment.post
+		NotificationChange.delete_notification_change(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
+		#Xoa binh luan
 		@comment.destroy
 		render nothing: true, status: :ok, content_type: 'application/json'	
 	end

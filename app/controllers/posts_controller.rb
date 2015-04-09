@@ -102,6 +102,8 @@ class PostsController < ApplicationController
 		like = @post.likes.where('user_id' => current_user.id).first
 		if like
 			like.destroy
+			#Neu thong bao do chua dc load va xem (is_new = true) thi xoa no di, con neu da dc xem rui thi coi nhu la lich su
+			NotificationChange.delete_notification_change(@post.user, @post, current_user, NotificationCategory.thich_bai_viet)
 			render nothing: true, status: :ok, content_type: 'application/json'
 		else
 			render nothing: true, status: :bad_request, content_type: 'application/json'
