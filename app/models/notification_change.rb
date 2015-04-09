@@ -107,3 +107,12 @@ end
 #B2: Moi khi 1 nguoi tac dong den post thi them nguoi do thanh theo doi post
 #B3: moi khi 1 nguoi trigger 1 thong bao thi tao ra thong bao cho moi 
 #nguoi followers (phai tao ra loai hang thong bao phu hop: Binh luan bai post ban theo doi, thich bai post ban theo doi)
+
+
+
+
+#GIAI PHAP KHAC
+#Notification change se la 1 mang cua trigger_users. Khi them 1 notification change thi tim cai notification change theo loai va lay cai moi nhat, neu
+#cai moi nhat do chua dc xem is_new = true thi don gian them 1 trigger user vao mang trigger users. Nguoc lai,
+#neu no da dc xem rui thi chi can tao ra 1 notification change moi.
+#Uu diem: Ko can group gi ca, chi lay notification change ve va hien thi (nhanh va chinh xac)
