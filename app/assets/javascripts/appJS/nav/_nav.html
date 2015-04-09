@@ -90,6 +90,20 @@
                           </div>
                       </a>
                       <!-- END CHO DUYET DOANH NGHIEP THANH CONG -->
+
+                      <!-- BEGIN CHO TU CHOI CAP TAI KHOAN DOANH NGHIEP -->
+                      <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối yêu cầu kích hoạt tài khoản doanh nghiệp'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
+                          <div class="notification-item" style="">
+                              <div  class="col-xs-2">
+                                <img width="50px" height="50px" ng-src="{{''|logo}}">
+                              </div>               
+                              <div class="col-xs-10">
+                                  <div>Yêu cầu kích hoạt tài khoản doanh nghiệp "<b>{{item.target_object.name}}</b>" của bạn bị từ chối bởi admin hệ thống</div>
+                                  <small>{{item.created_at | timeago}}</small>
+                              </div>
+                          </div>
+                      </a>
+                      <!-- END CHO TU CHOI CAP TAI KHOAN DOANH NGHIEP -->
                   </li>
               </ul>
             <a ng-if="notifications.length >= 10" class="see-all" style="display:block;border-top: 1px solid #c5c5c5; text-align:center; cursor:pointer; text-decoration:none;"><strong>Xem tất cả</strong></a>

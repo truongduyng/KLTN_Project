@@ -70,6 +70,8 @@ class SystemAdminBussinessRequestsController < SystemAdminController
 		#Gan yeu cau thanh trang thai tu choi va ko lam gi ca
 		@bussiness_request.status_id = BussinessRequestStatus.tu_choi_status.id
 		@bussiness_request.timeless.save
+		#Tao thong bao
+		NotificationChange.create_notification @bussiness_request.user, @bussiness_request, current_user, NotificationCategory.tu_choi_cap_tai_khoan_doanh_nghiep
 		render json: @bussiness_request, status: :ok, content_type: 'application/json' 
 	end
 
