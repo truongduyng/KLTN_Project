@@ -36,8 +36,23 @@ class NotificationChange
 		notification_change.save
 	end
 
+	#tim notification_change
+	def self.find_notification_change target_user, target_object, trigger_user, notification_category
+		notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first	
+		if !notification
+			return nil
+		else
+			notification_change = NotificationChange.all_of(trigger_user_id: trigger_user.id, notification_id: notification.id, notification_category_id: notification_category.id).first
+			return notification_change
+		end
+	end
+
+	#Xoa 1 notification change
 	def self.delete_notification_change target_user, target_object, trigger_user, notifcation_category
 		notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first
+		if !notification
+			return
+		end
 		notification_change = NotificationChange.all_of(trigger_user_id: trigger_user.id, notification_id: notification.id, notification_category_id: notifcation_category.id).first
 		#Neu co notification_change va no chua dc xem (is_new = true) thi xoa no di
 		if notification_change && notification_change.is_new 

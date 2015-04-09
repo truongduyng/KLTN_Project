@@ -14,7 +14,11 @@ class CommentsController < ApplicationController
 		if @comment.save
 			#Tao thong bao
 			post = @comment.post
-			NotificationChange.create_notification(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
+			#Neu ma da tao ra notification change va is_new = true thi ko can tao nua (vi tao nua cung vay)
+			notification_change =  NotificationChange.find_notification_change(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
+			if !notification_change || !notification_change.is_new
+				NotificationChange.create_notification(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
+			end
 			render 'show.json.jbuilder', status: :created
 		else
 			render json: @comment.errors, status: :bad_request
