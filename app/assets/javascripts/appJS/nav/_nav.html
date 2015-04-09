@@ -104,6 +104,43 @@
                           </div>
                       </a>
                       <!-- END CHO TU CHOI CAP TAI KHOAN DOANH NGHIEP -->
+
+                      <!-- BEGIN CHO THICH BAI VIET -->
+                      <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+                        <div class="notification-item" style="">
+                            <div  class="col-xs-2">
+                              <img width="50px" height="50px" ng-src="{{item.trigger_users[0].avatar|logo}}">
+                            </div>               
+                            <div class="col-xs-10">
+                                <div ng-if="item.trigger_users.length >=2">
+                                  {{item.trigger_users[0].username}} và {{item.trigger_users.length - 1}} người khác thích bài viết "<b>{{item.target_object.title}}</b>" của bạn
+                                </div>
+
+                                <div ng-if="item.trigger_users.length == 1">{{item.trigger_users[0].username}} thích bài viết "<b>{{item.target_object.title}}</b>" của bạn</div>
+                                <small>{{item.created_at | timeago}}</small>
+                            </div>
+                        </div>
+                      </a>
+                      <!-- END CHO THICH BAI VIET -->
+
+                      <!-- BEGIN CHO BINH LUAN BAI VIET -->
+                      <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+                        <div class="notification-item" style="">
+                            <div  class="col-xs-2">
+                              <img width="50px" height="50px" ng-src="{{item.trigger_users[0].avatar|logo}}">
+                            </div>               
+                            <div class="col-xs-10">
+                                <div ng-if="item.trigger_users.length >=2">
+                                  {{item.trigger_users[0].username}} và {{item.trigger_users.length - 1}} người khác bình luận trong bài viết "<b>{{item.target_object.title}}</b>" của bạn
+                                </div>
+
+                                <div ng-if="item.trigger_users.length == 1">{{item.trigger_users[0].username}} bình luận trong bài viết "<b>{{item.target_object.title}}</b>" của bạn</div>
+                                <small>{{item.created_at | timeago}}</small>
+                            </div>
+                        </div>
+                      </a>
+                      <!-- END CHO BINH LUAN BAI VIET -->
+
                   </li>
               </ul>
             <a ng-if="notifications.length >= 10" class="see-all" style="display:block;border-top: 1px solid #c5c5c5; text-align:center; cursor:pointer; text-decoration:none;"><strong>Xem tất cả</strong></a>
