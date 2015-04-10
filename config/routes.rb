@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
 
   resources :notifications do
-    # member do
-    #   put 'watched'
-    # end
+    member do
+      put 'watched'
+    end
 
     collection do
       put 'loaded'
-      put 'watched'
+      # put 'watched'
     end
   end
   

@@ -12,6 +12,7 @@ class SystemAdminPostsController < SystemAdminController
 	def accept
 		@post.post_status = PostStatus.publishedStatus
 		if @post.timeless.save
+			NotificationChange.delete_notification_change @post.user, @post, current_user, NotificationCategory.tu_choi_bai_viet
 			NotificationChange.create_notification @post.user, @post, current_user, NotificationCategory.duyet_bai_viet
 		else
 			render json: @post.errors, status: :bad_request
@@ -21,6 +22,7 @@ class SystemAdminPostsController < SystemAdminController
 	def deny
 		@post.post_status = PostStatus.deny_status
 		if @post.timeless.save
+			NotificationChange.delete_notification_change @post.user, @post, current_user, NotificationCategory.duyet_bai_viet
 			NotificationChange.create_notification @post.user, @post, current_user, NotificationCategory.tu_choi_bai_viet
 		else
 			render json: @post.errors, status: :bad_request

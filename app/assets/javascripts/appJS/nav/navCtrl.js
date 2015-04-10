@@ -43,67 +43,67 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', fun
 		});
 	};
 
-	////PHan Cu 
-	// $scope.onWatched = function(notification){
-	// 	console.log("on watched: ", notification);
-	// 	notificationService.watched(notification);
-	// };
-
-	// //Khi clich de xem notification thi danh dau is_new = false
-	// $scope.onDisplayNotifications = function(){
-
-	// 	//Lay array notifications isnew = true;
-	// 	 var newNotifactions = _.filter($scope.notifications, function(item){
-	// 			return item.is_new;
-	// 		});
-	// 	 //Lay 1 mang id cua cac new notifications
-	// 	 var notificationIds = _.map(newNotifactions, function(item){
-	// 	 		return item._id.$oid;
-	// 	 });
-	// 	 //Chi cap nhat neu co notification moi
-	// 	 if(notificationIds.length >= 1){
-	// 	 	 notificationService.loaded(notificationIds).success(function(){
-	// 	 	 	$scope.newNotificationsCount = notificationService.newNotificationsCount;
-	// 	 	 });
-	// 	 }
-	// 	 console.log("on display notifications: ", notificationIds);
-	// };
-
-
-
-	$scope.onWatched = function(notification) {
-		var notificationIds = _.map(notification.notification_change_ids, function(id) {
-			return id._id.$oid;
-		});
-		console.log("on watched: ", notificationIds);
-		notificationService.watched(notificationIds).success(function() {
-			notification.watched = true;
-		});
+	// ////Cho luoc do csdl trigger_users 
+	$scope.onWatched = function(notification){
+		console.log("on watched: ", notification);
+		notificationService.watched(notification);
 	};
 
-	// //Khi clich de xem notification thi danh dau is_new = false
-	$scope.onDisplayNotifications = function() {
+	//Khi clich de xem notification thi danh dau is_new = false
+	$scope.onDisplayNotifications = function(){
 		//Lay array notifications isnew = true;
-		var newNotifications = _.filter($scope.notifications, function(item) {
-			return item.is_new;
-		});
-		//Lay 1 mang id cua cac new notifications
-		var notificationIds = _.map(newNotifications, function(notification) {
-			var notificationChangeIds = _.map(notification.notification_change_ids, function(id) {
-				return id._id.$oid;
+		 var newNotifactions = _.filter($scope.notifications, function(item){
+				return item.is_new;
 			});
-			return notificationChangeIds;
-		});
-		notificationIds = _.flatten(notificationIds);
-		// console.log("on display notifications: ", notificationIds);
-		//Chi cap nhat neu co notification moi
-		if (notificationIds.length >= 1) {
-			notificationService.loaded(notificationIds).success(function() {
-				$scope.newNotificationsCount = notificationService.newNotificationsCount;
-			});
-		}
-		
+		 //Lay 1 mang id cua cac new notifications
+		 var notificationIds = _.map(newNotifactions, function(item){
+		 		return item._id.$oid;
+		 });
+		 //Chi cap nhat neu co notification moi
+		 if(notificationIds.length >= 1){
+		 	 notificationService.loaded(notificationIds).success(function(){
+		 	 	$scope.newNotificationsCount = notificationService.newNotificationsCount;
+		 	 });
+		 }
+		 console.log("on display notifications: ", notificationIds);
 	};
+
+
+
+	//Cho luoc do csdl trigger_user
+	// $scope.onWatched = function(notification) {
+	// 	var notificationIds = _.map(notification.notification_change_ids, function(id) {
+	// 		return id._id.$oid;
+	// 	});
+	// 	console.log("on watched: ", notificationIds);
+	// 	notificationService.watched(notificationIds).success(function() {
+	// 		notification.watched = true;
+	// 	});
+	// };
+
+	// // //Khi clich de xem notification thi danh dau is_new = false
+	// $scope.onDisplayNotifications = function() {
+	// 	//Lay array notifications isnew = true;
+	// 	var newNotifications = _.filter($scope.notifications, function(item) {
+	// 		return item.is_new;
+	// 	});
+	// 	//Lay 1 mang id cua cac new notifications
+	// 	var notificationIds = _.map(newNotifications, function(notification) {
+	// 		var notificationChangeIds = _.map(notification.notification_change_ids, function(id) {
+	// 			return id._id.$oid;
+	// 		});
+	// 		return notificationChangeIds;
+	// 	});
+	// 	notificationIds = _.flatten(notificationIds);
+	// 	// console.log("on display notifications: ", notificationIds);
+	// 	//Chi cap nhat neu co notification moi
+	// 	if (notificationIds.length >= 1) {
+	// 		notificationService.loaded(notificationIds).success(function() {
+	// 			$scope.newNotificationsCount = notificationService.newNotificationsCount;
+	// 		});
+	// 	}
+		
+	// };
 
 }]);
 

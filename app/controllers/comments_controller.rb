@@ -20,6 +20,10 @@ class CommentsController < ApplicationController
 				notification_change =  NotificationChange.find_notification_change(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
 				if !notification_change || !notification_change.is_new
 					NotificationChange.create_notification(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
+				else
+					#Ko tao moi thong bao nhung cap nhat moi thoi gian cua no
+					notification_change.updated_at = Time.now
+					notification_change.save
 				end
 			end
 			render 'show.json.jbuilder', status: :created

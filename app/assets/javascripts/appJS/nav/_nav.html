@@ -48,7 +48,7 @@
                             </div> 
                         </div>
                   </li>
-                  <li ng-class="{watched: item.watched}" role="presentation" ng-repeat="item in notifications | orderBy: '-created_at'">
+                  <li ng-class="{watched: item.watched}" role="presentation" ng-repeat="item in notifications | orderBy: '-updated_at'">
                       <!-- BEGIN CHO DUYET BAI VIET THANH CONG -->
                       <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Duyệt bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
                         <div class="notification-item" style="">
@@ -57,49 +57,49 @@
                             </div>               
                             <div class="col-xs-10">
                                 <div>Bài viết "<b>{{item.target_object.title}}</b>" của bạn đã được duyệt và đăng bởi admin hệ thống</div>
-                                <small>{{item.created_at | timeago}}</small>
+                                <small>{{item.updated_at | timeago}}</small>
                             </div>
                         </div>
                       </a>
                       <!-- END CHO DUYET BAI VIET THANH CONG -->
 
                       <!-- BEGIN CHO TU CHOI BAI VIET -->
-                       <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối bài viết'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item.notification_change_ids[0]._id.$oid})">
+                       <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối bài viết'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
                         <div class="notification-item" style="">
                             <div  class="col-xs-2">
                               <img width="50px" height="50px" ng-src="{{''|logo}}">
                             </div>               
                             <div class="col-xs-10">
                                 <div>Bài viết "<b>{{item.target_object.title}}</b>" của bạn không được duyệt bởi người quản trị hệ thống</div>
-                                <small>{{item.created_at | timeago}}</small>
+                                <small>{{item.updated_at | timeago}}</small>
                             </div>
                         </div>
                       </a>
                       <!-- END CHO TU CHOI BAI VIET -->
 
                       <!-- BEGIN CHO DUYET DOANH NGHIEP THANH CONG -->
-                      <a style="color:#00BC19;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Chấp nhận yêu cầu kích hoạt tài khoản doanh nghiệp'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item.notification_change_ids[0]._id.$oid})">
+                      <a style="color:#00BC19;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Chấp nhận yêu cầu kích hoạt tài khoản doanh nghiệp'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
                           <div class="notification-item" style="">
                               <div  class="col-xs-2">
                                 <img width="50px" height="50px" ng-src="{{''|logo}}">
                               </div>               
                               <div class="col-xs-10">
                                   <div>Yêu cầu kích hoạt tài khoản doanh nghiệp "<b>{{item.target_object.name}}</b>" của bạn đã được duyệt và chấp nhận bởi admin hệ thống</div>
-                                  <small>{{item.created_at | timeago}}</small>
+                                  <small>{{item.updated_at | timeago}}</small>
                               </div>
                           </div>
                       </a>
                       <!-- END CHO DUYET DOANH NGHIEP THANH CONG -->
 
                       <!-- BEGIN CHO TU CHOI CAP TAI KHOAN DOANH NGHIEP -->
-                      <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối yêu cầu kích hoạt tài khoản doanh nghiệp'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item.notification_change_ids[0]._id.$oid})">
+                      <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối yêu cầu kích hoạt tài khoản doanh nghiệp'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
                           <div class="notification-item" style="">
                               <div  class="col-xs-2">
                                 <img width="50px" height="50px" ng-src="{{''|logo}}">
                               </div>               
                               <div class="col-xs-10">
                                   <div>Yêu cầu kích hoạt tài khoản doanh nghiệp "<b>{{item.target_object.name}}</b>" của bạn bị từ chối bởi admin hệ thống</div>
-                                  <small>{{item.created_at | timeago}}</small>
+                                  <small>{{item.updated_at | timeago}}</small>
                               </div>
                           </div>
                       </a>
@@ -117,7 +117,7 @@
                                 </div>
 
                                 <div ng-if="item.trigger_users.length == 1">{{item.trigger_users[0].username}} thích bài viết "<b>{{item.target_object.title}}</b>" của bạn</div>
-                                <small>{{item.created_at | timeago}}</small>
+                                <small>{{item.updated_at | timeago}}</small>
                             </div>
                         </div>
                       </a>
@@ -135,7 +135,7 @@
                                 </div>
 
                                 <div ng-if="item.trigger_users.length == 1">{{item.trigger_users[0].username}} bình luận trong bài viết "<b>{{item.target_object.title}}</b>" của bạn</div>
-                                <small>{{item.created_at | timeago}}</small>
+                                <small>{{item.updated_at | timeago}}</small>
                             </div>
                         </div>
                       </a>
@@ -153,7 +153,7 @@
                                 </div>
 
                                 <div ng-if="item.trigger_users.length == 1">{{item.trigger_users[0].username}} thích bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bài viết "<b>{{item.target_object.post_title | shortContent: 7}}</b>"</div>
-                                <small>{{item.created_at | timeago}}</small>
+                                <small>{{item.updated_at | timeago}}</small>
                             </div>
                         </div>
                       </a>
@@ -171,7 +171,7 @@
                                 </div>
 
                                 <div ng-if="item.trigger_users.length == 1">{{item.trigger_users[0].username}} đã phản hồi bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bài viết "<b>{{item.target_object.post_title | shortContent: 7}}</b>"</div>
-                                <small>{{item.created_at | timeago}}</small>
+                                <small>{{item.updated_at | timeago}}</small>
                             </div>
                         </div>
                       </a>
@@ -189,7 +189,7 @@
                                 </div>
 
                                 <div ng-if="item.trigger_users.length == 1">{{item.trigger_users[0].username}} thích phản hồi "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bình luận "<b>{{item.target_object.comment_content | shortContent: 7}}</b>"</div>
-                                <small>{{item.created_at | timeago}}</small>
+                                <small>{{item.updated_at | timeago}}</small>
                             </div>
                         </div>
                       </a>

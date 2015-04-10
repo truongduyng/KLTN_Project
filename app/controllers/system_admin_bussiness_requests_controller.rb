@@ -45,6 +45,8 @@ class SystemAdminBussinessRequestsController < SystemAdminController
 					@bussiness_request.status_id =  BussinessRequestStatus.da_duyet_status.id
 					@bussiness_request.timeless.save
 					#Tao ra thong bao 
+					#Neu da lo deny va nguoi do chua xem thong bao deny thi xoa no
+				    NotificationChange.delete_notification_change user, @bussiness_request, current_user, NotificationCategory.tu_choi_cap_tai_khoan_doanh_nghiep
 					NotificationChange.create_notification user, @bussiness_request, current_user, NotificationCategory.chap_nhan_yeu_cau_doanh_nghiep
 					#Kich hoat thanh cong
 					render json: {message: 'Kích hoạt thành công tài khoản doanh nghiệp'}, status: :created, content_type: 'application/json'
@@ -71,6 +73,8 @@ class SystemAdminBussinessRequestsController < SystemAdminController
 		@bussiness_request.status_id = BussinessRequestStatus.tu_choi_status.id
 		@bussiness_request.timeless.save
 		#Tao thong bao
+		#Neu lo xac nhan, ma nguoi do chua xem, thi xoa xac nhan do di
+		NotificationChange.delete_notification_change  @bussiness_request.user, @bussiness_request, current_user, NotificationCategory.chap_nhan_yeu_cau_doanh_nghiep
 		NotificationChange.create_notification @bussiness_request.user, @bussiness_request, current_user, NotificationCategory.tu_choi_cap_tai_khoan_doanh_nghiep
 		render json: @bussiness_request, status: :ok, content_type: 'application/json' 
 	end
