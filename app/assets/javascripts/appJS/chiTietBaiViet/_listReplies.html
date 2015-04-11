@@ -19,7 +19,7 @@
      <!-- BEGIN DANH SACH CAC REPLIES CUA 1 COMMENT -->
     <div class="list-replies-of-comment" ng-show="comment.isRepliesLoaded">
     
-         <div class="media" ng-repeat-start="reply in comment.replies | orderBy: '-created_at'">
+         <div id="{{reply._id.$oid}}" class="media" ng-repeat-start="reply in comment.replies | orderBy: '-created_at'">
             <div class="media-left">
               <a href="#">
                <img class="img-circle" class="media-object" src="{{reply.user.avatar.url | logo}}" fallback-src="sportaLogo"

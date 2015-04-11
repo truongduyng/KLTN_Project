@@ -73,7 +73,6 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', fun
 	};
 
 
-
 	//Cho luoc do csdl trigger_user
 	// $scope.onWatched = function(notification) {
 	// 	var notificationIds = _.map(notification.notification_change_ids, function(id) {

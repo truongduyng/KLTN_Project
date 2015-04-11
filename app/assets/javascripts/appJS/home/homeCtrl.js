@@ -1,7 +1,11 @@
-app.controller('homeCtrl', ['$scope', '$http', 'FileUploader', '$interval', '$state',
- function($scope, $http, FileUploader, $interval, $state) {
+app.controller('homeCtrl', ['$scope', '$http', 'FileUploader', '$interval', '$state','$location',
+    '$anchorScroll',
+ function($scope, $http, FileUploader, $interval, $state, $location, $anchorScroll) {
 
-
+    $scope.scrollTo = function(){
+        $location.hash("listPost");
+        $anchorScroll();
+    };
   
     $scope.message = "This is message";
 

@@ -3,8 +3,8 @@
 //do do de lang nghe su kien $stateChangeError thi ta phai tao mainCtrl la controller cha 
 //cho tat ca controller va lang nghe su kien do
 
-app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash'
-	, function($scope, $rootScope, $state, Auth, Flash) {
+app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '$stateParams', '$location', '$anchorScroll',
+	function($scope, $rootScope, $state, Auth, Flash, $stateParams, $location, $anchorScroll) {
 
 	$rootScope.$on('$stateChangeStart',
 		function(event, toState, toParams, fromState, fromParams) {
@@ -45,6 +45,16 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash'
 		// 	console.log("href", $state.href(toState.name, {}, {absolute: true}));
 		// 	$rootScope.$emit("onRequireLoginWithReload");
 		// }
+	});
+
+	$rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
+		console.log("scrollTo: ", $stateParams.scrollTo);
+		//Cho scroll khi xem thong bao
+		if ($stateParams.scrollTo) {
+			$location.hash($stateParams.scrollTo);
+			$anchorScroll();
+		}
+
 	});
 
 

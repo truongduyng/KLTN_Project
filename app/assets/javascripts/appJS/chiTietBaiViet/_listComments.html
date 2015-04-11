@@ -19,7 +19,7 @@
 
 
  <!-- BEGIN COMMENT -->
-  <div class="media" ng-repeat-start="comment in comments | orderBy: '-created_at'">
+  <div id="{{comment._id.$oid}}" class="media" ng-repeat-start="comment in comments | orderBy: '-created_at'">
     <div class="media-left">
       <a href="#">
        <img class="img-circle" class="media-object" src="{{comment.user.avatar.url | logo}}" fallback-src="sportaLogo"
