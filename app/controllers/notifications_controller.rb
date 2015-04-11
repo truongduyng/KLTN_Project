@@ -30,7 +30,7 @@ class NotificationsController < ApplicationController
 
 	#PUT /notifications/:id/watched.json
 	def watched
-		@notification_change.update_attributes(watched: true)
+		@notification_change.timeless.update_attributes(watched: true)
 		render nothing: true, status: :ok, content_type: 'application/json'
 		# notification_ids = params.permit(:notification_ids => [])['notification_ids']
 		# #Lap wa danh sach id va gan gia tri is_new = false
@@ -46,7 +46,7 @@ class NotificationsController < ApplicationController
 		notification_ids = params.permit(:notification_ids => [])['notification_ids']
 		#Lap wa danh sach id va gan gia tri is_new = false
 		notification_ids.each do |id|
-			NotificationChange.find(id).update_attributes(is_new: false)
+			NotificationChange.find(id).timeless.update_attributes(is_new: false)
 		end
 		render nothing: true, status: :ok, content_type: 'application/json'
 	end

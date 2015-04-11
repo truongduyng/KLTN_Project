@@ -22,35 +22,6 @@ class NotificationChange
 	def distinct_triggers_by_user
 		self.triggers.desc(:updated_at).uniq{|trigger| trigger.trigger_user_id}
 	end
-	# def self.create_notification target_user, target_object, trigger_user, trigger_source, notification_category
-	# 	#B1: Tim hoac tao notification		
-	# 	notification = Notification.find_or_create(target_user, target_object)
-	# 	#Tim notification_change cho target_object, target_user va category va no chua dc xem. Neu dc xem rui thi tao ra 1 notification change moi
-	# 	notification_change = NotificationChange.all_of(notification_id: notification.id, notification_category_id: notification_category.id, is_new: true).first	
-	# 	#TH1: Neu co 1 notification change thoa man (chua dc xem) thi them no vao
-	# 	if notification_change
-	# 		#B1: Tao ra trigger (chu y trigger nay neu da ton tai thi tai su dung lai)
-	# 		trigger = NotificationChangeTrigger.find_or_create(trigger_user, trigger_source)
-	# 		#B2: Them trigger vao notification change
-	# 		notification_change.triggers << trigger
-	# 		notification_change.updated_at = Time.now
-	# 		notification_change.save
-	# 	else
-	# 		#TH2: Neu ko co notification change thoa man thi tao moi
-			
-	# 		#B1: Tao notification change
-	# 		notification_change = NotificationChange.new
-	# 		#notification_change.trigger = [trigger_user]
-	# 		notification_change.notification_category = notification_category
-	# 		notification_change.notification = notification
-	# 		#B2: Tao trigger
-	# 		trigger = NotificationChangeTrigger.find_or_create(trigger_user, trigger_source)
-	# 		#B3: Gan trigger vao notification changes
-	# 		notification_change.triggers = [trigger]
-	# 		notification_change.save
-	# 	end
-	# end
-
 	#Chua xet tao notification den nhieu nguoi, viec tai su dung trigger va xoa trigger co hop ly hay ko
 	#Vi 1 xet truong: 1 nguoi like bai viet dc theo boi 2 nguoi va sau do unlike: tuy nhien 1 nguoi da xem truoc unlike mong muon thay like cua nguoi do 
 	#va 1 nguoi xem sau unlike mong muon ko thay thong bao like cua nguoi do
@@ -64,21 +35,6 @@ class NotificationChange
 			#B1: Tao ra trigger (chu y trigger nay neu da ton tai thi tai su dung lai)
 			trigger = NotificationChangeTrigger.find_or_create(trigger_user, trigger_source)
 			trigger.add_notification_changes(notification_change)
-			# #Con sai khu vuc cho nay
-			# #TH: 1 nguoi comment rui, ma notification chua  dc xem, bay h nguoi do comment tiep
-			# exist_trigger = notification_change.triggers.where(trigger_user_id: trigger_user.id).first
-			# #Neu ma co 1 trigger nhu vay thi xoa no di
-			# if exist_trigger
-			# 	#Xoa id ra khoi mang id
-			# 	notification_change.trigger_ids.delete(exist_trigger.id)
-			# 	#Xoa id cua notification_change ra khoi mang trigger
-			# 	exist_trigger.notification_change_ids.delete(notification_change.id)
-			# 	exist_trigger.save
-			# 	# notification_change.triggers.delete(exist_trigger)
-			# 	if exist_trigger.notification_change_ids.count == 0
-			# 		exist_trigger.destroy
-			# 	end
-			# end
 			#Them trigger vao notification_change
 			notification_change.trigger_ids << trigger.id
 			notification_change.updated_at = Time.now

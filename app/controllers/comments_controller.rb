@@ -16,15 +16,6 @@ class CommentsController < ApplicationController
 			post = @comment.post
 			#TH1: Neu nguoi do comment tren bai viet cua nguoi do thi ko tao thong bao
 			if post.user != current_user
-				#TH2: Neu ma da tao ra notification change va is_new = true thi ko can tao nua (vi tao nua cung vay)
-				# notification_change =  NotificationChange.find_notification_change(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
-				# if !notification_change || !notification_change.is_new
-				# 	NotificationChange.create_notification(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
-				# else
-				# 	#Ko tao moi thong bao nhung cap nhat moi thoi gian cua no
-				# 	notification_change.updated_at = Time.now
-				# 	notification_change.save
-				# end
 				NotificationChange.create_notification(post.user, post, current_user, @comment, NotificationCategory.binh_luan_bai_viet)
 			end
 			render 'show.json.jbuilder', status: :created
@@ -58,11 +49,11 @@ class CommentsController < ApplicationController
 		if @comment.likes.where('user_id' => current_user.id).first
 			render nothing: true, status: :bad_request, content_type: 'application/json'
 		else
-			@comment.likes.create(user: current_user)
+			like = @comment.likes.create(user: current_user)
 			#Tao thong bao
 			#TH1: Ko thong bao khi nguoi do tu like binh luan cua chinh minh
 			if @comment.user != current_user
-				NotificationChange.create_notification @comment.user, @comment, current_user, NotificationCategory.thich_binh_luan
+				NotificationChange.create_notification @comment.user, @comment, current_user, like, NotificationCategory.thich_binh_luan
 			end
 			render nothing: true, status: :created, content_type: 'application/json'
 		end
@@ -73,9 +64,9 @@ class CommentsController < ApplicationController
 	def unlike
 		like = @comment.likes.where('user_id' => current_user.id).first
 		if like
-			like.destroy
 			#Neu thong bao do chua dc load va xem (is_new = true) thi xoa no di, con neu da dc xem rui thi coi nhu la lich su
-			NotificationChange.delete_notification_change(@comment.user, @comment, current_user, NotificationCategory.thich_binh_luan)
+			NotificationChange.delete_notification_change(@comment.user, @comment, current_user, like, NotificationCategory.thich_binh_luan)
+			like.destroy
 			render nothing: true, status: :ok, content_type: 'application/json'
 		else
 			render nothing: true, status: :bad_request, content_type: 'application/json'

@@ -165,7 +165,7 @@
                       <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Phản hồi bình luận'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
                         <div class="notification-item" style="">
                             <div  class="col-xs-2">
-                              <img width="50px" height="50px" ng-src="{{item.trigger_users[0].avatar|logo}}">
+                              <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
                             </div>               
                             <div class="col-xs-10">
                                 <div ng-if="item.triggers.length >=2">

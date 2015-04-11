@@ -21,11 +21,13 @@ class RepliesController < ApplicationController
 			target_user = @reply.comment.user
 			#TH1: Neu nguoi do phan hoi tren comment cua nguoi do thi ko tao thong bao
 			if target_user != current_user
-				#TH2: Neu ma da tao ra notification change va is_new = true thi ko can tao nua (vi tao nua cung vay)
-				notification_change =  NotificationChange.find_notification_change(target_user, @reply.comment, current_user, NotificationCategory.phan_hoi_binh_luan)
-				if !notification_change || !notification_change.is_new
-					NotificationChange.create_notification(target_user, @reply.comment, current_user, NotificationCategory.phan_hoi_binh_luan)
-				end
+				# #TH2: Neu ma da tao ra notification change va is_new = true thi ko can tao nua (vi tao nua cung vay)
+				# notification_change =  NotificationChange.find_notification_change(target_user, @reply.comment, current_user, NotificationCategory.phan_hoi_binh_luan)
+				# if !notification_change || !notification_change.is_new
+				# 	NotificationChange.create_notification(target_user, @reply.comment, current_user, NotificationCategory.phan_hoi_binh_luan)
+				# end
+				NotificationChange.create_notification(target_user, @reply.comment, current_user, @reply, NotificationCategory.phan_hoi_binh_luan)
+
 			end
 			render 'show.json.jbuilder', status: :created
 		else
@@ -59,12 +61,12 @@ class RepliesController < ApplicationController
 		if @reply.likes.where('user_id' => current_user.id).first
 			render nothing: true, status: :bad_request, content_type: 'application/json'
 		else
-			@reply.likes.create(user: current_user)
+			like = @reply.likes.create(user: current_user)
 			#Tao thong bao
 			target_user = @reply.user
 			#TH1: Ko thong bao khi nguoi do tu like phan hoi cua chinh minh
 			if target_user != current_user
-				NotificationChange.create_notification(target_user, @reply, current_user, NotificationCategory.thich_phan_hoi)
+				NotificationChange.create_notification(target_user, @reply, current_user, like, NotificationCategory.thich_phan_hoi)
 			end
 			render nothing: true, status: :created, content_type: 'application/json'
 		end
@@ -75,10 +77,11 @@ class RepliesController < ApplicationController
 	def unlike
 		like = @reply.likes.where('user_id' => current_user.id).first
 		if like
-			like.destroy
 			#Neu thong bao do chua dc load va xem (is_new = true) thi xoa no di, con neu da dc xem rui thi coi nhu la lich su
 			target_user = @reply.user
-			NotificationChange.delete_notification_change(target_user, @reply, current_user, NotificationCategory.thich_phan_hoi)
+			NotificationChange.delete_notification_change(target_user, @reply, current_user, like, NotificationCategory.thich_phan_hoi)
+			#Huy like
+			like.destroy
 			render nothing: true, status: :ok, content_type: 'application/json'
 		else
 			render nothing: true, status: :bad_request, content_type: 'application/json'
