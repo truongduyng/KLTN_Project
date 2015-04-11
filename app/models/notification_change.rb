@@ -1,8 +1,8 @@
-#Nhung actor tham gia vao thay doi notifcation len 1 doi tuong
+#Nhung actor tham gia vao thay doi notification len 1 doi tuong
 class NotificationChange
 	include Mongoid::Document
 	include Mongoid::Timestamps
-	#Co nhieu trigger tac dong vao notifcation change loai nay
+	#Co nhieu trigger tac dong vao notification change loai nay
 	#trigger_ids: [] cho thay nhung nguoi tac dong vao notification change nay
 	has_and_belongs_to_many :triggers, class_name: 'NotificationChangeTrigger', inverse_of: :notification_changes 
 	#has_and_belongs_to_many :triggers, class_name: 'NotificationChangeTrigger', inverse_of: nil 
@@ -18,55 +18,115 @@ class NotificationChange
 	field :is_new, type: Boolean, default: ->{true}
 
 
-	def self.create_notification target_user, target_object,  trigger_user, notification_category
-		notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first	
-		#Neu chua co loai notification cho doi tuong nay thi tao no
-		if !notification
-			notification = Notification.new
-			notification.target_user = target_user
-			notification.notificable = target_object
-			notification.save
-		end
+	# def self.create_notification target_user, target_object, trigger_user, trigger_source, notification_category
+	# 	#B1: Tim hoac tao notification		
+	# 	notification = Notification.find_or_create(target_user, target_object)
+	# 	#Tim notification_change cho target_object, target_user va category va no chua dc xem. Neu dc xem rui thi tao ra 1 notification change moi
+	# 	notification_change = NotificationChange.all_of(notification_id: notification.id, notification_category_id: notification_category.id, is_new: true).first	
+	# 	#TH1: Neu co 1 notification change thoa man (chua dc xem) thi them no vao
+	# 	if notification_change
+	# 		#B1: Tao ra trigger (chu y trigger nay neu da ton tai thi tai su dung lai)
+	# 		trigger = NotificationChangeTrigger.find_or_create(trigger_user, trigger_source)
+	# 		#B2: Them trigger vao notification change
+	# 		notification_change.triggers << trigger
+	# 		notification_change.updated_at = Time.now
+	# 		notification_change.save
+	# 	else
+	# 		#TH2: Neu ko co notification change thoa man thi tao moi
+			
+	# 		#B1: Tao notification change
+	# 		notification_change = NotificationChange.new
+	# 		#notification_change.trigger = [trigger_user]
+	# 		notification_change.notification_category = notification_category
+	# 		notification_change.notification = notification
+	# 		#B2: Tao trigger
+	# 		trigger = NotificationChangeTrigger.find_or_create(trigger_user, trigger_source)
+	# 		#B3: Gan trigger vao notification changes
+	# 		notification_change.triggers = [trigger]
+	# 		notification_change.save
+	# 	end
+	# end
 
+	def self.create_notification target_user, target_object, trigger_user, trigger_source, notification_category
+		#B1: Tim hoac tao notification		
+		notification = Notification.find_or_create(target_user, target_object)
 		#Tim notification_change cho target_object, target_user va category va no chua dc xem. Neu dc xem rui thi tao ra 1 notification change moi
 		notification_change = NotificationChange.all_of(notification_id: notification.id, notification_category_id: notification_category.id, is_new: true).first	
-		#Neu co 1 notification change thoa man (chua dc xem) thi them no vao
+		#TH1: Neu co 1 notification change thoa man (chua dc xem) thi them no vao
 		if notification_change
-			notification_change.trigger_users << trigger_user
+			#B1: Tao ra trigger (chu y trigger nay neu da ton tai thi tai su dung lai)
+			trigger = NotificationChangeTrigger.find_or_create(trigger_user_id: trigger_user.id, trigger_source_id: trigger_source.id)
+			#TH: 1 nguoi comment rui, ma notification chua  dc xem, bay h nguoi do comment tiep
+			exist_trigger = notification_change.triggers.where(trigger_user_id: trigger_user.id).first
+			#Neu ma co 1 trigger nhu vay thi xoa no di
+			if exist_trigger
+				notification_change.triggers.delete(exist_trigger)
+				if exist_trigger.notification_changes.count == 0
+					exist_trigger.destroy
+				end
+			end
+			notification_change.triggers << trigger
 			notification_change.updated_at = Time.now
 			notification_change.save
 		else
-			#Neu ko co notification change thoa man thi tao moi
+			#TH2: Neu ko co notification change thoa man thi tao moi
+			#B1: Tao notification change
 			notification_change = NotificationChange.new
-			notification_change.trigger_users = [trigger_user]
+			#notification_change.trigger = [trigger_user]
 			notification_change.notification_category = notification_category
 			notification_change.notification = notification
-			notification_change.updated_at = Time.now
+			#B2: Tao trigger
+			trigger = NotificationChangeTrigger.find_or_create(trigger_user, trigger_source)
+			#B3: Gan trigger vao notification changes
+			notification_change.triggers = [trigger]
 			notification_change.save
 		end
 	end
 
 	#tim notification_change
-	def self.find_notification_change target_user, target_object, trigger_user, notification_category
+	def self.find_notification_change target_user, target_object, trigger_user, trigger_source, notification_category
 		notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first	
 		if !notification
 			return nil
 		else
-			notification_change = NotificationChange.all_of('trigger_user_ids' => trigger_user.id, notification_id: notification.id, notification_category_id: notification_category.id).first
-			return notification_change
+			#Tim trigger notification change
+			trigger = NotificationChangeTrigger.all_of(trigger_user_id: trigger_user.id, trigger_source_id: trigger_source.id).first
+			if !trigger
+				return nil
+			else
+				notification_change = NotificationChange.all_of('trigger_ids' => trigger.id, notification_id: notification.id, notification_category_id: notification_category.id).first
+				return notification_change
+			end
 		end
 	end
 
 	#Xoa 1 notification change
-	def self.delete_notification_change target_user, target_object, trigger_user, notifcation_category
-		notification_change = NotificationChange.find_notification_change(target_user, target_object, trigger_user, notifcation_category)
-		#Neu co notification_change va no chua dc xem (is_new = true) thi xoa no di
+	def self.delete_notification_change target_user, target_object, trigger_user, trigger_source, notification_category
+		notification_change = NotificationChange.find_notification_change(target_user, target_object, trigger_user, trigger_source, notification_category)
+		#Neu co notification_change va no chua dc xem (is_new = true) thi xoa no di. 
+		#Trong truong hop bi tac dong boi nhieu nguoi thi xoa nguoi do di thoi, va khi mang tac dong = [] thi xoa notification change di
 		if notification_change && notification_change.is_new
-			#Bo trigger_user ra kho mang trigger_users 
-			notification_change.trigger_users.delete(trigger_user)
-			#Khi ko con trigger_users (co nghia la ko con notification change cho loai category) thi xoa no di
-			if notification_change.trigger_users.count == 0
+			#B1: Tim triggger. Luon tim dc vi tim dc notification_change
+			trigger = NotificationChangeTrigger.all_of(trigger_user_id: trigger_user.id, trigger_source_id: trigger_source.id).first
+			#B2: Bo trigger_user ra kho mang triggers
+			notification_change.triggers.delete(trigger)
+			#B5: Kiem tra trigger no co trigger 1 notification change nao khac ko, neu ko thi cung xoa no di 
+			if trigger.notification_changes.count == 0
+				trigger.destroy
+			end
+			#B3: Khi ko con triggers (co nghia la ko con notification change cho loai category) thi xoa no di
+			if notification_change.triggers.count == 0
 				notification_change.destroy
+				#Kiem tra notification coi thu co con notification_change nao hay ko, neu ko xoa no di
+				notification = Notification.find_or_create(target_user, target_object)
+				if notification.notification_changes.count == 0
+					notification.destroy
+				end
+			else
+				#B4: Cap nhat lai thoi gian cua notification_change thanh thoi gian cua trigger moi nhat
+				newest_triggger = notification_change.triggers.desc(:updated_at).first
+				notification_change.updated_at = newest_triggger.updated_at
+				notification_change.save
 			end
 		end
 	end
@@ -90,4 +150,4 @@ end
 
 #NotificationChange.all_of('trigger_users._id' => '54cf9a3f6875752467010000', notification_id: '552771dc6875750c31060000', notification_category_id: '55225d2b68757540e3000000').first
 
-#NotificationChange.all_of(notification_id: notification.id, notifcation_category_id: notification_category.id, is_new: true).first
+#NotificationChange.all_of(notification_id: notification.id, notification_category_id: notification_category.id, is_new: true).first

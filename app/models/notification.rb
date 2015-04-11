@@ -14,6 +14,20 @@ class Notification
 			reply = comment.replies.find(notificable_id)
 		end		
 	end
+
+	def self.find_or_create target_user, target_object
+		#B1: Tim
+		notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first	
+		#B2: Neu chua co loai notification cho doi tuong nay thi tao no
+		if !notification
+			notification = Notification.new
+			notification.target_user = target_user
+			notification.notificable = target_object
+			notification.save
+		end
+		#B3: Tra ve
+		return notification
+	end
 end
 
 #55269d7268757511c3860000
