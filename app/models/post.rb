@@ -13,8 +13,8 @@ class Post
 	has_many :comments, dependent: :destroy
 	embeds_many :likes, as: :likeable
 	#Notification system
-	#Doi tuong nay co the co nhieu thong bao ma lien quan den no
-	has_one :notification, as: :notificable
+	#Doi tuong nay co the duoc notification lien quan
+	has_many :notifications, as: :notificable
 
 	#scope
 	#Get published post

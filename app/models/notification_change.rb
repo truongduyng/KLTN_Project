@@ -2,8 +2,11 @@
 class NotificationChange
 	include Mongoid::Document
 	include Mongoid::Timestamps
-	#Co nhieu nguoi cung tac dong vao 1 loai notification change va gay thong bao den ai do
-	has_and_belongs_to_many :trigger_users, class_name: 'User', inverse_of: :trigger_notifications
+	#Co nhieu trigger tac dong vao notifcation change loai nay
+	#trigger_ids: [] cho thay nhung nguoi tac dong vao notification change nay
+	has_and_belongs_to_many :triggers, class_name: 'NotificationChangeTrigger', inverse_of: :notification_changes 
+	#has_and_belongs_to_many :triggers, class_name: 'NotificationChangeTrigger', inverse_of: nil 
+	#Luu 1 array id trigger_ids: []	
 	#Loai tac dong gi
 	belongs_to :notification_category
 	#Thuoc 1 ve notification nao do
