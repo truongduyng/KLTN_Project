@@ -12,8 +12,8 @@ class SystemAdminPostsController < SystemAdminController
 	def accept
 		@post.post_status = PostStatus.publishedStatus
 		if @post.timeless.save
-			NotificationChange.delete_notification_change @post.user, @post, current_user, NotificationCategory.tu_choi_bai_viet
-			NotificationChange.create_notification @post.user, @post, current_user, NotificationCategory.duyet_bai_viet
+			NotificationChange.delete_notification_change @post.user, @post, current_user, @post, NotificationCategory.tu_choi_bai_viet
+			NotificationChange.create_notification @post.user, @post, current_user, @post, NotificationCategory.duyet_bai_viet
 		else
 			render json: @post.errors, status: :bad_request
 		end
@@ -22,8 +22,8 @@ class SystemAdminPostsController < SystemAdminController
 	def deny
 		@post.post_status = PostStatus.deny_status
 		if @post.timeless.save
-			NotificationChange.delete_notification_change @post.user, @post, current_user, NotificationCategory.duyet_bai_viet
-			NotificationChange.create_notification @post.user, @post, current_user, NotificationCategory.tu_choi_bai_viet
+			NotificationChange.delete_notification_change @post.user, @post, current_user, @post, NotificationCategory.duyet_bai_viet
+			NotificationChange.create_notification @post.user, @post, current_user, @post, NotificationCategory.tu_choi_bai_viet
 		else
 			render json: @post.errors, status: :bad_request
 		end
@@ -37,13 +37,6 @@ class SystemAdminPostsController < SystemAdminController
 	end
 
 	private
-		# def find_post
-		# 	begin
-		# 		@post = Post.not_published.find(params[:id])
-		# 	rescue Mongoid::Errors::DocumentNotFound
-		# 		render nothing: true, status: :not_found, content_type: 'application/json'
-		# 	end
-		# end
 		def find_post
 			begin
 				@post = Post.find(params[:id])

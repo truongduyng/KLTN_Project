@@ -15,7 +15,8 @@ class Post
 	#Notification system
 	#Doi tuong nay co the duoc notification lien quan
 	has_many :notifications, as: :notificable
-
+	#trigger 1 thong bao nao (chap nhan hay tu choi bai viet)
+	has_one :notification_change_trigger, as: :trigger_source
 	#scope
 	#Get published post
 	scope :published, -> {

@@ -1,9 +1,22 @@
 #Id cua notification_change
 json._id @notification_change.id
 #Nguoi tac dong
-json.trigger_users @notification_change.trigger_users do |user|
-			json.username user.username
-			json.avatar user.avatar.url
+# json.trigger_users @notification_change.trigger_users do |user|
+# 			json.username user.username
+# 			json.avatar user.avatar.url
+# end
+json.triggers @notification_change.triggers do |trigger|
+			json._id trigger.id
+			json.trigger_user do 
+				json._id trigger.trigger_user.id
+				json.username trigger.trigger_user.username
+				json.avatar trigger.trigger_user.avatar.url
+			end
+			if trigger.trigger_source_id
+				json.trigger_source do
+					json._id trigger.trigger_source_id
+				end
+			end
 end
 #Thong tin ve doi tuong bi tac dong
 json.target_object @notification_change.notification.notificable

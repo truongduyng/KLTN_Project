@@ -14,7 +14,8 @@ class BussinessRequest
 	#Notification system
 	#Doi tuong nay co the co nhieu thong bao ma lien quan den no
 	has_many :notifications, as: :notificable
-
+	#trigger thong bao nao do (thong bao chap nhan hoac tu choi yeu cau)
+	has_one :notification_change_trigger, as: :trigger_source
 	#Validate
 	validates :name, presence: true
 	validates :address, presence: true

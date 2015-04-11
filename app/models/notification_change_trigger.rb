@@ -25,17 +25,7 @@ class NotificationChangeTrigger
 	end
 
 	def add_notification_changes notification_change
-		puts '--------------------------------------------------------------- in add_notification_changes -----------------'
-		puts notification_change.id
-		puts self.inspect
-
 		if self.notification_change_ids.include?(notification_change.id)
-		
-			puts '--------------------------------------------------------------- in add_notification_changes:: -----------------'
-			puts notification_change.id
-			puts self.inspect
-			puts self.notification_changes
-
 			self.notification_change_ids << notification_change.id
 			self.save
 		end

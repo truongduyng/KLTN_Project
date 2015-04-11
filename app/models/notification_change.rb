@@ -47,6 +47,9 @@ class NotificationChange
 	# 	end
 	# end
 
+	#Chua xet tao notification den nhieu nguoi, viec tai su dung trigger va xoa trigger co hop ly hay ko
+	#Vi 1 xet truong: 1 nguoi like bai viet dc theo boi 2 nguoi va sau do unlike: tuy nhien 1 nguoi da xem truoc unlike mong muon thay like cua nguoi do 
+	#va 1 nguoi xem sau unlike mong muon ko thay thong bao like cua nguoi do
 	def self.create_notification target_user, target_object, trigger_user, trigger_source, notification_category
 		#B1: Tim hoac tao notification		
 		notification = Notification.find_or_create(target_user, target_object)
@@ -60,7 +63,6 @@ class NotificationChange
 			#Con sai khu vuc cho nay
 			#TH: 1 nguoi comment rui, ma notification chua  dc xem, bay h nguoi do comment tiep
 			exist_trigger = notification_change.triggers.where(trigger_user_id: trigger_user.id).first
-			puts '------ chech exitst_trigger:' + exist_trigger.inspect
 			#Neu ma co 1 trigger nhu vay thi xoa no di
 			if exist_trigger
 				#Xoa id ra khoi mang id
@@ -77,13 +79,6 @@ class NotificationChange
 			notification_change.trigger_ids << trigger.id
 			notification_change.updated_at = Time.now
 			notification_change.save
-
-			puts '--------------------------------------------------------------- in create notification not null-----------------'
-			puts trigger.inspect
-			puts 'notification_changes:'
-			puts notification_change.trigger_ids.count
-
-
 		else
 			#TH2: Neu ko co notification change thoa man thi tao moi
 			#B1: Tao notification change
@@ -99,8 +94,6 @@ class NotificationChange
 			#B4: Add notification change cho trigger
 			trigger.add_notification_changes(notification_change)
 
-			puts '--------------------------------------------------------------- in create notification null-----------------'
-			puts trigger.notification_change_ids.inspect
 		end
 	end
 
