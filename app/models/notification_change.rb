@@ -18,6 +18,10 @@ class NotificationChange
 	field :is_new, type: Boolean, default: ->{true}
 
 
+	#Lay nhung trigger khac nhau boi trigger_user_id
+	def distinct_triggers_by_user
+		self.triggers.desc(:updated_at).uniq{|trigger| trigger.trigger_user_id}
+	end
 	# def self.create_notification target_user, target_object, trigger_user, trigger_source, notification_category
 	# 	#B1: Tim hoac tao notification		
 	# 	notification = Notification.find_or_create(target_user, target_object)
@@ -60,21 +64,21 @@ class NotificationChange
 			#B1: Tao ra trigger (chu y trigger nay neu da ton tai thi tai su dung lai)
 			trigger = NotificationChangeTrigger.find_or_create(trigger_user, trigger_source)
 			trigger.add_notification_changes(notification_change)
-			#Con sai khu vuc cho nay
-			#TH: 1 nguoi comment rui, ma notification chua  dc xem, bay h nguoi do comment tiep
-			exist_trigger = notification_change.triggers.where(trigger_user_id: trigger_user.id).first
-			#Neu ma co 1 trigger nhu vay thi xoa no di
-			if exist_trigger
-				#Xoa id ra khoi mang id
-				notification_change.trigger_ids.delete(exist_trigger.id)
-				#Xoa id cua notification_change ra khoi mang trigger
-				exist_trigger.notification_change_ids.delete(notification_change.id)
-				exist_trigger.save
-				# notification_change.triggers.delete(exist_trigger)
-				if exist_trigger.notification_change_ids.count == 0
-					exist_trigger.destroy
-				end
-			end
+			# #Con sai khu vuc cho nay
+			# #TH: 1 nguoi comment rui, ma notification chua  dc xem, bay h nguoi do comment tiep
+			# exist_trigger = notification_change.triggers.where(trigger_user_id: trigger_user.id).first
+			# #Neu ma co 1 trigger nhu vay thi xoa no di
+			# if exist_trigger
+			# 	#Xoa id ra khoi mang id
+			# 	notification_change.trigger_ids.delete(exist_trigger.id)
+			# 	#Xoa id cua notification_change ra khoi mang trigger
+			# 	exist_trigger.notification_change_ids.delete(notification_change.id)
+			# 	exist_trigger.save
+			# 	# notification_change.triggers.delete(exist_trigger)
+			# 	if exist_trigger.notification_change_ids.count == 0
+			# 		exist_trigger.destroy
+			# 	end
+			# end
 			#Them trigger vao notification_change
 			notification_change.trigger_ids << trigger.id
 			notification_change.updated_at = Time.now
@@ -167,3 +171,6 @@ end
 #NotificationChange.all_of('trigger_users._id' => '54cf9a3f6875752467010000', notification_id: '552771dc6875750c31060000', notification_category_id: '55225d2b68757540e3000000').first
 
 #NotificationChange.all_of(notification_id: notification.id, notification_category_id: notification_category.id, is_new: true).first
+
+
+#tra ve gia triggers rieng biet dua tren user_id

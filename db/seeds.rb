@@ -171,4 +171,3 @@
 # NotificationChange.destroy_all
 # NotificationChangeTrigger.destroy_all
 
-# puts NotificationChangeTrigger.first.inspect

@@ -8,7 +8,7 @@ json.notifications do
 		# 	json.avatar user.avatar.url
 		# end
 		#Doi tuong tac dong: gom ai tac dong va lam cai gi (comment nao, reply nao)
-		json.triggers nc.triggers.desc(:updated_at) do |trigger|
+		json.triggers nc.distinct_triggers_by_user do |trigger|
 			json._id trigger.id
 			json.trigger_user do 
 				json._id trigger.trigger_user.id

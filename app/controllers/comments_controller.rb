@@ -17,14 +17,15 @@ class CommentsController < ApplicationController
 			#TH1: Neu nguoi do comment tren bai viet cua nguoi do thi ko tao thong bao
 			if post.user != current_user
 				#TH2: Neu ma da tao ra notification change va is_new = true thi ko can tao nua (vi tao nua cung vay)
-				notification_change =  NotificationChange.find_notification_change(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
-				if !notification_change || !notification_change.is_new
-					NotificationChange.create_notification(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
-				else
-					#Ko tao moi thong bao nhung cap nhat moi thoi gian cua no
-					notification_change.updated_at = Time.now
-					notification_change.save
-				end
+				# notification_change =  NotificationChange.find_notification_change(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
+				# if !notification_change || !notification_change.is_new
+				# 	NotificationChange.create_notification(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
+				# else
+				# 	#Ko tao moi thong bao nhung cap nhat moi thoi gian cua no
+				# 	notification_change.updated_at = Time.now
+				# 	notification_change.save
+				# end
+				NotificationChange.create_notification(post.user, post, current_user, @comment, NotificationCategory.binh_luan_bai_viet)
 			end
 			render 'show.json.jbuilder', status: :created
 		else
@@ -45,7 +46,7 @@ class CommentsController < ApplicationController
 	def destroy
 		#Neu co notification ma chua dc xem (trong truong lo binh luan xong xoa lien) thi xoa notification_change do
 		post = @comment.post
-		NotificationChange.delete_notification_change(post.user, post, current_user, NotificationCategory.binh_luan_bai_viet)
+		NotificationChange.delete_notification_change(post.user, post, current_user, @comment, NotificationCategory.binh_luan_bai_viet)
 		#Xoa binh luan
 		@comment.destroy
 		render nothing: true, status: :ok, content_type: 'application/json'	
