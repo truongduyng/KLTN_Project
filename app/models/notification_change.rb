@@ -55,19 +55,35 @@ class NotificationChange
 		#TH1: Neu co 1 notification change thoa man (chua dc xem) thi them no vao
 		if notification_change
 			#B1: Tao ra trigger (chu y trigger nay neu da ton tai thi tai su dung lai)
-			trigger = NotificationChangeTrigger.find_or_create(trigger_user_id: trigger_user.id, trigger_source_id: trigger_source.id)
+			trigger = NotificationChangeTrigger.find_or_create(trigger_user, trigger_source)
+			trigger.add_notification_changes(notification_change)
+			#Con sai khu vuc cho nay
 			#TH: 1 nguoi comment rui, ma notification chua  dc xem, bay h nguoi do comment tiep
 			exist_trigger = notification_change.triggers.where(trigger_user_id: trigger_user.id).first
+			puts '------ chech exitst_trigger:' + exist_trigger.inspect
 			#Neu ma co 1 trigger nhu vay thi xoa no di
 			if exist_trigger
-				notification_change.triggers.delete(exist_trigger)
-				if exist_trigger.notification_changes.count == 0
+				#Xoa id ra khoi mang id
+				notification_change.trigger_ids.delete(exist_trigger.id)
+				#Xoa id cua notification_change ra khoi mang trigger
+				exist_trigger.notification_change_ids.delete(notification_change.id)
+				exist_trigger.save
+				# notification_change.triggers.delete(exist_trigger)
+				if exist_trigger.notification_change_ids.count == 0
 					exist_trigger.destroy
 				end
 			end
-			notification_change.triggers << trigger
+			#Them trigger vao notification_change
+			notification_change.trigger_ids << trigger.id
 			notification_change.updated_at = Time.now
 			notification_change.save
+
+			puts '--------------------------------------------------------------- in create notification not null-----------------'
+			puts trigger.inspect
+			puts 'notification_changes:'
+			puts notification_change.trigger_ids.count
+
+
 		else
 			#TH2: Neu ko co notification change thoa man thi tao moi
 			#B1: Tao notification change
@@ -78,8 +94,13 @@ class NotificationChange
 			#B2: Tao trigger
 			trigger = NotificationChangeTrigger.find_or_create(trigger_user, trigger_source)
 			#B3: Gan trigger vao notification changes
-			notification_change.triggers = [trigger]
+			notification_change.trigger_ids = [trigger.id]
 			notification_change.save
+			#B4: Add notification change cho trigger
+			trigger.add_notification_changes(notification_change)
+
+			puts '--------------------------------------------------------------- in create notification null-----------------'
+			puts trigger.notification_change_ids.inspect
 		end
 	end
 
@@ -109,13 +130,15 @@ class NotificationChange
 			#B1: Tim triggger. Luon tim dc vi tim dc notification_change
 			trigger = NotificationChangeTrigger.all_of(trigger_user_id: trigger_user.id, trigger_source_id: trigger_source.id).first
 			#B2: Bo trigger_user ra kho mang triggers
-			notification_change.triggers.delete(trigger)
+			notification_change.trigger_ids.delete(trigger.id)
+			trigger.notification_change_ids.delete(notification_change.id)
+			trigger.save
 			#B5: Kiem tra trigger no co trigger 1 notification change nao khac ko, neu ko thi cung xoa no di 
-			if trigger.notification_changes.count == 0
+			if trigger.notification_change_ids.count == 0
 				trigger.destroy
 			end
 			#B3: Khi ko con triggers (co nghia la ko con notification change cho loai category) thi xoa no di
-			if notification_change.triggers.count == 0
+			if notification_change.trigger_ids.count == 0
 				notification_change.destroy
 				#Kiem tra notification coi thu co con notification_change nao hay ko, neu ko xoa no di
 				notification = Notification.find_or_create(target_user, target_object)

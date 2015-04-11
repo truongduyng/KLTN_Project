@@ -163,3 +163,12 @@
 
 # ##Thích phản hồi
 # NotificationCategory.create(name: 'Thích phản hồi')
+
+
+
+## clear notification 
+# Notification.destroy_all
+# NotificationChange.destroy_all
+# NotificationChangeTrigger.destroy_all
+
+# puts NotificationChangeTrigger.first.inspect

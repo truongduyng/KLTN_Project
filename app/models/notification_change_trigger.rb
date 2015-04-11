@@ -24,9 +24,30 @@ class NotificationChangeTrigger
 		return trigger
 	end
 
+	def add_notification_changes notification_change
+		puts '--------------------------------------------------------------- in add_notification_changes -----------------'
+		puts notification_change.id
+		puts self.inspect
+
+		if self.notification_change_ids.include?(notification_change.id)
+		
+			puts '--------------------------------------------------------------- in add_notification_changes:: -----------------'
+			puts notification_change.id
+			puts self.inspect
+			puts self.notification_changes
+
+			self.notification_change_ids << notification_change.id
+			self.save
+		end
+	end
 end
 
 #trigger_user_id
 #trigger_source_id
 
 #Tao ra document nay co id chinh la ket hop cua: trigger_user, trigger_source
+#Xu ly truong hop ko co trigger source thi sao (cho system admin)
+#5528e8be68757551790e0000
+# notification_changes.where(id: '5528e8be68757551790e0000')
+
+

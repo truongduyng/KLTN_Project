@@ -90,11 +90,17 @@ class PostsController < ApplicationController
 		if @post.likes.where('user_id' => current_user.id).first
 			render nothing: true, status: :bad_request, content_type: 'application/json'
 		else
-			@post.likes.create(user: current_user)
+			like = @post.likes.create(user: current_user)
+			
+			puts '------------------------------------in like---------------------- '
+			puts like
+			puts like.inspect
+			
 			#Tao thong bao
 			#TH1: Ko thong bao khi nguoi do tu like bai viet cua minh
 			if @post.user != current_user
-				NotificationChange.create_notification @post.user, @post, current_user, NotificationCategory.thich_bai_viet
+				NotificationChange.create_notification @post.user, @post, current_user, like, NotificationCategory.thich_bai_viet
+				# NotificationChange.create_notification @post.user, @post, current_user, NotificationCategory.thich_bai_viet
 			end
 			render nothing: true, status: :created, content_type: 'application/json'
 		end
@@ -104,9 +110,9 @@ class PostsController < ApplicationController
 	def unlike
 		like = @post.likes.where('user_id' => current_user.id).first
 		if like
-			like.destroy
 			#Neu thong bao do chua dc load va xem (is_new = true) thi xoa no di, con neu da dc xem rui thi coi nhu la lich su
-			NotificationChange.delete_notification_change(@post.user, @post, current_user, NotificationCategory.thich_bai_viet)
+			NotificationChange.delete_notification_change(@post.user, @post, current_user, like, NotificationCategory.thich_bai_viet)
+			like.destroy
 			render nothing: true, status: :ok, content_type: 'application/json'
 		else
 			render nothing: true, status: :bad_request, content_type: 'application/json'
