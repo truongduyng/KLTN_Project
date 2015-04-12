@@ -60,6 +60,6 @@ gem 'mongoid_paranoia'
 gem 'will_paginate_mongoid'
 gem 'will_paginate', '~> 3.0.6'
 
-#For mongoid use Moped::BSON
-# gem "bson"
-# gem "moped", github: "mongoid/moped"
+
+#For websocket 
+gem 'websocket-rails'

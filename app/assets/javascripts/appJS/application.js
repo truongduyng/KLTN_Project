@@ -13,6 +13,14 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree ../extendJavascript
+
+//= require ./customJS/websocket_rails/websocket_rails.js
+//= require ./customJS/websocket_rails/event.js
+//= require ./customJS/websocket_rails/abstract_connection.js
+//= require ./customJS/websocket_rails/http_connection.js
+//= require ./customJS/websocket_rails/websocket_connection.js
+//= require ./customJS/websocket_rails/channel.js
+
 //= require underscore
 //= require angular
 //= require bootstrap/dist/js/bootstrap
