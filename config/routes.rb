@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   resources 'branches'
-  get 'search(/:search)' => 'branches#search'
+  get 'search(/:lat/:lng)' => 'branches#search'
 
   resources 'assests' do
     collection do
@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   get 'check/username' => 'user#check_username'
   get 'check/email' => 'user#check_email'
   devise_for :users
-  get 'bussiness-admin' => 'admin#index' 
+  get 'bussiness-admin' => 'admin#index'
   root 'application#angular'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

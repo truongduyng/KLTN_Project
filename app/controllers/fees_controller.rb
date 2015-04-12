@@ -1,7 +1,7 @@
 class FeesController < ApplicationController
 	before_action :authenticate_user!
 	before_action :check_assest_category_with_user
-	
+
 	#chua test
 	#POST assest_category/:assest_category_id/fees.json
 	def create
@@ -9,7 +9,7 @@ class FeesController < ApplicationController
 			if(fees_params.has_key?(:begin_time))
 				fee.begin_time = Time.parse(fees_params[:begin_time])
 			end
-			
+
 			if(fees_params.has_key?(:end_time))
 				fee.end_time = Time.parse(fees_params[:end_time])
 			end
@@ -49,11 +49,10 @@ class FeesController < ApplicationController
 				render nothing: true, status: :not_found, content_type: 'application/json'
 			end
 
-			
+
 		end
 
-		def fees_params
+	def fees_params
 			params.require(:fee).permit(:begin_time, :end_time, :price)
 		end
-
 end
