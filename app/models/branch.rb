@@ -22,7 +22,7 @@ class Branch
 
   def self.search(param)
     if param
-     return Branch.near([param[:lat].to_f, param[:lng].to_f], 70, :order => "distance")
+     return Branch.near([param[:lat].to_f, param[:lng].to_f], 1, :order => "distance")
    else
      Branch.all
    end

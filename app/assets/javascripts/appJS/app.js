@@ -1,4 +1,4 @@
-var app = angular.module("sportApp", ['ui.router', 'templates', 'Devise']);
+var app = angular.module("sportApp", ['ui.router', 'templates', 'Devise','ngMap']);
 app.config(['$stateProvider', '$urlRouterProvider',
   function($stateProvider, $urlRouterProvider) {
     $stateProvider

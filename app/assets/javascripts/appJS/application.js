@@ -16,6 +16,7 @@
 //= require angular-ui-router
 //= require angular-rails-templates
 //= require angular-devise
+//= require ngmap
 //= require initModule
 //= require jquery-timepicker-jt
 //= require jquery-timepicker-jt/lib/bootstrap-datepicker

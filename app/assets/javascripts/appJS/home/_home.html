@@ -1,6 +1,13 @@
 <!-- BAN DO O DAY -->
-<div ng-controller = "mapCtrl">
-  <div id="map" style='height: 500px;'></div>
+
+<div ng-controller="mapCtrl" class= "ng-scope">
+  <map center="current-position" geo-fallback-center="[16.0667, 108.2333]" geo-callback="showcurrentposition()" on-center-changed="centerChanged()" zoom="5" max-zoom = "18" disable-default-u-i="true" style='height: 500px;'>
+    <custom-control id="home" position="BOTTOM_LEFT" index="1">
+      <form ng-submit = "search_address()">
+        <input type="text" id="Geo  Search" class="form-control" placeholder = "Tìm kiếm địa chỉ" style= "width: 250px; margin-bottom: 5px; font-size: 14px;" ng-model = "query_address"/>
+      </form>
+    </custom-control>
+  </map>
 </div>
 
 <!-- POST O DAY-->
