@@ -24,6 +24,17 @@ app.controller('mapCtrl', ['$scope', '$timeout', '$http', 'Auth', function($scop
   $scope.bounds = new google.maps.LatLngBounds();
   $scope.geocoder = new google.maps.Geocoder();
 
+  $scope.$on('mapInitialized', function(e, map) {
+    google.maps.event.addListener(map, 'idle', function() {
+      var latlng = map.getCenter();
+      markers = [];
+      $http.get("/search/"+latlng.k+"/"+latlng.D).success(function(data){
+        console.log(data);
+        setMarkers(map,data);
+      });
+    });
+  });
+
   $scope.search_address = function(){
     alert($scope.query_address);
   };
@@ -38,40 +49,32 @@ app.controller('mapCtrl', ['$scope', '$timeout', '$http', 'Auth', function($scop
     });
   };
 
-  $scope.centerChanged = function(event) {
-    var latlng = $scope.map.getCenter();
-    $scope.markers = [];
-    $http.get("/search/"+latlng.k+"/"+latlng.D).success(function(data){
-      setMarkers($scope.map,data);
+function setMarkers(map, data){
+  for (var i=0; i < data.length; i++) {
+    $scope.image.url = data[i].picture;
+    var myLatLng = new google.maps.LatLng(data[i].lat,data[i].lng);
+    var marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map,
+      icon: $scope.image,
+      shape: $scope.shape,
+      title: data[i].name,
+      zIndex: i+1
     });
-  };
 
-  function setMarkers(map, data){
-    for (var i=0; i < data.length; i++) {
-      $scope.image.url = data[i].picture;
-      var myLatLng = new google.maps.LatLng(data[i].lat,data[i].lng);
-      var marker = new google.maps.Marker({
-        position: myLatLng,
-        map: map,
-        icon: $scope.image,
-        shape: $scope.shape,
-        title: data[i].name,
-        zIndex: i+1
-      });
+    google.maps.event.addListener(marker,"click",(function(marker,i){
+      return function(){
+       $scope.infowindow.setContent('<div id="info-window"><a href="'+data[i].url+'">'+data[i].name+'</a><br><span>'+data[i].address.substring(0,20)+'...</span></div>');
+       $scope.infowindow.open(map,marker);
+       map.setCenter(marker.getPosition());
+     }
+   })(marker,i));
+    $scope.markers.push(marker);
+    $scope.bounds.extend(marker.getPosition());
+  }
+};
 
-      google.maps.event.addListener(marker,"click",(function(marker,i){
-        return function(){
-         $scope.infowindow.setContent('<div id="info-window"><a href="'+data[i].url+'">'+data[i].name+'</a><br><span>'+data[i].address.substring(0,20)+'...</span></div>');
-         $scope.infowindow.open(map,marker);
-         map.setCenter(marker.getPosition());
-       }
-     })(marker,i));
-      $scope.markers.push(marker);
-      $scope.bounds.extend(marker.getPosition());
-    }
-  };
-
-  function setUserMarker(map, latlng){
+function setUserMarker(map, latlng){
     $scope.image.url = "http://i.imgur.com/a06y4s3.png"; //#scope.user.avatar
     var marker = new google.maps.Marker({
       position: latlng,
