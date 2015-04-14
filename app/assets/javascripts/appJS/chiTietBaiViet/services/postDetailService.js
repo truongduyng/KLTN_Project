@@ -106,5 +106,26 @@ app.factory('postDetailService', ['$http', function($http) {
 		var url = "/posts/" + id + ".json";
 		return $http.delete(url);
 	};
+
+
+	//follow and unfollow post
+	o.follow = function(){
+		var id = o.post._id.$oid;
+		var url  = "/posts/" + id + "/follow.json";
+		var promise = $http.put(url).success(function(){
+			o.post.followed = true;
+		});
+		return promise;
+	};
+	
+	o.unfollow = function(){
+		var id = o.post._id.$oid;
+		var url  = "/posts/" + id + "/unfollow.json";
+		var promise = $http.put(url).success(function(){
+			o.post.followed = false;
+		});
+		return promise;
+	};
+
 	return o;
 }]);

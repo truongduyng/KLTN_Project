@@ -25,7 +25,20 @@
                   <div class="media-body">
                     <div>
                       <a ui-sref="trangCaNhan({username: post.user.username})"><h5  style="color:#337ab7;"  class="media-heading pull-left">{{post.user.username}}</h5></a>
-                      <small class="pull-right" style="font-weight: 600;">{{post.updated_at | date:'h:mm a, dd/mm/yyyy'}}</small>
+                      <!-- Simple dropdown -->
+                      <span ng-if="signedIn && currentUser != null && currentUser._id.$oid != post.user._id.$oid" class="dropdown pull-right" dropdown on-toggle="toggled(open)" style="margin-top: -8px;">
+                        <a href class="dropdown-toggle" dropdown-toggle>
+                          <span class="fa fa-caret-down fa-2x"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href ng-if="!post.followed" ng-click="followPost()">Nhận thông báo</a>
+                          </li>
+                          <li><a href ng-if="post.followed" ng-click="unfollowPost()">Bỏ nhận thông báo</a></li>
+                        </ul>
+                      </span>
+                     <!--  <small class="pull-right" style="font-weight: 600;">{{post.updated_at | date:'h:mm a, dd/mm/yyyy'}}</small> -->
+                      <p style="clear: both; margin-top:-5px "><small style="font-weight: 600; display:block;">{{post.updated_at | date:'h:mm a, dd/mm/yyyy'}}</small></p>
                     </div>
                     <div class="clearfix"></div>
                      <h4 class="media-heading">{{post.title}}</h4>

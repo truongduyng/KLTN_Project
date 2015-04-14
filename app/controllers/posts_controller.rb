@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
-	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo, :like, :unlike, :edit, :update, :get_posts_by_current_user, :destroy]
+	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo, :like, :unlike, :edit, :update, :get_posts_by_current_user, :destroy, :follow, :unfollow]
 	# before_action :authenticate_user!, only: [:destroy]
-	before_action :find_published_post, only: [:like, :unlike, :get_k_first_like, :get_all_likes]
+	before_action :find_published_post, only: [:like, :unlike, :get_k_first_like, :get_all_likes, :follow, :unfollow]
 	before_action :find_and_check_post_with_user, only: [:add_photo, :destroy]
 	before_action :find_post_for_show, only: [:show]
 	before_action :find_post_for_edit, only: [:edit, :delete_photo, :update]
@@ -129,6 +129,36 @@ class PostsController < ApplicationController
 		render 'get_all_likes.json.jbuilder', status: :ok
 	end
 
+
+	#PUT /posts/:id/follow.json
+	def follow
+		#TH1: Nguoi do ko tu theo doi bai viet nguoi do.
+		#TH2: Chi follow khi nguoi do chua follow
+		if current_user != @post.user &&  !@post.follower_ids.include?(current_user.id) && !current_user.followed_post_ids.include?(@post.id)
+			@post.follower_ids << current_user.id
+			current_user.followed_post_ids << @post.id
+			@post.save
+			current_user.save
+			render nothing: true, status: :ok, content_type: 'application/json'
+		else
+			render nothing: true, status: :bad_request, content_type: 'application/json'
+		end
+	end
+
+	#PUT /posts/:id/unfollow.json
+	def unfollow
+		#TH1: Nguoi do ko tu bo theo doi bai viet nguoi do.
+		#Chi unfollow khi nguoi do da follow
+		if  current_user != @post.user &&  @post.follower_ids.include?(current_user.id)  && current_user.followed_post_ids.include?(@post.id)
+			@post.follower_ids.delete current_user.id
+			current_user.followed_post_ids.delete @post.id
+			@post.save
+			current_user.save
+			render nothing: true, status: :ok, content_type: 'application/json'
+		else
+			render nothing: true, status: :bad_request, content_type: 'application/json'
+		end
+	end
 
 
 	#cho trang profile

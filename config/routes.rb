@@ -70,6 +70,8 @@ Rails.application.routes.draw do
       put 'like'
       put 'unlike'
       get 'get_all_likes'
+      put 'follow'
+      put 'unfollow'
       # get 'get_k_first_like'
     end
 

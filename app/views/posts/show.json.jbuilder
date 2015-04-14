@@ -14,6 +14,12 @@ else
 	json.isFavorited false
 end
 
+if user_signed_in? && @post.follower_ids.include?(current_user.id)
+	json.followed true
+else
+	json.followed false
+end
+
 json.like_count @post.likes.count
 json.comments @post.comments do |comment|
 	json._id comment.id

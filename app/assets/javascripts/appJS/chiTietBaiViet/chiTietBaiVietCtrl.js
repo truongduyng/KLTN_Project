@@ -1,6 +1,7 @@
 //5510dcd56875751cdb030000
 app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'userService', '$state', '$modal', '$rootScope','Auth',
 	function($scope, postDetailService, Flash, userService, $state, $modal, $rootScope, Auth) {
+		$scope.signedIn = Auth.isAuthenticated;
 
 		Auth.currentUser().then(function(user){
 			angular.copy(user, userService.currentUser);
@@ -109,6 +110,14 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 			});
 		};
 
+		//theo doi bai post
+		$scope.followPost = function(){
+			postDetailService.follow();
+		};
+		//Bo theo bai post
+		$scope.unfollowPost = function(){
+			postDetailService.unfollow();
+		};
 	}
 ]);
 

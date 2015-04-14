@@ -16,7 +16,7 @@ class User
   has_and_belongs_to_many :roles 
   #embeds_one :information 
   has_one :bussiness
-  has_many :posts
+  has_many :posts, class_name: 'Post', inverse_of: :user
   has_many :favorite_posts
   #Moi nguoi co the co nhieu yeu cau, boi vi neu 1 yeu cau ko dc chap thuan thi co the gui yeu cau khac
   has_many :bussiness_requests
@@ -26,7 +26,8 @@ class User
   has_many :notifications, class_name: 'Notification', inverse_of: :target_user
   #1 nguoi co the trigger nhieu thong bao
   has_many :notification_change_triggers, class_name: 'NotificationChangeTrigger', inverse_of: :trigger_user
-  
+  #Nhung post dc theo doi
+  has_and_belongs_to_many :followed_posts, class_name: 'Post', inverse_of: :followers
   #My field
   field :firstname, type: String
   field :lastname, type: String

@@ -9,7 +9,7 @@ class Post
 	belongs_to :post_status
 	
 	embeds_many :photos
-	belongs_to :user
+	belongs_to :user, class_name: 'User', inverse_of: :posts
 	has_many :comments, dependent: :destroy
 	embeds_many :likes, as: :likeable
 	#Notification system
@@ -17,6 +17,9 @@ class Post
 	has_many :notifications, as: :notificable
 	#trigger 1 thong bao nao (chap nhan hay tu choi bai viet)
 	has_one :notification_change_trigger, as: :trigger_source
+	#followers
+	has_and_belongs_to_many :followers, class_name: 'User', inverse_of: :followed_posts
+
 	#scope
 	#Get published post
 	scope :published, -> {
