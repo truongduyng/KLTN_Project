@@ -26,7 +26,7 @@ class RepliesController < ApplicationController
 				# if !notification_change || !notification_change.is_new
 				# 	NotificationChange.create_notification(target_user, @reply.comment, current_user, NotificationCategory.phan_hoi_binh_luan)
 				# end
-				NotificationChange.create_notification(target_user, @reply.comment, current_user, @reply, NotificationCategory.phan_hoi_binh_luan)
+				NotificationChange.create_notifications([target_user.id], @reply.comment, current_user, @reply, NotificationCategory.phan_hoi_binh_luan)
 
 			end
 			render 'show.json.jbuilder', status: :created
@@ -47,9 +47,15 @@ class RepliesController < ApplicationController
 	end
 
 	def destroy
+		#Khi xoa reply thi xoa luon cac notification lien quan den reply cua nguoi do (vi target_object la reply ko the tim thay)
+		notification = Notification.all_of(target_user_id: current_user.id, notificable_id: @reply.id).first	
+		if notification
+			notification.notification_changes.destroy_all
+			notification.destroy
+		end
 		#Xoa thong bao neu no chua dc xem
 		target_user = @reply.comment.user
-		NotificationChange.delete_notification_change(target_user, @reply.comment, current_user, NotificationCategory.phan_hoi_binh_luan)
+		NotificationChange.delete_notification_changes([target_user.id], @reply.comment, current_user, @reply, NotificationCategory.phan_hoi_binh_luan)
 		#Xoa reply
 		@reply.destroy
 		render nothing: true, status: :ok, content_type: 'application/json'

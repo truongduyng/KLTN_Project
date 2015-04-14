@@ -35,7 +35,7 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 			postDetailService.like().success(function() {
 				$scope.post.isLiked = true;
 				//Khi like post mac dinh theo doi post do neu no chua dc followed = false
-				if(!$scope.post.followed){
+				if(!$scope.post.followed && $scope.post.user._id.$oid != $scope.currentUser._id.$oid){
 					postDetailService.follow();
 				}
 			});

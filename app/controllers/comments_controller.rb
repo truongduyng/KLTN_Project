@@ -48,6 +48,14 @@ class CommentsController < ApplicationController
 	def destroy
 		#Neu co notification ma chua dc xem (trong truong lo binh luan xong xoa lien) thi xoa notification_change do
 		post = @comment.post
+		#Khi xoa binh luan thi xoa luon cac notification lien quan den binh luan cua nguoi do (vi target_object la comment ko the tim thay)
+		notification = Notification.all_of(target_user_id: current_user.id, notificable_id: @comment.id).first	
+		if notification
+			notification.notification_changes.destroy_all
+			notification.destroy
+		end
+
+		#Gui thong bao
 		if post.user == current_user
 			#TH1: Neu nguoi comment la chu bai post thi xoa nhung thong bao dc gui den cac followers neu no chua dc load realtime
 			target_user_ids = post.follower_ids.clone

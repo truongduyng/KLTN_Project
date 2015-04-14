@@ -18,7 +18,7 @@ app.controller('commentCtrl', ['$scope', 'postDetailService',
 					$scope.comment.content = '';
 					$scope.isCommenting = false;
 					//Khi comment len post mac dinh theo doi post do neu no chua dc followed = false
-					if(!$scope.post.followed){
+					if(!$scope.post.followed  && $scope.post.user._id.$oid != $scope.currentUser._id.$oid){
 						postDetailService.follow();
 					}
 				}).error(function(data, status) {
