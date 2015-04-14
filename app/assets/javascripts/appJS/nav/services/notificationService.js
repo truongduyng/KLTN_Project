@@ -125,8 +125,9 @@ app.factory('notificationService', ['$http', function($http) {
 	// 	return promise;
 	// };
 
-	o.loaded = function() {
-		var url = "/notifications/loaded.json";
+	//Danh dau tat ca notification la old
+	o.boNew = function() {
+		var url = "/notifications/bo_new.json";
 		var promise = $http.put(url).success(function(data) {
 			//Gan tat ca nofication la new = false
 			_.each(o.notifications, function(item) {
@@ -137,6 +138,12 @@ app.factory('notificationService', ['$http', function($http) {
 		});
 		return promise;
 	};
+
+	o.loaded = function(notificationChange) {
+		var id = notificationChange._id.$oid;
+		var url = "/notifications/" + id + "/loaded.json";
+		return $http.put(url);
+	}
 
 	return o;
 }])

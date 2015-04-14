@@ -1,6 +1,6 @@
 class NotificationsController < ApplicationController
 	before_action :authenticate_user!
-	before_action :find_notification, only: [:watched, :show]
+	before_action :find_notification, only: [:watched, :show, :loaded]
 
 	#GET /notifications.json
 	# def index
@@ -65,27 +65,32 @@ class NotificationsController < ApplicationController
 	# 	render nothing: true, status: :ok, content_type: 'application/json'
 	# end
 
+	#PUT /notifications/loaded.json
 	#Khi click vao de xo ra doanh sach thong bao thi danh dau tat ca cac notification moi (is_new = true) thanh is_new = false
 	#Xu ly cho truong hop 1 nguoi co 100 thong bao chua dc load, khi load lan dau tien thi load 15 thong bao moi nhat
 	#nhung van hien thi co 100 thong bao moi. Va khi nguoi do click vao de xem danh sach thong bao
 	#thi danh dau tat ca cac thong bao moi is_new =false de lan sau khi truy cap nguoi do ko con thay thong bao moi con sot lai
-	def loaded
+	def bo_new
 		target_user = current_user
 		notification_ids = Notification.where(target_user_id: target_user.id).only(:_id).map(&:_id)
 		all_notification_changes = NotificationChange.where(:notification_id.in => notification_ids)
-		new_notification_changes = all_notification_changes.where(is_new: true).update_all(is_new: false)
+		new_notification_changes = all_notification_changes.where(is_new: true).update_all(is_new: false, loaded: true)
 		render nothing: true, status: :ok, content_type: 'application/json'
 	end
+
+	#PUT /notifications/id/loaded.json
+	#Ham nay danh 1 dau 1 notification da dc load. Xu ly khi hien thi thong bao realtime, thi thong bao do da xem nhu dc load
+	def loaded
+		@notification_change.update_attributes(loaded: true)
+		render nothing: true, status: :ok, content_type: 'application/json'
+	end
+
 
 	private
 		def find_notification
 			begin 
 				@notification_change = NotificationChange.find(params[:id])
 				if @notification_change.notification.target_user != current_user
-					# render json: {
-					# 	message: 'Bạn không có quyền xử lý notification này'	
-					# },
-					# status: :bad_request
 					render nothing: true, status: :not_found, content_type: 'application/json'
 				end
 			rescue Mongoid::Errors::DocumentNotFound

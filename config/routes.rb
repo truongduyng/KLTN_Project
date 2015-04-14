@@ -3,11 +3,11 @@ Rails.application.routes.draw do
   resources :notifications do
     member do
       put 'watched'
+      put 'loaded'
     end
 
     collection do
-      put 'loaded'
-      # put 'watched'
+      put 'bo_new'
     end
   end
   

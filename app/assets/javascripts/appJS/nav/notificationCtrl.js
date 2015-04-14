@@ -42,17 +42,25 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 
 		//Danh dau tat ca notification la dc dc load va xem boi nguoi dung
 		$scope.onDisplayNotifications = function() {
-			notificationService.loaded().success(function() {
-					$scope.newNotificationsCount = notificationService.newNotificationsCount;
+			//B1: Kiem tra thu co notification_change moi hay ko
+			var hasNewNotification = _.some($scope.notifications, function(item) {
+				return item.is_new;
 			});
+			//B2: Neu co moi goi ham danh dau va chuyen doi no thanh cu
+			if (hasNewNotification) {
+				notificationService.boNew().success(function() {
+					$scope.newNotificationsCount = notificationService.newNotificationsCount;
+				});
+			}
 		};
-
+		
 		//Dung websocket de cap nhat realtime
 		var dispatcher = null;
 		var user_channel = null;
 		$scope.registerNotification = function() {
 			// B2: Dk channel private cho user, de cap nhat notification
 			dispatcher = new WebSocketRails('localhost:3000/websocket');
+
 			dispatcher.on_open = function(data) {
 				console.log('Connection has been established: ', data);
 			};
@@ -70,18 +78,24 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 			//B3: Bind den su thich hop va lang nghe
 			//Su kien khi co 1 notification moi
 			user_channel.bind("on_new_notification", function(newNotification) {
+				//B1: Chuyen string thanh json object
 				newNotification = JSON.parse(newNotification);
-				console.log("on newNotification: ", newNotification);
+				//B2: Khi ma notification_change dc hien thi realtime thi danh dau no la da dc load
+				notificationService.loaded(newNotification);
+				//B3: Cap nhat giao dien
 				$scope.$apply(function() {
 					$scope.notifications.splice(0, 0, newNotification);
 					$scope.newNotificationsCount++;
 				});
+				//B4: Hien thi ket qua ra console
+				console.log("on newNotification: ", newNotification);
 			});
 			//Su kien khi 1 notification thay doi: vi du 1 notification change chua dc xem
 			//va no cap nhat trigger
 			user_channel.bind("on_update_notification", function(updatedNotification) {
+				//B1: Chuyen string thanh json object
 				updatedNotification = JSON.parse(updatedNotification);
-				console.log("on updatedNotification: ", updatedNotification);
+				//B3: Cap nhat giao dien
 				$scope.$apply(function() {
 					_.find($scope.notifications, function(item) {
 						if (item._id.$oid == updatedNotification._id.$oid) {
@@ -90,6 +104,8 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 						}
 					});
 				});
+				//B4: Hien thi ket qua ra console
+				console.log("on updatedNotification: ", updatedNotification);
 			});
 
 			// //
