@@ -39,6 +39,11 @@ class NotificationChange
 			notification_change.trigger_ids << trigger.id
 			notification_change.updated_at = Time.now
 			notification_change.save
+			#B5: Thong bao toi client realtime, Trigger thong bao 1 notification change da thay doi can cap nhat
+			ac = ActionController::Base.new()
+			#Giup chuyen notification_change thanh json object thich hop dung template show.json.jbuilder.
+			notification_change_json = ac.render_to_string( template: 'notifications/show.json.jbuilder', locals: { :@notification_change => notification_change})
+			WebsocketRails[target_user.id.to_s].trigger(:on_update_notification, notification_change_json)
 		else
 			#TH2: Neu ko co notification change thoa man thi tao moi
 			#B1: Tao notification change
@@ -53,8 +58,12 @@ class NotificationChange
 			notification_change.save
 			#B4: Add notification change cho trigger
 			trigger.add_notification_changes(notification_change)
-
+			#B5: Thong bao toi client realtime, Trigger thong bao 1 notification moi, can them vao ds notification
+			ac = ActionController::Base.new()
+			notification_change_json = ac.render_to_string( template: 'notifications/show.json.jbuilder', locals: { :@notification_change => notification_change})
+			WebsocketRails[target_user.id.to_s].trigger(:on_new_notification, notification_change_json)
 		end
+
 	end
 
 	#tim notification_change

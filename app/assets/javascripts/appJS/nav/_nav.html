@@ -1,6 +1,6 @@
 
 <ul class="nav navbar-nav navbar-right" style="margin-top:2px;" ng-controller="navCtrl">
-  <button class="btn btn-success" ng-click="loadNotifications()">Load notification</button>
+ <!--  <button class="btn btn-success" ng-click="loadNotifications()">Load notification</button> -->
   
   <li class="active"><a ui-sref="home">Trang chủ</a></li>
 
@@ -15,7 +15,7 @@
   <li ng-hide="signedIn()"><a ng-click="onRegister()" style="cursor:pointer;">Đăng kí</a></li>
 
 
-  <li ng-show="signedIn()">
+  <li ng-controller="notificationCtrl" ng-if="signedIn()">
     <a ng-click="onDisplayNotifications()" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" >Thông báo <span class="badge" ng-class="{badge: true, 'blue-badge': newNotificationsCount >= 1}">{{newNotificationsCount}}</span></a>
         <div class="dropdown-menu notifications" role="menu" aria-labelledby="dropdownMenu1">
             <!--  <ul class="list-notifications">
@@ -204,8 +204,6 @@
           </div>
    </li>
    
-
-
     <li class="dropdown" dropdown >
        <a href class="dropdown-toggle" dropdown-toggle>
               {{user.username}}

@@ -26,3 +26,4 @@ json.notification_category @notification_change.notification_category
 json.watched @notification_change.watched
 json.is_new @notification_change.is_new
 json.created_at @notification_change.created_at
+json.updated_at @notification_change.updated_at
