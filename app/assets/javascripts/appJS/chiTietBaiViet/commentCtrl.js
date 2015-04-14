@@ -17,6 +17,10 @@ app.controller('commentCtrl', ['$scope', 'postDetailService',
 				.success(function() {
 					$scope.comment.content = '';
 					$scope.isCommenting = false;
+					//Khi comment len post mac dinh theo doi post do neu no chua dc followed = false
+					if(!$scope.post.followed){
+						postDetailService.follow();
+					}
 				}).error(function(data, status) {
 					$scope.isCommenting = false;
 					if (status == 401) {
