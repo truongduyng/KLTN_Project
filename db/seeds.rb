@@ -164,10 +164,18 @@
 # ##Thích phản hồi
 # NotificationCategory.create(name: 'Thích phản hồi')
 
+# ##Bình luận trên bài viết bạn đang theo dõi
+# NotificationCategory.create(name: 'Bình luận trên bài viết bạn đang theo dõi')
+
+# ##Thích bài viết bạn đang theo dõi
+# NotificationCategory.create(name: 'Thích bài viết bạn đang theo dõi')
+
+# # ##Bình luận của chủ bài viết
+# NotificationCategory.create(name: 'Bình luận của chủ bài viết')
 
 
 ## clear notification 
-# Notification.destroy_all
-# NotificationChange.destroy_all
-# NotificationChangeTrigger.destroy_all
+Notification.destroy_all
+NotificationChange.destroy_all
+NotificationChangeTrigger.destroy_all
 

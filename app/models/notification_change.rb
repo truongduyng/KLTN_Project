@@ -65,12 +65,81 @@ class NotificationChange
 			notification_change_json = ac.render_to_string( template: 'notifications/show.json.jbuilder', locals: { :@notification_change => notification_change})
 			WebsocketRails[target_user.id.to_s].trigger(:on_new_notification, notification_change_json)
 		end
+	end
 
+	#Tao ra notification cho nhieu nguoi
+	def self.create_notifications target_user_ids, target_object, trigger_user, trigger_source, notification_category
+		#B1: Tao ra trigger (chu y trigger nay neu da ton tai thi tai su dung lai)
+		trigger = NotificationChangeTrigger.find_or_create(trigger_user, trigger_source)
+		#B2: Lap qua ds target_users va gui thong bao den tung nguoi
+		target_user_ids.each do |target_user_id|
+			#B2: Tim notification cua target_user vs target_object
+			notification = Notification.find_or_create(target_user_id, target_object)
+			#Tim notification_change cho target_object, target_user va category va no chua dc xem. Neu dc xem rui thi tao ra 1 notification change moi
+			notification_change = NotificationChange.all_of(notification_id: notification.id, notification_category_id: notification_category.id, is_new: true).first	
+			#TH1: Neu co 1 notification change thoa man (chua dc xem) thi them no vao
+			if notification_change
+				#Them trigger vao notification_change
+				notification_change.trigger_ids << trigger.id
+				#Add notification change cho trigger
+				trigger.add_notification_changes(notification_change)
+				notification_change.updated_at = Time.now
+				notification_change.save
+				#B5: Thong bao toi client realtime, Trigger thong bao 1 notification change da thay doi can cap nhat
+				ac = ActionController::Base.new()
+				#Giup chuyen notification_change thanh json object thich hop dung template show.json.jbuilder.
+				notification_change_json = ac.render_to_string( template: 'notifications/show.json.jbuilder', locals: { :@notification_change => notification_change})
+				WebsocketRails[target_user_id.to_s].trigger(:on_update_notification, notification_change_json)
+			else
+				#TH2: Neu ko co notification change thoa man thi tao moi
+				#B1: Tao notification change
+				notification_change = NotificationChange.new
+				#notification_change.trigger = [trigger_user]
+				notification_change.notification_category = notification_category
+				notification_change.notification = notification
+				#B2: Gan trigger vao notification changes
+				notification_change.trigger_ids = [trigger.id]
+				notification_change.save
+				#Add notification change cho trigger
+				trigger.add_notification_changes(notification_change)
+				#B5: Thong bao toi client realtime, Trigger thong bao 1 notification moi, can them vao ds notification
+				ac = ActionController::Base.new()
+				notification_change_json = ac.render_to_string( template: 'notifications/show.json.jbuilder', locals: { :@notification_change => notification_change})
+				WebsocketRails[target_user_id.to_s].trigger(:on_new_notification, notification_change_json)
+			end
+
+		end
+		
 	end
 
 	#tim notification_change
+	# def self.find_notification_change target_user, target_object, trigger_user, trigger_source, notification_category
+	# 	notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first	
+	# 	if !notification
+	# 		return nil
+	# 	else
+	# 		#Tim trigger notification change
+	# 		trigger = NotificationChangeTrigger.all_of(trigger_user_id: trigger_user.id, trigger_source_id: trigger_source.id).first
+	# 		if !trigger
+	# 			return nil
+	# 		else
+	# 			notification_change = NotificationChange.all_of('trigger_ids' => trigger.id, notification_id: notification.id, notification_category_id: notification_category.id).first
+	# 			return notification_change
+	# 		end
+	# 	end
+	# end
+
 	def self.find_notification_change target_user, target_object, trigger_user, trigger_source, notification_category
-		notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first	
+		#B1: Kiem tra target_user la user object hay la id cua user
+		if target_user.class.to_s == 'User'
+			target_user_id = target_user.id
+		else
+			if target_user.class.to_s == 'BSON::ObjectId'
+				target_user_id = target_user
+			end
+		end
+		#B2: Tim notification cho target_user tuong ung vs target_object
+		notification  = Notification.all_of(target_user_id: target_user_id, notificable_id: target_object.id).first	
 		if !notification
 			return nil
 		else
@@ -114,6 +183,42 @@ class NotificationChange
 				newest_triggger = notification_change.triggers.desc(:updated_at).first
 				notification_change.updated_at = newest_triggger.updated_at
 				notification_change.save
+			end
+		end
+	end
+
+	#Xoa nhieu notifications
+	def self.delete_notification_changes target_user_ids, target_object, trigger_user, trigger_source, notification_category
+		#B1: Tim triggger. Luon tim dc vi tim dc notification_change
+		trigger = NotificationChangeTrigger.all_of(trigger_user_id: trigger_user.id, trigger_source_id: trigger_source.id).first
+		target_user_ids.each do |target_user_id|
+			#B2: Tim notification_change
+			notification_change = NotificationChange.find_notification_change(target_user_id, target_object, trigger_user, trigger_source, notification_category)
+			#Neu co notification_change va no chua dc load (loaded = false) thi xoa no di. 
+			#Trong truong hop bi tac dong boi nhieu nguoi thi xoa nguoi do di thoi, va khi mang tac dong = [] thi xoa notification change di
+			if notification_change && !notification_change.loaded
+				#B2: Bo trigger_user ra kho mang triggers
+				notification_change.trigger_ids.delete(trigger.id)
+				trigger.notification_change_ids.delete(notification_change.id)
+				trigger.save
+				#B5: Kiem tra trigger no co trigger 1 notification change nao khac ko, neu ko thi cung xoa no di 
+				if trigger.notification_change_ids.count == 0
+					trigger.destroy
+				end
+				#B3: Khi ko con triggers (co nghia la ko con notification change cho loai category) thi xoa no di
+				if notification_change.trigger_ids.count == 0
+					notification_change.destroy
+					#Kiem tra notification coi thu co con notification_change nao hay ko, neu ko xoa no di
+					notification = Notification.find_or_create(target_user, target_object)
+					if notification.notification_changes.count == 0
+						notification.destroy
+					end
+				else
+					#B4: Cap nhat lai thoi gian cua notification_change thanh thoi gian cua trigger moi nhat
+					newest_triggger = notification_change.triggers.desc(:updated_at).first
+					notification_change.updated_at = newest_triggger.updated_at
+					notification_change.save
+				end
 			end
 		end
 	end

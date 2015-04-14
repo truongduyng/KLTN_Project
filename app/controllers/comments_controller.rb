@@ -14,9 +14,20 @@ class CommentsController < ApplicationController
 		if @comment.save
 			#Tao thong bao
 			post = @comment.post
-			#TH1: Neu nguoi do comment tren bai viet cua nguoi do thi ko tao thong bao
-			if post.user != current_user
-				NotificationChange.create_notification(post.user, post, current_user, @comment, NotificationCategory.binh_luan_bai_viet)
+			if post.user == current_user
+				#TH1: Neu nguoi do tu comment len bai post cua nguoi do, thi chi gui den nhung nguoi theo doi vs loai "trung nguyen huu cung binh luan len bai viet .. cua anh ay"
+				target_user_ids = post.follower_ids.clone
+				NotificationChange.create_notifications(target_user_ids, post, current_user, @comment, NotificationCategory.binh_luan_cua_chu_bai_viet)
+			else
+				#TH2: Neu ai do comment len bai post cua nguoi do, thi
+				#gui thong bao den tat ca nguoi theo doi, nguoi chu bai viet , tuy
+				#nhien ko gui thong bao den nguoi comment
+				#B1: Gui thong bao den cac nguoi theo doi vs loai "ai do binh luan len bai viet ban dang theo doi"
+				target_user_ids = post.follower_ids.clone
+				target_user_ids.delete(current_user.id)
+				NotificationChange.create_notifications(target_user_ids, post, current_user, @comment, NotificationCategory.binh_luan_bai_viet_ban_dang_theo_doi)
+				#B2: Gui thong bao den chu bai viet vs loai "ai do binh luan len bai viet cua ban"
+				NotificationChange.create_notifications([post.user.id], post,  current_user, @comment, NotificationCategory.binh_luan_bai_viet)
 			end
 			render 'show.json.jbuilder', status: :created
 		else

@@ -127,7 +127,7 @@
                       </a>
                       <!-- END CHO THICH BAI VIET -->
 
-                      <!-- BEGIN CHO BINH LUAN BAI VIET -->
+                      <!-- BEGIN CHO BINH LUAN BAI VIET CUA BAN-->
                       <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
                         <div class="notification-item" style="">
                             <div  class="col-xs-2">
@@ -143,7 +143,40 @@
                             </div>
                         </div>
                       </a>
-                      <!-- END CHO BINH LUAN BAI VIET -->
+                      <!-- END CHO BINH LUAN BAI VIET CUA BAN-->
+
+                      <!-- BEGIN CHO BINH LUAN BAI VIET BAN DANG THEO DOI-->
+                      <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận trên bài viết bạn đang theo dõi'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+                        <div class="notification-item" style="">
+                            <div  class="col-xs-2">
+                              <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+                            </div>               
+                            <div class="col-xs-10">
+                                <div ng-if="item.triggers.length >=2">
+                                  {{item.triggers[0].trigger_user.username}} và {{item.triggers.length - 1}} người khác bình luận trong bài viết "<b>{{item.target_object.title}}</b>" mà bạn đang theo dõi
+                                </div>
+
+                                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.username}} bình luận trong bài viết "<b>{{item.target_object.title}}</b>" mà bạn đang theo dõi</div>
+                                <small>{{item.updated_at | timeago}}</small>
+                            </div>
+                        </div>
+                      </a>
+                      <!-- END CHO BINH LUAN BAI VIET BAN DANG THEO DOI-->
+
+                        <!-- BEGIN CHO BINH LUAN CUA CHU BAI VIET-->
+                      <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận của chủ bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+                        <div class="notification-item" style="">
+                            <div  class="col-xs-2">
+                              <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+                            </div>               
+                            <div class="col-xs-10">
+                                <div>
+                                  {{item.triggers[0].trigger_user.username}} cũng đã bình luận trong bài viết "<b>{{item.target_object.title}}</b>" của anh ấy
+                                </div>
+                            </div>
+                        </div>
+                      </a>
+                      <!-- END CHO BINH LUAN CUA CHU BAI VIET-->
 
                       <!-- BEGIN CHO HIEN THI THONG BAO THICH BINH LUAN -->
                        <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bình luận'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
