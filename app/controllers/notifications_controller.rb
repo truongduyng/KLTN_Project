@@ -24,6 +24,7 @@ class NotificationsController < ApplicationController
 	# end
 
 	def index
+		sleep(5)
 		#B1: Get new notification changes
 		target_user = current_user
 		notification_ids = Notification.where(target_user_id: target_user.id).only(:_id).map(&:_id)

@@ -16,7 +16,7 @@
 
 
   <li ng-controller="notificationCtrl" ng-if="signedIn()">
-    <a ng-click="onDisplayNotifications()" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" >Thông báo <span class="badge" ng-class="{badge: true, 'blue-badge': newNotificationsCount >= 1}">{{newNotificationsCount}}</span></a>
+    <a ng-click="onDisplayNotifications()" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" >Thông báo <span class="badge" ng-class="{badge: true, 'blue-badge': newNotificationsCount >= 1}">{{newNotificationsCount}}</span> <span ng-if="isLoading" class="fa fa-spinner fa-pulse fa-fw"></span></a>
         <div class="dropdown-menu notifications" role="menu" aria-labelledby="dropdownMenu1">
             <!--  <ul class="list-notifications">
                    <li role="presentation">
@@ -47,7 +47,8 @@
                   <li style="border:none;" role="presentation" ng-if="notifications == null || notifications.length == 0">
                         <div class="notification-item" style="">
                             <div style="text-align: center; border: none;" class="col-xs-12">
-                                Chưa có thông báo nào
+                                <span ng-if="!isLoading">Chưa có thông báo nào</span>
+                                <span ng-if="isLoading" class="fa fa-spinner fa-pulse fa-2x fa-fw"></span>
                             </div> 
                         </div>
                   </li>

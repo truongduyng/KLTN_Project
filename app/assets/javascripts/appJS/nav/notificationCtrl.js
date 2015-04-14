@@ -7,39 +7,24 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 				$scope.loadNotifications();
 				$scope.registerNotification();
 			});
-
+		//Cho thay dang load notification
+		$scope.isLoading = false;
 		$scope.loadNotifications = function() {
+			$scope.isLoading = true;
 			notificationService.index().success(function() {
+				$scope.isLoading = false;
 				$scope.notifications = notificationService.notifications;
 				$scope.newNotificationsCount = notificationService.newNotificationsCount;
+			}).error(function(){
+				$scope.isLoading = false;
 			});
 		};
 
 		//Cho luoc do csdl trigger_users 
 		$scope.onWatched = function(notification) {
-			console.log("on watched: ", notification);
 			notificationService.watched(notification);
 		};
-
-		//Khi clich de xem notification thi danh dau is_new = false
-		// $scope.onDisplayNotifications = function() {
-		// 	//Lay array notifications isnew = true;
-		// 	var newNotifactions = _.filter($scope.notifications, function(item) {
-		// 		return item.is_new;
-		// 	});
-		// 	//Lay 1 mang id cua cac new notifications
-		// 	var notificationIds = _.map(newNotifactions, function(item) {
-		// 		return item._id.$oid;
-		// 	});
-		// 	//Chi cap nhat neu co notification moi
-		// 	if (notificationIds.length >= 1) {
-		// 		notificationService.loaded(notificationIds).success(function() {
-		// 			$scope.newNotificationsCount = notificationService.newNotificationsCount;
-		// 		});
-		// 	}
-		// 	console.log("on display notifications: ", notificationIds);
-		// };
-
+		
 		//Danh dau tat ca notification la dc dc load va xem boi nguoi dung
 		$scope.onDisplayNotifications = function() {
 			//B1: Kiem tra thu co notification_change moi hay ko
@@ -53,7 +38,7 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 				});
 			}
 		};
-		
+
 		//Dung websocket de cap nhat realtime
 		var dispatcher = null;
 		var user_channel = null;
@@ -108,12 +93,11 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 				console.log("on updatedNotification: ", updatedNotification);
 			});
 
-			// //
-			// post_channel = dispatcher.subscribe('post');
-			// post_channel.bind("on_post", function(notificationChange){
-			// 	console.log("on post channel bind: ", notificationChange);
-			// });
 
 		};
 	}
 ]);
+
+//Chuyen den dung cai vi tri cua doi tuong gay ra thong bao
+//Cuon xuong de load nhieu notification
+//Hine thi tat ca notification
