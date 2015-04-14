@@ -48,7 +48,18 @@ class CommentsController < ApplicationController
 	def destroy
 		#Neu co notification ma chua dc xem (trong truong lo binh luan xong xoa lien) thi xoa notification_change do
 		post = @comment.post
-		NotificationChange.delete_notification_change(post.user, post, current_user, @comment, NotificationCategory.binh_luan_bai_viet)
+		if post.user == current_user
+			#TH1: Neu nguoi comment la chu bai post thi xoa nhung thong bao dc gui den cac followers neu no chua dc load realtime
+			target_user_ids = post.follower_ids.clone
+			NotificationChange.delete_notification_changes(target_user_ids, post, current_user, @comment, NotificationCategory.binh_luan_cua_chu_bai_viet)
+		else
+			#TH2: Xoa cac thong bao dc gui toi followers duoi dang "binh luan bai viet ban dang theo doi" va
+			#xoa thong bao gui toi chu bai viet duoi dang "binh luan len bai viet cua ban"
+			target_user_ids = post.follower_ids.clone
+			target_user_ids.delete(current_user.id)
+			NotificationChange.delete_notification_changes(target_user_ids, post, current_user, @comment, NotificationCategory.binh_luan_bai_viet_ban_dang_theo_doi)
+			NotificationChange.delete_notification_changes([post.user.id], post,  current_user, @comment, NotificationCategory.binh_luan_bai_viet)
+		end
 		#Xoa binh luan
 		@comment.destroy
 		render nothing: true, status: :ok, content_type: 'application/json'	

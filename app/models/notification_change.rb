@@ -209,7 +209,7 @@ class NotificationChange
 				if notification_change.trigger_ids.count == 0
 					notification_change.destroy
 					#Kiem tra notification coi thu co con notification_change nao hay ko, neu ko xoa no di
-					notification = Notification.find_or_create(target_user, target_object)
+					notification = Notification.find_or_create(target_user_id, target_object)
 					if notification.notification_changes.count == 0
 						notification.destroy
 					end
