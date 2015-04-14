@@ -67,7 +67,6 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 				console.log("on newNotification: ", newNotification);
 				$scope.$apply(function() {
 					$scope.notifications.splice(0, 0, newNotification);
-					console.log("notifications: ", $scope.notifications);
 					$scope.newNotificationsCount++;
 				});
 			});
