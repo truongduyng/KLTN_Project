@@ -11,10 +11,12 @@ class NotificationChange
 	belongs_to :notification_category
 	#Thuoc 1 ve notification nao do
 	belongs_to :notification	
-	#Da xem hay chua
+	#Da click vao de xem chi tiet. Giup hien thi mau va cho biet notification nao da duoc click vao va xem chi tiet
 	field :watched, type: Boolean, default: ->{false}
-	#Cho thay da load hay chua
-	# field :loaded, type: Boolean, default: ->{false}
+	#Cho thay da load hay chua. Neu no chua dc load thi co the loai bo 1 notification khi no bi bo boi nguoi tac dong.
+	#vi du 1 nguoi like thi khi 1 notification chua dc load thi khi nguoi do bo like thi se bo lun thong bao
+	field :loaded, type: Boolean, default: ->{false}
+	#Cho thay da dc xem hay chua. Giup xac dinh so luong notification moi.
 	field :is_new, type: Boolean, default: ->{true}
 
 
@@ -86,9 +88,9 @@ class NotificationChange
 	#Xoa 1 notification change
 	def self.delete_notification_change target_user, target_object, trigger_user, trigger_source, notification_category
 		notification_change = NotificationChange.find_notification_change(target_user, target_object, trigger_user, trigger_source, notification_category)
-		#Neu co notification_change va no chua dc xem (is_new = true) thi xoa no di. 
+		#Neu co notification_change va no chua dc load (loaded = false) thi xoa no di. 
 		#Trong truong hop bi tac dong boi nhieu nguoi thi xoa nguoi do di thoi, va khi mang tac dong = [] thi xoa notification change di
-		if notification_change && notification_change.is_new
+		if notification_change && !notification_change.loaded
 			#B1: Tim triggger. Luon tim dc vi tim dc notification_change
 			trigger = NotificationChangeTrigger.all_of(trigger_user_id: trigger_user.id, trigger_source_id: trigger_source.id).first
 			#B2: Bo trigger_user ra kho mang triggers

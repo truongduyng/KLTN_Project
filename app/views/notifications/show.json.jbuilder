@@ -54,5 +54,6 @@ end
 #1 so thong tin khac
 json.watched @notification_change.watched
 json.is_new @notification_change.is_new
+json.loaded @notification_change.loaded
 json.created_at @notification_change.created_at
 json.updated_at @notification_change.updated_at

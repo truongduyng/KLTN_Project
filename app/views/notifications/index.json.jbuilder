@@ -63,6 +63,7 @@ json.notifications do
 		#1 so thong tin khac
 		json.watched nc.watched
 		json.is_new nc.is_new
+		json.loaded nc.loaded
 		json.created_at nc.created_at
 		json.updated_at nc.updated_at
 		json.end '---------------'
