@@ -12,16 +12,8 @@ class CommentsController < ApplicationController
 		@comment.user = current_user
 		@comment.post_id = params[:post_id]
 		if @comment.save
-			#Khi comment thi mac dinh nguoi do bat dau theo doi bai viet ma ho comment, de dat tuong tac tot nhat
-			post = @comment.post
-			# #Kiem tra xem thu da theo doi chua, neu chua thi them vao
-			# if !post.follower_ids.include?(current_user.id) && !current_user.followed_post_ids.include?(post.id)
-			# 	post.follower_ids << current_user.id
-			# 	current_user.followed_post_ids << post.id
-			# 	post.save
-			# 	current_user.save
-			# end
 			#Tao thong bao
+			post = @comment.post
 			if post.user == current_user
 				#TH1: Neu nguoi do tu comment len bai post cua nguoi do, thi chi gui den nhung nguoi theo doi vs loai "trung nguyen huu cung binh luan len bai viet .. cua anh ay"
 				target_user_ids = post.follower_ids.clone

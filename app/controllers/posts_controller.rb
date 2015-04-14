@@ -92,9 +92,17 @@ class PostsController < ApplicationController
 		else
 			like = @post.likes.create(user: current_user)
 			#Tao thong bao
-			#TH1: Ko thong bao khi nguoi do tu like bai viet cua minh
+			#Chi thong bao khi ai do thich bai viet ma ai do theo doi va ko thong bao khi chu bai viet tu thich bai viet cua minh
 			if @post.user != current_user
-				NotificationChange.create_notification @post.user, @post, current_user, like, NotificationCategory.thich_bai_viet
+				#TH2: Neu ai do thich bai post cua nguoi do, thi
+				#gui thong bao den tat ca nguoi theo doi, nguoi chu bai viet , tuy
+				#nhien ko gui thong bao den nguoi thich
+				#B1: Gui thong bao den cac nguoi theo doi vs loai "ai do thich bai viet ban dang theo doi"
+				target_user_ids = @post.follower_ids.clone
+				target_user_ids.delete(current_user.id)
+				NotificationChange.create_notifications(target_user_ids, @post, current_user, like, NotificationCategory.thich_bai_viet_ban_dang_theo_doi)
+				#B2: Gui thong bao den chu bai viet vs loai "ai do thich bai viet cua ban"
+				NotificationChange.create_notifications([@post.user.id], @post,  current_user, like, NotificationCategory.thich_bai_viet)
 			end
 			render nothing: true, status: :created, content_type: 'application/json'
 		end
@@ -103,9 +111,18 @@ class PostsController < ApplicationController
 	#/posts/:id/unlike
 	def unlike
 		like = @post.likes.where('user_id' => current_user.id).first
-		if like
+		if like	
+			#Xoa thong bao neu co the
 			#Neu thong bao do chua dc load va xem (is_new = true) thi xoa no di, con neu da dc xem rui thi coi nhu la lich su
-			NotificationChange.delete_notification_change(@post.user, @post, current_user, like, NotificationCategory.thich_bai_viet)
+			if @post.user != current_user
+				#TH2: Xoa cac thong bao dc gui toi followers duoi dang "ai do thich bai viet ban dang theo doi" va
+				#xoa thong bao gui toi chu bai viet duoi dang "binh luan len bai viet cua ban"
+				target_user_ids = @post.follower_ids.clone
+				target_user_ids.delete(current_user.id)
+				NotificationChange.delete_notification_changes(target_user_ids, @post, current_user, like, NotificationCategory.thich_bai_viet_ban_dang_theo_doi)
+				NotificationChange.delete_notification_changes([@post.user.id], @post,  current_user, like, NotificationCategory.thich_bai_viet)
+			end
+
 			like.destroy
 			render nothing: true, status: :ok, content_type: 'application/json'
 		else
