@@ -72,7 +72,6 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '
 		'disabled-class': 'disabled',
 		'show-prev-next': true,
 	};
-
 }]);
 
 //cho xu ly login xem cai nay http://plnkr.co/edit/3kImqU?p=preview

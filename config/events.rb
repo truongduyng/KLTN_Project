@@ -12,11 +12,25 @@ WebsocketRails::EventMap.describe do
   #   end
   # The above will handle an event triggered on the client like `product.new`.
 
-  subscribe :client_connected, :to => ChatController, :with_method => :client_connected
-  namespace :chat do
-      subscribe :hello, :to => ChatController, :with_method => :hello
-      subscribe :chat, :to => ChatController, :with_method => :chat
+  # subscribe :client_connected, :to => ChatController, :with_method => :client_connected
+  # namespace :chat do
+  #     subscribe :hello, :to => ChatController, :with_method => :hello
+  #     subscribe :chat, :to => ChatController, :with_method => :chat
 
+  # end
+
+  #for private channel
+  # subscribe :client_connected, :to => AuthorizationController, :with_method => :client_connected
+  #Channel notifications cho thong bao la private
+  # private_channel :notifications
+
+  namespace :websocket_rails do
+    subscribe :subscribe_private, :to => AuthorizationController, :with_method => :authorize_channels
   end
+  
+  # namespace :websocket_rails do
+  #     subscribe :subscribe, :to => AuthorizationController, :with_method => :on_subscribe
+  #     subscribe :subscribe_private, :to => AuthorizationController, :with_method => :on_subscribe_private
+  # end
   
 end
