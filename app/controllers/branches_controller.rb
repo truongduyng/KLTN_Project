@@ -9,7 +9,7 @@ class BranchesController < ApplicationController
   end
 
   def search
-    @branches = Branch.search(param_latlng)
+    @branches = Branch.search(param_searching)
     result = []
     (@branches).each do |branch|
      result << {
@@ -25,8 +25,8 @@ class BranchesController < ApplicationController
 end
 
 private
-  def param_latlng
-    params.permit(:lat,:lng)
+  def param_searching
+    params.permit(:lat,:lng, :distance)
   end
 	#Da test
   def check_role_bussiness_admin

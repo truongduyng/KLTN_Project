@@ -8,12 +8,12 @@ class Branch
   field :coordinates, :type => Array
   geocoded_by :address
   after_validation :geocode
-  index({ coordinates: "2d" }, { min: -200, max: 200 })
+  index({ coordinates: "2d" }, { min: -180, max: 180 })
 
   belongs_to :bussiness
   has_many :assests
 
-  validates :name, presence: true,  length: {maximum: 1000}
+  validates :name, presence: true,  length: {maximum: 100}
   validates :address, presence: true, length: {maximum: 1000}
 
   # def address
@@ -22,7 +22,7 @@ class Branch
 
   def self.search(param)
     if param
-     return Branch.near([param[:lat].to_f, param[:lng].to_f], 1, :order => "distance")
+     return Branch.near([param[:lat].to_f, param[:lng].to_f], 2, order:"distance")
    else
      Branch.all
    end

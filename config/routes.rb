@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   resources 'branches'
-  get 'search(/:lat/:lng)' => 'branches#search', constraints:{ lat: /[0-9\.]+/, lng: /[0-9\.]+/ }
+  get 'search(/:lat/:lng/:distance)' => 'branches#search', constraints:{ lat: /[0-9\.]+/, lng: /[0-9\.]+/ }
 
   resources 'assests' do
     collection do

@@ -25,12 +25,15 @@ app.controller('mapCtrl', ['$scope', '$timeout', '$http', 'Auth', function($scop
   $scope.geocoder = new google.maps.Geocoder();
 
   $scope.$on('mapInitialized', function(e, map) {
+    $scope.map.setZoom(5);
     google.maps.event.addListener(map, 'idle', function() {
-      var latlng = map.getCenter();
+      var latlng = $scope.map.getCenter();
+      var distance = getsearchingdistance();
+      console.log($scope.map.getZoom());
+      console.log(distance);
       markers = [];
-      $http.get("/search/"+latlng.k+"/"+latlng.D).success(function(data){
-        console.log(data);
-        setMarkers(map,data);
+      $http.get("/search/"+latlng.k+"/"+latlng.D+"/"+distance).success(function(data){
+        setMarkers($scope.map,data);
       });
     });
   });
@@ -40,41 +43,59 @@ app.controller('mapCtrl', ['$scope', '$timeout', '$http', 'Auth', function($scop
   };
 
   $scope.showcurrentposition = function(){
-    $scope.map.setZoom(14);
     var latlng = $scope.map.getCenter();
-    setUserMarker($scope.map,latlng)
-    $http.get("/search/"+latlng.k+"/"+latlng.D).success(function(data){
-      setMarkers($scope.map,data)
+    var distance = getsearchingdistance();
+    // $scope.map.setZoom(17);
+    console.log($scope.map.getZoom());
+    console.log(distance);
+    setUserMarker($scope.map,latlng);
+    $http.get("/search/"+latlng.k+"/"+latlng.D+"/"+distance).success(function(data){
+      setMarkers($scope.map,data);
       $scope.map.fitBounds($scope.bounds);
     });
+    console.log($scope.map.getZoom());
   };
 
-function setMarkers(map, data){
-  for (var i=0; i < data.length; i++) {
-    $scope.image.url = data[i].picture;
-    var myLatLng = new google.maps.LatLng(data[i].lat,data[i].lng);
-    var marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map,
-      icon: $scope.image,
-      shape: $scope.shape,
-      title: data[i].name,
-      zIndex: i+1
-    });
+  function getsearchingdistance(){
+    var Bound = $scope.map.getBounds();
+    console.log($scope.map.getZoom());
+    console.log(Bound);
+    var NE = Bound.getNorthEast();
+    var SW = Bound.getSouthWest();
+    var lat1 =  NE.lat();
+    var lat2 =  SW.lat();
+    var lng1 =  NE.lng();
+    var verticalLatLng1 = new google.maps.LatLng(lat1,lng1);
+    var verticalLatLng2 = new google.maps.LatLng(lat2,lng1);
+    return google.maps.geometry.spherical.computeDistanceBetween(verticalLatLng1,verticalLatLng2)/2/6378.1; // convert to radians
+  };
 
-    google.maps.event.addListener(marker,"click",(function(marker,i){
-      return function(){
-       $scope.infowindow.setContent('<div id="info-window"><a href="'+data[i].url+'">'+data[i].name+'</a><br><span>'+data[i].address.substring(0,20)+'...</span></div>');
-       $scope.infowindow.open(map,marker);
-       map.setCenter(marker.getPosition());
-     }
-   })(marker,i));
-    $scope.markers.push(marker);
-    $scope.bounds.extend(marker.getPosition());
-  }
-};
+  function setMarkers(map, data){
+    for (var i=0; i < data.length; i++) {
+      $scope.image.url = data[i].picture;
+      var myLatLng = new google.maps.LatLng(data[i].lat,data[i].lng);
+      var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        icon: $scope.image,
+        shape: $scope.shape,
+        title: data[i].name,
+        zIndex: i+1
+      });
 
-function setUserMarker(map, latlng){
+      google.maps.event.addListener(marker,"click",(function(marker,i){
+        return function(){
+         $scope.infowindow.setContent('<div id="info-window"><a href="'+data[i].url+'">'+data[i].name+'</a><br><span>'+data[i].address.substring(0,20)+'...</span></div>');
+         $scope.infowindow.open(map,marker);
+         map.setCenter(marker.getPosition());
+       }
+     })(marker,i));
+      $scope.markers.push(marker);
+      $scope.bounds.extend(marker.getPosition());
+    }
+  };
+
+  function setUserMarker(map, latlng){
     $scope.image.url = "http://i.imgur.com/a06y4s3.png"; //#scope.user.avatar
     var marker = new google.maps.Marker({
       position: latlng,
