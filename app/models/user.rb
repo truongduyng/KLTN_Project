@@ -3,18 +3,13 @@ class User
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  :recoverable, :rememberable, :trackable, :validatable
 
   #callback
   before_create :set_default_role
-  private
-    def set_default_role
-      self.role ||= Role.where(name: 'user').first
-    end
-
   #relationships
-  belongs_to :role 
-  embeds_one :information 
+  belongs_to :role
+  embeds_one :information
   has_one :bussiness
   #My field
   field :firstname, type: String
@@ -24,7 +19,7 @@ class User
   validates :username, presence: true, uniqueness: true
   validates :firstname, presence: true
   validates :lastname, presence: true
-  
+
   ## Database authenticatable
   field :email,              type: String, default: ""
   field :encrypted_password, type: String, default: ""
@@ -53,4 +48,8 @@ class User
   # field :failed_attempts, type: Integer, default: 0 # Only if lock strategy is :failed_attempts
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
+  private
+  def set_default_role
+    self.role ||= Role.where(name: 'user').first
+  end
 end

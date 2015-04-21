@@ -10,6 +10,9 @@ class ApplicationController < ActionController::Base
     render 'layouts/application'
   end
 
+  def not_found
+    render(:file => "#{Rails.root}/public/404.html")
+  end
   #for devise
   before_action :configure_permitted_parameters, if: :devise_controller?
 

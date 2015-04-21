@@ -1,6 +1,4 @@
 source 'https://rubygems.org'
-
-ruby '2.1.5'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 
@@ -41,7 +39,7 @@ group :development, :test do
 end
 
 group :production do
-	gem 'rails_12factor'
-	gem 'unicorn'
-	gem 'thin'
+  gem 'rails_12factor'
+  gem 'unicorn'
+  gem 'thin'
 end

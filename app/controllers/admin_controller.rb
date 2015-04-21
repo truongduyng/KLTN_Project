@@ -1,4 +1,4 @@
-class AdminController < ActionController::Base
+class AdminController < ApplicationController
   def index
     render 'layouts/admin'
   end

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="sportApp">
+<html>
 <head>
   <meta charset="utf-8">
   <title>Sporta</title>
@@ -11,8 +11,7 @@
   <%= javascript_include_tag 'appJS/application' %>
 
 </head>
-<body>
-
+<body ng-app="sportApp">
   <header data-ng-include="'appJS/header/_header.html'"></header>
 
   <!-- CONTENT HERE -->
@@ -29,30 +28,15 @@
 
   <!-- MODALS HERE -->
   <div class="modals">
-   <div data-ng-include="'appJS/auth/_login.html'"></div>
-   <div data-ng-include="'appJS/auth/_register.html'"></div>
-   <div data-ng-include="'appJS/auth/_forget_password.html'"></div>
- </div>
- <!-- END MODALS -->
+    <div data-ng-include="'appJS/auth/_login.html'"></div>
+    <div data-ng-include="'appJS/auth/_register.html'"></div>
+    <div data-ng-include="'appJS/auth/_forget_password.html'"></div>
+  </div>
+  <!-- END MODALS -->
 
- <script>
-  /*For textarea*/
-  autosize(document.querySelectorAll('textarea'));
-  $(document).ready(function(e) {
-    $('#login-on-register').click(function(e) {
-      $('#register-modal').modal('toggle');
-      $('#login-modal').modal('toggle');
-    });
-
-    $('#signup-on-login').click(function(e) {
-      $('#register-modal').modal('toggle');
-      $('#login-modal').modal('toggle');
-    });
-
-    $('#forget-password-on-login').click(function(e) {
-      $('#login-modal').modal('toggle');
-    });
-  });
-</script>
+  <script>
+    /*For textarea*/
+    autosize(document.querySelectorAll('textarea'));
+  </script>
 </body>
 </html>

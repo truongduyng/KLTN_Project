@@ -1,13 +1,13 @@
 <ul class="nav navbar-nav navbar-right" style="margin-top:2px;" ng-controller="navCtrl">
   <li class="dropdown">
-    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Đặt sân<span class="caret"></span></a>  
+    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Đặt sân<span class="caret"></span></a>
     <ul class="dropdown-menu" role="menu">
       <li><a href="#">Action</a></li>
     </ul>
   </li>
-  
+
   <li ng-hide="signedIn()"><a href="#login-modal" data-toggle="modal">Đăng nhập</a></li>
-  <li ng-hide="signedIn()"><a href="#register-modal"  data-toggle="modal">Đăng kí</a></li>
+  <li ng-hide="signedIn()"><a href="#register-modal" data-toggle="modal">Đăng kí</a></li>
 
   <!-- with logined -->
   <li ng-show="signedIn()">
@@ -17,7 +17,7 @@
 
        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
         <div class="notification-item" style="">
-          <div  class="col-xs-2"><!-- avatar --></div>               
+          <div  class="col-xs-2"><!-- avatar --></div>
           <div class="col-xs-10">
             <div>Nguyễn Hữu Trung đã thích bài viết của bạn</div>
             <small>Khoảng 1 giờ trước</small>
@@ -27,7 +27,7 @@
 
       <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
         <div class="notification-item" style="">
-          <div  class="col-xs-2"><!-- avatar --></div>               
+          <div  class="col-xs-2"><!-- avatar --></div>
           <div class="col-xs-10">
             <div>Nguyễn Hữu Trung đã thích bài viết của bạn</div>
             <small>Khoảng 1 giờ trước</small>
@@ -40,12 +40,12 @@
 </li>
 
 <li ng-show = "signedIn()">
-    <a href="bussiness-admin#/">{{user.username}}</a>
+    <a href="/{{user.username}}">{{user.username}}</a>
 </li>
 <li ng-show ="signedIn()">
   <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="caret"></span>
-  </a> 
+  </a>
   <ul class="dropdown-menu" role="menu">
     <li ng-show="signedIn()"><a style="cursor:pointer;" href="#/dang-ky-doanh-nghiep">đăng ký doanh nghiệp</a></li>
     <li ng-show="signedIn()"><a style="cursor:pointer;" ng-click="logout()">Thoát</a></li>

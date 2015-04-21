@@ -7,8 +7,8 @@ class Bussiness
 	field :category, type: String #Linh vuc
 	field :short_desc, type: String
 	field :description, type: String
-	
+
 	belongs_to :user
-	has_many :assest_categories
+	has_many :asset_categories
 	has_many :branches
 end

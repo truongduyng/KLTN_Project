@@ -25,41 +25,32 @@ app.controller('mapCtrl', ['$scope', '$timeout', '$http', 'Auth', function($scop
   $scope.geocoder = new google.maps.Geocoder();
 
   $scope.$on('mapInitialized', function(e, map) {
-    $scope.map.setZoom(5);
-    google.maps.event.addListener(map, 'idle', function() {
-      var latlng = $scope.map.getCenter();
-      var distance = getsearchingdistance();
-      console.log($scope.map.getZoom());
-      console.log(distance);
-      markers = [];
-      $http.get("/search/"+latlng.k+"/"+latlng.D+"/"+distance).success(function(data){
-        setMarkers($scope.map,data);
-      });
-    });
+    google.maps.event.addListener(map, 'idle', (function(map) {
+      return function(){
+        var latlng = $scope.map.getCenter();
+        var distance = getsearchingdistance();
+        $scope.markers = [];
+        $http.get("/search/"+latlng.k+"/"+latlng.D+"/"+distance).success(function(data){
+          setMarkers($scope.map,data);
+        });
+      }})(map));
   });
 
-  $scope.search_address = function(){
-    alert($scope.query_address);
-  };
-
   $scope.showcurrentposition = function(){
+    $scope.map.setZoom(17);
     var latlng = $scope.map.getCenter();
     var distance = getsearchingdistance();
-    // $scope.map.setZoom(17);
-    console.log($scope.map.getZoom());
-    console.log(distance);
     setUserMarker($scope.map,latlng);
     $http.get("/search/"+latlng.k+"/"+latlng.D+"/"+distance).success(function(data){
-      setMarkers($scope.map,data);
-      $scope.map.fitBounds($scope.bounds);
+      if (data != null) {
+        setMarkers($scope.map,data);
+        // $scope.map.fitBounds($scope.bounds);
+      };
     });
-    console.log($scope.map.getZoom());
   };
 
   function getsearchingdistance(){
     var Bound = $scope.map.getBounds();
-    console.log($scope.map.getZoom());
-    console.log(Bound);
     var NE = Bound.getNorthEast();
     var SW = Bound.getSouthWest();
     var lat1 =  NE.lat();

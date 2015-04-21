@@ -1,11 +1,12 @@
-class Assest
+class AssetCategory
 	include Mongoid::Document
 	field :name, type: String
-	field :quantity, type: Integer, default: ->{1}
+	field :short_desc, type: String
 	field :description, type: String
-	
-	belongs_to :branch
-	belongs_to :assest_category
+
+	belongs_to :bussiness
+	embeds_many :fees
+	has_many :assets
 
 	validates :name, presence: true, length: {maximum: 1000}
 end

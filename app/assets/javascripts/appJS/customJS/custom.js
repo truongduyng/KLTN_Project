@@ -1,7 +1,6 @@
 /*global jQuery:false */
 jQuery(document).ready(function($) {
-	"use strict";
-
+  "use strict";
   $('.datepicker').datetimepicker({
     timepicker: false,
     format: 'd-m-y'
@@ -50,16 +49,29 @@ jQuery(document).ready(function($) {
     $(this).find('.accordion-toggle i').not($(e.target)).addClass('icon-plus');
   });
 
-	//scroll to top
-	$(window).scroll(function(){
-		if ($(this).scrollTop() > 100) {
-			$('.scrollup').fadeIn();
-		} else {
-			$('.scrollup').fadeOut();
-		}
-	});
-	$('.scrollup').click(function(){
-		$("html, body").animate({ scrollTop: 0 }, 100);
-		return false;
-	});
+  //scroll to top
+  $(window).scroll(function(){
+    if ($(this).scrollTop() > 100) {
+      $('.scrollup').fadeIn();
+    } else {
+      $('.scrollup').fadeOut();
+    }
+  });
+  $('.scrollup').click(function(){
+    $("html, body").animate({ scrollTop: 0 }, 100);
+    return false;
+  });
+  $('#login-on-register').click(function(e) {
+    $('#register-modal').modal('toggle');
+    $('#login-modal').modal('toggle');
+  });
+
+  $('#signup-on-login').click(function(e) {
+    $('#register-modal').modal('toggle');
+    $('#login-modal').modal('toggle');
+  });
+
+  $('#forget-password-on-login').click(function(e) {
+    $('#login-modal').modal('toggle');
+  });
 });
