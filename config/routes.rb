@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources 'branches', except: :show
   get '/:branch_name' => 'branches#show'
   get 'search(/:lat/:lng/:distance)' => 'branches#search', constraints:{ lat: /[0-9\.]+/, lng: /[0-9\.]+/, distance: /[0-9\.]+/ }
-  # get 'search(/:search_query)' => 'branches#search_nameandaddress'
+  get 'searchnameadd(/:search_query)' => 'branches#search'
 
   resources 'assets' do
     collection do

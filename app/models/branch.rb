@@ -20,17 +20,14 @@ class Branch
   # 	return self.street + self.district + self.city
   # end
 
-  def self.search_latlng(params)
-    if params
-      return Branch.near([params[:lat].to_f, params[:lng].to_f], 2, order:"distance")
+  def self.search(param_search)
+    if param_search[:lat]
+      return Branch.near([param_search[:lat].to_f, param_search[:lng].to_f], param_search[:distance].to_f, order:"distance")
     else
-      return Branch.all
+      if param_search[:search_query] == "all"
+        return Branch.all
+      end
+      return Branch.near(param_search[:search_query], 2, order:"distance")
     end
   end
-
-  # def self.search_name_and_address(seach_query)
-  #   if seach_query
-  #     return Branch.near(seach_query, 5, order: "distance")
-  #   end
-  # end
 end

@@ -17,12 +17,12 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="headerCtrl">
       <div class="col-sm-5">
-        <form class="navbar-form navbar-left" ng-submit="main_search()">
-          <div class="form-group">
-          <input type="text" class="form-control" placeholder="Tìm kiếm sân, địa chỉ..." ng-model= "query">
-            <button type="submit" class="btn btn-success"><i class = "fa fa-search"></i></button>
-          </div>
-        </form>
+        <div class="input-group" style="margin-top:10px;">
+          <input type="text" id="search_box" class="form-control" placeholder="Tìm kiếm sân, địa chỉ...">
+          <span class="input-group-btn">
+          <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+          </span>
+        </div>
       </div>
 
       <!-- NAVIGATION HERE -->

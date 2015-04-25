@@ -1,4 +1,4 @@
-app.controller('mapCtrl', ['$scope', '$timeout', '$http', 'Auth', function($scope, $timeout, $http, Auth){
+app.controller('mapCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth){
 
   Auth.currentUser().then(function(user) {
     $scope.username = user.username;
@@ -44,7 +44,6 @@ app.controller('mapCtrl', ['$scope', '$timeout', '$http', 'Auth', function($scop
     $http.get("/search/"+latlng.k+"/"+latlng.D+"/"+distance).success(function(data){
       if (data != null) {
         setMarkers($scope.map,data);
-        // $scope.map.fitBounds($scope.bounds);
       };
     });
   };
@@ -58,7 +57,7 @@ app.controller('mapCtrl', ['$scope', '$timeout', '$http', 'Auth', function($scop
     var lng1 =  NE.lng();
     var verticalLatLng1 = new google.maps.LatLng(lat1,lng1);
     var verticalLatLng2 = new google.maps.LatLng(lat2,lng1);
-    return google.maps.geometry.spherical.computeDistanceBetween(verticalLatLng1,verticalLatLng2)/2/6378.1; // convert to radians
+    return google.maps.geometry.spherical.computeDistanceBetween(verticalLatLng1,verticalLatLng2)/1609.34; // convert to miles
   };
 
   function setMarkers(map, data){

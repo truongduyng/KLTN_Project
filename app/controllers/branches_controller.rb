@@ -9,12 +9,12 @@ class BranchesController < ApplicationController
   end
 
   def show
-    @branch = current_user.bussiness.branches.where(name: params[:branch_name])
+    @branch = current_user.bussiness.branches.where(name: branch_param[:branch_name])
     render json: @branch
   end
 
   def search
-    branches = Branch.search_latlng(params)
+    branches = Branch.search(branch_param)
     result = []
     if branches.present?
       branches.each do |branch|
@@ -31,27 +31,9 @@ class BranchesController < ApplicationController
     render json: result
   end
 
-  # def search_nameandaddress
-  #   branches = Branch.search_name_and_address(params[:seach_query])
-  #   result = []
-  #   if branches.present?
-  #     branches.each do |branch|
-  #       result << {
-  #         lat: branch.coordinates[1],
-  #         lng: branch.coordinates[0],
-  #         picture:  "http://i.imgur.com/BBk3iBl.png",
-  #         name: branch.name,
-  #         address: branch.address,
-  #         url: "link to branch"
-  #       }
-  #     end
-  #   end
-  #   render json: result
-  # end
-
   private
-  def params
-    params.permit(:lat,:lng, :distance, :branch_name)
+  def branch_param
+    params.permit(:lat,:lng, :distance, :branch_name, :search_query)
   end
 	#Da test
   def check_role_bussiness_admin
