@@ -5,7 +5,7 @@ class Branch
   field :name, type: String
   field :phone, type: String
   field :address, type: String
-  field :coordinates, :type => Array
+  field :coordinates, type: Array
   geocoded_by :address
   after_validation :geocode
   index({ coordinates: "2d" }, { min: -180, max: 180 })

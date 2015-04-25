@@ -9,7 +9,7 @@ class BranchesController < ApplicationController
   end
 
   def show
-    @branch = current_user.bussiness.branches.where(name: branch_param[:branch_name])
+    @branch = Branch.where(name: branch_param[:branch_name])
     render json: @branch
   end
 
