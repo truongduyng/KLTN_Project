@@ -39,7 +39,7 @@ ngMap.directive('weatherLayer', ['Attr2Options', function(Attr2Options) {
 
       var layer = getLayer(options, events);
       mapController.addObject('weatherLayers', layer);
-      mapController.observeAttrSetObj(orgAttrs, attrs, layer);  //observers
+      parser.observeAttrSetObj(orgAttrs, attrs, layer);  //observers
       element.bind('$destroy', function() {
         mapController.deleteObject('weatherLayers', layer);
       });

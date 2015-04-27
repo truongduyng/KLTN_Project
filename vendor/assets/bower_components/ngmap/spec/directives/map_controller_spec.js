@@ -1,19 +1,13 @@
 /* global ngMap, google */
 describe('MapController', function() {
-  'use strict';
 
   var scope, ctrl;
   var el = document.body;
 
-  beforeEach(function() {
-    module('ngMap');
+  beforeEach( function() {
     inject( function($controller, $rootScope){
-        scope = $rootScope;
-        ctrl = $controller('MapController', {
-          $scope: scope, 
-          'NavigatorGeolocation': {},
-          'GeoCoder': {}
-        });
+      scope = $rootScope;
+      ctrl = $controller(ngMap.MapController, {$scope: scope, 'NavigatorGeolocation': {}, 'GeoCoder': {} });
     });
   });
 

@@ -48,7 +48,7 @@ ngMap.directive('kmlLayer', ['Attr2Options', function(Attr2Options) {
 
       var kmlLayer = getKmlLayer(options, events);
       mapController.addObject('kmlLayers', kmlLayer);
-      mapController.observeAttrSetObj(orgAttrs, attrs, kmlLayer);  //observers
+      parser.observeAttrSetObj(orgAttrs, attrs, kmlLayer);  //observers
       element.bind('$destroy', function() {
         mapController.deleteObject('kmlLayers', kmlLayer);
       });

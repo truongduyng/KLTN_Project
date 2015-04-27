@@ -1,4 +1,4 @@
-var app = angular.module("sportApp", ['ui.router', 'templates', 'Devise','ngMap']);
+var app = angular.module("sportApp", ['ui.router', 'ui.bootstrap', 'templates', 'Devise','ngMap']);
 
 app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',
   function($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -10,7 +10,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',
       controller: 'homeCtrl'
     })
     .state('booking',{
-      url: '/{branch-url}',
+      url: '/:branch_name',
       templateUrl: 'appJS/booking/_booking.html',
       controller: 'bookingCtrl'
     });

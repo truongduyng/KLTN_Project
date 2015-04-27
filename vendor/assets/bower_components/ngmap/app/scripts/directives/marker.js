@@ -16,7 +16,6 @@
  *      'current position',  
  *      '[40.74, -74.18]'  
  * @param {Boolean} centered if set, map will be centered with this marker
- * @param {Expression} geo-callback if position is an address, the expression is will be performed when geo-lookup is successful. e.g., geo-callback="showStoreInfo()"
  * @param {String} &lt;MarkerOption> Any Marker options, https://developers.google.com/maps/documentation/javascript/reference?csw=1#MarkerOptions  
  * @param {String} &lt;MapEvent> Any Marker events, https://developers.google.com/maps/documentation/javascript/reference
  * @example
@@ -34,9 +33,10 @@
  *    <marker position="the cn tower" on-click="myfunc()"></div>
  *   </map>
  */
-/* global google */
-(function() {
+/* global google, ngMap */
+ngMap.directive('marker', ['Attr2Options', function(Attr2Options)  {
   'use strict';
+  var parser = Attr2Options;
 
   var getMarker = function(options, events) {
     var marker;
@@ -58,9 +58,13 @@
       }
     }
     if (!(options.position instanceof google.maps.LatLng)) {
+      var orgPosition = options.position;
       options.position = new google.maps.LatLng(0,0);
-    } 
-    marker = new google.maps.Marker(options);
+      marker = new google.maps.Marker(options);
+      parser.setDelayedGeoLocation(marker, 'setPosition', orgPosition);
+    } else {
+      marker = new google.maps.Marker(options);
+    }
 
     /**
      * set events
@@ -77,47 +81,26 @@
     return marker;
   };
 
-  var marker = function(Attr2Options, $parse) {
-    var parser = Attr2Options;
-    var linkFunc = function(scope, element, attrs, mapController) {
+  return {
+    restrict: 'E',
+    require: '^map',
+    link: function(scope, element, attrs, mapController) {
       var orgAttrs = parser.orgAttributes(element);
       var filtered = parser.filter(attrs);
       var markerOptions = parser.getOptions(filtered, scope);
       var markerEvents = parser.getEvents(scope, filtered);
       console.log('marker options', markerOptions, 'events', markerEvents);
 
-      var address;
-      if (!(markerOptions.position instanceof google.maps.LatLng)) {
-        address = markerOptions.position;
-      }
       var marker = getMarker(markerOptions, markerEvents);
       mapController.addObject('markers', marker);
-      if (address) {
-        mapController.getGeoLocation(address).then(function(latlng) {
-          marker.setPosition(latlng);
-          markerOptions.centered && marker.map.setCenter(latlng);
-          var geoCallback = attrs.geoCallback;
-          geoCallback && $parse(geoCallback)(scope);
-        });
-      }
 
       /**
        * set observers
        */
-      mapController.observeAttrSetObj(orgAttrs, attrs, marker); /* observers */
+      parser.observeAttrSetObj(orgAttrs, attrs, marker); /* observers */
       element.bind('$destroy', function() {
         mapController.deleteObject('markers', marker);
       });
-    };
-
-    return {
-      restrict: 'E',
-      require: '^map',
-      link: linkFunc
-    };
-  };
-
-  marker.$inject = ['Attr2Options', '$parse'];
-  angular.module('ngMap').directive('marker', marker); 
-
-})();
+    } //link
+  }; // return
+}]);// 

@@ -9,7 +9,7 @@ class BranchesController < ApplicationController
   end
 
   def show
-    @branch = Branch.where(name: branch_param[:branch_name])
+  @branch = Branch.where(name: branch_param[:branch_name])
     render json: @branch
   end
 
@@ -24,7 +24,7 @@ class BranchesController < ApplicationController
           picture:  "http://i.imgur.com/BBk3iBl.png",
           name: branch.name,
           address: branch.address,
-          url: "link to branch"
+          url: branch.url
         }
       end
     end

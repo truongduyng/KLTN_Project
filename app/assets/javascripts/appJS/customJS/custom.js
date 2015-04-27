@@ -1,22 +1,7 @@
 /*global jQuery:false */
 jQuery(document).ready(function($) {
   "use strict";
-  $('.datepicker').datetimepicker({
-    timepicker: false,
-    format: 'd-m-y'
-  });
-
-  $('.timepicker').datetimepicker({
-    datepicker:false,
-    format:'H:i',
-    step:30
-  });
-  $('#datepickercalendar').datetimepicker({
-    inline:true,
-    timepicker: false
-  });
-
-  $(".big-cta").hover(
+    $(".big-cta").hover(
     function () {
      $('.cta a').addClass("animated shake");
    },
@@ -61,6 +46,9 @@ jQuery(document).ready(function($) {
     $("html, body").animate({ scrollTop: 0 }, 100);
     return false;
   });
+
+  $('.table-scroll').scrollTop(200);
+
   $('#login-on-register').click(function(e) {
     $('#register-modal').modal('toggle');
     $('#login-modal').modal('toggle');

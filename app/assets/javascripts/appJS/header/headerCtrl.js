@@ -1,15 +1,15 @@
-app.controller('headerCtrl', ['$scope', '$http','$location', function($scope, $http, $location){
+app.controller('headerCtrl', ['$scope', '$http','$window', '$location',function($scope, $http, $window, $location){
   var branches = [];
   $http.get("/searchnameadd/all").success(function(data){
     for (i=0;i<data.length; i++) {
-      branches.push(data[i].name + ", " + data[i].address);
+      branches.push({"label": data[i].name + ", " + data[i].address, "value": data[i].url});
     }
-    $scope.branches = data;
   });
   $("#search_box").autocomplete({
     source: branches,
     select: function (event, item) {
-      window.location = "/linktobranch";
+      $location.path("/#"+item.item.value);
+      $window.location.href = "/#"+item.item.value;
     }
   });
 }]);

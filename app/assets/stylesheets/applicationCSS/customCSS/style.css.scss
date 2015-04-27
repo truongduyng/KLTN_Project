@@ -272,7 +272,7 @@ header ul.nav li ul {
 }
 header ul.nav li ul li ul {
 	margin:1px 0 0 1px;
-}*/
+  }*/
 
 /*
 
@@ -1742,6 +1742,10 @@ article img.pull-right, article .align-right{
 	margin-bottom:0;
 }
 
+.marginbot5{
+	margin-bottom:5px;
+}
+
 .marginbot10{
 	margin-bottom:10px;
 }
@@ -1831,8 +1835,8 @@ article img.pull-right, article .align-right{
 		margin-top: 10px;
 		border-bottom: none;
 	}
-	
-	
+
+
 	.navbar-header {
 		margin-top: 20px;
 		border-bottom: none;
@@ -1979,8 +1983,12 @@ article img.pull-right, article .align-right{
 	width:100%;
 }
 .tablebooking th, .tablebooking td{
-	border: 1px solid gray;
+	border: 1px solid #DDDDDD;
 	border-collapse: collapse;
+}
+
+.tablebooking td{
+  height: 20px;
 }
 
 .padding10 {
@@ -2005,7 +2013,7 @@ article img.pull-right, article .align-right{
 }
 .postcontent
 {
-	
+
 }
 
 /*minibooking*/

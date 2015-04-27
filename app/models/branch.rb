@@ -5,13 +5,14 @@ class Branch
   field :name, type: String
   field :phone, type: String
   field :address, type: String
+  field :url, type: String
   field :coordinates, type: Array
   geocoded_by :address
   after_validation :geocode
   index({ coordinates: "2d" }, { min: -180, max: 180 })
 
   belongs_to :bussiness
-  has_many :assests
+  has_many :assets
 
   validates :name, presence: true,  length: {maximum: 100}
   validates :address, presence: true, length: {maximum: 1000}
