@@ -5,7 +5,7 @@ class Branch
   field :name, type: String
   field :phone, type: String
   field :address, type: String
-  field :url, type: String
+  field :url_alias, type: String
   field :coordinates, type: Array
   geocoded_by :address
   after_validation :geocode
@@ -13,6 +13,7 @@ class Branch
 
   belongs_to :bussiness
   has_many :assets
+  has_many :asset_categories
 
   validates :name, presence: true,  length: {maximum: 100}
   validates :address, presence: true, length: {maximum: 1000}

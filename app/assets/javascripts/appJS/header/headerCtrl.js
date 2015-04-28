@@ -1,4 +1,5 @@
-app.controller('headerCtrl', ['$scope', '$http','$window', '$location',function($scope, $http, $window, $location){
+app.controller('headerCtrl', ['$scope', '$http','$window',
+  function($scope, $http, $window){
   var branches = [];
   $http.get("/searchnameadd/all").success(function(data){
     for (i=0;i<data.length; i++) {
@@ -8,7 +9,7 @@ app.controller('headerCtrl', ['$scope', '$http','$window', '$location',function(
   $("#search_box").autocomplete({
     source: branches,
     select: function (event, item) {
-      $location.path("/#"+item.item.value);
+      $window.lacation = "/#"+item.item.value;
       $window.location.href = "/#"+item.item.value;
     }
   });

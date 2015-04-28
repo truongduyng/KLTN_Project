@@ -1,11 +1,11 @@
 #Phai validate begin_time < end_time
-class Fee 
-	include Mongoid::Document
-	
-	field :begin_time, type: Time, default: ->{Time.now}
-	field :end_time, type: Time, default: ->{Time.now}
-	field :price, type: Float, default: ->{0}
+class Fee
+  include Mongoid::Document
 
-	validates :price, presence: true
-	embedded_in :assest_category
+  field :begin_time, type: String, default: ->{Time.now}
+  field :end_time, type: String, default: ->{Time.now}
+  field :price, type: Float, default: ->{0}
+
+  validates :price, presence: true
+  embedded_in :assest_category
 end

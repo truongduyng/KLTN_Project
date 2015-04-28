@@ -15,5 +15,5 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',
       controller: 'bookingCtrl'
     });
   //Khoi phuc
-  // $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('');
 }]);

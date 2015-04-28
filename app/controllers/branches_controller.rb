@@ -9,7 +9,7 @@ class BranchesController < ApplicationController
   end
 
   def show
-  @branch = Branch.where(name: branch_param[:branch_name])
+  @branch = Branch.where(url_alias: branch_param[:branch_url_alias])
     render json: @branch
   end
 
@@ -24,7 +24,7 @@ class BranchesController < ApplicationController
           picture:  "http://i.imgur.com/BBk3iBl.png",
           name: branch.name,
           address: branch.address,
-          url: branch.url
+          url: branch.url_alias
         }
       end
     end
@@ -33,7 +33,7 @@ class BranchesController < ApplicationController
 
   private
   def branch_param
-    params.permit(:lat,:lng, :distance, :branch_name, :search_query)
+    params.permit(:lat,:lng, :distance, :search_query, :branch_url_alias)
   end
 	#Da test
   def check_role_bussiness_admin
