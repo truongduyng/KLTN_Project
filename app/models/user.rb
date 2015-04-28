@@ -11,14 +11,16 @@ class User
   belongs_to :role
   embeds_one :information
   has_one :bussiness
+  has_many :tickets
   #My field
-  field :firstname, type: String
-  field :lastname, type: String
+  field :fullname, type: String
   field :username, type: String
+  field :phone, type: String
+
   #My validation
   validates :username, presence: true, uniqueness: true
-  validates :firstname, presence: true
-  validates :lastname, presence: true
+  validates :fullname, presence: true
+  validates :phone, presence: true
 
   ## Database authenticatable
   field :email,              type: String, default: ""

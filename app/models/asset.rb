@@ -4,6 +4,7 @@ class Asset
   field :quantity, type: Integer, default: ->{1}
   field :description, type: String
 
+  has_many :tickets
   belongs_to :branch
   belongs_to :asset_category
 

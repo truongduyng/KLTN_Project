@@ -1,5 +1,5 @@
 class BranchesController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :show]
+  before_action :authenticate_user!, only: [:index]
   before_action :check_role_bussiness_admin, only: [:index]
 
 	#/branches.json
@@ -9,8 +9,19 @@ class BranchesController < ApplicationController
   end
 
   def show
-  @branch = Branch.where(url_alias: branch_param[:branch_url_alias])
+    @branch = Branch.where(id: branch_param[:id])
     render json: @branch
+  end
+
+  def branch_details
+    @branch_details= {}
+    branch= Branch.where(url_alias: branch_param[:branch_url_alias]).first
+    if branch.present?
+      @branch_details[:branch]= branch
+      @branch_details[:asset_categories] = branch.asset_categories
+      @branch_details[:assets] = branch.assets
+    end
+    render json: @branch_details
   end
 
   def search
@@ -33,7 +44,7 @@ class BranchesController < ApplicationController
 
   private
   def branch_param
-    params.permit(:lat,:lng, :distance, :search_query, :branch_url_alias)
+    params.permit(:id, :lat,:lng, :distance, :search_query, :branch_url_alias)
   end
 	#Da test
   def check_role_bussiness_admin

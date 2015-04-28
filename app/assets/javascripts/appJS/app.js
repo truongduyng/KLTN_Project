@@ -10,7 +10,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',
       controller: 'homeCtrl'
     })
     .state('booking',{
-      url: '/:branch_name',
+      url: '/:branch_url_alias',
       templateUrl: 'appJS/booking/_booking.html',
       controller: 'bookingCtrl'
     });

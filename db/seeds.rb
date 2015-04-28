@@ -6,8 +6,8 @@ user = User.create() do |u|
   u.email = "ntduy@sporta.vn"
   u.username = 'ntduy'
   u.password = '123456789'
-  u.firstname = 'Nguyen Truong'
-  u.lastname = 'Duy'
+  u.fullname = 'Nguyen Truong Duy'
+  u.phone = "01633248188"
 end
 
 #Khoi tao information for user

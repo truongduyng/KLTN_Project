@@ -47,8 +47,6 @@ jQuery(document).ready(function($) {
     return false;
   });
 
-  $('.table-scroll').scrollTop(200);
-
   $('#login-on-register').click(function(e) {
     $('#register-modal').modal('toggle');
     $('#login-modal').modal('toggle');

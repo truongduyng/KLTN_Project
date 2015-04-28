@@ -272,7 +272,7 @@ header ul.nav li ul {
 }
 header ul.nav li ul li ul {
 	margin:1px 0 0 1px;
-  }*/
+	}*/
 
 /*
 
@@ -1980,7 +1980,7 @@ article img.pull-right, article .align-right{
 
 /*Style of table booking*/
 .tablebooking {
-	width:100%;
+	width:1000px;
 }
 .tablebooking th, .tablebooking td{
 	border: 1px solid #DDDDDD;
@@ -1988,7 +1988,7 @@ article img.pull-right, article .align-right{
 }
 
 .tablebooking td{
-  height: 20px;
+	height: 20px;
 }
 
 .padding10 {
@@ -2019,6 +2019,7 @@ article img.pull-right, article .align-right{
 /*minibooking*/
 .minibooking {
 	background: #f8f8f8;
-	padding-bottom: 10px;
-	width: auto;
+	padding: 0px 10px 10px 10px;
+	position: fixed;
+	z-index: 2;
 }

@@ -1,7 +1,6 @@
 class UserController < ActionController::Base
 
   def show
-
   end
 
   def check_username

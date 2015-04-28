@@ -13,6 +13,7 @@ gem 'angular-rails-templates'
 gem 'angular_rails_csrf'
 gem 'devise'
 gem 'geocoder'
+gem 'thin'
 
 group :development, :test do
   gem 'byebug'
@@ -22,5 +23,4 @@ end
 
 group :production do
   gem 'rails_12factor'
-  gem 'thin'
 end

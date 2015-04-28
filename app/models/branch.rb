@@ -14,6 +14,7 @@ class Branch
   belongs_to :bussiness
   has_many :assets
   has_many :asset_categories
+  has_many :tickets
 
   validates :name, presence: true,  length: {maximum: 100}
   validates :address, presence: true, length: {maximum: 1000}
