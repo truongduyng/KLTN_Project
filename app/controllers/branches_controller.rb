@@ -20,6 +20,7 @@ class BranchesController < ApplicationController
       @branch_details[:branch]= branch
       @branch_details[:asset_categories] = branch.asset_categories
       @branch_details[:assets] = branch.assets
+      @branch_details[:tickets] = branch.tickets
     end
     render json: @branch_details
   end

@@ -48,8 +48,6 @@ class FeesController < ApplicationController
 			rescue Mongoid::Errors::DocumentNotFound
 				render nothing: true, status: :not_found, content_type: 'application/json'
 			end
-
-
 		end
 
 	def fees_params
