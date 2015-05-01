@@ -1,14 +1,35 @@
-app.controller('bookingCtrl', ['$scope', '$http','$stateParams', 'Auth', '$modal',function($scope, $http, $stateParams, Auth, $modal){
+app.factory('tickets',['$http',function($http){
+  var object = {
+    tickets: []
+  };
+  object.getTickets = function(ticket_query) {
+    return $http.get('/tickets/'+ticket_query.date+'/'+ticket_query.branch_id).success(function(data){
+      console.log(data);
+      angular.copy(data, object.posts);
+    });
+  };
+  object.create = function(ticket){
+    return $http.post('tickets.json', ticket).success(function(data){
+      object.tickets.push(data);
+    });
+  };
+  return object;
+}]);
+
+app.controller('bookingCtrl', ['$scope', '$http','$stateParams', 'Auth', '$modal','tickets', function($scope, $http, $stateParams, Auth, $modal, tickets){
   $scope.rate = 4;
   $scope.isReadonly = false;
   $scope.minibooking = false;
   $scope.miniedit = false;
+  $scope.tickets = tickets.tickets;
   $scope.dt = new Date();
 
   $http.get("/"+$stateParams.branch_url_alias).success(function(data){
     if (data != null){
       $scope.branch = data;
       console.log($scope.branch);
+      getticketsandshow($scope.dt,$scope.branch.branch._id.$oid);
+      console.log($scope.tickets);
       $scope.isfounddata = true;
     }
     else
@@ -16,6 +37,14 @@ app.controller('bookingCtrl', ['$scope', '$http','$stateParams', 'Auth', '$modal
       $scope.isfounddata = false;
     }
   });
+
+  function getticketsandshow(date, branch_id){
+    tickets.getTickets({date: date.toJSON().slice(0,10), branch_id: branch_id});
+  };
+
+  $scope.date_change = function(){
+    getticketsandshow($scope.dt,$scope.branch.branch._id.$oid);
+  };
 
   $scope.hoveringOver = function(value) {
     $scope.overstar = value;
@@ -42,6 +71,7 @@ app.controller('bookingCtrl', ['$scope', '$http','$stateParams', 'Auth', '$modal
   function repair_data(hour, asset_id, user){
     clear_current_display();
     $scope.user = user;
+    $scope.asset_id = asset_id;
     if(hour>Math.floor(hour))
     {
       $scope.hour_begin = Math.floor(hour) + ":30";
@@ -114,5 +144,20 @@ app.controller('bookingCtrl', ['$scope', '$http','$stateParams', 'Auth', '$modal
   $scope.close_minibooking = function(){
     $scope.minibooking = false;
     clear_current_display();
+  };
+
+  $scope.ticket_create = function(dt,hour_begin,hour_end){
+    var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_begin.split(":")[0],hour_begin.split(":")[1]);
+    console.log(begintime);
+    var endtime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_end.split(":")[0],hour_end.split(":")[1]);
+    tickets.create({
+      begin_use_time:begintime,
+      end_use_time:endtime,
+      price:$scope.price,
+      status: "new",
+      branch_id: $scope.branch.branch._id.$oid,
+      asset_id: $scope.asset_id,
+    });
+    $scope.minibooking = false;
   };
 }]);

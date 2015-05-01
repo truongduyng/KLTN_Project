@@ -30,7 +30,7 @@ app.controller('mapCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Au
         var latlng = $scope.map.getCenter();
         var distance = getsearchingdistance();
         $scope.markers = [];
-        $http.get("/search/"+latlng.k+"/"+latlng.D+"/"+distance).success(function(data){
+        $http.get("/search/"+latlng.A+"/"+latlng.F+"/"+distance).success(function(data){
           setMarkers($scope.map,data);
         });
       }})(map));
@@ -41,7 +41,7 @@ app.controller('mapCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Au
     var latlng = $scope.map.getCenter();
     var distance = getsearchingdistance();
     setUserMarker($scope.map,latlng);
-    $http.get("/search/"+latlng.k+"/"+latlng.D+"/"+distance).success(function(data){
+    $http.get("/search/"+latlng.A+"/"+latlng.F+"/"+distance).success(function(data){
       if (data != null) {
         setMarkers($scope.map,data);
       };

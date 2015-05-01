@@ -10,7 +10,7 @@
     <div class="col-lg-3 col-sm-4">
       <a class="btn btn-danger marginbot10" href="#/{{branch.branch.name}}/booking">Đặt sân</a>
       <div style="display:inline-block; margin-bottom: -20px;">
-        <datepicker ng-model="dt" show-weeks="false" class="well well-sm"></datepicker>
+        <datepicker ng-model="dt" show-weeks="false" class="well well-sm" ng-click="date_change()"></datepicker>
       </div>
 
       <h4 class="marginbot5">Bảng phí</h4>
@@ -55,8 +55,8 @@
     <p class="marginbot5">Dia diem: <a href="">{{branch.branch.name}}</a></p>
     <p class="marginbot5">Dat boi: <a href="" title="">{{user.fullname}}</a>, sdt: {{user.phone}}</p>
     <p class="marginbot5">Gia: {{price}} (.000 VND)</p>
-    <button class="btn btn-default pull-left marginright20" type="submit">Đặt</button>
-    <a class="margintop10 pull-left" href="#/{{branch.branch.name}}/booking" ng-click="close_minibooking()">Dat chi tiet >></a>
+    <button class="btn btn-default pull-left marginright20" type="submit" ng-click="ticket_create(dt,hour_begin,hour_end)">Đặt</button>
+    <a class="margintop10 pull-left" href="#/{{branch.branch.name}}/booking">Dat chi tiet >></a>
   </div>
 
   <div class="miniedit" ng-show = "miniedit">
