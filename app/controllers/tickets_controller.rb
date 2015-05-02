@@ -8,6 +8,7 @@ class TicketsController < ApplicationController
 
   def create
     ticket = Ticket.create(ticket_param.merge(user_id: current_user.id))
+    # byebug
     if ticket.errors.blank?
       render json: ticket, status: :created
     else

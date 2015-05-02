@@ -4,8 +4,7 @@ app.factory('tickets',['$http',function($http){
   };
   object.getTickets = function(ticket_query) {
     return $http.get('/tickets/'+ticket_query.date+'/'+ticket_query.branch_id).success(function(data){
-      console.log(data);
-      angular.copy(data, object.posts);
+      angular.copy(data, object.tickets);
     });
   };
   object.create = function(ticket){
@@ -25,30 +24,18 @@ app.controller('bookingCtrl', ['$scope', '$http','$stateParams', 'Auth', '$modal
   $scope.dt = new Date();
 
   $http.get("/"+$stateParams.branch_url_alias).success(function(data){
-    if (data != null){
+    if (data != "null"){
       $scope.branch = data;
-      console.log($scope.branch);
-      getticketsandshow($scope.dt,$scope.branch.branch._id.$oid);
-      console.log($scope.tickets);
+      // console.log($scope.branch);
+      $scope.date_change();
       $scope.isfounddata = true;
-    }
-    else
-    {
+    } else {
       $scope.isfounddata = false;
     }
   });
 
-  function getticketsandshow(date, branch_id){
-    tickets.getTickets({date: date.toJSON().slice(0,10), branch_id: branch_id});
-  };
-
   $scope.date_change = function(){
-    getticketsandshow($scope.dt,$scope.branch.branch._id.$oid);
-  };
-
-  $scope.hoveringOver = function(value) {
-    $scope.overstar = value;
-    $scope.ishoverstar = true;
+    tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
   };
 
   $scope.fast_book_open = function(hour,asset_id,event) {
@@ -148,7 +135,6 @@ app.controller('bookingCtrl', ['$scope', '$http','$stateParams', 'Auth', '$modal
 
   $scope.ticket_create = function(dt,hour_begin,hour_end){
     var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_begin.split(":")[0],hour_begin.split(":")[1]);
-    console.log(begintime);
     var endtime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_end.split(":")[0],hour_end.split(":")[1]);
     tickets.create({
       begin_use_time:begintime,
@@ -159,5 +145,10 @@ app.controller('bookingCtrl', ['$scope', '$http','$stateParams', 'Auth', '$modal
       asset_id: $scope.asset_id,
     });
     $scope.minibooking = false;
+  };
+
+  $scope.hoveringOver = function(value) {
+    $scope.overstar = value;
+    $scope.ishoverstar = true;
   };
 }]);

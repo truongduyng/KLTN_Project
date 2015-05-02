@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   post 'infomations/edit' => 'informations#edit'
   get 'informations/show' => 'informations#show'
 
-  get 'check/username' => 'user#check_username'
-  get 'check/email' => 'user#check_email'
+  get 'check/username' => 'users#check_username'
+  get 'check/email' => 'users#check_email'
   devise_for :users
 end

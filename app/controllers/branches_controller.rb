@@ -1,6 +1,6 @@
 class BranchesController < ApplicationController
-  before_action :authenticate_user!, only: [:index]
-  before_action :check_role_bussiness_admin, only: [:index]
+  before_action :authenticate_user!, only: [:index,:show]
+  before_action :check_role_bussiness_admin, only: [:index, :show]
 
 	#/branches.json
   def index
@@ -15,13 +15,16 @@ class BranchesController < ApplicationController
 
   def branch_details
     @branch_details= {}
-    branch= Branch.where(url_alias: branch_param[:branch_url_alias]).first
+    branch = Branch.where(url_alias: branch_param[:branch_url_alias]).first
     if branch.present?
       @branch_details[:branch]= branch
       @branch_details[:asset_categories] = branch.asset_categories
       @branch_details[:assets] = branch.assets
+      render json: @branch_details
+    else
+      render json: nil
     end
-    render json: @branch_details
+
   end
 
   def search
