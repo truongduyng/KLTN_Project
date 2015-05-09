@@ -6,11 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="" />
 
-  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=geometry"></script>
 
   <%= stylesheet_link_tag    'applicationCSS/application', media: 'all'%>
-  <%= javascript_include_tag 'appJS/application' %>
-  <script src="http://code.angularjs.org/1.4.0-rc.1/i18n/angular-locale_vi-vn.js"></script>
+  <%= csrf_meta_tags %>
 </head>
 <body ng-app="sportApp">
   <!-- {{4+3}} -->
@@ -28,6 +27,8 @@
 
   <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a>
 
+  <%= javascript_include_tag 'appJS/application' %>
+  <script src="http://code.angularjs.org/1.4.0-rc.1/i18n/angular-locale_vi-vn.js"></script>
   <script>
     /*For textarea*/
     autosize(document.querySelectorAll('textarea'));

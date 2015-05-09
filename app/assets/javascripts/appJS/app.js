@@ -12,8 +12,14 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',
     .state('booking',{
       url: '/:branch_url_alias',
       templateUrl: 'appJS/booking/_booking.html',
-      controller: 'bookingCtrl'
-    });
+      controller: 'bookingCtrl',
+      resolve: {
+        branch: function($http, $stateParams){
+          return $http.get("/"+$stateParams.branch_url_alias).success(function(data){
+            return data;
+         });
+        }}
+      })
   //Khoi phuc
   $urlRouterProvider.otherwise('home');
 }]);

@@ -1,7 +1,7 @@
 /*global jQuery:false */
 jQuery(document).ready(function($) {
   "use strict";
-    $(".big-cta").hover(
+  $(".big-cta").hover(
     function () {
      $('.cta a').addClass("animated shake");
    },

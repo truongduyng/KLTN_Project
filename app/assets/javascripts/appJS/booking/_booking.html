@@ -1,12 +1,13 @@
 <div ng-show = "isfounddata">
+
   <div class="marginbot40 margintop20">
     <h1 style="display:inline;">{{branch.branch.name}}</h1>
-    <h2> {{tickets}}</h2>
-    <!-- <rating ng-model="rate" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="ishoverstar = false"></rating>
+    <rating ng-model="rate" readonly="isReadonly" ng-hover="hoveringOver(value)" on-leave="ishoverstar = false"></rating>
     <span ng-hide = "ishoverstar">({{rate}}/5)</span>
     <span ng-show = "ishoverstar">({{overstar}}/5)</span>
-    <a href="#/{{branch.branch.name}}/review">Reviews</a> -->
+    <a href="#/{{branch.branch.name}}/review">Reviews</a>
   </div>
+
   <div class="row margintop20">
     <div class="col-lg-3 col-sm-4">
       <a class="btn btn-danger marginbot10" href="#/{{branch.branch.name}}/booking">Đặt sân</a>
@@ -32,7 +33,7 @@
       </ul>
     </div>
 
-    <div class="" style="overflow: auto; height: 510px;" id = "table-scroll">
+    <div class="calendar_content">
       <table class="tablebooking">
         <tr>
           <th class="text-center" style="width:50px !important">Time</th>
@@ -48,23 +49,31 @@
           </tr>
         </tbody>
       </table>
+      <div id= "ticket_temp" class="ticket">
+        <span>{{hour_begin}} - {{hour_end}}</span><br>
+        <span>Gia: {{price}}</span>
+      </div>
     </div>
   </div>
-  <div class="minibooking" ng-show = "minibooking">
+
+  <div id='minibooking'class="boxbooking">
     <button type="button" class="close" style="color: red" aria-hidden="true" ng-click="close_minibooking()">&times;</button><br>
-    <p class="marginbot5">Thoi gian: {{ dt | date:'fullDate'}}, {{hour_begin}} - {{hour_end}}</p>
+    <p class="marginbot5">Thoi gian: {{ dt | date:'dd-MM-yyyy'}}, {{hour_begin}} - <select ng-options = "hour_end for hour_end in hour_end_list" ng-model= 'hour_end' ng-change='update_hour_end()'/></p>
     <p class="marginbot5">Dia diem: <a href="">{{branch.branch.name}}</a></p>
     <p class="marginbot5">Dat boi: <a href="" title="">{{user.fullname}}</a>, sdt: {{user.phone}}</p>
     <p class="marginbot5">Gia: {{price}} (.000 VND)</p>
     <button class="btn btn-default pull-left marginright20" type="submit" ng-click="ticket_create(dt,hour_begin,hour_end)">Đặt</button>
-    <a class="margintop10 pull-left" href="#/{{branch.branch.name}}/booking">Dat chi tiet >></a>
   </div>
 
-  <div class="miniedit" ng-show = "miniedit">
-
+  <div id='miniedit' class="boxbooking">
+    <button type="button" class="close" style="color: red" aria-hidden="true" ng-click="close_miniedit()">&times;</button><br>
+    <p class="marginbot5">Thoi gian: {{dt | date: 'dd-MM-yyyy'}}, <span id='time_ticket'></span></p>
+    <p id='price_ticket'class="marginbot5"></p>
+    <button class="btn btn-primary pull-left marginright20" type="submit" ng-click="ticket_edit()">Cap Nhat</button>
+    <button class="btn btn-danger pull-right marginright20" type="submit" ng-click="ticket_delete()">Huy</button>
   </div>
+
 </div>
-
 
 <div ng-hide="isfounddata">
   <h3>Not found this bussiness</h3>
