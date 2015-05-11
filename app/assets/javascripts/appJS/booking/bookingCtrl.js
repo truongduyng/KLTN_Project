@@ -94,7 +94,6 @@ app.factory('tickets',['$http',function($http){
       return parseFloat(time_split[0]);
     }
   }
-
   return object;
 }]);
 
