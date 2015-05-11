@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   post 'tickets' => 'tickets#create'
   get 'tickets/:date/:branch_id' => 'tickets#show'
+  delete 'tickets/:ticket_id' => 'tickets#destroy'
 
   get 'dang-ky-doanh-nghiep' => 'bussinesses#new'
   post 'bussiness-create' => 'bussinesses#create'

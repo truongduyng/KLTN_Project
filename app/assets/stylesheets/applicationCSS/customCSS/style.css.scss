@@ -50,6 +50,33 @@ h1,h2, h3, h4, h5, h6 {
 	padding:0;
 }
 
+
+.scrollup{
+	position  :fixed;
+	width     :32px;
+	height    :32px;
+	bottom    :0px;
+	right     :20px;
+	background: #222;
+}
+
+a.scrollup {
+	outline:0;
+	text-align: center;
+}
+
+a.scrollup:hover,a.scrollup:active,a.scrollup:focus {
+	opacity:1;
+	text-decoration:none;
+}
+a.scrollup i {
+	margin-top: 10px;
+	color: #fff;
+}
+a.scrollup i:hover {
+	text-decoration:none;
+}
+
 /* =============================
 20. Spacer, margin
 ============================= */

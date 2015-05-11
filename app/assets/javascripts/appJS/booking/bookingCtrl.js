@@ -20,6 +20,18 @@ app.factory('tickets',['$http',function($http){
     });
   };
 
+  object.delete = function(ticket_id){
+    return $http.delete('/tickets/'+ ticket_id).success(function(){
+      $('div#'+ ticket_id).remove();
+      for (var i = 0; i < object.tickets.length; i++) {
+        if (object.tickets[i].ticket_id.$oid == ticket_id) {
+          object.tickets.splice(i,1);
+          break;
+        }
+      };
+    });
+  };
+
   function viewTickets(ticket){
     var begintime = object.change_time_to_float(ticket.begin_use_time.slice(11,16));
     var endtime = object.change_time_to_float(ticket.end_use_time.slice(11,16));
@@ -33,12 +45,12 @@ app.factory('tickets',['$http',function($http){
 
     $('.calendar_content').append(
       $("<div id='"+ ticket.ticket_id.$oid + "' class='ticket ticket_new'><span> "+ ticket.user_name + " </span><br><span>" + ticket.user_phone + ", Gia: " + ticket.price + "</span></div>").click(function(event){
-
         $('#minibooking').css('display','none');
         $('div#ticket_temp').removeClass('ticket_new');
         $('#miniedit').css('display','inline');
-        $('span#time_ticket').html('Thoi gian: '+ticket.begin_use_time.slice(11,16)+ ' - '+ticket.end_use_time.slice(11,16));
+        $('span#time_ticket').html(ticket.begin_use_time.slice(11,16)+ ' - '+ticket.end_use_time.slice(11,16));
         $('p#price_ticket').html('Gia: '+ ticket.price);
+        $('p#ticket_id_hidden').html(ticket.ticket_id.$oid);
         var edit_top = event.pageY - $(window).scrollTop()- $('#miniedit').height() - event.offsetY -10;
         var edit_right = $(window).width() - event.pageX - $('#miniedit').width()/2;
         edit_top = edit_top>0? edit_top : 0;
@@ -97,18 +109,19 @@ app.factory('tickets',['$http',function($http){
   return object;
 }]);
 
-app.controller('bookingCtrl', ['$scope', '$http','$stateParams', 'Auth', '$modal','tickets', 'branch', function($scope, $http, $stateParams, Auth, $modal, tickets, branch){
-  $scope.rate = 4;
-  $scope.isReadonly = false;
-  $scope.tickets = tickets.tickets;
-  $scope.dt = new Date();
-  if (branch.data != "null"){
-    $scope.branch = branch.data;
-    tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
-    $scope.isfounddata = true;
-  } else {
-    $scope.isfounddata = false;
-  }
+app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','branch',
+  function($scope, $http, Auth, $modal, tickets, branch){
+    $scope.rate = 4;
+    $scope.isReadonly = false;
+    $scope.dt = new Date();
+
+    if (branch.data != "null"){
+      $scope.branch = branch.data;
+      tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
+      $scope.isfounddata = true;
+    } else {
+      $scope.isfounddata = false;
+    }
 
   $scope.date_change = function(){
     $scope.close_minibooking();
@@ -116,16 +129,16 @@ app.controller('bookingCtrl', ['$scope', '$http','$stateParams', 'Auth', '$modal
     tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
   };
 
-  $scope.update_tickets = function update_tickets(){
-
-  };
+  // $scope.update_tickets = function update_tickets(){
+  // };
 
   $scope.fast_book_open = function(hour,asset_id,event){
     Auth.currentUser().then(function(user) {
       //repair data
-      repair_data(hour, asset_id, user)
-      // display dialog booking
-      display_booking_dialog(hour, event);
+      if (repair_data(hour, asset_id, user)) {
+        // display dialog booking
+        display_booking_dialog(hour, event);
+      }
     }, function(error) {
       //not yet sign in
       $scope.user = null;
@@ -142,12 +155,26 @@ app.controller('bookingCtrl', ['$scope', '$http','$stateParams', 'Auth', '$modal
     $scope.asset_id = asset_id;
     $scope.hour_begin = tickets.hourtoview(hour);
     $scope.hour_end_list = [];
-    for (var i = 1; i <= 4; i+=0.5) {
-      if(hour+i>24.0) break;
-      $scope.hour_end_list.push(tickets.hourtoview(hour+i));
+    var max_time_length = hour + 4;
+    for (var i = 0; i < tickets.tickets.length; i++) {
+      if(tickets.tickets[i].asset_id.$oid == asset_id){
+        var begintime = tickets.change_time_to_float(tickets.tickets[i].begin_use_time.slice(11,16));
+        if(hour < begintime && begintime < max_time_length)
+          max_time_length = begintime;
+      }
     };
-    $scope.hour_end = $scope.hour_end_list[0];
-    $scope.price = calculate_price();
+    for (var i = hour+1; i <= max_time_length; i+=0.5) {
+      if(i>24.0) break;
+      $scope.hour_end_list.push(tickets.hourtoview(i));
+    };
+    if ($scope.hour_end_list.length) {
+      $scope.hour_end = $scope.hour_end_list[0];
+      $scope.price = calculate_price();
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   $scope.update_hour_end = function(){
@@ -208,7 +235,7 @@ app.controller('bookingCtrl', ['$scope', '$http','$stateParams', 'Auth', '$modal
 
   $scope.close_miniedit = function(){
     $('#miniedit').css('display','none');
-  }
+  };
 
   $scope.ticket_create = function(dt,hour_begin,hour_end){
     var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_begin.split(":")[0],hour_begin.split(":")[1]);
@@ -224,13 +251,23 @@ app.controller('bookingCtrl', ['$scope', '$http','$stateParams', 'Auth', '$modal
     $scope.close_minibooking();
   };
 
-  $scope.ticket_edit = function(){
-    alert('dsada');
-  }
+  $scope.ticket_delete = function(ticket_id){
+    tickets.delete($('p#ticket_id_hidden').html());
+    $scope.close_miniedit();
+  };
 
-  $scope.ticket_delete = function(){
-    alert('ddddddd');
-  }
+  $scope.ticket_edit = function(){
+    $modal.open({
+      templateUrl: 'appJS/ticket/_ticket_update.html',
+      controller: 'ticketCtrl',
+      size: 'lg',
+      resolve: {
+        items: function(){
+          return $scope.branch;
+        }
+      }
+    });
+  };
 
   $scope.hoveringOver = function(value) {
     $scope.overstar = value;

@@ -16,6 +16,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',
       resolve: {
         branch: function($http, $stateParams){
           return $http.get("/"+$stateParams.branch_url_alias).success(function(data){
+            console.log(data);
             return data;
          });
         }}

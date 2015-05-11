@@ -61,6 +61,17 @@ class TicketsController < ApplicationController
     end
   end
 
+  def destroy
+    begin
+      ticket = Ticket.where(id: ticket_param[:ticket_id])
+      if ticket.destroy
+        render nothing: true, status: :ok, content_type: 'application/json'
+      end
+    rescue Exception => e
+      render nothing: true, status: :not_found, content_type: 'application/json'
+    end
+  end
+
   private
   def ticket_param
     params.permit(:ticket_id, :begin_use_time, :end_use_time, :price, :status,

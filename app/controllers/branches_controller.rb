@@ -14,6 +14,7 @@ class BranchesController < ApplicationController
   end
 
   def branch_details
+    # byebug
     @branch_details= {}
     branch = Branch.where(url_alias: branch_param[:branch_url_alias]).first
     if branch.present?

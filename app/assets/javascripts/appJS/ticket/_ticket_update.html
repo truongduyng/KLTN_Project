@@ -1,0 +1,53 @@
+<div class="modal-header">
+  <button type="button" class="close" aria-hidden="true" ng-click="close_modal()">&times;</button>
+  <h1>chỉnh sửa thông tin đặt sân</h1>
+</div>
+<div class="modal-body row">
+  <div class="col-lg-6">
+    <h4>Thời gian</h4>
+    <tabset>
+      <tab heading="Đặt sân">
+
+      </tab>
+      <tab heading="Đặt hàng tuần">
+
+      </tab>
+      <tab heading="Đặt lịch cho giải đấu">
+
+      </tab>
+    </tabset>
+
+
+    <h4>Địa điểm</h4>
+    <p style="display:inline">{{branch.branch.address}}</p>
+    <img src="" alt="iconmap">
+    <h4>Đặt bởi</h4>
+    <img src="" alt="avarta">
+    <p style="display:inline">Nguyễn Hữu Trung <br> Số ĐT: 0127012790</p>
+    <h4>Thanh toán</h4>
+    <input type="radio" name="" value="" placeholder="">Thanh toán tại sân <br>
+    <input type="radio" name="" value="" placeholder="">Thanh toán điện tử <br>
+    <h4>Giá phí</h4>
+    <p>250000VNĐ</p>
+    <button class="btn btn-theme margintop10 pull-left marginright20 marginbot40" type="submit">Đặt</button>
+    <button class="btn btn-danger margintop10 pull-left" type="submit">Hủy</button>
+  </div>
+
+  <div class="col-lg-6">
+    <h4>Gửi thông báo qua</h4>
+    <input type="checkbox" name="notification" value="Sporta">Sporta <br>
+    <input type="checkbox" name="notification" value="email">E-mail <br>
+    <input class='field margintop10' type="text" name="" value="" placeholder="">
+    <h5 class="widgetheading"></h5>
+    <div class="widget">
+      <ul class="tags">
+        <li><a href="#">ManU</a></li>
+        <li><a href="#">ManC</a></li>
+      </ul>
+    </div>
+    <h4>Lời nhắn</h4>
+    <div class="margintop10 field">
+      <textarea rows="7" name="message" class="input-block-level box" placeholder="Lời nhắn của bạn tới đồng đội..."></textarea>
+    </div>
+  </div>
+</div>
