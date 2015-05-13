@@ -1,4 +1,4 @@
-var app = angular.module("sportApp", ['ui.router', 'ui.bootstrap', 'templates', 'Devise','ngMap']);
+var app = angular.module("sportApp", ['ui.router', 'templates', 'Devise','ngMap', 'ui.bootstrap']);
 
 app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',
   function($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -16,7 +16,6 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',
       resolve: {
         branch: function($http, $stateParams){
           return $http.get("/"+$stateParams.branch_url_alias).success(function(data){
-            console.log(data);
             return data;
          });
         }}

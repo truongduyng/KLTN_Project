@@ -34,9 +34,10 @@ app.controller('mapCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Au
           setMarkers($scope.map,data);
         });
       }})(map));
+
   });
 
-  $scope.showcurrentposition = function(){
+  $scope.callbackFunc = function(){
     $scope.map.setZoom(17);
     var latlng = $scope.map.getCenter();
     var distance = getsearchingdistance();

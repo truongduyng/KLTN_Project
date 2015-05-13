@@ -36,10 +36,17 @@ app.factory('tickets',['$http',function($http){
     var begintime = object.change_time_to_float(ticket.begin_use_time.slice(11,16));
     var endtime = object.change_time_to_float(ticket.end_use_time.slice(11,16));
 
-    if(begintime>Math.floor(begintime)){
-      ticket_td = $('td#td_'+Math.floor(begintime)+'_half_'+ticket.asset_id.$oid)[0]
-    }
-    else{
+    switch(begintime-Math.floor(begintime)){
+      case 0.5:
+      ticket_td = $('td#td_'+Math.floor(begintime)+'_30_'+ticket.asset_id.$oid)[0]
+      break;
+      case 0.25:
+      ticket_td = $('td#td_'+Math.floor(begintime)+'_15_'+ticket.asset_id.$oid)[0]
+      break;
+      case 0.75:
+      ticket_td = $('td#td_'+Math.floor(begintime)+'_45_'+ticket.asset_id.$oid)[0]
+      break;
+      default:
       ticket_td = $('td#td_'+begintime+'_'+ticket.asset_id.$oid)[0]
     }
 
@@ -59,7 +66,7 @@ app.factory('tickets',['$http',function($http){
       })
       );
 
-    $('div#'+ticket.ticket_id.$oid).css({'top': ticket_td.offsetTop,'width': ticket_td.offsetWidth-3, 'left': ticket_td.offsetLeft,'height': ticket_td.offsetHeight*2*(endtime-begintime)-3});
+    $('div#'+ticket.ticket_id.$oid).css({'top': ticket_td.offsetTop,'width': ticket_td.offsetWidth-3, 'left': ticket_td.offsetLeft,'height': ticket_td.offsetHeight*4*(endtime-begintime)-3});
 
     switch(ticket.status) {
       case "new":
@@ -87,41 +94,51 @@ app.factory('tickets',['$http',function($http){
   }
 
   object.hourtoview = function hourtoview(hour){
-    if(hour>Math.floor(hour))
-    {
-      return  Math.floor(hour)+ ':30'
-    }
-    else
-    {
-      return hour + ':00'
+    switch(hour-Math.floor(hour)){
+      case 0.25:
+      return  Math.floor(hour)+ ':15';
+      case 0.5:
+      return  Math.floor(hour)+ ':30';
+      case 0.75:
+      return  Math.floor(hour)+ ':45';
+      default:
+      return  Math.floor(hour)+ ':00';
     }
   }
 
   object.change_time_to_float = function change_time_to_float(mytime){
     var time_split = mytime.split(":");
-    if (time_split[1] == "30"){
-      return parseFloat(time_split[0])+0.5;
-    }
-    else{
+    switch(time_split[1]){
+      case "15":
+      return parseFloat(time_split[0]) + 0.25;
+      case "30":
+      return parseFloat(time_split[0]) + 0.5;
+      case "45":
+      return parseFloat(time_split[0]) + 0.75;
+      default:
       return parseFloat(time_split[0]);
     }
   }
   return object;
 }]);
 
-app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','branch',
-  function($scope, $http, Auth, $modal, tickets, branch){
-    $scope.rate = 4;
-    $scope.isReadonly = false;
-    $scope.dt = new Date();
+app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','branch', function($scope, $http, Auth, $modal, tickets, branch){
+  $scope.rate = 4;
+  $scope.isReadonly = false;
+  $scope.dt = new Date();
 
-    if (branch.data != "null"){
-      $scope.branch = branch.data;
-      tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
-      $scope.isfounddata = true;
-    } else {
-      $scope.isfounddata = false;
-    }
+  Auth.currentUser().then(function(user) {
+    $scope.user = user;
+  }, function(error) {
+  });
+
+  if (branch.data != "null"){
+    $scope.branch = branch.data;
+    tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
+    $scope.isfounddata = true;
+  } else {
+    $scope.isfounddata = false;
+  }
 
   $scope.date_change = function(){
     $scope.close_minibooking();
@@ -129,29 +146,15 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
   };
 
-  // $scope.update_tickets = function update_tickets(){
-  // };
-
   $scope.fast_book_open = function(hour,asset_id,event){
-    Auth.currentUser().then(function(user) {
-      //repair data
-      if (repair_data(hour, asset_id, user)) {
-        // display dialog booking
-        display_booking_dialog(hour, event);
-      }
-    }, function(error) {
-      //not yet sign in
-      $scope.user = null;
-      alert("Ban can dang nhap de dat san!");
-      $modal.open({
-        templateUrl: 'appJS/auth/_login.html',
-        controller: 'authCtrl'
-      });
-    });
+    //repair data
+    if (repair_data(hour, asset_id)) {
+      // display dialog booking
+      display_booking_dialog(hour, event);
+    }
   };
 
   function repair_data(hour, asset_id, user){
-    $scope.user = user;
     $scope.asset_id = asset_id;
     $scope.hour_begin = tickets.hourtoview(hour);
     $scope.hour_end_list = [];
@@ -181,7 +184,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     var hbegin = tickets.change_time_to_float($scope.hour_begin);
     var hend = tickets.change_time_to_float($scope.hour_end);
     $scope.price = calculate_price();
-    $('div#ticket_temp').css('height', $scope.ticket_heigth*2*(hend-hbegin)-3);
+    $('div#ticket_temp').css('height', $scope.ticket_heigth*4*(hend-hbegin)-3);
   }
 
   function calculate_price(){
@@ -214,8 +217,8 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
   function display_booking_dialog(hour,event){
     if(hour < 23.5){
-      $scope.ticket_heigth = event.currentTarget.offsetHeight;
-      $('div#ticket_temp').css({'top': event.currentTarget.offsetTop,'width': event.currentTarget.offsetWidth-3, 'left': event.currentTarget.offsetLeft,'height': $scope.ticket_heigth*2-3});
+      $scope.ticket_heigth = 20; //height of td
+      $('div#ticket_temp').css({'top': event.currentTarget.offsetTop,'width': event.currentTarget.offsetWidth-3, 'left': event.currentTarget.offsetLeft,'height': $scope.ticket_heigth*4-3});
       $('div#ticket_temp').addClass('ticket_new');
       $('#minibooking').css('display','inline');
       $scope.close_miniedit();
@@ -238,36 +241,73 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   };
 
   $scope.ticket_create = function(dt,hour_begin,hour_end){
-    var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_begin.split(":")[0],hour_begin.split(":")[1]);
-    var endtime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_end.split(":")[0],hour_end.split(":")[1]);
-    tickets.create({
-      begin_use_time:begintime,
-      end_use_time:endtime,
-      price:$scope.price,
-      status: "new",
-      branch_id: $scope.branch.branch._id.$oid,
-      asset_id: $scope.asset_id,
+    Auth.currentUser().then(function(user) {
+      var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_begin.split(":")[0],hour_begin.split(":")[1]);
+      var endtime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_end.split(":")[0],hour_end.split(":")[1]);
+      tickets.create({
+        begin_use_time: begintime,
+        end_use_time: endtime,
+        price: $scope.price,
+        status: "new",
+        branch_id: $scope.branch.branch._id.$oid,
+        asset_id: $scope.asset_id,
+      });
+      $scope.close_minibooking();
+    }, function(error) {
+      alert("Ban can dang nhap de dat san!");
+      $modal.open({
+        templateUrl: 'appJS/auth/_login.html',
+        controller: 'authCtrl'
+      });
     });
-    $scope.close_minibooking();
   };
 
   $scope.ticket_delete = function(ticket_id){
-    tickets.delete($('p#ticket_id_hidden').html());
-    $scope.close_miniedit();
+    Auth.currentUser().then(function(user) {
+      tickets.delete($('p#ticket_id_hidden').html());
+      $scope.close_miniedit();
+    }, function(error) {
+      alert("Ban can dang nhap de huy!");
+      $modal.open({
+        templateUrl: 'appJS/auth/_login.html',
+        controller: 'authCtrl'
+      });
+    });
   };
 
   $scope.ticket_edit = function(){
-    $modal.open({
-      templateUrl: 'appJS/ticket/_ticket_update.html',
-      controller: 'ticketCtrl',
-      size: 'lg',
-      resolve: {
-        items: function(){
-          return $scope.branch;
+    Auth.currentUser().then(function(user) {
+      var ticket_update = $modal.open({
+        templateUrl: "appJS/ticket/_ticket_update.html",
+        controller: "ticketCtrl",
+        resolve: {
+          ticket: function(){
+            return $('p#ticket_id_hidden').html();
+          },
+          branch: function(){
+            return $scope.branch;
+          }
         }
-      }
+      });
+    }, function(error) {
+      alert("Ban can dang nhap de chinh sua lich dat!");
+      $modal.open({
+        templateUrl: 'appJS/auth/_login.html',
+        controller: 'authCtrl'
+      });
     });
   };
+
+  $scope.showtimeintd = function(hour,element,show){
+    if(show){
+      $(element.currentTarget).css('background-color','#eeeeee');
+      $(element.currentTarget).html(tickets.hourtoview(hour));
+    }
+    else{
+      $(element.currentTarget).css('background-color','white');
+      $(element.currentTarget).html("");
+    }
+  }
 
   $scope.hoveringOver = function(value) {
     $scope.overstar = value;

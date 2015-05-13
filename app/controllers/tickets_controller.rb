@@ -1,7 +1,8 @@
 class TicketsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:create, :update_status, :update, :destroy]
 
   def show
+    # byebug
     tickets = Ticket.onday(ticket_param[:date],ticket_param[:branch_id])
     results = []
     if tickets.present?
@@ -17,8 +18,11 @@ class TicketsController < ApplicationController
             user_phone: ticket.user.phone
           }
       end
+      render json: results
+    else
+      render json: nil
     end
-    render json: results
+
   end
 
   def create

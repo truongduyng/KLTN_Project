@@ -37,15 +37,21 @@
       <table class="tablebooking">
         <tr>
           <th class="text-center" style="width:50px !important">Time</th>
-          <th class="text-center" ng-repeat= "asset in branch.assets">{{asset.name}}</th>
+          <th class="text-center" style="width:144px !important" ng-repeat= "asset in branch.assets">{{asset.name}}</th>
         </tr>
         <tbody ng-repeat= "hour in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]">
           <tr>
-            <td class="padding10 text-center" rowspan="2" style="width:50px !important">{{hour}}:00</td>
-            <td id= "td_{{hour}}_{{asset._id.$oid}}" ng-click = "fast_book_open(hour,asset._id.$oid, $event)" ng-repeat= "asset in branch.assets"></td>
+            <td class="padding10 text-center" rowspan="4" style="width:50px !important">{{hour}}:00</td>
+            <td id= "td_{{hour}}_{{asset._id.$oid}}" ng-click = "fast_book_open(hour,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour,$event,true)" ng-mouseleave="showtimeintd(hour,$event,false)" ng-repeat= "asset in branch.assets"></td>
           </tr>
           <tr>
-            <td id="td_{{hour}}_half_{{asset._id.$oid}}" ng-click = "fast_book_open(hour+0.5,asset._id.$oid, $event)" ng-repeat= "asset in branch.assets"></td>
+            <td id="td_{{hour}}_15_{{asset._id.$oid}}" ng-click = "fast_book_open(hour+0.25,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour+0.25,$event,true)" ng-mouseleave="showtimeintd(hour+0.25,$event,false)" ng-repeat= "asset in branch.assets"></td>
+          </tr>
+          <tr>
+            <td id="td_{{hour}}_30_{{asset._id.$oid}}" ng-click = "fast_book_open(hour+0.5,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour+0.5,$event,true)" ng-mouseleave="showtimeintd(hour+0.5,$event,false)" ng-repeat= "asset in branch.assets"></td>
+          </tr>
+          <tr>
+            <td id="td_{{hour}}_45_{{asset._id.$oid}}" ng-click = "fast_book_open(hour+0.75,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour+0.75,$event,true)" ng-mouseleave="showtimeintd(hour+0.75,$event,false)" ng-repeat= "asset in branch.assets"></td>
           </tr>
         </tbody>
       </table>
@@ -70,10 +76,9 @@
     <p class="marginbot5">Thoi gian: {{dt | date: 'dd-MM-yyyy'}}, <span id='time_ticket'></span></p>
     <p id='price_ticket' class="marginbot5"></p>
     <p id='ticket_id_hidden' hidden= 'true'></p>
-    <button class="btn btn-primary pull-left marginright20" type="submit" ng-controller="ticketCtrl" ng-click="ticket_edit()">Cap Nhat</button>
+    <button class="btn btn-primary pull-left marginright20" type="submit" ng-click="ticket_edit()">Cap Nhat</button>
     <button class="btn btn-danger pull-right marginright20" type="submit" ng-click="ticket_delete()">Xoa</button>
   </div>
-
 </div>
 
 <div ng-hide="isfounddata">

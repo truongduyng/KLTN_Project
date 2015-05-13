@@ -139,14 +139,14 @@ a.scrollup i:hover {
 	width:1000px;
 }
 .tablebooking th, .tablebooking td{
-	border: 1px solid #DDDDDD;
+	border: 1.5px solid #DDDDDD;
 	border-collapse: collapse;
 }
 
 .tablebooking td{
-	height: 22px;
+	height: 20px;
 	width: 144px;
-	background-color: "#FFFFFF";
+	background-color: #FFFFFF;
 }
 
 .padding10 {
@@ -225,4 +225,9 @@ a.scrollup i:hover {
 	overflow: auto;
 	height: 510px;
 	position: relative;
+}
+
+i:hover{
+	color: rgb(65, 171, 107);
+	cursor: pointer;
 }

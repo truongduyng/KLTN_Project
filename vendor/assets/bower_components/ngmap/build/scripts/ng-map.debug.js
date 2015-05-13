@@ -5,11 +5,8 @@ var ngMap = angular.module('ngMap', []);
  * @name Attr2Options
  * @description 
  *   Converts tag attributes to options used by google api v3 objects, map, marker, polygon, circle, etc.
- *
- *   TODO: there are some methods that must be in mapController. Those shoulb be moved for better collaboration.
- *   i.e. setDelayedGeoLocation, observeAndSet
  */
-/* global ngMap, google */
+/* global google */
 (function() {
   'use strict';
 
@@ -37,7 +34,7 @@ var ngMap = angular.module('ngMap', []);
     }
   }
 
-  var Attr2Options = function($parse, NavigatorGeolocation, GeoCoder) { 
+  var Attr2Options = function($parse, $timeout, NavigatorGeolocation, GeoCoder) { 
 
     /**
      * Returns the attributes of an element as hash
@@ -119,44 +116,10 @@ var ngMap = angular.module('ngMap', []);
       return output;
     };
 
-    var setDelayedGeoLocation = function(object, method, param, options) {
-      options = options || {};
-      var centered = object.centered || options.centered;
-      var errorFunc = function() {
-        console.log('error occurred while', object, method, param, options);
-        var fallbackLocation = options.fallbackLocation || new google.maps.LatLng(0,0);
-        object[method](fallbackLocation);
-      };
-      if (!param || param.match(/^current/i)) { // sensored position
-        NavigatorGeolocation.getCurrentPosition().then(
-          function(position) { // success
-            var lat = position.coords.latitude;
-            var lng = position.coords.longitude;
-            var latLng = new google.maps.LatLng(lat,lng);
-            object[method](latLng);
-            if (centered) {
-              object.map.setCenter(latLng);
-            }
-            options.callback && options.callback.apply(object);
-          },
-          errorFunc
-        );
-      } else { //assuming it is address
-        GeoCoder.geocode({address: param}).then(
-          function(results) { // success
-            object[method](results[0].geometry.location);
-            if (centered) {
-              object.map.setCenter(results[0].geometry.location);
-            }
-          },
-          errorFunc
-        );
-      }
-    };
-
     var getAttrsToObserve = function(attrs) {
       var attrsToObserve = [];
       if (attrs["ng-repeat"] || attrs.ngRepeat) {  // if element is created by ng-repeat, don't observe any
+        void(0);
       } else {
         for (var attrName in attrs) {
           var attrValue = attrs[attrName];
@@ -169,36 +132,6 @@ var ngMap = angular.module('ngMap', []);
       return attrsToObserve;
     };
 
-    var observeAttrSetObj = function(orgAttrs, attrs, obj) {
-      var attrsToObserve = getAttrsToObserve(orgAttrs);
-      if (Object.keys(attrsToObserve).length) {
-        console.log(obj, "attributes to observe", attrsToObserve);
-      }
-      for (var i=0; i<attrsToObserve.length; i++) {
-        observeAndSet(attrs, attrsToObserve[i], obj);
-      }
-    };
-
-    var observeAndSet = function(attrs, attrName, object) {
-      attrs.$observe(attrName, function(val) {
-        if (val) {
-          console.log('observing ', object, attrName, val);
-          var setMethod = camelCase('set-'+attrName);
-          var optionValue = toOptionValue(val, {key: attrName});
-          console.log('setting ', object, attrName, 'with value', optionValue);
-          if (object[setMethod]) { //if set method does exist
-            /* if an location is being observed */
-            if (attrName.match(/center|position/) && 
-              typeof optionValue == 'string') {
-              setDelayedGeoLocation(object, setMethod, optionValue);
-            } else {
-              object[setMethod](optionValue);
-            }
-          }
-        }
-      });
-    };
-
     /**
      * filters attributes by skipping angularjs methods $.. $$..
      * @memberof Attr2Options
@@ -209,6 +142,7 @@ var ngMap = angular.module('ngMap', []);
       var options = {};
       for(var key in attrs) {
         if (key.match(/^\$/) || key.match(/^ng[A-Z]/)) {
+          void(0);
         } else {
           options[key] = attrs[key];
         }
@@ -268,10 +202,12 @@ var ngMap = angular.module('ngMap', []);
         return function(event) {
           function index(obj,i) {return obj[i];}
           var f = funcName.split('.').reduce(index, scope);
-          f.apply(this, [event].concat(args));
-          scope.$apply();
-        }
-      }
+          f && f.apply(this, [event].concat(args));
+          $timeout( function() {
+            scope.$apply();
+          });
+        };
+      };
 
       for(var key in attrs) {
         if (attrs[key]) {
@@ -358,21 +294,19 @@ var ngMap = angular.module('ngMap', []);
     };
 
     return {
+      camelCase: camelCase,
       filter: filter,
       getOptions: getOptions,
       getEvents: getEvents,
       getControlOptions: getControlOptions,
       toOptionValue: toOptionValue,
-      setDelayedGeoLocation: setDelayedGeoLocation,
       getAttrsToObserve: getAttrsToObserve,
-      observeAndSet: observeAndSet,
-      observeAttrSetObj: observeAttrSetObj,
       orgAttributes: orgAttributes
     }; // return
 
   }; 
 
-  angular.module('ngMap').service('Attr2Options', ['$parse', 'NavigatorGeolocation', 'GeoCoder', Attr2Options]);
+  angular.module('ngMap').service('Attr2Options', ['$parse', '$timeout', 'NavigatorGeolocation', 'GeoCoder', Attr2Options]);
 })();
 
 /**
@@ -577,9 +511,9 @@ ngMap.directive('bicyclingLayer', ['Attr2Options', function(Attr2Options) {
 
       var layer = getLayer(options, events);
       mapController.addObject('bicyclingLayers', layer);
-      parser.observeAttrSetObj(orgAttrs, attrs, layer);  //observers
+      mapController.observeAttrSetObj(orgAttrs, attrs, layer);  //observers
       element.bind('$destroy', function() {
-        mapController.deleteObject('biclclingLayers', layer);
+        mapController.deleteObject('bicyclingLayers', layer);
       });
     }
    }; // return
@@ -625,7 +559,7 @@ ngMap.directive('cloudLayer', ['Attr2Options', function(Attr2Options) {
 
       var layer = getLayer(options, events);
       mapController.addObject('cloudLayers', layer);
-      parser.observeAttrSetObj(orgAttrs, attrs, layer);  //observers
+      mapController.observeAttrSetObj(orgAttrs, attrs, layer);  //observers
       element.bind('$destroy', function() {
         mapController.deleteObject('cloudLayers', layer);
       });
@@ -698,6 +632,120 @@ ngMap.directive('customControl', ['Attr2Options', '$compile', function(Attr2Opti
     } //link
   }; // return
 }]);// function
+
+/**
+ * @ngdoc directive
+ * @name directions
+ * @description 
+ *   Enable directions on map. e.g., origin, destination, draggable, waypoints, etc
+ *   
+ *   Requires:  map directive
+ *
+ *   Restrict To:  Element 
+ *
+ * @param {String} &lt;DirectionsRendererOptions> Any DirectionsRendererOptions, 
+ *   https://developers.google.com/maps/documentation/javascript/reference#DirectionsRendererOptions
+ * @param {String} &lt;DirectionsRequest Options> Any DirectionsRequest options, 
+ *   https://developers.google.com/maps/documentation/javascript/reference#DirectionsRequest
+ * @example
+ * Example: 
+ *   <map zoom="14" center="37.7699298, -122.4469157">
+ *     <directions 
+ *       draggable="true"
+ *       panel="directions-panel"
+ *       travel-mode="{{travelMode}}"
+ *       waypoints="[{location:'kingston', stopover:true}]"
+ *       origin="{{origin}}"
+ *       destination="{{destination}}">
+ *     </directions>
+ *   </map> 
+ */
+/* global google */
+(function() {
+  'use strict';
+
+  var getDirectionsRenderer = function(options, events) {
+    if (options.panel) {
+      options.panel = document.getElementById(options.panel) || document.querySelector(options.panel);
+    }
+    var renderer = new google.maps.DirectionsRenderer(options);
+    for (var eventName in events) {
+      google.maps.event.addListener(renderer, eventName, events[eventName]);
+    }
+    return renderer;
+  };
+
+  var directions = function(Attr2Options, $timeout) {
+    var parser = Attr2Options;
+    var directionsService = new google.maps.DirectionsService();
+
+    var updateRoute = function(renderer, options) {
+      /* filter out valid keys only for DirectionsRequest object*/
+      var request = options;
+      request.travelMode = request.travelMode || 'DRIVING';
+      var validKeys = [
+        'origin', 'destination', 'travelMode', 'transitOptions', 'unitSystem',
+        'durationInTraffic', 'waypoints', 'optimizeWaypoints', 
+        'provideRouteAlternatives', 'avoidHighways', 'avoidTolls', 'region'
+      ];
+      for(var key in request){
+        (validKeys.indexOf(key) === -1) && (delete request[key]);
+      }
+
+      if (request.origin && request.destination) {
+        console.log('request', request);
+        directionsService.route(request, function(response, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
+            $timeout(function() {
+              renderer.setDirections(response);
+            });
+          }
+        });
+      } 
+    };
+
+    var linkFunc = function(scope, element, attrs, mapController) {
+      var orgAttrs = parser.orgAttributes(element);
+      var filtered = parser.filter(attrs);
+      var options = parser.getOptions(filtered);
+      var events = parser.getEvents(scope, filtered);
+      var attrsToObserve = parser.getAttrsToObserve(orgAttrs);
+
+      var renderer = getDirectionsRenderer(options, events);
+      mapController.addObject('directionsRenderers', renderer);
+      
+      attrsToObserve.forEach(function(attrName) {
+        (function(attrName) {
+          attrs.$observe(attrName, function(val) {
+            if (options[attrName] !== val) { //apply only if changed
+              var optionValue = parser.toOptionValue(val, {key: attrName});
+              console.log('setting ', attrName, 'with value', optionValue);
+              options[attrName] = optionValue;
+              updateRoute(renderer, options);
+            }
+          });
+        })(attrName);
+      });
+
+      scope.$on('mapInitialized', function(event, map) {
+        updateRoute(renderer, options);
+      });
+      scope.$on('$destroy', function(event, map) {
+        mapController.deleteObject('directionsRenderers', renderer);
+      });
+    };
+    
+    return {
+      restrict: 'E',
+      require: '^map',
+      link: linkFunc
+    }
+  }; // var directions
+  directions.$inject = ['Attr2Options', '$timeout'];
+
+  angular.module('ngMap').directive('directions', directions);
+})();
+
 
 /**
  * @ngdoc directive
@@ -903,7 +951,6 @@ ngMap.directive('heatmapLayer', ['Attr2Options', '$window', function(Attr2Option
    }; // return
 }]);
 
-/*jshint -W030*/
 /**
  * @ngdoc directive
  * @name info-window 
@@ -918,6 +965,7 @@ ngMap.directive('heatmapLayer', ['Attr2Options', '$window', function(Attr2Option
  *
  * @param {Boolean} visible Indicates to show it when map is initialized
  * @param {Boolean} visible-on-marker Indicates to show it on a marker when map is initialized
+ * @param {Expression} geo-callback if position is an address, the expression is will be performed when geo-lookup is successful. e.g., geo-callback="showDetail()"
  * @param {String} &lt;InfoWindowOption> Any InfoWindow options,
  *        https://developers.google.com/maps/documentation/javascript/reference?csw=1#InfoWindowOptions  
  * @param {String} &lt;InfoWindowEvent> Any InfoWindow events, https://developers.google.com/maps/documentation/javascript/reference
@@ -940,139 +988,137 @@ ngMap.directive('heatmapLayer', ['Attr2Options', '$window', function(Attr2Option
  *    </info-window>
  *  </map>
  */
-ngMap.directive('infoWindow', ['Attr2Options', '$compile', '$timeout', function(Attr2Options, $compile, $timeout)  {
-  var parser = Attr2Options;
+/* global google */
+(function() {
+  'use strict';
 
-  var getInfoWindow = function(options, events, element) {
-    var infoWindow;
+   var infoWindow = function(Attr2Options, $compile, $timeout, $parse)  {
+     var parser = Attr2Options;
 
-    /**
-     * set options
-     */
-    if (options.position && 
-      !(options.position instanceof google.maps.LatLng)) {
-      var address = options.position;
-      delete options.position;
-      infoWindow = new google.maps.InfoWindow(options);
-      var callback = function() {
-        infoWindow.open(infoWindow.map);
-      }
-      parser.setDelayedGeoLocation(infoWindow, 'setPosition', address, {callback: callback});
-    } else {
-      infoWindow = new google.maps.InfoWindow(options);
-    }
+     var getInfoWindow = function(options, events, element) {
+       var infoWindow;
 
-    /**
-     * set events
-     */
-    if (Object.keys(events).length > 0) {
-      console.log("infoWindow events", events);
-    }
-    for (var eventName in events) {
-      if (eventName) {
-        google.maps.event.addListener(infoWindow, eventName, events[eventName]);
-      }
-    }
+       /**
+        * set options
+        */
+       if (options.position && !(options.position instanceof google.maps.LatLng)) {
+         delete options.position;
+       }
+       infoWindow = new google.maps.InfoWindow(options);
 
-    /**
-     * set template ane template-relate functions
-     * it must have a container element with ng-non-bindable
-     */
-    var template = element.html().trim();
-    if (angular.element(template).length != 1) {
-      throw "info-window working as a template must have a container";
-    }
-    infoWindow.__template = template.replace(/\s?ng-non-bindable[='"]+/,"");
+       /**
+        * set events
+        */
+       if (Object.keys(events).length > 0) {
+         console.log("infoWindow events", events);
+       }
+       for (var eventName in events) {
+         if (eventName) {
+           google.maps.event.addListener(infoWindow, eventName, events[eventName]);
+         }
+       }
 
-    infoWindow.__compile = function(scope) {
-      var el = $compile(infoWindow.__template)(scope);
-      scope.$apply();
-      infoWindow.setContent(el[0]);
-    };
+       /**
+        * set template ane template-relate functions
+        * it must have a container element with ng-non-bindable
+        */
+       var template = element.html().trim();
+       if (angular.element(template).length != 1) {
+         throw "info-window working as a template must have a container";
+       }
+       infoWindow.__template = template.replace(/\s?ng-non-bindable[='"]+/,"");
 
-    infoWindow.__eval = function() {
-      var template = infoWindow.__template;
-      var _this = this;
-      template = template.replace(/{{(event|this)[^;\}]+}}/g, function(match) {
-        var expression = match.replace(/[{}]/g, "").replace("this.", "_this.");
-        console.log('expression', expression);
-        return eval(expression);
-      });
-      console.log('template', template);
-      return template;
-    };
+       infoWindow.__compile = function(scope, anchor) {
+         anchor && (scope['this'] = anchor);
+         var el = $compile(infoWindow.__template)(scope);
+         infoWindow.setContent(el[0]);
+         scope.$apply();
+       };
 
-    infoWindow.__open = function(scope, anchor) {
-      var _this = this;
-      $timeout(function() {
-        var tempTemplate = infoWindow.__template; // set template in a temporary variable
-        infoWindow.__template = infoWindow.__eval.apply(_this);
-        infoWindow.__compile(scope);
-        if (anchor && anchor.getPosition) {
-      console.log('anchor', anchor);
-      console.log('map', infoWindow.map);
-          infoWindow.open(infoWindow.map, anchor);
-        } else {
-          infoWindow.open(infoWindow.map);
-        }
-        infoWindow.__template = tempTemplate; // reset template to the object
-      });
-    };
+       infoWindow.__open = function(map, scope, anchor) {
+         $timeout(function() {
+           var tempTemplate = infoWindow.__template; // set template in a temporary variable
+           infoWindow.__compile(scope, anchor);
+           if (anchor && anchor.getPosition) {
+             infoWindow.open(map, anchor);
+           } else if (anchor && anchor instanceof google.maps.LatLng) {
+             infoWindow.open(map);
+             infoWindow.setPosition(anchor);
+           } else {
+             infoWindow.open(map);
+           }
+           infoWindow.__template = tempTemplate; // reset template to the object
+         });
+       };
 
-    return infoWindow;
-  };
+       return infoWindow;
+     };
 
-  return {
-    restrict: 'E',
-    require: '^map',
-    link: function(scope, element, attrs, mapController) {
-      element.css('display','none');
-      var orgAttrs = parser.orgAttributes(element);
-      var filtered = parser.filter(attrs);
-      var options = parser.getOptions(filtered, scope);
-      var events = parser.getEvents(scope, filtered);
-      console.log('infoWindow', 'options', options, 'events', events);
+     var linkFunc = function(scope, element, attrs, mapController) {
+       element.css('display','none');
+       var orgAttrs = parser.orgAttributes(element);
+       var filtered = parser.filter(attrs);
+       var options = parser.getOptions(filtered, scope);
+       var events = parser.getEvents(scope, filtered);
+       console.log('infoWindow', 'options', options, 'events', events);
 
-      var infoWindow = getInfoWindow(options, events, element);
+       var address;
+       if (options.position && !(options.position instanceof google.maps.LatLng)) {
+         address = options.position;
+       }
+       var infoWindow = getInfoWindow(options, events, element);
+       if (address) {
+         mapController.getGeoLocation(address).then(function(latlng) {
+           infoWindow.setPosition(latlng);
+           infoWindow.__open(mapController.map, scope, latlng);
+           var geoCallback = attrs.geoCallback;
+           geoCallback && $parse(geoCallback)(scope);
+         });
+       }
 
-      mapController.addObject('infoWindows', infoWindow);
-      parser.observeAttrSetObj(orgAttrs, attrs, infoWindow); /* observers */
-      element.bind('$destroy', function() {
-        mapController.deleteObject('infoWindows', infoWindow);
-      });
+       mapController.addObject('infoWindows', infoWindow);
+       mapController.observeAttrSetObj(orgAttrs, attrs, infoWindow); /* observers */
 
-      scope.$on('mapInitialized', function(evt, map) {
-        infoWindow.map = map;
-        infoWindow.visible && infoWindow.__open(scope);
-        if (infoWindow.visibleOnMarker) {
-          var markerId = infoWindow.visibleOnMarker;
-          infoWindow.__open(scope, map.markers[markerId]);
-        }
-      });
+       scope.$on('mapInitialized', function(evt, map) {
+         infoWindow.visible && infoWindow.__open(map, scope);
+         if (infoWindow.visibleOnMarker) {
+           var markerId = infoWindow.visibleOnMarker;
+           infoWindow.__open(map, scope, map.markers[markerId]);
+         }
+       });
 
-      /**
-       * provide showInfoWindow method to scope
-       */
-      scope.showInfoWindow  = scope.showInfoWindow ||
-        function(event, id, marker) {
-          var infoWindow = mapController.map.infoWindows[id];
-          var anchor = marker ? marker :
-            this.getPosition ? this : null;
-          infoWindow.__open.apply(this, [scope, anchor]);
-        };
+       /**
+        * provide showInfoWindow method to scope
+        */
 
-      /**
-       * provide hideInfoWindow method to scope
-       */
-      scope.hideInfoWindow  = scope.hideInfoWindow ||
-        function(event, id) {
-          var infoWindow = mapController.map.infoWindows[id];
-          infoWindow.close();
-        };
+       scope.showInfoWindow  = function(e, id, marker) {
+         var infoWindow = mapController.map.infoWindows[id];
+         var anchor = marker ? marker : (this.getPosition ? this : null);
+         infoWindow.__open(mapController.map, scope, anchor);
+       };
 
-    } //link
-  }; // return
-}]);// function
+       /**
+        * provide hideInfoWindow method to scope
+        */
+       scope.hideInfoWindow  = scope.hideInfoWindow ||
+         function(event, id) {
+           var infoWindow = mapController.map.infoWindows[id];
+           infoWindow.close();
+         };
+
+     }; //link
+
+     return {
+       restrict: 'E',
+       require: '^map',
+       link: linkFunc
+     }; 
+
+   }; // infoWindow
+   infoWindow.$inject = ['Attr2Options', '$compile', '$timeout', '$parse'];
+
+   angular.module('ngMap').directive('infoWindow', infoWindow); 
+})();
 
 /**
  * @ngdoc directive
@@ -1096,7 +1142,7 @@ ngMap.directive('infoWindow', ['Attr2Options', '$compile', '$timeout', function(
  * Example: 
  *
  *   <map zoom="11" center="[41.875696,-87.624207]">
- *     <kml-layer url="http://gmaps-samples.googlecode.com/svn/trunk/ggeoxml/cta.kml" ></kml-layer>
+ *     <kml-layer url="https://gmaps-samples.googlecode.com/svn/trunk/ggeoxml/cta.kml" ></kml-layer>
  *    </map>
  */
 /*jshint -W089*/
@@ -1124,7 +1170,7 @@ ngMap.directive('kmlLayer', ['Attr2Options', function(Attr2Options) {
 
       var kmlLayer = getKmlLayer(options, events);
       mapController.addObject('kmlLayers', kmlLayer);
-      parser.observeAttrSetObj(orgAttrs, attrs, kmlLayer);  //observers
+      mapController.observeAttrSetObj(orgAttrs, attrs, kmlLayer);  //observers
       element.bind('$destroy', function() {
         mapController.deleteObject('kmlLayers', kmlLayer);
       });
@@ -1313,6 +1359,7 @@ ngMap.directive('mapType', ['Attr2Options', '$window', function(Attr2Options, $w
  *   Restrict To:
  *     Element
  *
+ * @param {Expression} geo-callback if center is an address or current location, the expression is will be executed when geo-lookup is successful. e.g., geo-callback="showMyStoreInfo()"
  * @param {Array} geo-fallback-center 
  *    The center of map incase geolocation failed. i.e. [0,0]
  * @param {String} init-event The name of event to initialize this map. 
@@ -1336,22 +1383,23 @@ ngMap.directive('mapType', ['Attr2Options', '$window', function(Attr2Options, $w
  *   <map geo-fallback-center="[40.74, -74.18]">
  *   </map>
  */
-/*jshint -W030*/
-ngMap.directive('map', ['Attr2Options', '$timeout', function(Attr2Options, $timeout) {
-  var parser = Attr2Options;
-  function getStyle(el,styleProp)
-  {
+/* global google */
+(function() {
+  'use strict';
+
+  function getStyle(el,styleProp) {
+    var y;
     if (el.currentStyle) {
-      var y = el.currentStyle[styleProp];
+      y = el.currentStyle[styleProp];
     } else if (window.getComputedStyle) {
-      var y = document.defaultView.getComputedStyle(el,null).getPropertyValue(styleProp);
+      y = document.defaultView.getComputedStyle(el,null).getPropertyValue(styleProp);
     }
     return y;
   }
 
-  return {
-    restrict: 'AE',
-    controller: ngMap.MapController,
+  var mapDirective = function(Attr2Options, $timeout, $parse) {
+    var parser = Attr2Options;
+
     /**
      * Initialize map and events
      * @memberof map
@@ -1360,14 +1408,14 @@ ngMap.directive('map', ['Attr2Options', '$timeout', function(Attr2Options, $time
      * @param {Hash} attrs
      * @ctrl {MapController} ctrl
      */
-    link: function (scope, element, attrs, ctrl) {
+    var linkFunc = function(scope, element, attrs, ctrl) {
       var orgAttrs = parser.orgAttributes(element);
 
       scope.google = google;  //used by $scope.eval in Attr2Options to avoid eval()
 
       /**
        * create a new `div` inside map tag, so that it does not touch map element
-       * http://stackoverflow.com/questions/20955356
+       * https://stackoverflow.com/questions/20955356
        */
       var el = document.createElement("div");
       el.style.width = "100%";
@@ -1408,8 +1456,13 @@ ngMap.directive('map', ['Attr2Options', '$timeout', function(Attr2Options, $time
           mapOptions.center = new google.maps.LatLng(0,0);
         } else if (!(center instanceof google.maps.LatLng)) {
           delete mapOptions.center;
-          Attr2Options.setDelayedGeoLocation(map, 'setCenter', 
-              center, {fallbackLocation: options.geoFallbackCenter});
+          ctrl.getGeoLocation(center).then(function(latlng) {
+            map.setCenter(latlng);
+            var geoCallback = attrs.geoCallback;
+            geoCallback && $parse(geoCallback)(scope);
+          }, function(error) {
+            map.setCenter(options.geoFallbackCenter);
+          });
         }
         map.setOptions(mapOptions);
 
@@ -1425,7 +1478,7 @@ ngMap.directive('map', ['Attr2Options', '$timeout', function(Attr2Options, $time
         /**
          * set observers
          */
-        parser.observeAttrSetObj(orgAttrs, attrs, map);
+        ctrl.observeAttrSetObj(orgAttrs, attrs, map);
 
         /**
          * set controller and set objects
@@ -1446,9 +1499,9 @@ ngMap.directive('map', ['Attr2Options', '$timeout', function(Attr2Options, $time
          */
         scope.map = map;
         scope.map.scope = scope;
-        //google.maps.event.addListenerOnce(map, "idle", function() {
-        scope.$emit('mapInitialized', map);  
-        //});
+        google.maps.event.addListenerOnce(map, "idle", function() {
+          scope.$emit('mapInitialized', map);  
+        });
 
         // the following lines will be deprecated on behalf of mapInitialized
         // to collect maps, we should use scope.maps in your own controller, i.e. MyCtrl
@@ -1474,98 +1527,188 @@ ngMap.directive('map', ['Attr2Options', '$timeout', function(Attr2Options, $time
       } else {
         initializeMap(mapOptions, mapEvents);
       } // if
-    }
-  }; 
-}]);
+    };
 
-/**
- * @ngdoc directive
- * @name MapController
- * @requires $scope
- * @property {Hash} controls collection of Controls initiated within `map` directive
- * @property {Hash} markersi collection of Markers initiated within `map` directive
- * @property {Hash} shapes collection of shapes initiated within `map` directive
- * @property {MarkerClusterer} markerClusterer MarkerClusterer initiated within `map` directive
- */
-/*jshint -W089*/
-/* global google, ngMap */
-ngMap.MapController = function() { 
+    return {
+      restrict: 'AE',
+      controller: 'MapController',
+      link: linkFunc
+    }; 
+  };
+
+  angular.module('ngMap').directive('map', ['Attr2Options', '$timeout', '$parse', mapDirective]);
+})();
+
+/* global google */
+(function() {
   'use strict';
 
-  this.map = null;
-  this._objects = []; /* temporary collection of map objects */
-
   /**
-   * Add an object to the collection of group
-   * @memberof MapController
-   * @name addObject
-   * @param groupName the name of collection that object belongs to
-   * @param obj  an object to add into a collection, i.e. marker, shape
+   * @ngdoc controller
+   * @name MapController
+   * @requires $scope
+   * @property {Hash} controls collection of Controls initiated within `map` directive
+   * @property {Hash} markers collection of Markers initiated within `map` directive
+   * @property {Hash} shapes collection of shapes initiated within `map` directive
    */
-  this.addObject = function(groupName, obj) {
+  var MapController = function($q, NavigatorGeolocation, GeoCoder, Attr2Options) { 
+    var parser = Attr2Options;
+    var _this = this;
+
+    var observeAndSet = function(attrs, attrName, object) {
+      attrs.$observe(attrName, function(val) {
+        if (val) {
+          console.log('observing ', object, attrName, val);
+          var setMethod = parser.camelCase('set-'+attrName);
+          var optionValue = parser.toOptionValue(val, {key: attrName});
+          console.log('setting ', object, attrName, 'with value', optionValue);
+          if (object[setMethod]) { //if set method does exist
+            /* if an location is being observed */
+            if (attrName.match(/center|position/) && 
+              typeof optionValue == 'string') {
+              _this.getGeoLocation(optionValue).then(function(latlng) {
+                object[setMethod](latlng);
+              });
+            } else {
+              object[setMethod](optionValue);
+            }
+          }
+        }
+      });
+    };
+
+    this.map = null;
+    this._objects = []; /* temporary collection of map objects */
+
     /**
-     * objects, i.e. markers and shapes, are initialized before map is initialized
-     * so, we collect those objects, then, we will add to map when map is initialized
-     * However the case as in ng-repeat, we can directly add to map
+     * Add an object to the collection of group
+     * @memberof MapController
+     * @function addObject
+     * @param groupName the name of collection that object belongs to
+     * @param obj  an object to add into a collection, i.e. marker, shape
      */
-    if (this.map) {
-      this.map[groupName] = this.map[groupName] || {};
-      var len = Object.keys(this.map[groupName]).length;
-      this.map[groupName][obj.id || len] = obj;
-      if (groupName != "infoWindows" && obj.setMap) { //infoWindow.setMap works like infoWindow.open
-        obj.setMap(this.map);
-      }
-      if (obj.centered && obj.position) {
-        this.map.setCenter(obj.position);
-      }
-    } else {
-      obj.groupName = groupName;
-      this._objects.push(obj);
-    }
-  }
-
-  /**
-   * Delete an object from the collection and remove from map
-   * @memberof MapController
-   * @name deleteObject
-   * @param {Array} objs the collection of objects. i.e., map.markers
-   * @param {Object} obj the object to be removed. i.e., marker
-   */
-  this.deleteObject = function(groupName, obj) {
-    /* delete from group */
-    var objs = obj.map[groupName];
-    for (var name in objs) {
-      objs[name] === obj && (delete objs[name]);
-    }
-
-    /* delete from map */
-    obj.map && obj.setMap(null);          
-  };
-
-  /**
-   * Add collected objects to map
-   * @memberof MapController
-   * @name addShape
-   * @param {Shape} shape google map shape
-   */
-  this.addObjects = function(objects) {
-    for (var i=0; i<objects.length; i++) {
-      var obj=objects[i];
-      if (obj instanceof google.maps.Marker) {
-        this.addObject('markers', obj);
-      } else if (obj instanceof google.maps.Circle ||
-        obj instanceof google.maps.Polygon ||
-        obj instanceof google.maps.Polyline ||
-        obj instanceof google.maps.Rectangle ||
-        obj instanceof google.maps.GroundOverlay) {
-        this.addObject('shapes', obj);
+    this.addObject = function(groupName, obj) {
+      /**
+       * objects, i.e. markers and shapes, are initialized before map is initialized
+       * so, we collect those objects, then, we will add to map when map is initialized
+       * However the case as in ng-repeat, we can directly add to map
+       */
+      if (this.map) {
+        this.map[groupName] = this.map[groupName] || {};
+        var len = Object.keys(this.map[groupName]).length;
+        this.map[groupName][obj.id || len] = obj;
+        if (groupName != "infoWindows" && obj.setMap) { //infoWindow.setMap works like infoWindow.open
+          obj.setMap && obj.setMap(this.map);
+        }
+        if (obj.centered && obj.position) {
+          this.map.setCenter(obj.position);
+        }
       } else {
-        this.addObject(obj.groupName, obj);
+        obj.groupName = groupName;
+        this._objects.push(obj);
       }
-    }
-  };
+    };
 
-};
+    /**
+     * Delete an object from the collection and remove from map
+     * @memberof MapController
+     * @function deleteObject
+     * @param {Array} objs the collection of objects. i.e., map.markers
+     * @param {Object} obj the object to be removed. i.e., marker
+     */
+    this.deleteObject = function(groupName, obj) {
+      /* delete from group */
+      var objs = obj.map[groupName];
+      for (var name in objs) {
+        objs[name] === obj && (delete objs[name]);
+      }
+
+      /* delete from map */
+      obj.map && obj.setMap && obj.setMap(null);
+    };
+
+    /**
+     * Add collected objects to map
+     * @memberof MapController
+     * @function addObjects
+     * @param {Array} objects the collection of objects. i.e., map.markers
+     */
+    this.addObjects = function(objects) {
+      for (var i=0; i<objects.length; i++) {
+        var obj=objects[i];
+        if (obj instanceof google.maps.Marker) {
+          this.addObject('markers', obj);
+        } else if (obj instanceof google.maps.Circle ||
+          obj instanceof google.maps.Polygon ||
+          obj instanceof google.maps.Polyline ||
+          obj instanceof google.maps.Rectangle ||
+          obj instanceof google.maps.GroundOverlay) {
+          this.addObject('shapes', obj);
+        } else {
+          this.addObject(obj.groupName, obj);
+        }
+      }
+    };
+
+    /**
+     * returns the location of an address or 'current-location'
+     * @memberof MapController
+     * @function getGeoLocation
+     * @param {String} string an address to find the location
+     * @returns {Promise} latlng the location of the address
+     */
+    this.getGeoLocation = function(string) {
+      var deferred = $q.defer();
+      if (!string || string.match(/^current/i)) { // current location
+        NavigatorGeolocation.getCurrentPosition().then(
+          function(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            var latLng = new google.maps.LatLng(lat,lng);
+            deferred.resolve(latLng);
+          },
+          function(error) {
+            deferred.reject(error);
+          }
+        );
+      } else {
+        GeoCoder.geocode({address: string}).then(
+          function(results) {
+            deferred.resolve(results[0].geometry.location);
+          },
+          function(error) {
+            deferred.reject(error);
+          }
+        );
+      }
+
+      return deferred.promise;
+    };
+
+    /**
+     * watch changes of attribute values and do appropriate action based on attribute name
+     * @memberof MapController
+     * @function observeAttrSetObj
+     * @param {Hash} orgAttrs attributes before its initialization
+     * @param {Hash} attrs    attributes after its initialization
+     * @param {Object} obj    map object that an action is to be done
+     */
+    this.observeAttrSetObj = function(orgAttrs, attrs, obj) {
+      var attrsToObserve = parser.getAttrsToObserve(orgAttrs);
+      if (Object.keys(attrsToObserve).length) {
+        console.log(obj, "attributes to observe", attrsToObserve);
+      }
+      for (var i=0; i<attrsToObserve.length; i++) {
+        observeAndSet(attrs, attrsToObserve[i], obj);
+      }
+    };
+
+
+  }; // MapController
+
+  MapController.$inject = ['$q', 'NavigatorGeolocation', 'GeoCoder', 'Attr2Options'];
+  angular.module('ngMap').controller('MapController', MapController);
+})();
 
 /**
  * @ngdoc directive
@@ -1629,6 +1772,7 @@ ngMap.directive('mapsEngineLayer', ['Attr2Options', function(Attr2Options) {
  *      'current position',  
  *      '[40.74, -74.18]'  
  * @param {Boolean} centered if set, map will be centered with this marker
+ * @param {Expression} geo-callback if position is an address, the expression is will be performed when geo-lookup is successful. e.g., geo-callback="showStoreInfo()"
  * @param {String} &lt;MarkerOption> Any Marker options, https://developers.google.com/maps/documentation/javascript/reference?csw=1#MarkerOptions  
  * @param {String} &lt;MapEvent> Any Marker events, https://developers.google.com/maps/documentation/javascript/reference
  * @example
@@ -1646,10 +1790,9 @@ ngMap.directive('mapsEngineLayer', ['Attr2Options', function(Attr2Options) {
  *    <marker position="the cn tower" on-click="myfunc()"></div>
  *   </map>
  */
-/* global google, ngMap */
-ngMap.directive('marker', ['Attr2Options', function(Attr2Options)  {
+/* global google */
+(function() {
   'use strict';
-  var parser = Attr2Options;
 
   var getMarker = function(options, events) {
     var marker;
@@ -1671,13 +1814,9 @@ ngMap.directive('marker', ['Attr2Options', function(Attr2Options)  {
       }
     }
     if (!(options.position instanceof google.maps.LatLng)) {
-      var orgPosition = options.position;
       options.position = new google.maps.LatLng(0,0);
-      marker = new google.maps.Marker(options);
-      parser.setDelayedGeoLocation(marker, 'setPosition', orgPosition);
-    } else {
-      marker = new google.maps.Marker(options);
-    }
+    } 
+    marker = new google.maps.Marker(options);
 
     /**
      * set events
@@ -1694,29 +1833,50 @@ ngMap.directive('marker', ['Attr2Options', function(Attr2Options)  {
     return marker;
   };
 
-  return {
-    restrict: 'E',
-    require: '^map',
-    link: function(scope, element, attrs, mapController) {
+  var marker = function(Attr2Options, $parse) {
+    var parser = Attr2Options;
+    var linkFunc = function(scope, element, attrs, mapController) {
       var orgAttrs = parser.orgAttributes(element);
       var filtered = parser.filter(attrs);
       var markerOptions = parser.getOptions(filtered, scope);
       var markerEvents = parser.getEvents(scope, filtered);
       console.log('marker options', markerOptions, 'events', markerEvents);
 
+      var address;
+      if (!(markerOptions.position instanceof google.maps.LatLng)) {
+        address = markerOptions.position;
+      }
       var marker = getMarker(markerOptions, markerEvents);
       mapController.addObject('markers', marker);
+      if (address) {
+        mapController.getGeoLocation(address).then(function(latlng) {
+          marker.setPosition(latlng);
+          markerOptions.centered && marker.map.setCenter(latlng);
+          var geoCallback = attrs.geoCallback;
+          geoCallback && $parse(geoCallback)(scope);
+        });
+      }
 
       /**
        * set observers
        */
-      parser.observeAttrSetObj(orgAttrs, attrs, marker); /* observers */
+      mapController.observeAttrSetObj(orgAttrs, attrs, marker); /* observers */
       element.bind('$destroy', function() {
         mapController.deleteObject('markers', marker);
       });
-    } //link
-  }; // return
-}]);// 
+    };
+
+    return {
+      restrict: 'E',
+      require: '^map',
+      link: linkFunc
+    };
+  };
+
+  marker.$inject = ['Attr2Options', '$parse'];
+  angular.module('ngMap').directive('marker', marker); 
+
+})();
 
 /**
  * @ngdoc directive
@@ -1770,6 +1930,67 @@ ngMap.directive('overlayMapType', ['Attr2Options', '$window', function(Attr2Opti
 
 /**
  * @ngdoc directive
+ * @name places-auto-complete
+ * @requires Attr2Options 
+ * @description 
+ *   Provides address auto complete feature to an input element
+ *   Requires: input tag
+ *   Restrict To: Attribute
+ *
+ * @param {AutoCompleteOptions} Any AutocompleteOptions
+ *    https://developers.google.com/maps/documentation/javascript/3.exp/reference#AutocompleteOptions
+ *
+ * @example
+ * Example: 
+ *   <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+ *   <input places-auto-complete types="['geocode']" />
+ */
+/* global google */
+(function() {
+  'use strict';
+
+  var placesAutoComplete = function(Attr2Options, $timeout) {
+    var parser = Attr2Options;
+
+    var linkFunc = function(scope, element, attrs, ngModelCtrl) {
+      var filtered = parser.filter(attrs);
+      var options = parser.getOptions(filtered);
+      var events = parser.getEvents(scope, filtered);
+      console.log('autocomplete options', options, 'events', events);
+      var autocomplete = new google.maps.places.Autocomplete(element[0], options);
+      for (var eventName in events) {
+        google.maps.event.addListener(autocomplete, eventName, events[eventName]);
+      }
+      element[0].addEventListener('change', function() {
+        $timeout(function(){
+          ngModelCtrl && ngModelCtrl.$setViewValue(element.val());
+        },100);
+      });
+
+      attrs.$observe('types', function(val) {
+        if (val) {
+          console.log('observing types', val);
+          var optionValue = parser.toOptionValue(val, {key: 'types'});
+          console.log('setting types with value', optionValue);
+          autocomplete.setTypes(optionValue);
+        }
+      });
+    };
+
+    return {
+      restrict: 'A',
+      require: '?ngModel',
+      link: linkFunc
+    };
+  };
+
+  placesAutoComplete.$inject = ['Attr2Options', '$timeout'];
+  angular.module('ngMap').directive('placesAutoComplete', placesAutoComplete); 
+
+})();
+
+/**
+ * @ngdoc directive
  * @name shape
  * @requires Attr2Options 
  * @description 
@@ -1786,6 +2007,7 @@ ngMap.directive('overlayMapType', ['Attr2Options', '$window', function(Attr2Opti
  *   Restrict To:  Element
  *
  * @param {Boolean} centered if set, map will be centered with this marker
+ * @param {Expression} geo-callback if shape is a circle and the center is an address, the expression is will be performed when geo-lookup is successful. e.g., geo-callback="showDetail()"
  * @param {String} &lt;OPTIONS>
  *   For circle, [any circle options](https://developers.google.com/maps/documentation/javascript/reference#CircleOptions)  
  *   For polygon, [any polygon options](https://developers.google.com/maps/documentation/javascript/reference#PolygonOptions)  
@@ -1829,9 +2051,10 @@ ngMap.directive('overlayMapType', ['Attr2Options', '$window', function(Attr2Opti
  *  For full-working example, please visit 
  *    [shape example](https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/shape.html)
  */
-ngMap.directive('shape', ['Attr2Options', function(Attr2Options) {
-  var parser = Attr2Options;
-  
+/* global google */
+(function() {
+  'use strict';
+
   var getBounds = function(points) {
     return new google.maps.LatLngBounds(points[0], points[1]);
   };
@@ -1856,14 +2079,10 @@ ngMap.directive('shape', ['Attr2Options', function(Attr2Options) {
     }
     switch(shapeName) {
       case "circle":
-        if (options.center instanceof google.maps.LatLng) {
-          shape = new google.maps.Circle(options);
-        } else {
-          var orgCenter = options.center;
+        if (!(options.center instanceof google.maps.LatLng)) {
           options.center = new google.maps.LatLng(0,0);
-          shape = new google.maps.Circle(options);
-          parser.setDelayedGeoLocation(shape, 'setCenter', orgCenter);
-        }
+        } 
+        shape = new google.maps.Circle(options);
         break;
       case "polygon":
         shape = new google.maps.Polygon(options);
@@ -1896,33 +2115,151 @@ ngMap.directive('shape', ['Attr2Options', function(Attr2Options) {
     }
     return shape;
   };
-  
-  return {
-    restrict: 'E',
-    require: '^map',
-    /**
-     * link function
-     * @private
-     */
-    link: function(scope, element, attrs, mapController) {
+
+  var shape = function(Attr2Options, $parse) {
+    var parser = Attr2Options;
+
+    var linkFunc = function(scope, element, attrs, mapController) {
       var orgAttrs = parser.orgAttributes(element);
       var filtered = parser.filter(attrs);
       var shapeOptions = parser.getOptions(filtered);
       var shapeEvents = parser.getEvents(scope, filtered);
 
+      var address, shapeType;
+      shapeType = shapeOptions.name;
+      if (!(shapeOptions.center instanceof google.maps.LatLng)) {
+        address = shapeOptions.center;
+      }
       var shape = getShape(shapeOptions, shapeEvents);
       mapController.addObject('shapes', shape);
+
+      if (address && shapeType == 'circle') {
+        mapController.getGeoLocation(address).then(function(latlng) {
+          shape.setCenter(latlng);
+          shape.centered && shape.map.setCenter(latlng);
+          var geoCallback = attrs.geoCallback;
+          geoCallback && $parse(geoCallback)(scope);
+        });
+      }
 
       /**
        * set observers
        */
-      parser.observeAttrSetObj(orgAttrs, attrs, shape); 
+      mapController.observeAttrSetObj(orgAttrs, attrs, shape); 
       element.bind('$destroy', function() {
         mapController.deleteObject('shapes', shape);
       });
-    }
-   }; // return
-}]);
+    };
+
+    return {
+      restrict: 'E',
+      require: '^map',
+      link: linkFunc
+     }; // return
+  };
+  shape.$inject = ['Attr2Options', '$parse'];
+
+  angular.module('ngMap').directive('shape', shape);
+
+})();
+
+/**
+ * @ngdoc directive
+ * @name streetview-panorama
+ * @requires Attr2Options
+ * @description
+ *   Requires:  map directive
+ *   Restrict To:  Element
+ *
+ * @param container Optional, id or css selector, if given, streetview will be in the given html element
+ * @param {String} &lt;StreetViewPanoramaOption> Any Google StreetViewPanorama options, 
+ *        https://developers.google.com/maps/documentation/javascript/reference?csw=1#StreetViewPanoramaOptions
+ * @param {String} &lt;StreetViewPanoramaEvent> Any Google StreetViewPanorama events, 
+ *        https://developers.google.com/maps/documentation/javascript/reference#StreetViewPanorama 
+ *
+ * @example
+ *   <map zoom="11" center="[40.688738,-74.043871]" >
+ *     <street-view-panorama
+ *       click-to-go="true"
+ *       disable-default-ui="true"
+ *       disable-double-click-zoom="true"
+ *       enable-close-button="true"
+ *       pano="my-pano"
+ *       position="40.688738,-74.043871"
+ *       pov="{heading:0, pitch: 90}"
+ *       scrollwheel="false"
+ *       visible="true">
+ *     </street-view-panorama>
+ *   </map>
+ */
+/* global google */
+(function() {
+  'use strict';
+   
+  var streetViewPanorama = function(Attr2Options) {
+    var parser = Attr2Options;
+  
+    var getStreetViewPanorama = function(map, options, events) {
+      var svp, container;
+      if (options.container) {
+        container = document.getElementById(options.container);
+        container = container || document.querySelector(options.container);
+      }
+      if (container) {
+        svp = new google.maps.StreetViewPanorama(container, options);
+      } else {
+        svp = map.getStreetView();
+        svp.setOptions(options);
+      }
+
+      for (var eventName in events) {
+        eventName &&
+          google.maps.event.addListener(svp, eventName, events[eventName]);
+      }
+      return svp;
+    };
+
+    var linkFunc = function(scope, element, attrs, mapController) {
+      var orgAttrs = parser.orgAttributes(element);
+      var filtered = parser.filter(attrs);
+      var options = parser.getOptions(filtered);
+      var controlOptions = parser.getControlOptions(filtered);
+      var svpOptions = angular.extend(options, controlOptions);
+
+      var svpEvents = parser.getEvents(scope, filtered);
+      console.log('street-view-panorama', 
+        'options', svpOptions, 'events', svpEvents);
+ 
+      scope.$on('mapInitialized', function(evt, map) {
+        var svp = getStreetViewPanorama(map, svpOptions, svpEvents);
+
+        map.setStreetView(svp);
+        (!svp.getPosition()) && svp.setPosition(map.getCenter());
+        google.maps.event.addListener(svp, 'position_changed', function() {
+          if (svp.getPosition() !== map.getCenter()) {
+            map.setCenter(svp.getPosition());
+          }
+        });
+        //needed for geo-callback
+        var listener = google.maps.event.addListener(map, 'center_changed', function() {
+          svp.setPosition(map.getCenter());
+          google.maps.event.removeListener(listener);
+        });
+      });
+
+    }; //link
+
+    return {
+      restrict: 'E',
+      require: '^map',
+      link: linkFunc
+    };
+
+  };
+  streetViewPanorama.$inject = ['Attr2Options'];
+
+  angular.module('ngMap').directive('streetViewPanorama', streetViewPanorama);
+})();
 
 /**
  * @ngdoc directive
@@ -1964,7 +2301,7 @@ ngMap.directive('trafficLayer', ['Attr2Options', function(Attr2Options) {
 
       var layer = getLayer(options, events);
       mapController.addObject('trafficLayers', layer);
-      parser.observeAttrSetObj(orgAttrs, attrs, layer);  //observers
+      mapController.observeAttrSetObj(orgAttrs, attrs, layer);  //observers
       element.bind('$destroy', function() {
         mapController.deleteObject('trafficLayers', layer);
       });
@@ -2012,7 +2349,7 @@ ngMap.directive('transitLayer', ['Attr2Options', function(Attr2Options) {
 
       var layer = getLayer(options, events);
       mapController.addObject('transitLayers', layer);
-      parser.observeAttrSetObj(orgAttrs, attrs, layer);  //observers
+      mapController.observeAttrSetObj(orgAttrs, attrs, layer);  //observers
       element.bind('$destroy', function() {
         mapController.deleteObject('transitLayers', layer);
       });
@@ -2061,7 +2398,7 @@ ngMap.directive('weatherLayer', ['Attr2Options', function(Attr2Options) {
 
       var layer = getLayer(options, events);
       mapController.addObject('weatherLayers', layer);
-      parser.observeAttrSetObj(orgAttrs, attrs, layer);  //observers
+      mapController.observeAttrSetObj(orgAttrs, attrs, layer);  //observers
       element.bind('$destroy', function() {
         mapController.deleteObject('weatherLayers', layer);
       });

@@ -2,10 +2,7 @@
 /*jshint globalstrict: true*/
 /*jshint undef:false */
 
-// @todo NOTE We should investigate changing default to 
-// $routeChangeStart see https://github.com/angular-ui/ui-router/blob/3898270241d4e32c53e63554034d106363205e0e/src/compat.js#L126
-
-angular.module('unsavedChanges', ['lazyModel'])
+angular.module('unsavedChanges', ['resettable'])
 
 .provider('unsavedWarningsConfig', function() {
 
@@ -68,7 +65,7 @@ angular.module('unsavedChanges', ['lazyModel'])
 
             function translateIfAble(message) {
                 if ($injector.has('$translate') && useTranslateService) {
-                    return $injector.get('$translate')(message);
+                    return $injector.get('$translate').instant(message);
                 } else {
                     return false;
                 }
@@ -124,27 +121,21 @@ angular.module('unsavedChanges', ['lazyModel'])
     ];
 })
 
-.service('unsavedWarningSharedService', ['$rootScope', 'unsavedWarningsConfig', '$injector',
-    function($rootScope, unsavedWarningsConfig, $injector) {
+.service('unsavedWarningSharedService', ['$rootScope', 'unsavedWarningsConfig', '$injector', '$window',
+    function($rootScope, unsavedWarningsConfig, $injector, $window) {
 
         // Controller scopped variables
         var _this = this;
         var allForms = [];
         var areAllFormsClean = true;
-        var removeFunctions = [angular.noop];
+        var removeFunctions = [];
 
         // @note only exposed for testing purposes.
         this.allForms = function() {
             return allForms;
         };
 
-        // save shorthand reference to messages
-        var messages = {
-            navigate: unsavedWarningsConfig.navigateMessage,
-            reload: unsavedWarningsConfig.reloadMessage
-        };
-
-        // Check all registered forms 
+        // Check all registered forms
         // if any one is dirty function will return true
 
         function allFormsClean() {
@@ -170,7 +161,7 @@ angular.module('unsavedChanges', ['lazyModel'])
             var idx = allForms.indexOf(form);
 
             // this form is not present array
-            // @todo needs test coverage 
+            // @todo needs test coverage
             if (idx === -1) return;
 
             allForms.splice(idx, 1);
@@ -184,13 +175,14 @@ angular.module('unsavedChanges', ['lazyModel'])
             angular.forEach(removeFunctions, function(fn) {
                 fn();
             });
-            window.onbeforeunload = null;
+            removeFunctions = [];
+            $window.onbeforeunload = null;
         }
 
         // Function called when user tries to close the window
         this.confirmExit = function() {
-            // @todo this could be written a lot cleaner! 
-            if (!allFormsClean()) return messages.reload;
+            if (!allFormsClean()) return unsavedWarningsConfig.reloadMessage;
+            $rootScope.$broadcast('resetResettables');
             tearDown();
         };
 
@@ -200,22 +192,23 @@ angular.module('unsavedChanges', ['lazyModel'])
         function setup() {
             unsavedWarningsConfig.log('Setting up');
 
-            window.onbeforeunload = _this.confirmExit;
+            $window.onbeforeunload = _this.confirmExit;
 
             var eventsToWatchFor = unsavedWarningsConfig.routeEvent;
 
             angular.forEach(eventsToWatchFor, function(aEvent) {
-                // calling this function later will unbind this, acting as $off()
+                //calling this function later will unbind this, acting as $off()
                 var removeFn = $rootScope.$on(aEvent, function(event, next, current) {
                     unsavedWarningsConfig.log("user is moving with " + aEvent);
-                    // @todo this could be written a lot cleaner! 
+                    // @todo this could be written a lot cleaner!
                     if (!allFormsClean()) {
                         unsavedWarningsConfig.log("a form is dirty");
-                        if (!confirm(messages.navigate)) {
+                        if (!confirm(unsavedWarningsConfig.navigateMessage)) {
                             unsavedWarningsConfig.log("user wants to cancel leaving");
-                            event.preventDefault(); // user clicks cancel, wants to stay on page 
+                            event.preventDefault(); // user clicks cancel, wants to stay on page
                         } else {
                             unsavedWarningsConfig.log("user doesn't care about loosing stuff");
+                            $rootScope.$broadcast('resetResettables');
                         }
                     } else {
                         unsavedWarningsConfig.log("all forms are clean");
@@ -231,9 +224,9 @@ angular.module('unsavedChanges', ['lazyModel'])
 .directive('unsavedWarningClear', ['unsavedWarningSharedService',
     function(unsavedWarningSharedService) {
         return {
-            scope: true,
+            scope: {},
             require: '^form',
-            priority: 3000,
+            priority: 10,
             link: function(scope, element, attrs, formCtrl) {
                 element.bind('click', function(event) {
                     formCtrl.$setPristine();
@@ -244,11 +237,26 @@ angular.module('unsavedChanges', ['lazyModel'])
     }
 ])
 
-.directive('unsavedWarningForm', ['unsavedWarningSharedService',
-    function(unsavedWarningSharedService) {
+.directive('unsavedWarningForm', ['unsavedWarningSharedService', '$rootScope',
+    function(unsavedWarningSharedService, $rootScope) {
         return {
-            require: 'form',
+            scope: {},
+            require: '^form',
             link: function(scope, formElement, attrs, formCtrl) {
+
+                // @todo refactor, temp fix for issue #22
+                // where user might use form on element inside a form
+                // we shouldnt need isolate scope on this, but it causes the tests to fail
+                // traverse up parent elements to find the form.
+                // we need a form element since we bind to form events: submit, reset
+                var count = 0;
+                while(formElement[0].tagName !== 'FORM' && count < 3) {
+                    count++;
+                    formElement = formElement.parent();
+                }
+                if(count >= 3) {
+                    throw('unsavedWarningForm must be inside a form element');
+                }
 
                 // register this form
                 unsavedWarningSharedService.init(formCtrl);
@@ -261,7 +269,23 @@ angular.module('unsavedChanges', ['lazyModel'])
                     }
                 });
 
-                // @todo check destroy on clear button too? 
+                // bind to form submit
+                // developers can hook into resetResettables to do
+                // do things like reset validation, present messages, etc.
+                formElement.bind('reset', function(event) {
+                    event.preventDefault();
+                    
+                    // trigger resettables within this form or element 
+                    var resettables = angular.element(formElement[0].querySelector('[resettable]'));
+                    if(resettables.length) {
+                        scope.$apply(resettables.triggerHandler('resetResettables'));    
+                    }
+
+                    // sets for back to valid and pristine states
+                    formCtrl.$setPristine();
+                });
+
+                // @todo check destroy on clear button too?
                 scope.$on('$destroy', function() {
                     unsavedWarningSharedService.removeForm(formCtrl);
                 });
@@ -273,58 +297,51 @@ angular.module('unsavedChanges', ['lazyModel'])
 
 /**
  * --------------------------------------------
- * Lazy model adapted from vitalets
+ * resettable models adapted from vitalets lazy model
  * @see https://github.com/vitalets/lazy-model/
+ *
+ * The main difference is that we DO set the model value
+ * as the user changes the inputs. However we provide a hook
+ * to reset the model to original value. This we can then
+ * broadcast on from reset which triggers resettable to revert
+ * to original value.
  * --------------------------------------------
  *
+ * @note we don't create a seperate scope so the model value
+ * is still available onChange within the controller scope. 
+ * This fixes https://github.com/facultymatt/angular-unsavedChanges/issues/19
+ *
  */
-angular.module('lazyModel', [])
+angular.module('resettable', [])
 
-.directive('lazyModel', ['$parse', '$compile',
-    function($parse, $compile) {
+.directive('resettable', ['$parse', '$compile', '$rootScope',
+    function($parse, $compile, $rootScope) {
+
         return {
             restrict: 'A',
-            priority: 500,
-            terminal: true,
-            require: '^form',
-            scope: true,
-            compile: function compile(elem, attr) {
-                // getter and setter for original model
-                var ngModelGet = $parse(attr.lazyModel);
-                var ngModelSet = ngModelGet.assign;
-                // set ng-model to buffer in isolate scope
-                elem.attr('ng-model', 'buffer');
-                // remove lazy-model attribute to exclude recursion
-                elem.removeAttr("lazy-model");
-                return {
-                    pre: function(scope, elem) {
-                        // initialize buffer value as copy of original model 
-                        scope.buffer = ngModelGet(scope.$parent);
-                        // compile element with ng-model directive pointing to buffer value   
-                        $compile(elem)(scope);
-                    },
-                    post: function postLink(scope, elem, attr, formCtrl) {
-                        // bind form submit to write back final value from buffer
-                        var form = elem.parent();
-                        while (form[0].tagName !== 'FORM') {
-                            form = form.parent();
-                        }
-                        form.bind('submit', function() {
-                            // form valid - save new value
-                            if (formCtrl.$valid) {
-                                scope.$apply(function() {
-                                    ngModelSet(scope.$parent, scope.buffer);
-                                });
-                            }
-                        });
-                        form.bind('reset', function(e) {
-                            e.preventDefault();
-                            scope.$apply(function() {
-                                scope.buffer = ngModelGet(scope.$parent);
-                            });
-                        });
-                    }
+            link: function postLink(scope, elem, attr, ngModelCtrl) {
+
+                var setter, getter, originalValue;
+
+                // save getters and setters and store the original value.
+                attr.$observe('ngModel', function(newValue) {
+                    getter = $parse(attr.ngModel);
+                    setter = getter.assign;
+                    originalValue = getter(scope);
+                });
+
+                // reset our form to original value
+                var resetFn = function() {
+                    setter(scope, originalValue);
                 };
+
+                elem.on('resetResettables', resetFn);
+
+                // @note this doesn't work if called using
+                // $rootScope.on() and $rootScope.$emit() pattern
+                var removeListenerFn = scope.$on('resetResettables', resetFn);
+                scope.$on('$destroy', removeListenerFn);
+
             }
         };
     }

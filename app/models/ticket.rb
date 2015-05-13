@@ -12,7 +12,6 @@ class Ticket
   belongs_to :asset
 
   def self.onday(date, branch_id)
-    # byebug
     return Ticket.where(:begin_use_time => (Time.parse(date)..Time.parse(date+" 23:59:59")),branch_id: branch_id)
   end
 end
