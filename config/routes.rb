@@ -17,8 +17,9 @@ Rails.application.routes.draw do
     resources 'fees'
   end
 
-  post 'tickets' => 'tickets#create'
   get 'tickets/:date/:branch_id' => 'tickets#show'
+  post 'tickets' => 'tickets#create'
+  post 'tickets/update' => 'tickets#update'
   delete 'tickets/:ticket_id' => 'tickets#destroy'
 
   get 'dang-ky-doanh-nghiep' => 'bussinesses#new'

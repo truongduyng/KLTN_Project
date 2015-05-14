@@ -1,23 +1,25 @@
 <div class="modal-header">
   <button type="button" class="close" aria-hidden="true" ng-click="close_modal()">&times;</button>
-  <h3>chỉnh sửa thông tin đặt sân</h3>
+  <h3>Chi tiet </h3>
 </div>
 <div class="modal-body row">
   <div class="col-lg-12">
-    <label>Thời gian</label>
+    <i class="fa fa-clock-o fa-2x marginbot10"></i>
+    <span>{{ dt | date:'dd-MM-yyyy'}},</span>
+    <select ng-options = "hour_begin for hour_begin in hour_begin_list" ng-model= 'hour_begin' ng-change='update_hour_end(false)'/>
+    <select ng-options = "hour_end for hour_end in hour_end_list" ng-model= 'hour_end' ng-change='update_price()'/>
+    <br><i class="fa fa-futbol-o fa-2x marginbot10"></i>
+    <span style="display:inline">{{branch.branch.name}} tai {{branch.branch.address}}</span>
 
-    <br><label>Địa điểm</label><br>
-    <span style="display:inline">{{branchname}} tai {{address}}</span>
-    <i class="fa fa-street-view fa-2x" ng-click= 'showbranchpostion()'></i>
-    <br><label>Đặt bởi</label><br>
-    <img src="" alt="avarta">
-    <span style="display:inline">{{user.username}} , Số ĐT: {{user.phone}}</span>
-    <br><label>Thanh toán</label><br>
+    <br><i class="fa fa-user fa-2x marginbot10"></i>
+    <img src="" alt="ava">
+    <span style="display:inline">{{user.username}} , Số ĐT: <strong style="color: #0078ad">{{user.phone}}</strong></span>
+    <br><i class="fa fa-bell fa-2x marginbot10"></i>
     <input type="radio" value="taisan" checked>Thanh toán tại sân
     <!-- <input type="radio" name="" value="" placeholder="">Thanh toán điện tử <br> -->
-    <br><label>Giá phí</label><br>
-    <span>250000VNĐ</span>
+    <br><i class="fa fa-money fa-2x marginbot10"></i>
+    <span>{{price}}.000 VND</span>
     <br>
-    <button class="btn btn-theme margintop10 pull-left marginright20 marginbot40" type="submit">Cap nhat</button>
+    <button class="btn btn-theme margintop10 pull-left" ng-click="update_ticket(dt, hour_begin, hour_end)">Cap nhat</button>
   </div>
 </div>
