@@ -9,4 +9,9 @@ class AdminController < ActionController::Base
 	def system_admin
 		render 'layouts/system_admin'
 	end
+
+	# def image_browser
+	# 	render json: {message: 'founded'}, status: :ok
+	#     # render :file => '/assets/ckeditor/plugins/imagebrowser/browser/browser.html', :layout => false 
+	# end
 end
