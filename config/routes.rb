@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :images
+
   resources :notifications do
     member do
       put 'watched'

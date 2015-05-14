@@ -1,0 +1,106 @@
+<section class="wrapper"> 
+  <!--overview start-->
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 class="page-header"><i class="fa fa-laptop"></i> Dashboard</h3>
+      <ol class="breadcrumb">
+        <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+        <li><i class="fa fa-laptop"></i>Dashboard</li>
+      </ol>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-lg-12">
+    	<h1>This is home page</h1>
+    	{{message}}
+    	<textarea ckeditor="editorOptions" ng-model="page.body"></textarea>
+    	<div>{{page.body}}</div>
+   
+    	
+    	<!-- 	<textarea cols="30" rows="40"
+	          ng-model="page.body"
+	          name="pageBody"
+	          ckeditor="editorOptions" rows="100"  required="required">
+			</textarea> -->
+
+  	    <!-- 	  <textarea  name="editor11" id="editor11" rows="10" cols="80">
+                This is my textarea to be replaced with CKEditor.
+            </textarea>
+ -->
+           
+    </div>
+  </div>
+
+  <!--BEGIN  inline editor -->
+  <div class="row">
+    <div class="col-lg-12">
+          <div id="introduction" data-sample="1">
+              <h1>Inline Editor <a href="http://docs.ckeditor.com/#!/guide/dev_inline" class="documentation">Documentation</a></h1>
+
+              <p>
+                <strong>Inline Editing</strong> allows you to edit any element on the page in-place. Inline editor provides a real <abbr title="What You See is What You Get">WYSIWYG</abbr> experience "out of the box", because unlike in <a href="./classic.html">classic editor</a>, there is no <code>&lt;iframe&gt;</code> element surrounding the editing area. The CSS styles used for editor content are exactly the same as on the target page where this content is rendered!
+              </p>
+
+              <h2 class="editor-title">Inline Editing Enabled by Code</h2>
+
+              <p>
+                Press the "Start editing" button below. An editor will be created using the <a href="http://docs.ckeditor.com/#!/api/CKEDITOR-method-inline"><code>CKEDITOR.inline()</code></a> method with <a href="http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-startupFocus"><code>config.startupFocus</code></a> set to <code>true</code>.
+              </p>
+        </div>
+    </div>
+  </div>
+  <!--END  inline editor -->
+
+  <!-- BEGIN SHARE Editor -->
+  <div class="row">
+      <div class="col-lg-12">
+          <div id="top">
+            <!-- This div will handle all toolbars. -->
+          </div>
+          <div style="height: 460px; overflow: auto; border: 1px solid #afafaf; padding: 10px 10px;">
+
+              <div style="width: 100%;background-color: #FF5C00; border-radius: 25px;">
+                  <textarea id="editor1" name="editor1"></textarea>
+              </div>
+          </div>
+          <div id="bottom">
+            <!-- This div will handle all toolbars. -->
+          </div>
+      </div>
+  </div>
+  <!-- END SHARE Editor -->
+</section>
+<script type="text/javascript">
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                // console.log("CKEDITOR: ", CKEDITOR);
+                // CKEDITOR.replace('editor11');
+                // alert("ok")
+                var introduction = document.getElementById('introduction');
+                introduction.setAttribute('contenteditable', true);
+
+                CKEDITOR.inline('introduction', {
+                  // Allow some non-standard markup that we used in the introduction.
+                  extraAllowedContent: 'a(documentation);abbr[title];code',
+                  removePlugins: 'stylescombo',
+                  extraPlugins: 'sourcedialog',
+                  // Show toolbar on startup (optional).
+                  startupFocus: true
+                });
+
+                //for shared editor
+                CKEDITOR.replace('editor1', {
+                  extraPlugins: 'sharedspace',
+                  removePlugins: 'resize',
+                  height: 410,
+                  sharedSpaces: {
+                    top: 'top',
+                    bottom: 'bottom'
+                  }
+                });
+
+</script>
+
+
+

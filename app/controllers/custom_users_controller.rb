@@ -54,7 +54,7 @@ class CustomUsersController < ApplicationController
 			#render json: @current_user, status: :ok
 			render 'get_user_by_username.json.jbuilder'
 		else
-			render json: @current_user.errors, status: :bad_request
+			render json: current_user.errors, status: :bad_request
 		end
 	end
 

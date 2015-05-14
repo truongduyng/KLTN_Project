@@ -1,7 +1,7 @@
 var app = angular.module('sportaSystemAdmin', ["ui.router", 'templates', 'Devise', 'angular-flash.flash-alert-directive',
 	'sporta.services', 'sporta.directives', 'sporta.filters',
 	'angular-flash.service', 'flash', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging', 'infinite-scroll','ngAnimate',
-	'ngMap',
+	'ngMap', 'ngCkeditor'
 ]);
 
 // //For intercept $http
@@ -36,16 +36,22 @@ app.config(function(flashProvider) {
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
 	$stateProvider
+		// .state("home", {
+		// 	url: "/",
+		// 	templateUrl: 'appJS/home/_home.html',
+		// 	controller: 'homeCtrl',
+		// 	resolve: {
+		// 		posts: ['listPostService', function(listPostService) {
+		// 			return listPostService.get_all(1);
+		// 		}],
+		// 	}
+		// })
 		.state("home", {
 			url: "/",
-			templateUrl: 'appJS/home/_home.html',
-			controller: 'homeCtrl',
-			resolve: {
-				posts: ['listPostService', function(listPostService) {
-					return listPostService.get_all(1);
-				}],
-			}
+			templateUrl: 'adminJS/systemAdmin/home/_home.html',
+			controller: 'SAhomeCtrl',
 		})
+		
 		.state('duyetBaiViet', {
 			url: '/duyet-bai-viet',
 			templateUrl: 'adminJS/systemAdmin/baiViet/duyetBaiViet/_duyetBaiViet.html',

@@ -28,6 +28,8 @@ class User
   has_many :notification_change_triggers, class_name: 'NotificationChangeTrigger', inverse_of: :trigger_user
   #Nhung post dc theo doi
   has_and_belongs_to_many :followed_posts, class_name: 'Post', inverse_of: :followers
+  #1 nguoi co nhieu image (test)
+  has_many :images
   #My field
   field :firstname, type: String
   field :lastname, type: String

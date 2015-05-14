@@ -9,7 +9,6 @@ class PostsController < ApplicationController
 	#/posts.json
 	#Get all published post for display on home
 	def index
-		sleep(1)
 		@posts = Post.published.desc(:updated_at).paginate(page: params[:page], per_page: 9)
 		# render json: @posts, status: :ok
 	end
@@ -58,6 +57,7 @@ class PostsController < ApplicationController
 	def destroy
 		#xoa tat ca bai viet yeu thich gan voi post nay
 		FavoritePost.where(post_id: @post.id).destroy_all
+		#Neu photo ko embeded in post thi xoa lun photo
 		@post.destroy
 		render nothing: true, status: :ok, content_type: 'application/json' 
 	end

@@ -63,3 +63,5 @@ gem 'will_paginate', '~> 3.0.6'
 
 #For websocket 
 gem 'websocket-rails'
+
+gem 'ckeditor'

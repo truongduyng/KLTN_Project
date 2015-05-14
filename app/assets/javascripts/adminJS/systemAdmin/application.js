@@ -32,5 +32,6 @@
 //= require angular-animate
 //= require ngmap
 //= require ./customJS/richmarker.js
+//= require ng-ckeditor
 //= require ./systemAdminApp.js
 //= require_tree .
