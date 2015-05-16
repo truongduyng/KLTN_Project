@@ -44,3 +44,55 @@ ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 450)
 Asset.create(name: "San 4", description: "San gan nhat", branch_id: branch.id, asset_category_id: ac.id)
 Asset.create(name: "San 5", description: "San gan nhi", branch_id: branch.id, asset_category_id: ac.id)
 Asset.create(name: "San 6", description: "San gan ba", branch_id: branch.id, asset_category_id: ac.id)
+
+branch = bussiness.branches[1]
+
+ac = AssetCategory.create(name: 'San 5 nguoi', branch_id: branch.id)
+ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 150)
+ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 250)
+Asset.create(name: "San 1", description: "San gan nhat", branch_id: branch.id, asset_category_id: ac.id)
+
+
+ac = AssetCategory.create(name: 'San 10 nguoi', branch_id: branch.id)
+ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 250)
+ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 450)
+Asset.create(name: "San 2", description: "San gan nhat", branch_id: branch.id, asset_category_id: ac.id)
+
+
+branch = bussiness.branches[2]
+
+ac = AssetCategory.create(name: 'San 5 nguoi', branch_id: branch.id)
+ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 150)
+ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 250)
+Asset.create(name: "San 1", description: "San gan nhat", branch_id: branch.id, asset_category_id: ac.id)
+Asset.create(name: "San 2", description: "San gan nhi", branch_id: branch.id, asset_category_id: ac.id)
+
+
+ac = AssetCategory.create(name: 'San 10 nguoi', branch_id: branch.id)
+ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 250)
+ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 450)
+Asset.create(name: "San 3", description: "San gan nhat", branch_id: branch.id, asset_category_id: ac.id)
+Asset.create(name: "San 4", description: "San gan nhi", branch_id: branch.id, asset_category_id: ac.id)
+
+
+branch = bussiness.branches[3]
+
+ac = AssetCategory.create(name: 'San 5 nguoi', branch_id: branch.id)
+ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 150)
+ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 250)
+Asset.create(name: "San 1", description: "San gan nhat", branch_id: branch.id, asset_category_id: ac.id)
+Asset.create(name: "San 2", description: "San gan nhi", branch_id: branch.id, asset_category_id: ac.id)
+Asset.create(name: "San 3", description: "San gan ba", branch_id: branch.id, asset_category_id: ac.id)
+Asset.create(name: "San 4", description: "San gan nhat", branch_id: branch.id, asset_category_id: ac.id)
+Asset.create(name: "San 5", description: "San gan nhi", branch_id: branch.id, asset_category_id: ac.id)
+Asset.create(name: "San 6", description: "San gan ba", branch_id: branch.id, asset_category_id: ac.id)
+
+ac = AssetCategory.create(name: 'San 10 nguoi', branch_id: branch.id)
+ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 250)
+ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 450)
+Asset.create(name: "San 7", description: "San gan nhat", branch_id: branch.id, asset_category_id: ac.id)
+Asset.create(name: "San 8", description: "San gan nhi", branch_id: branch.id, asset_category_id: ac.id)
+Asset.create(name: "San 9", description: "San gan ba", branch_id: branch.id, asset_category_id: ac.id)
+Asset.create(name: "San 10", description: "San gan nhat", branch_id: branch.id, asset_category_id: ac.id)
+Asset.create(name: "San 11", description: "San gan nhi", branch_id: branch.id, asset_category_id: ac.id)
+Asset.create(name: "San 12", description: "San gan ba", branch_id: branch.id, asset_category_id: ac.id)

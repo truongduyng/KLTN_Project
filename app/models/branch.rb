@@ -7,6 +7,7 @@ class Branch
   field :address, type: String
   field :url_alias, type: String
   field :coordinates, type: Array
+
   geocoded_by :address
   after_validation :geocode
   index({ coordinates: "2d" }, { min: -180, max: 180 })
@@ -18,6 +19,8 @@ class Branch
 
   validates :name, presence: true,  length: {maximum: 100}
   validates :address, presence: true, length: {maximum: 1000}
+  validates :url_alias, presence: true, length: {maximum: 100}
+  validates :address, presence: true, length: {maximum: 100}
 
   # def address
   # 	return self.street + self.district + self.city

@@ -11,7 +11,21 @@ class Ticket
   belongs_to :branch
   belongs_to :asset
 
+  validates :begin_use_time,:end_use_time, :price, :status, presence: true
+  validate :check_time
+
   def self.onday(date, branch_id)
-    return Ticket.where(:begin_use_time => (Time.parse(date)..Time.parse(date+" 23:59:59")),branch_id: branch_id)
+    return Ticket.where(:begin_use_time => (date.to_time..(date+" 23:59:59").to_time),branch_id: branch_id)
   end
+
+  def check_time
+    tickets = Ticket.where(:begin_use_time => (begin_use_time.beginning_of_day.. begin_use_time.end_of_day),branch_id: branch_id, asset_id: asset_id)
+    tickets.each do |ticket|
+      if((ticket.begin_use_time <= begin_use_time && begin_use_time < ticket.end_use_time) ||(ticket.begin_use_time < end_use_time && end_use_time <= ticket.end_use_time))
+        errors.add(:begin_time, "can't not be greater end_time")
+        return false
+      end
+    end
+  end
+
 end

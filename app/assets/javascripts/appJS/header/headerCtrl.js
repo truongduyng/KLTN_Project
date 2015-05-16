@@ -9,7 +9,8 @@ app.controller('headerCtrl', ['$scope', '$http','$state',
     $("#search_box").autocomplete({
       source: branches,
       select: function (event, item) {
-      $state.go('booking', {branch_url_alias: item.item.value});
-    }
-  });
-}]);
+        $scope.search_query = "";
+        $state.go('booking', {branch_url_alias: item.item.value});
+      }
+    });
+  }]);

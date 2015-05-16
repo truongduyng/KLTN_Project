@@ -1,5 +1,5 @@
-/*global jQuery:false */
-jQuery(document).ready(function($) {
+
+$(document).ready(function() {
   "use strict";
   $(".big-cta").hover(
     function () {
@@ -47,17 +47,21 @@ jQuery(document).ready(function($) {
     return false;
   });
 
-  $('#login-on-register').click(function(e) {
-    $('#register-modal').modal('toggle');
-    $('#login-modal').modal('toggle');
-  });
+  var $table = $('table.tablebooking'),
+    $bodyCells = $table.find('tbody tr:first').children(),
+    colWidth;
 
-  $('#signup-on-login').click(function(e) {
-    $('#register-modal').modal('toggle');
-    $('#login-modal').modal('toggle');
-  });
+  // Adjust the width of thead cells when window resizes
+  $(window).resize(function() {
+    // Get the tbody columns width array
+    colWidth = $bodyCells.map(function() {
+        return $(this).width();
+    }).get();
 
-  $('#forget-password-on-login').click(function(e) {
-    $('#login-modal').modal('toggle');
-  });
+    // Set the width of thead columns
+    $table.find('thead tr').children().each(function(i, v) {
+        $(v).width(colWidth[i]);
+    });
+  }).resize();
+
 });

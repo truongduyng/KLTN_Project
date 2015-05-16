@@ -1,4 +1,4 @@
-app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch', 'Auth', function($scope, $http, tickets, ticket_id, branch, Auth){
+app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch', 'Auth', '$modal', function($scope, $http, tickets, ticket_id, branch, Auth, $modal){
 
   Auth.currentUser().then(function(user) {
     $scope.user = user;

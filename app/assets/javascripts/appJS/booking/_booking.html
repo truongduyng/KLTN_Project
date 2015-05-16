@@ -10,7 +10,6 @@
 
   <div class="row margintop20">
     <div class="col-lg-3 col-sm-4">
-      <a class="btn btn-danger marginbot10" href="#/{{branch.branch.name}}/booking">Đặt sân</a>
       <div style="display:inline-block; margin-bottom: -20px;">
         <datepicker ng-model="dt" show-weeks="false" class="well well-sm" ng-click="date_change()"></datepicker>
       </div>
@@ -34,14 +33,19 @@
     </div>
 
     <div class="calendar_content">
+      <hr class="timeline" ng-show='showtimeline'>
       <table class="tablebooking">
-        <tr>
-          <th class="text-center" style="width:50px !important">Time</th>
-          <th class="text-center" style="width:144px !important" ng-repeat= "asset in branch.assets">{{asset.name}}</th>
-        </tr>
-        <tbody ng-repeat= "hour in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]">
+        <thead>
           <tr>
-            <td class="padding10 text-center" rowspan="4" style="width:50px !important">{{hour}}:00</td>
+            <th class="text-center" style="width: 50px !important">Time</th>
+            <th class="text-center" ng-repeat= "asset in branch.assets">{{asset.name}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat-start= "hour in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]">
+          <td class="padding10 text-center" rowspan="5" style="width:50px !important">{{hour}}:00</td>
+          </tr>
+          <tr>
             <td id= "td_{{hour}}_{{asset._id.$oid}}" ng-click = "fast_book_open(hour,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour,$event,true)" ng-mouseleave="showtimeintd(hour,$event,false)" ng-repeat= "asset in branch.assets"></td>
           </tr>
           <tr>
@@ -50,7 +54,7 @@
           <tr>
             <td id="td_{{hour}}_30_{{asset._id.$oid}}" ng-click = "fast_book_open(hour+0.5,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour+0.5,$event,true)" ng-mouseleave="showtimeintd(hour+0.5,$event,false)" ng-repeat= "asset in branch.assets"></td>
           </tr>
-          <tr>
+          <tr ng-repeat-end>
             <td id="td_{{hour}}_45_{{asset._id.$oid}}" ng-click = "fast_book_open(hour+0.75,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour+0.75,$event,true)" ng-mouseleave="showtimeintd(hour+0.75,$event,false)" ng-repeat= "asset in branch.assets"></td>
           </tr>
         </tbody>
@@ -62,13 +66,13 @@
     </div>
   </div>
 
-  <div id='minibooking'class="boxbooking">
+  <div id='minibooking' class="boxbooking">
     <button type="button" class="close" style="color: red" aria-hidden="true" ng-click="close_minibooking()">&times;</button><br>
     <p class="marginbot5">Thoi gian: {{ dt | date:'dd-MM-yyyy'}}, {{hour_begin}} - <select ng-options = "hour_end for hour_end in hour_end_list" ng-model= 'hour_end' ng-change='update_hour_end()'/></p>
     <p class="marginbot5">Dia diem: <a href="">{{branch.branch.name}}</a></p>
     <p class="marginbot5">Dat boi: <a href="" title="">{{user.fullname}}</a>, sdt: {{user.phone}}</p>
     <p class="marginbot5">Gia: {{price}} (.000 VND)</p>
-    <button class="btn btn-default pull-left marginright20" type="submit" ng-click="ticket_create(dt,hour_begin,hour_end)">Đặt</button>
+    <button class="btn btn-default marginright20 margintop10" ng-click="ticket_create(dt,hour_begin,hour_end)">Đặt</button>
   </div>
 
   <div id='miniedit' class="boxbooking">

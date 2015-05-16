@@ -48,6 +48,7 @@ app.factory('tickets',['$http',function($http){
   function viewTickets(ticket){
     var begintime = object.change_time_to_float(ticket.begin_use_time.slice(11,16));
     var endtime = object.change_time_to_float(ticket.end_use_time.slice(11,16));
+    console.log(ticket.end_use_time.slice(11,16));
 
     switch(begintime-Math.floor(begintime)){
       case 0.5:
@@ -78,8 +79,8 @@ app.factory('tickets',['$http',function($http){
         $('#miniedit').css({top: edit_top, right: edit_right});
       })
       );
-
-    $('div#'+ticket.ticket_id.$oid).css({'top': ticket_td.offsetTop,'width': ticket_td.offsetWidth-3, 'left': ticket_td.offsetLeft,'height': ticket_td.offsetHeight*4*(endtime-begintime)-3});
+    console.log(ticket_td.offsetHeight*4*(endtime-begintime), endtime, begintime);
+    $('div#'+ticket.ticket_id.$oid).css({'top': ticket_td.offsetTop+2,'width': ticket_td.offsetWidth-3, 'left': ticket_td.offsetLeft,'height': ticket_td.offsetHeight*4*(endtime-begintime)-5});
 
     switch(ticket.status) {
       case "new":
@@ -107,30 +108,18 @@ app.factory('tickets',['$http',function($http){
   }
 
   object.hourtoview = function hourtoview(hour){
-    switch(hour-Math.floor(hour)){
-      case 0.25:
-      return  Math.floor(hour)+ ':15';
-      case 0.5:
-      return  Math.floor(hour)+ ':30';
-      case 0.75:
-      return  Math.floor(hour)+ ':45';
-      default:
+    if (hour-Math.floor(hour) > 0)
+      return Math.floor(hour) + ':' + (hour-Math.floor(hour))*60;
+    else
       return  Math.floor(hour)+ ':00';
-    }
   }
 
   object.change_time_to_float = function change_time_to_float(mytime){
     var time_split = mytime.split(":");
-    switch(time_split[1]){
-      case "15":
-      return parseFloat(time_split[0]) + 0.25;
-      case "30":
-      return parseFloat(time_split[0]) + 0.5;
-      case "45":
-      return parseFloat(time_split[0]) + 0.75;
-      default:
-      return parseFloat(time_split[0]);
-    }
+    if (time_split[0]!='00')
+      return parseFloat(time_split[0]) + (parseFloat(time_split[1])/60.0);
+    else
+      return 24.0;
   }
   return object;
 }]);

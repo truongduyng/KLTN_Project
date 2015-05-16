@@ -26,8 +26,9 @@ class TicketsController < ApplicationController
   end
 
   def create
-    ticket = Ticket.create(ticket_param.merge(user_id: current_user.id))
-    if ticket.errors.blank?
+    ticket = Ticket.new(ticket_param.merge(user_id: current_user.id))
+    if ticket.valid?
+      ticket.save
       render json: {
             ticket_id: ticket.id,
             asset_id: ticket.asset_id,
@@ -39,7 +40,7 @@ class TicketsController < ApplicationController
             user_phone: ticket.user.phone
           }, status: :created
     else
-      render json: @ticket.errors, status: :unprocessable_entity
+      render json: ticket.errors, status: :unprocessable_entity
     end
   end
 
