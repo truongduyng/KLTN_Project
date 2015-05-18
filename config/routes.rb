@@ -3,9 +3,13 @@ Rails.application.routes.draw do
 
   # #render plugin image browser thay vi load resource
   # get '/assets/ckeditor/plugins/imagebrowser/browser/browser.html' => 'admin#image_browser'
+
   
   resources :images
 
+  resources :notification_categories do
+  end
+  
   resources :notifications do
     member do
       put 'watched'

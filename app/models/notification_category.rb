@@ -66,6 +66,12 @@ class NotificationCategory
 		NotificationCategory.where(name: 'Thích bài viết bạn đang theo dõi').first
 	end
 
+	#Lay nhung notification category co template
+	def self.have_templates
+		NotificationCategory.all.select do |item|
+			!item.notification_template.nil?
+		end
+	end
 end
 
 ##Gom cac loai sau:

@@ -83,6 +83,17 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 				}],
 			}
 		})
+
+		.state("mauThongBao", {
+			url: '/mau-thong-bao',
+			templateUrl: 'adminJS/systemAdmin/mauThongBao/_mauThongBao.html',
+			controller: 'SAmauThongBaoCtrl',
+			resolve:{
+				notificationTemplates: ['SAmauThongBaoService', function(mauThongBaoService){
+					return mauThongBaoService.getAllNotificationTemplates();
+				}],
+			}
+		})
 		
 	//$urlRouterProvider.otherwise('/');
 
