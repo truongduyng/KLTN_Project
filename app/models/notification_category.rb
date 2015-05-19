@@ -72,6 +72,10 @@ class NotificationCategory
 			!item.notification_template.nil?
 		end
 	end
+
+	def have_template?
+		!self.notification_template.nil?
+	end
 end
 
 ##Gom cac loai sau:
