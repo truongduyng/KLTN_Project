@@ -28,10 +28,11 @@
 //= require ngInfiniteScroll
 //= require angular-flash
 //= require underscore
+//= require angular-cookies
 //= require_tree ../../angularJSComponents
 //= require angular-animate
 //= require ngmap
 //= require ./customJS/richmarker.js
-//= require ng-ckeditor
+//= require angular-ckeditor
 //= require ./systemAdminApp.js
 //= require_tree .

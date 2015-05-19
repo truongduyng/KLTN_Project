@@ -27,16 +27,24 @@ class ImagesController < ApplicationController
 		# 		message: 'file not in params[:upload]'
 		# 	},status: :ok
 		# end
+		# if params.has_key?(:upload)
+		# 	image = Image.new(image: params[:upload])
+		# 	current_user.images << image
+		# 	render json: {
+		# 		message: 'upload thanh cong',
+		# 	}, status: :ok
+		# else
+		# 	render json: {
+		# 		message: 'upload that bai',
+		# 	}, status: :bad_request
+		# end
+
 		if params.has_key?(:upload)
 			image = Image.new(image: params[:upload])
 			current_user.images << image
-			render json: {
-				message: 'upload thanh cong',
-			}, status: :ok
+			render plain: 'Tải ảnh lên thành công', status: :ok
 		else
-			render json: {
-				message: 'upload that bai',
-			}, status: :bad_request
+			render plain: "Tải ảnh lên thất bại", status: :bad_request
 		end
 	end
 
