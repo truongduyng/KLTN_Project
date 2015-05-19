@@ -29,7 +29,7 @@
                                         <tr ng-repeat="(index, nc) in notificationCategories | orderBy:'name'">
                                           <td>{{index + 1}}</td>
                                           <td style="max-width:250px;">{{nc.name}}</td>
-                                          <td style="max-width:250px;">{{nc.notification_template.content | shortContent: 20}}</td> 
+                                          <td style="max-width:250px;" ng-bind-html="nc.notification_template.content | shortContent: 20"></td> 
                                           <td> 
                                             <a class="btn btn-danger" ng-click="onSelectNC(nc)">Chỉnh sửa<a/>
                                           </td>

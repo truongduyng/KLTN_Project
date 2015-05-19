@@ -50,6 +50,9 @@ end
 json.notification_category do 
 	json._id @notification_change.notification_category.id
 	json.name @notification_change.notification_category.name
+	json.notification_template do
+		json.content @notification_change.notification_category.notification_template.content
+	end
 end 
 #1 so thong tin khac
 json.watched @notification_change.watched

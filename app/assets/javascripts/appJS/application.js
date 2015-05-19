@@ -36,6 +36,7 @@
 //= require angular-unsavedChanges/dist/unsavedChanges
 //= require angular-flash-alert
 //= require angular-cookies
+//= require angular-sanitize
 //= require_tree ../angularJSComponents
 //= require ng-timeago
 //= require angular-paging

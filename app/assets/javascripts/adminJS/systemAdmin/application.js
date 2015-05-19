@@ -29,6 +29,7 @@
 //= require angular-flash
 //= require underscore
 //= require angular-cookies
+//= require angular-sanitize
 //= require_tree ../../angularJSComponents
 //= require angular-animate
 //= require ngmap
