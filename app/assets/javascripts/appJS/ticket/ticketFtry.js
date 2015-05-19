@@ -1,14 +1,18 @@
-app.factory('tickets',['$http',function($http){
+app.factory('tickets',['$http','Auth', function($http, Auth){
   var object = {
     tickets: [],
   };
 
   object.getTickets = function(ticket_query) {
-    clearviewTickets();
+
+    for (var i = 0; i < object.tickets.length; i++) {
+      clearviewTicket(object.tickets[i].ticket_id.$oid);
+    };
+
     return $http.get('/tickets/'+ticket_query.date+'/'+ticket_query.branch_id).success(function(data){
       angular.copy(data, object.tickets);
       for (var i = 0; i < object.tickets.length; i++) {
-        viewTickets(object.tickets[i]);
+        viewTicket(object.tickets[i]);
       };
     });
   };
@@ -16,17 +20,19 @@ app.factory('tickets',['$http',function($http){
   object.create = function(ticket){
     return $http.post('tickets.json', ticket).success(function(data){
       object.tickets.push(data);
-      viewTickets(data);
+      viewTicket(data);
     });
   };
 
   object.update = function(ticket_update){
     return $http.post('tickets/update.json',ticket_update).success(function(data){
-      $('div#'+ ticket_update.ticket_id).remove();
+
+      clearviewTicket(ticket_update.ticket_id);
+
       for (var i = 0; i < object.tickets.length; i++) {
-        if (object.tickets[i].ticket_id.$oid == ticket_update.ticket_id) {
+        if (object.tickets[i].ticket_id.$oid == data.ticket_id.$oid) {
           object.tickets[i] = data;
-          viewTickets(data);
+          viewTicket(data);
           break;
         }
       };
@@ -35,7 +41,9 @@ app.factory('tickets',['$http',function($http){
 
   object.delete = function(ticket_id){
     return $http.delete('/tickets/'+ ticket_id).success(function(){
-      $('div#'+ ticket_id).remove();
+
+      clearviewTicket(ticket_id);
+
       for (var i = 0; i < object.tickets.length; i++) {
         if (object.tickets[i].ticket_id.$oid == ticket_id) {
           object.tickets.splice(i,1);
@@ -45,23 +53,32 @@ app.factory('tickets',['$http',function($http){
     });
   };
 
-  function viewTickets(ticket){
+  object.update_view = function(){
+    for (var i = 0; i < object.tickets.length; i++) {
+      clearviewTicket(object.tickets[i].ticket_id.$oid);
+      viewTicket(object.tickets[i]);
+    };
+  }
+
+  function viewTicket(ticket){
     var begintime = object.change_time_to_float(ticket.begin_use_time.slice(11,16));
-    var endtime = object.change_time_to_float(ticket.end_use_time.slice(11,16));
-    console.log(ticket.end_use_time.slice(11,16));
+    if (ticket.begin_use_time.slice(0,10) == ticket.end_use_time.slice(0,10))
+      var endtime = object.change_time_to_float(ticket.end_use_time.slice(11,16));
+    else
+      var endtime = 24.0;
 
     switch(begintime-Math.floor(begintime)){
       case 0.5:
-      ticket_td = $('td#td_'+Math.floor(begintime)+'_30_'+ticket.asset_id.$oid)[0]
+      var ticket_td = $('td#td_'+Math.floor(begintime)+'_30_'+ticket.asset_id.$oid)[0]
       break;
       case 0.25:
-      ticket_td = $('td#td_'+Math.floor(begintime)+'_15_'+ticket.asset_id.$oid)[0]
+      var ticket_td = $('td#td_'+Math.floor(begintime)+'_15_'+ticket.asset_id.$oid)[0]
       break;
       case 0.75:
-      ticket_td = $('td#td_'+Math.floor(begintime)+'_45_'+ticket.asset_id.$oid)[0]
+      var ticket_td = $('td#td_'+Math.floor(begintime)+'_45_'+ticket.asset_id.$oid)[0]
       break;
       default:
-      ticket_td = $('td#td_'+begintime+'_'+ticket.asset_id.$oid)[0]
+      var ticket_td = $('td#td_'+begintime+'_'+ticket.asset_id.$oid)[0]
     }
 
     $('.calendar_content').append(
@@ -79,11 +96,32 @@ app.factory('tickets',['$http',function($http){
         $('#miniedit').css({top: edit_top, right: edit_right});
       })
       );
-    console.log(ticket_td.offsetHeight*4*(endtime-begintime), endtime, begintime);
-    $('div#'+ticket.ticket_id.$oid).css({'top': ticket_td.offsetTop+2,'width': ticket_td.offsetWidth-3, 'left': ticket_td.offsetLeft,'height': ticket_td.offsetHeight*4*(endtime-begintime)-5});
+
+    $('div#' + ticket.ticket_id.$oid).css({
+      top: ticket_td.offsetTop+2,
+      width: ticket_td.offsetWidth-3,
+      left: ticket_td.offsetLeft,
+      height: ticket_td.offsetHeight*4*(endtime-begintime)-5
+    });
 
     switch(ticket.status) {
       case "new":
+      if(Auth._currentUser != null && Auth._currentUser.role_name == "bussiness admin"){
+
+        $('.calendar_content').append(
+          $("<i class='fa fa-arrow-circle-o-right to_status_doing' id='" + ticket.ticket_id.$oid + "_i'></i>").click(function(){
+            object.update({
+              ticket_id: ticket.ticket_id.$oid,
+              status: "doing"
+            });
+          })
+          );
+
+        $('i#' + ticket.ticket_id.$oid + '_i').css({
+          top: ticket_td.offsetTop + $('div#' + ticket.ticket_id.$oid).height() -$('i#' + ticket.ticket_id.$oid + '_i').height(),
+          left: ticket_td.offsetLeft + $('div#' + ticket.ticket_id.$oid).width()-$('i#' + ticket.ticket_id.$oid + '_i').width()
+        });
+      }
       $('div#'+ticket.ticket_id.$oid).addClass('ticket_new');
       break;
       case "doing":
@@ -101,10 +139,9 @@ app.factory('tickets',['$http',function($http){
     }
   }
 
-  function clearviewTickets(){
-    for(i=0; i < object.tickets.length; i++){
-      $('div#'+ object.tickets[i].ticket_id.$oid).remove();
-    }
+  function clearviewTicket(ticket_id){
+    $('div#'+ ticket_id).remove();
+    $('i#'+ ticket_id +'_i').remove();
   }
 
   object.hourtoview = function hourtoview(hour){
@@ -116,10 +153,7 @@ app.factory('tickets',['$http',function($http){
 
   object.change_time_to_float = function change_time_to_float(mytime){
     var time_split = mytime.split(":");
-    if (time_split[0]!='00')
-      return parseFloat(time_split[0]) + (parseFloat(time_split[1])/60.0);
-    else
-      return 24.0;
+    return parseFloat(time_split[0]) + (parseFloat(time_split[1])/60.0);
   }
   return object;
 }]);

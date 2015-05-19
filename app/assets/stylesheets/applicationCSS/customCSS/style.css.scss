@@ -190,7 +190,7 @@ a.scrollup i:hover {
 	padding: 0px 10px 10px 10px;
 	box-shadow: 2px 2px 5px #888888;
 	position: fixed;
-	z-index: 3;
+	z-index: 4;
 }
 
 .ticket {
@@ -241,6 +241,12 @@ i:hover{
 	height: 1px;
 	top: 0px;
 	border: 0px;
-	z-index: 2;
+	z-index: 3;
 	position: relative;
+}
+
+.to_status_doing{
+	position: absolute;
+	color: black;
+	z-index: 2;
 }

@@ -5,10 +5,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   $scope.showtimeline = true;
   $scope.td_height = 20; //height of td
 
-  Auth.currentUser().then(function(user) {
-    $scope.user = user;
-  }, function(error) {
-  });
+  $scope.user = Auth._currentUser;
 
   if (branch.data != "null"){
     $scope.branch = branch.data;
@@ -44,11 +41,10 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     $scope.hour_begin = tickets.hourtoview(hour);
     $scope.hour_end_list = [];
 
-    var max_time_length = hour + 4;
     var timenow = tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes());
     if ((hour-timenow) < -10.0/60 && $scope.dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10) || $scope.dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)) return false;
 
-
+    var max_time_length = hour + 4;
     for (var i = 0; i < tickets.tickets.length; i++) {
       if(tickets.tickets[i].asset_id.$oid == asset_id){
         var begintime = tickets.change_time_to_float(tickets.tickets[i].begin_use_time.slice(11,16));
@@ -184,6 +180,9 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
         },
         branch: function(){
           return $scope.branch;
+        },
+        dt: function(){
+          return $scope.dt;
         }
       }
     });
@@ -224,4 +223,8 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       top_timeline = 23 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()))*scrollheight/(60*24));
     $('hr.timeline').animate({top: top_timeline},'fast');
   },1000*60*5);
+
+  $('.fa-chevron-circle-right').click(function(){
+    alert('oh clicking');
+  });
 }]);

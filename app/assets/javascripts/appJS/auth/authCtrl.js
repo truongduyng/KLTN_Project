@@ -36,8 +36,9 @@ app.controller('authCtrl', ['$scope', 'Auth', '$state', '$modal',
    $scope.register = function(){
     Auth.register($scope.user).then(function(){
       $scope.$close();
-    },  function(){
-      alert("error");
+    },  function(e){
+      console.log(e)
+      $scope.error = "what error";
     });
   };
 }]);

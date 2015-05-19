@@ -7,6 +7,7 @@ class User
 
   #callback
   before_create :set_default_role
+  after_save :set_role_name
   #relationships
   belongs_to :role
   embeds_one :information
@@ -16,11 +17,11 @@ class User
   field :fullname, type: String
   field :username, type: String
   field :phone, type: String
+  field :role_name, type: String
 
   #My validation
-  validates :username, presence: true, uniqueness: true
-  validates :fullname, presence: true
-  validates :phone, presence: true
+  validates :username, :email, presence: true, uniqueness: true
+  validates :fullname, :phone, presence: true
 
   ## Database authenticatable
   field :email,              type: String, default: ""
@@ -53,5 +54,11 @@ class User
   private
   def set_default_role
     self.role ||= Role.where(name: 'user').first
+    # self.role_name = self.role.name
+  end
+
+  def set_role_name
+    # byebug
+    self.set(role_name: self.role.name)
   end
 end

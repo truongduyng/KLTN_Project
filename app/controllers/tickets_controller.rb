@@ -1,5 +1,5 @@
 class TicketsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :update_status, :update, :destroy]
+  before_action :authenticate_user!, only: [:create, :update, :destroy]
 
   def show
     # byebug
@@ -8,15 +8,15 @@ class TicketsController < ApplicationController
     if tickets.present?
       tickets.each do |ticket|
         results << {
-            ticket_id: ticket.id,
-            asset_id: ticket.asset_id,
-            begin_use_time: ticket.begin_use_time,
-            end_use_time: ticket.end_use_time,
-            price: ticket.price,
-            status: ticket.status,
-            user_name: ticket.user.fullname,
-            user_phone: ticket.user.phone
-          }
+          ticket_id: ticket.id,
+          asset_id: ticket.asset_id,
+          begin_use_time: ticket.begin_use_time,
+          end_use_time: ticket.end_use_time,
+          price: ticket.price,
+          status: ticket.status,
+          user_name: ticket.user.fullname,
+          user_phone: ticket.user.phone
+        }
       end
       render json: results
     else
@@ -30,15 +30,15 @@ class TicketsController < ApplicationController
     if ticket.valid?
       ticket.save
       render json: {
-            ticket_id: ticket.id,
-            asset_id: ticket.asset_id,
-            begin_use_time: ticket.begin_use_time,
-            end_use_time: ticket.end_use_time,
-            price: ticket.price,
-            status: ticket.status,
-            user_name: ticket.user.fullname,
-            user_phone: ticket.user.phone
-          }, status: :created
+        ticket_id: ticket.id,
+        asset_id: ticket.asset_id,
+        begin_use_time: ticket.begin_use_time,
+        end_use_time: ticket.end_use_time,
+        price: ticket.price,
+        status: ticket.status,
+        user_name: ticket.user.fullname,
+        user_phone: ticket.user.phone
+        }, status: :created
     else
       render json: ticket.errors, status: :unprocessable_entity
     end
@@ -48,8 +48,9 @@ class TicketsController < ApplicationController
     begin
       # byebug
       ticket = Ticket.where(id: ticket_param[:ticket_id]).first
-      if ticket.update_attributes(ticket_param.except(:ticket_id))
-        render json: {
+      if (ticket_param.except(:ticket_id).length == 1 && ticket_param.except(:ticket_id).include?(:status))
+        if ticket.update_attribute(:status, ticket_param.except(:ticket_id)[:status])
+          render json: {
             ticket_id: ticket.id,
             asset_id: ticket.asset_id,
             begin_use_time: ticket.begin_use_time,
@@ -58,9 +59,25 @@ class TicketsController < ApplicationController
             status: ticket.status,
             user_name: ticket.user.fullname,
             user_phone: ticket.user.phone
-          }, status: :ok
+            }, status: :ok
+        else
+          render json: ticket.errors, status: :unprocessable_entity
+        end
       else
-        render json: ticket.errors, status: :unprocessable_entity
+        if ticket.update_attributes(ticket_param.except(:ticket_id))
+          render json: {
+            ticket_id: ticket.id,
+            asset_id: ticket.asset_id,
+            begin_use_time: ticket.begin_use_time,
+            end_use_time: ticket.end_use_time,
+            price: ticket.price,
+            status: ticket.status,
+            user_name: ticket.user.fullname,
+            user_phone: ticket.user.phone
+            }, status: :ok
+        else
+          render json: ticket.errors, status: :unprocessable_entity
+        end
       end
     rescue Exception => e
       render json: e, status: :unprocessable_entity
@@ -83,4 +100,5 @@ class TicketsController < ApplicationController
     params.permit(:ticket_id, :begin_use_time, :end_use_time, :price, :status,
       :branch_id, :asset_id, :date)
   end
+
 end

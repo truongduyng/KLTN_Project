@@ -13,13 +13,13 @@
 
     <br><i class="fa fa-user fa-2x marginbot10"></i>
     <img src="" alt="ava">
-    <span style="display:inline">{{user.username}} , Số ĐT: <strong style="color: #0078ad">{{user.phone}}</strong></span>
+    <span style="display:inline">{{ticket.user_name}} , Số ĐT: <strong style="color: #0078ad">{{ticket.user_phone}}</strong></span>
     <br><i class="fa fa-bell fa-2x marginbot10"></i>
     <input type="radio" value="taisan" checked>Thanh toán tại sân
     <!-- <input type="radio" name="" value="" placeholder="">Thanh toán điện tử <br> -->
     <br><i class="fa fa-money fa-2x marginbot10"></i>
     <span>{{price}}.000 VND</span>
     <br>
-    <button class="btn btn-theme margintop10 pull-left" ng-click="update_ticket(dt, hour_begin, hour_end)">Cap nhat</button>
+    <button class="btn btn-theme margintop10 pull-left" ng-click="update_ticket(hour_begin, hour_end)">Cap nhat</button>
   </div>
 </div>

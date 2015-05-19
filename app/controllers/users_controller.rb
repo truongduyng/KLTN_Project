@@ -18,4 +18,5 @@ class UsersController < ActionController::Base
       render json: {isUnique: true}
     end
   end
+
 end
