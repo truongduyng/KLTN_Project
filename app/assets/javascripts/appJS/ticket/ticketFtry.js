@@ -14,6 +14,8 @@ app.factory('tickets',['$http','Auth', function($http, Auth){
       for (var i = 0; i < object.tickets.length; i++) {
         viewTicket(object.tickets[i]);
       };
+
+      check_td_in_past(ticket_query.date);
     });
   };
 
@@ -58,6 +60,33 @@ app.factory('tickets',['$http','Auth', function($http, Auth){
       clearviewTicket(object.tickets[i].ticket_id.$oid);
       viewTicket(object.tickets[i]);
     };
+  }
+
+  //Check time to change color of tr --------------------------------------
+  function check_td_in_past(date){
+    var datenow = new Date();
+
+    if (date < datenow.toJSON().slice(0,10)) {
+      $("table.tablebooking tbody tr.time_td").each(function(index){
+        $(this).addClass('inthepast');
+      });
+    } else {
+
+      if (date > datenow.toJSON().slice(0,10)) {
+        $("table.tablebooking tbody tr.time_td").each(function(index){
+          $(this).removeClass('inthepast');
+        });
+      } else {
+
+        var timenow = object.change_time_to_float(datenow.getHours() + ':' + datenow.getMinutes());
+        $("table.tablebooking tbody tr.time_td").each(function(index){
+          if ($(this).attr('time') < timenow) {
+            $(this).addClass('inthepast');
+          }
+        });
+
+      }
+    }
   }
 
   function viewTicket(ticket){
@@ -152,8 +181,11 @@ app.factory('tickets',['$http','Auth', function($http, Auth){
   }
 
   object.change_time_to_float = function change_time_to_float(mytime){
-    var time_split = mytime.split(":");
-    return parseFloat(time_split[0]) + (parseFloat(time_split[1])/60.0);
+    if (mytime != null) {
+      var time_split = mytime.split(":");
+      return parseFloat(time_split[0]) + (parseFloat(time_split[1])/60.0);
+    };
+    return null;
   }
   return object;
 }]);

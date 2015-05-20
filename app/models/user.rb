@@ -7,9 +7,8 @@ class User
 
   #callback
   before_create :set_default_role
-  after_save :set_role_name
   #relationships
-  belongs_to :role
+  belongs_to :role, primary_key: "name", foreign_key: "role_name"
   embeds_one :information
   has_one :bussiness
   has_many :tickets
@@ -54,11 +53,6 @@ class User
   private
   def set_default_role
     self.role ||= Role.where(name: 'user').first
-    # self.role_name = self.role.name
   end
 
-  def set_role_name
-    # byebug
-    self.set(role_name: self.role.name)
-  end
 end

@@ -76,7 +76,7 @@ app.controller('mapCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Au
 
       google.maps.event.addListener(marker,"click",(function(marker,i){
         return function(){
-         $scope.infowindow.setContent('<div id="info-window"><a href="'+data[i].url+'">'+data[i].name+'</a><br><span>'+data[i].address.substring(0,20)+'...</span></div>');
+         $scope.infowindow.setContent('<div id="info-window"><a href="#/'+data[i].url+'">'+data[i].name+'</a><br><span>'+data[i].address.substring(0,20)+'...</span></div>');
          $scope.infowindow.open(map,marker);
          map.setCenter(marker.getPosition());
        }

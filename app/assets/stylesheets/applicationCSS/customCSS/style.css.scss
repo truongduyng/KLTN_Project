@@ -154,7 +154,7 @@ a.scrollup i:hover {
 	border-collapse: collapse;
 	height: 20px !important;
 	width: 170px !important;
-	background-color: #FFFFFF;
+	/*background-color: #FFFFFF;*/
 }
 
 .tablebooking td{
@@ -249,4 +249,8 @@ i:hover{
 	position: absolute;
 	color: black;
 	z-index: 2;
+}
+
+.inthepast{
+	background-color: rgba(227, 227, 227, 0.3);
 }

@@ -3,6 +3,8 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
   $scope.branch = branch;
   $scope.hour_begin_list = [];
   $scope.dt = dt;
+  var timenow = tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes());
+
   for (var i = 0; i < tickets.tickets.length; i++) {
     if(tickets.tickets[i].ticket_id.$oid == ticket_id){
       $scope.ticket = tickets.tickets[i];
@@ -10,10 +12,14 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
       break;
     }
   }
+  function customroundtime(time){
+    var fraction = time - Math.floor(time);
+    return fraction > 0.5? fraction > 0.75? Math.ceil(time):Math.floor(time)+0.5 : fraction > 0.25? Math.floor(time)+0.5:Math.floor(time);
+  }
   // build time data
   var hour_begin = tickets.change_time_to_float($scope.ticket.begin_use_time.slice(11,16));
   var hour_end = tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16));
-  var min_begin_time = 0;
+  var min_begin_time = customroundtime(timenow);
   var max_end_time = 24;
   for (var i = 0; i < tickets.tickets.length; i++) {
     if(tickets.tickets[i].asset_id.$oid == $scope.ticket.asset_id.$oid){
@@ -119,7 +125,6 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
 
   $scope.update_ticket = function(hour_begin, hour_end){
     Auth.currentUser().then(function(user) {
-      var timenow = tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes());
 
       if ((tickets.change_time_to_float(hour_begin)-timenow) < -10.0/60 && dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10) || dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)) {
         alert("Khong the cap nhat ve da qua");

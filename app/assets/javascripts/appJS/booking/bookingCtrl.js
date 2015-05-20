@@ -188,18 +188,22 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     });
   };
 
+
+  var previouscolor = '';
   $scope.showtimeintd = function(hour,element,show){
-    $td = $(element.currentTarget)
+    $td = $(element.currentTarget);
     $th = $td.closest('table').find('th').eq($td.index()+1);
     if(show){
-      $(element.currentTarget).css('background-color','#eeeeee');
+      previouscolor = $(element.currentTarget).css('background-color');
+      $(element.currentTarget).css('background-color','#fed559');
       $(element.currentTarget).html('<strong>'+ $th.html() +'</strong>'+', '+'<strong>'+ tickets.hourtoview(hour) + '</strong>');
     }
     else{
-      $(element.currentTarget).css('background-color','white');
+      $(element.currentTarget).css('background-color',previouscolor);
       $(element.currentTarget).html("");
     }
   }
+
 
   $scope.hoveringOver = function(value) {
     $scope.overstar = value;
@@ -224,7 +228,4 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     $('hr.timeline').animate({top: top_timeline},'fast');
   },1000*60*5);
 
-  $('.fa-chevron-circle-right').click(function(){
-    alert('oh clicking');
-  });
 }]);
