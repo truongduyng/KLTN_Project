@@ -7,6 +7,6 @@
 //= require angular-devise
 //= require angular-ui-router
 //= require ngmap
-//= require angular-flash
+//= require angular-flash-alert/src/angular-flash
 //= require initModule
 //= require_tree .

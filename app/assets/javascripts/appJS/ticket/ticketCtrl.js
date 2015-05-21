@@ -2,92 +2,95 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
 
   $scope.branch = branch;
   $scope.hour_begin_list = [];
+  $scope.hour_end_list = [];
   $scope.dt = dt;
-  var timenow = tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes());
 
   for (var i = 0; i < tickets.tickets.length; i++) {
-    if(tickets.tickets[i].ticket_id.$oid == ticket_id){
+    if(tickets.tickets[i]._id.$oid == ticket_id){
       $scope.ticket = tickets.tickets[i];
       $scope.price = tickets.tickets[i].price;
       break;
     }
   }
-  function customroundtime(time){
-    var fraction = time - Math.floor(time);
-    return fraction > 0.5? fraction > 0.75? Math.ceil(time):Math.floor(time)+0.5 : fraction > 0.25? Math.floor(time)+0.5:Math.floor(time);
-  }
-  // build time data
-  var hour_begin = tickets.change_time_to_float($scope.ticket.begin_use_time.slice(11,16));
-  var hour_end = tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16));
-  var min_begin_time = customroundtime(timenow);
-  var max_end_time = 24;
-  for (var i = 0; i < tickets.tickets.length; i++) {
-    if(tickets.tickets[i].asset_id.$oid == $scope.ticket.asset_id.$oid){
-      var endtime = tickets.change_time_to_float(tickets.tickets[i].end_use_time.slice(11,16));
-      var begintime = tickets.change_time_to_float(tickets.tickets[i].begin_use_time.slice(11,16));
-      if(hour_begin > endtime && endtime > min_begin_time)
-        min_begin_time = endtime;
-      if(hour_end < begintime && begintime < max_end_time)
-        max_end_time = begintime;
-    }
-  };
 
-  for (var i = min_begin_time; i <= max_end_time -1; i+=0.25) {
-
-    $scope.hour_begin_list.push(tickets.hourtoview(i));
-  };
-  if ($scope.hour_begin_list.length) {
-    for (var i = 0; i < $scope.hour_begin_list.length; i++) {
-      if(tickets.change_time_to_float($scope.hour_begin_list[i]) == hour_begin){
-        $scope.hour_begin = $scope.hour_begin_list[i];
-        break;
-      }
-    };
-  }
-  //===================================================================================
   $scope.update_price = function(){
     $scope.price = calculate_price();
   }
-  //=====================================================================================
+
   // build $scope.hour_end_list
   $scope.update_hour_end = function(firstrun){
     $scope.hour_end_list = [];
-    var hour_begin = tickets.change_time_to_float($scope.hour_begin);
-    var max_time_length = hour_begin + 4;
+    var float_hour_begin = tickets.change_time_to_float($scope.hour_begin);
+    var max_time_length = float_hour_begin + 4;
 
     for (var i = 0; i < tickets.tickets.length; i++) {
       if(tickets.tickets[i].asset_id.$oid == $scope.ticket.asset_id.$oid && tickets.tickets[i] != $scope.ticket){
         var begintime = tickets.change_time_to_float(tickets.tickets[i].begin_use_time.slice(11,16));
-        if(hour_begin < begintime && begintime < max_time_length)
+        if(float_hour_begin < begintime && begintime < max_time_length)
           max_time_length = begintime;
       }
     };
 
-    for (var i = hour_begin+1; i <= max_time_length; i+=0.25) {
+    for (var i = float_hour_begin+1; i <= max_time_length; i+=0.25) {
       if(i>24.0) break;
       $scope.hour_end_list.push(tickets.hourtoview(i));
     };
     if ($scope.hour_end_list.length) {
 
       if(firstrun){
-        for (var i = 0; i < $scope.hour_end_list.length; i++) {
-          if(tickets.change_time_to_float($scope.hour_end_list[i])==tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16)))
-          $scope.hour_end = $scope.hour_end_list[i];
-        }
+        $scope.hour_end = tickets.hourtoview(hour_end);
       }
       else{
         $scope.hour_end = $scope.hour_end_list[0];
+        $scope.update_price();
       }
-
-      $scope.update_price();
       return true;
     }
     else{
       return false;
     }
   };
-  $scope.update_hour_end(true);
   //=======================================================================================
+
+  var timenow = $scope.dt == new Date()? tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes()) : $scope.dt < new Date()? 24 : 0 ;
+  var hour_begin = tickets.change_time_to_float($scope.ticket.begin_use_time.slice(11,16));
+  var hour_end = tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16));
+
+  if (hour_begin-timenow < -10.0/60 && dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10) || dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)) {
+    $scope.hour_begin_list.push(tickets.hourtoview(hour_begin));
+    $scope.hour_begin = $scope.hour_begin_list[0];
+    $scope.hour_end_list.push(tickets.hourtoview(hour_end));
+    $scope.hour_end = $scope.hour_end_list[0];
+  } else {
+    // build time data
+    var min_begin_time = customroundtime(timenow);
+    var max_end_time = 24;
+    for (var i = 0; i < tickets.tickets.length; i++) {
+      if(tickets.tickets[i].asset_id == $scope.ticket.asset_id && tickets.tickets[i]._id != $scope.ticket._id){
+        var endtime = tickets.change_time_to_float(tickets.tickets[i].end_use_time.slice(11,16));
+        var begintime = tickets.change_time_to_float(tickets.tickets[i].begin_use_time.slice(11,16));
+        if(hour_begin > endtime && endtime > min_begin_time)
+          min_begin_time = endtime;
+        if(hour_end < begintime && begintime < max_end_time)
+          max_end_time = begintime;
+      }
+    };
+
+    for (var i = min_begin_time; i <= max_end_time -1; i+=0.25) {
+      $scope.hour_begin_list.push(tickets.hourtoview(i));
+    };
+    if ($scope.hour_begin_list.length) {
+      $scope.hour_begin = tickets.hourtoview(hour_begin);
+    }
+    $scope.update_hour_end(true);
+  }
+  //===================================================================================
+
+  function customroundtime(time){
+    var fraction = time - Math.floor(time);
+    return fraction > 0.5? fraction > 0.75? Math.ceil(time):Math.floor(time)+0.5 : fraction > 0.25? Math.floor(time)+0.5:Math.floor(time);
+  }
+  //=====================================================================================
 
   function calculate_price(){
     var hbegin = tickets.change_time_to_float($scope.hour_begin);
@@ -123,17 +126,17 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
     $('#miniedit').css('display','none');
   };
 
-  $scope.update_ticket = function(hour_begin, hour_end){
+  $scope.update_ticket = function(new_hour_begin, new_hour_end){
     Auth.currentUser().then(function(user) {
 
-      if ((tickets.change_time_to_float(hour_begin)-timenow) < -10.0/60 && dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10) || dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)) {
+      if ((tickets.change_time_to_float(new_hour_begin)-timenow) < -10.0/60 && dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10) || dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)) {
         alert("Khong the cap nhat ve da qua");
         $scope.close_modal();
         return false;
       }
 
-      var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_begin.split(":")[0],hour_begin.split(":")[1]);
-      var endtime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_end.split(":")[0],hour_end.split(":")[1]);
+      var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),new_hour_begin.split(":")[0],new_hour_begin.split(":")[1]);
+      var endtime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),new_hour_end.split(":")[0],new_hour_end.split(":")[1]);
       tickets.update({
         ticket_id: ticket_id,
         begin_use_time: begintime,

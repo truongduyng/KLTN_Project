@@ -5,7 +5,9 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   $scope.showtimeline = true;
   $scope.td_height = 20; //height of td
 
-  $scope.user = Auth._currentUser;
+  Auth.currentUser().then(function(user) {
+    $scope.user = user;
+  });
 
   if (branch.data != "null"){
     $scope.branch = branch.data;
@@ -36,7 +38,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     }
   };
 
-  function repair_data(hour, asset_id, user){
+  function repair_data(hour, asset_id){
     $scope.asset_id = asset_id;
     $scope.hour_begin = tickets.hourtoview(hour);
     $scope.hour_end_list = [];
@@ -139,11 +141,14 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     Auth.currentUser().then(function(user) {
       var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_begin.split(":")[0],hour_begin.split(":")[1]);
       var endtime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_end.split(":")[0],hour_end.split(":")[1]);
+      console.log(user);
       tickets.create({
         begin_use_time: begintime,
         end_use_time: endtime,
         price: $scope.price,
         status: "new",
+        customer_name: user.fullname,
+        customer_phone: user.phone,
         branch_id: $scope.branch.branch._id.$oid,
         asset_id: $scope.asset_id,
       });

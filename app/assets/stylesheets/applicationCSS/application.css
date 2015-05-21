@@ -11,8 +11,7 @@
  * file per style scope.
  *= require jquery-ui
  *= require bootstrap/dist/css/bootstrap
- *= require jquery-timepicker-jt
- *= require jquery-timepicker-jt/lib/bootstrap-datepicker
+ *= require angular-flash-alert/src/angular-flash
  *= require_tree .
  *= require_self
  */

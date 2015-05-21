@@ -1,24 +1,12 @@
 class TicketsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update, :destroy]
+  before_action :check_normal_user, only: [:update, :destroy]
 
   def show
-    # byebug
+
     tickets = Ticket.onday(ticket_param[:date],ticket_param[:branch_id])
-    results = []
     if tickets.present?
-      tickets.each do |ticket|
-        results << {
-          ticket_id: ticket.id,
-          asset_id: ticket.asset_id,
-          begin_use_time: ticket.begin_use_time,
-          end_use_time: ticket.end_use_time,
-          price: ticket.price,
-          status: ticket.status,
-          user_name: ticket.user.fullname,
-          user_phone: ticket.user.phone
-        }
-      end
-      render json: results
+      render json: tickets, status: :ok
     else
       render json: nil
     end
@@ -29,16 +17,7 @@ class TicketsController < ApplicationController
     ticket = Ticket.new(ticket_param.merge(user_id: current_user.id))
     if ticket.valid?
       ticket.save
-      render json: {
-        ticket_id: ticket.id,
-        asset_id: ticket.asset_id,
-        begin_use_time: ticket.begin_use_time,
-        end_use_time: ticket.end_use_time,
-        price: ticket.price,
-        status: ticket.status,
-        user_name: ticket.user.fullname,
-        user_phone: ticket.user.phone
-        }, status: :created
+      render json: ticket, status: :created
     else
       render json: ticket.errors, status: :unprocessable_entity
     end
@@ -50,31 +29,13 @@ class TicketsController < ApplicationController
       ticket = Ticket.where(id: ticket_param[:ticket_id]).first
       if (ticket_param.except(:ticket_id).length == 1 && ticket_param.except(:ticket_id).include?(:status))
         if ticket.update_attribute(:status, ticket_param.except(:ticket_id)[:status])
-          render json: {
-            ticket_id: ticket.id,
-            asset_id: ticket.asset_id,
-            begin_use_time: ticket.begin_use_time,
-            end_use_time: ticket.end_use_time,
-            price: ticket.price,
-            status: ticket.status,
-            user_name: ticket.user.fullname,
-            user_phone: ticket.user.phone
-            }, status: :ok
+          render json: ticket, status: :ok
         else
           render json: ticket.errors, status: :unprocessable_entity
         end
       else
         if ticket.update_attributes(ticket_param.except(:ticket_id))
-          render json: {
-            ticket_id: ticket.id,
-            asset_id: ticket.asset_id,
-            begin_use_time: ticket.begin_use_time,
-            end_use_time: ticket.end_use_time,
-            price: ticket.price,
-            status: ticket.status,
-            user_name: ticket.user.fullname,
-            user_phone: ticket.user.phone
-            }, status: :ok
+          render json: ticket, status: :ok
         else
           render json: ticket.errors, status: :unprocessable_entity
         end
@@ -98,7 +59,12 @@ class TicketsController < ApplicationController
   private
   def ticket_param
     params.permit(:ticket_id, :begin_use_time, :end_use_time, :price, :status,
-      :branch_id, :asset_id, :date)
+      :branch_id, :asset_id, :customer_name, :customer_phone, :date)
   end
-
+  def check_normal_user
+    ticket = Ticket.where(id: ticket_param[:ticket_id]).first
+    if (ticket.user_id != current_user.id || ticket.status != 'new')
+      render json: {errors: "Khong the cap nhat ve cua nguoi khac"}
+    end
+  end
 end
