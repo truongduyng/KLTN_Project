@@ -57,8 +57,9 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     $scope.hour_begin = tickets.hourtoview(hour);
     $scope.hour_end_list = [];
 
-    var timenow = tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes());
-    if ((hour-timenow) < -10.0/60 && $scope.dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10) || $scope.dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)) return false;
+    var timenow = $scope.dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10)? tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes()) : $scope.dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)? 24 : 0 ;
+    if ((Auth._currentUser == null || Auth._currentUser.role_name == 'user') && (hour-timenow) < -10.0/60) return false;
+    // if (Auth._currentUser == null && (hour-timenow) < -10.0/60) return false;
 
     var max_time_length = hour + 4;
     for (var i = 0; i < tickets.tickets.length; i++) {
@@ -155,7 +156,9 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     Auth.currentUser().then(function(user) {
       var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_begin.split(":")[0],hour_begin.split(":")[1]);
       var endtime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_end.split(":")[0],hour_end.split(":")[1]);
-
+      if ($scope.customer_name == null) {
+        $scope.customer_name = "Khach";
+      }
       tickets.create({
         begin_use_time: begintime,
         end_use_time: endtime,
@@ -179,8 +182,32 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     });
   };
 
-  $scope.ticket_delete = function(ticket_id){
+  $scope.ticket_delete = function(){
     Auth.currentUser().then(function(user) {
+
+      for (var i = 0; i < tickets.tickets.length; i++) {
+        if(tickets.tickets[i]._id.$oid == $('p#ticket_id_hidden').html()){
+          var ticket_del = tickets.tickets[i];
+          break;
+        }
+      }
+      var timenow = $scope.dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10)? tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes()) : $scope.dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)? 24 : 0 ;
+
+      var hour_begin = tickets.change_time_to_float(ticket_del.begin_use_time.slice(11,16));
+      if (user.role_name == 'user'){
+        if (hour_begin-timenow < -10.0/60) {
+          alert("Khong the xoa ve da qua");
+          $scope.close_miniedit();
+          return false;
+        }
+
+        if(ticket_del.user_id == null || ticket_del.user_id.$oid != Auth._currentUser._id.$oid){
+          alert('Khong the xoa ve cua ng khac');
+          $scope.close_miniedit();
+          return false;
+        }
+      }
+
       tickets.delete($('p#ticket_id_hidden').html());
       $scope.close_miniedit();
     }, function(error) {
@@ -190,47 +217,47 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
         controller: 'authCtrl'
       });
     });
-  };
+};
 
-  $scope.ticket_edit = function(){
-    var ticket_update = $modal.open({
-      templateUrl: "appJS/ticket/_ticket_update.html",
-      controller: "ticketCtrl",
-      resolve: {
-        ticket_id: function(){
-          return $('p#ticket_id_hidden').html();
-        },
-        branch: function(){
-          return $scope.branch;
-        },
-        dt: function(){
-          return $scope.dt;
-        }
+$scope.ticket_edit = function(){
+  var ticket_update = $modal.open({
+    templateUrl: "appJS/ticket/_ticket_update.html",
+    controller: "ticketCtrl",
+    resolve: {
+      ticket_id: function(){
+        return $('p#ticket_id_hidden').html();
+      },
+      branch: function(){
+        return $scope.branch;
+      },
+      dt: function(){
+        return $scope.dt;
       }
-    });
-  };
+    }
+  });
+};
 
 
-  var previouscolor = '';
-  $scope.showtimeintd = function(hour,element,show){
-    $td = $(element.currentTarget);
-    $th = $td.closest('table').find('th').eq($td.index()+1);
-    if(show){
-      previouscolor = $(element.currentTarget).css('background-color');
-      $(element.currentTarget).css('background-color','#fed559');
-      $(element.currentTarget).html('<strong>'+ $th.html() +'</strong>'+', '+'<strong>'+ tickets.hourtoview(hour) + '</strong>');
-    }
-    else{
-      $(element.currentTarget).css('background-color',previouscolor);
-      $(element.currentTarget).html("");
-    }
+var previouscolor = '';
+$scope.showtimeintd = function(hour,element,show){
+  $td = $(element.currentTarget);
+  $th = $td.closest('table').find('th').eq($td.index()+1);
+  if(show){
+    previouscolor = $(element.currentTarget).css('background-color');
+    $(element.currentTarget).css('background-color','#fed559');
+    $(element.currentTarget).html('<strong>'+ $th.html() +'</strong>'+', '+'<strong>'+ tickets.hourtoview(hour) + '</strong>');
   }
+  else{
+    $(element.currentTarget).css('background-color',previouscolor);
+    $(element.currentTarget).html("");
+  }
+}
 
 
-  $scope.hoveringOver = function(value) {
-    $scope.overstar = value;
-    $scope.ishoverstar = true;
-  };
+$scope.hoveringOver = function(value) {
+  $scope.overstar = value;
+  $scope.ishoverstar = true;
+};
 
   //Timeline---------------------------------------------------------------
   if($scope.branch.assets.length * 160 > $('.calendar_content').width())

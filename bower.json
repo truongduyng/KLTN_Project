@@ -18,9 +18,7 @@
   "dependencies": {
     "angular": "~1.4.0",
     "angular-ui-router": "~0.2.13",
-    "bootstrap": "~3.3.4",
     "angular-devise": "~1.0.2",
-    "angular-bootstrap": "~0.13.0",
     "angular-unsavedChanges": "~0.2.3",
     "angular-flash-alert": "~1.1.0",
     "angular-cookies": "~1.4.0",
@@ -34,7 +32,6 @@
     "ngstorage": "~0.3.0"
   },
   "resolutions": {
-    "angular": "~1.4.0",
-    "bootstrap": "~3.3.4"
+    "angular": "~1.4.0"
   }
 }

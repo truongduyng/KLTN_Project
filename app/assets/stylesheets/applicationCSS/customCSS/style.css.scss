@@ -1,6 +1,8 @@
 /* ==== Google font ==== */
 @import "font-awesome-sprockets";
 @import "font-awesome";
+@import "bootstrap-sprockets";
+@import "bootstrap";
 /* ===================================
 1. General
 ==================================== */
@@ -253,4 +255,9 @@ i:hover{
 
 .inthepast{
 	background-color: rgba(227, 227, 227, 0.3);
+}
+
+.customer{
+	border-radius: 10px;
+	border: 1px solid #8AC007;
 }

@@ -3,6 +3,7 @@ class TicketsController < ApplicationController
   before_action :check_normal_user, only: [:update, :destroy]
 
   def show
+
     tickets = Ticket.onday(ticket_param[:date],ticket_param[:branch_id])
     if tickets.present?
       render json: tickets, status: :ok
@@ -12,8 +13,13 @@ class TicketsController < ApplicationController
   end
 
   def create
-    byebug
-    ticket = Ticket.new(ticket_param.merge(user_id: current_user.id))
+
+    if (current_user.role_name == 'user')
+      ticket = Ticket.new(ticket_param.merge(user_id: current_user.id))
+    else
+      ticket =  Ticket.new(ticket_param);
+    end
+
     if ticket.valid?
       ticket.save
       render json: ticket, status: :created
@@ -23,8 +29,8 @@ class TicketsController < ApplicationController
   end
 
   def update
+
     begin
-      # byebug
       ticket = Ticket.where(id: ticket_param[:ticket_id]).first
       if (ticket_param.except(:ticket_id).length == 1 && ticket_param.except(:ticket_id).include?(:status))
         if ticket.update_attribute(:status, ticket_param.except(:ticket_id)[:status])

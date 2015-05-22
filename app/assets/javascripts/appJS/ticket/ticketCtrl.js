@@ -51,10 +51,10 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
       return false;
     }
   };
-  //=======================================================================================
 
+  //================================================================================
   var timenow = dt.toJSON().slice(0,10) == dt_now? tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes()) : dt.toJSON().slice(0,10) < dt_now? 24 : 0 ;
-  console.log(timenow);
+
   var hour_begin = tickets.change_time_to_float($scope.ticket.begin_use_time.slice(11,16));
   var hour_end = tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16));
 
@@ -134,10 +134,18 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
   $scope.update_ticket = function(new_hour_begin, new_hour_end){
     Auth.currentUser().then(function(user) {
 
-      if ((tickets.change_time_to_float(new_hour_begin)-timenow) < -10.0/60 && dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10) || dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)) {
-        alert("Khong the cap nhat ve da qua");
-        $scope.close_modal();
-        return false;
+      if (user.role_name == 'user'){
+        if ( hour_begin-timenow < -10.0/60) {
+          alert("Khong the cap nhat ve da qua");
+          $scope.close_modal();
+          return false;
+        }
+
+        if($scope.ticket.user_id == null || $scope.ticket.user_id.$oid != Auth._currentUser._id.$oid){
+          alert('Khong the cap nhat ve cua ng khac');
+          $scope.close_modal();
+          return false;
+        }
       }
 
       var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),new_hour_begin.split(":")[0],new_hour_begin.split(":")[1]);
@@ -149,6 +157,7 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
         price: $scope.price
       });
       $scope.close_modal();
+
     }, function(error) {
       alert("Ban can dang nhap de cap nhat lich dat!");
       $modal.open({
@@ -156,6 +165,6 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
         controller: 'authCtrl'
       });
     });
-  }
+}
 
 }]);

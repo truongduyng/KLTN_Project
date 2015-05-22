@@ -9,6 +9,7 @@ gem 'jquery-ui-rails'
 gem 'jbuilder'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'font-awesome-sass'
+gem 'bootstrap-sass'
 gem 'angular-rails-templates'
 gem 'angular_rails_csrf'
 gem 'devise'

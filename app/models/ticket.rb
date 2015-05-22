@@ -14,6 +14,7 @@ class Ticket
   belongs_to :asset
 
   validates :begin_use_time, :end_use_time, :price, :status, :customer_phone, presence: true
+  validates_format_of :customer_phone, with: /\A\d{10,11}\z/
   validate :check_time
 
   def self.onday(date, branch_id)
