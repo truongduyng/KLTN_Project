@@ -13,7 +13,7 @@ class Ticket
   belongs_to :branch
   belongs_to :asset
 
-  validates :begin_use_time,:end_use_time, :price, :status, :customer_name, :customer_phone, presence: true
+  validates :begin_use_time, :end_use_time, :price, :status, :customer_phone, presence: true
   validate :check_time
 
   def self.onday(date, branch_id)

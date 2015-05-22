@@ -5,10 +5,6 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   $scope.showtimeline = true;
   $scope.td_height = 20; //height of td
 
-  Auth.currentUser().then(function(user) {
-    $scope.user = user;
-  });
-
   if (branch.data != "null"){
     $scope.branch = branch.data;
     tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
@@ -17,10 +13,28 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     $scope.isfounddata = false;
   }
 
+  $scope.isnormaluser = function(){
+    if (Auth._currentUser != null && Auth._currentUser.role_name == 'user'){
+      $scope.customer_name = Auth._currentUser.username;
+      $scope.customer_phone = Auth._currentUser.phone;
+      return true;
+    }
+    else
+      return false;
+  }
+
+  $scope.isadminuser = function(){
+    if (Auth._currentUser != null && Auth._currentUser.role_name == 'bussiness admin'){
+      return true;
+    }
+    else
+      return false;
+  }
+
   $scope.date_change = function(){
     $scope.close_minibooking();
     $scope.close_miniedit();
-    if ($scope.dt.getDate() == new Date().getDate())
+    if ($scope.dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10))
       $scope.showtimeline = true;
     else
       $scope.showtimeline = false;
@@ -141,18 +155,21 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     Auth.currentUser().then(function(user) {
       var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_begin.split(":")[0],hour_begin.split(":")[1]);
       var endtime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_end.split(":")[0],hour_end.split(":")[1]);
-      console.log(user);
+
       tickets.create({
         begin_use_time: begintime,
         end_use_time: endtime,
         price: $scope.price,
         status: "new",
-        customer_name: user.fullname,
-        customer_phone: user.phone,
+        customer_name: $scope.customer_name,
+        customer_phone: $scope.customer_phone,
         branch_id: $scope.branch.branch._id.$oid,
         asset_id: $scope.asset_id,
       });
+      $scope.customer_name = "";
+      $scope.customer_phone = "";
       $scope.close_minibooking();
+
     }, function(error) {
       alert("Ban can dang nhap de dat san!");
       $modal.open({

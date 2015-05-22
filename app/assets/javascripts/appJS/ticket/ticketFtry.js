@@ -11,6 +11,7 @@ app.factory('tickets',['$http','Auth', function($http, Auth){
 
     return $http.get('/tickets/'+ticket_query.date+'/'+ticket_query.branch_id).success(function(data){
       angular.copy(data, object.tickets);
+
       for (var i = 0; i < object.tickets.length; i++) {
         viewTicket(object.tickets[i]);
       };
@@ -42,16 +43,25 @@ app.factory('tickets',['$http','Auth', function($http, Auth){
   };
 
   object.delete = function(ticket_id){
-    return $http.delete('/tickets/'+ ticket_id).success(function(){
+    return $http.delete('/tickets/'+ ticket_id)
+    .success(function(data){
 
-      clearviewTicket(ticket_id);
+      if (data.errors == null) {
+        clearviewTicket(ticket_id);
 
-      for (var i = 0; i < object.tickets.length; i++) {
-        if (object.tickets[i]._id.$oid == ticket_id) {
-          object.tickets.splice(i,1);
-          break;
-        }
-      };
+        for (var i = 0; i < object.tickets.length; i++) {
+          if (object.tickets[i]._id.$oid == ticket_id) {
+            object.tickets.splice(i,1);
+            break;
+          }
+        };
+      }
+      else{
+        alert(data.errors);
+      }
+    })
+    .error(function(data){
+      console.log(data);
     });
   };
 
@@ -127,74 +137,74 @@ app.factory('tickets',['$http','Auth', function($http, Auth){
       })
       );
 
-    $('div#' + ticket._id.$oid).css({
-      top: ticket_td.offsetTop+2,
-      width: ticket_td.offsetWidth-3,
-      left: ticket_td.offsetLeft,
-      height: ticket_td.offsetHeight*4*(endtime-begintime)-3
-    });
+$('div#' + ticket._id.$oid).css({
+  top: ticket_td.offsetTop+2,
+  width: ticket_td.offsetWidth-3,
+  left: ticket_td.offsetLeft,
+  height: ticket_td.offsetHeight*4*(endtime-begintime)-3
+});
 
-    if(Auth._currentUser != null && Auth._currentUser.role_name == "bussiness admin"){
-      $('div#' + ticket._id.$oid + ' span.private_info').css('display', 'inline');
-    }
+if(Auth._currentUser != null && Auth._currentUser.role_name == "bussiness admin"){
+  $('div#' + ticket._id.$oid + ' span.private_info').css('display', 'inline');
+}
 
-    switch(ticket.status) {
-      case "new":
-      if(Auth._currentUser != null && Auth._currentUser.role_name == "bussiness admin"){
+switch(ticket.status) {
+  case "new":
+  if(Auth._currentUser != null && Auth._currentUser.role_name == "bussiness admin"){
 
-        $('.calendar_content').append(
-          $("<i class='fa fa-arrow-circle-o-right to_status_doing' id='" + ticket._id.$oid + "_i'></i>").click(function(){
-            object.update({
-              ticket_id: ticket._id.$oid,
-              status: "doing"
-            });
-          })
-          );
-
-        $('i#' + ticket._id.$oid + '_i').css({
-          top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
-          left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
+    $('.calendar_content').append(
+      $("<i class='fa fa-arrow-circle-o-right to_status_doing' id='" + ticket._id.$oid + "_i'></i>").click(function(){
+        object.update({
+          ticket_id: ticket._id.$oid,
+          status: "doing"
         });
-      }
-      $('div#'+ticket._id.$oid).addClass('ticket_new');
-      break;
+      })
+      );
 
-      case "doing":
-      $('div#'+ticket._id.$oid).addClass('ticket_doing');
-      break;
-
-      case "over":
-      $('div#'+ticket._id.$oid).addClass('ticket_over');
-      break;
-
-      case "waiting":
-      $('div#'+ticket._id.$oid).addClass('ticket_waiting');
-      break;
-
-      case "done":
-      $('div#'+ticket._id.$oid).addClass('ticket_done');
-      break;
-    }
+    $('i#' + ticket._id.$oid + '_i').css({
+      top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
+      left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
+    });
   }
+  $('div#'+ticket._id.$oid).addClass('ticket_new');
+  break;
 
-  function clearviewTicket(ticket_id){
-    $('div#'+ ticket_id).remove();
-    $('i#'+ ticket_id +'_i').remove();
-  }
+  case "doing":
+  $('div#'+ticket._id.$oid).addClass('ticket_doing');
+  break;
 
-  object.hourtoview = function hourtoview(hour){
-    if (hour-Math.floor(hour) > 0)
-      return Math.floor(hour) + ':' + (hour-Math.floor(hour))*60;
-    else
-      return  Math.floor(hour)+ ':00';
-  }
+  case "over":
+  $('div#'+ticket._id.$oid).addClass('ticket_over');
+  break;
 
-  object.change_time_to_float = function change_time_to_float(mytime){
-    if (mytime != null) {
-      var time_split = mytime.split(":");
-      return parseFloat(time_split[0]) + (parseFloat(time_split[1])/60.0);
-    };
-    return null;
-  }
-  return object;
+  case "waiting":
+  $('div#'+ticket._id.$oid).addClass('ticket_waiting');
+  break;
+
+  case "done":
+  $('div#'+ticket._id.$oid).addClass('ticket_done');
+  break;
+}
+}
+
+function clearviewTicket(ticket_id){
+  $('div#'+ ticket_id).remove();
+  $('i#'+ ticket_id +'_i').remove();
+}
+
+object.hourtoview = function hourtoview(hour){
+  if (hour-Math.floor(hour) > 0)
+    return Math.floor(hour) + ':' + (hour-Math.floor(hour))*60;
+  else
+    return  Math.floor(hour)+ ':00';
+}
+
+object.change_time_to_float = function change_time_to_float(mytime){
+  if (mytime != null) {
+    var time_split = mytime.split(":");
+    return parseFloat(time_split[0]) + (parseFloat(time_split[1])/60.0);
+  };
+  return null;
+}
+return object;
 }]);

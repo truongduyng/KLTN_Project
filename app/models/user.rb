@@ -16,7 +16,6 @@ class User
   field :fullname, type: String
   field :username, type: String
   field :phone, type: String
-  field :role_name, type: String
 
   #My validation
   validates :username, :email, presence: true, uniqueness: true

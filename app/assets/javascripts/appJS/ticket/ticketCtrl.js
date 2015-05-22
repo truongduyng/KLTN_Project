@@ -4,6 +4,7 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
   $scope.hour_begin_list = [];
   $scope.hour_end_list = [];
   $scope.dt = dt;
+  var dt_now = new Date().toJSON().slice(0,10);
 
   for (var i = 0; i < tickets.tickets.length; i++) {
     if(tickets.tickets[i]._id.$oid == ticket_id){
@@ -52,11 +53,12 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
   };
   //=======================================================================================
 
-  var timenow = $scope.dt == new Date()? tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes()) : $scope.dt < new Date()? 24 : 0 ;
+  var timenow = dt.toJSON().slice(0,10) == dt_now? tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes()) : dt.toJSON().slice(0,10) < dt_now? 24 : 0 ;
+  console.log(timenow);
   var hour_begin = tickets.change_time_to_float($scope.ticket.begin_use_time.slice(11,16));
   var hour_end = tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16));
 
-  if (hour_begin-timenow < -10.0/60 && dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10) || dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)) {
+  if (hour_begin-timenow < -10.0/60) {
     $scope.hour_begin_list.push(tickets.hourtoview(hour_begin));
     $scope.hour_begin = $scope.hour_begin_list[0];
     $scope.hour_end_list.push(tickets.hourtoview(hour_end));
@@ -66,12 +68,15 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
     var min_begin_time = customroundtime(timenow);
     var max_end_time = 24;
     for (var i = 0; i < tickets.tickets.length; i++) {
-      if(tickets.tickets[i].asset_id == $scope.ticket.asset_id && tickets.tickets[i]._id != $scope.ticket._id){
+
+      if(tickets.tickets[i].asset_id.$oid == $scope.ticket.asset_id.$oid && tickets.tickets[i]._id.$oid != $scope.ticket._id.$oid){
+
         var endtime = tickets.change_time_to_float(tickets.tickets[i].end_use_time.slice(11,16));
         var begintime = tickets.change_time_to_float(tickets.tickets[i].begin_use_time.slice(11,16));
-        if(hour_begin > endtime && endtime > min_begin_time)
+
+        if(hour_begin >= endtime && endtime > min_begin_time)
           min_begin_time = endtime;
-        if(hour_end < begintime && begintime < max_end_time)
+        if(hour_end <= begintime && begintime < max_end_time)
           max_end_time = begintime;
       }
     };

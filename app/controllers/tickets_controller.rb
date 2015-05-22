@@ -3,17 +3,16 @@ class TicketsController < ApplicationController
   before_action :check_normal_user, only: [:update, :destroy]
 
   def show
-
     tickets = Ticket.onday(ticket_param[:date],ticket_param[:branch_id])
     if tickets.present?
       render json: tickets, status: :ok
     else
       render json: nil
     end
-
   end
 
   def create
+    byebug
     ticket = Ticket.new(ticket_param.merge(user_id: current_user.id))
     if ticket.valid?
       ticket.save
@@ -62,9 +61,12 @@ class TicketsController < ApplicationController
       :branch_id, :asset_id, :customer_name, :customer_phone, :date)
   end
   def check_normal_user
-    ticket = Ticket.where(id: ticket_param[:ticket_id]).first
-    if (ticket.user_id != current_user.id || ticket.status != 'new')
-      render json: {errors: "Khong the cap nhat ve cua nguoi khac"}
+    # byebug
+    if (current_user.role_name == 'user')
+      ticket = Ticket.where(id: ticket_param[:ticket_id]).first
+      if (ticket.user_id != current_user.id || ticket.status != 'new')
+        render json: {errors: "Khong the chinh sua ve cua nguoi khac"}
+      end
     end
   end
 end

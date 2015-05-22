@@ -5,8 +5,10 @@ class Branch
   field :name, type: String
   field :phone, type: String
   field :address, type: String
-  field :url_alias, type: String
   field :coordinates, type: Array
+  field :url_alias, type: String
+  field :begin_work_time, type: String
+  field :end_work_time, type: String
 
   geocoded_by :address
   after_validation :geocode
@@ -17,10 +19,8 @@ class Branch
   has_many :asset_categories
   has_many :tickets
 
-  validates :name, presence: true,  length: {maximum: 100}
+  validates :name, :url_alias, :address, presence: true,  length: {maximum: 100}
   validates :address, presence: true, length: {maximum: 1000}
-  validates :url_alias, presence: true, length: {maximum: 100}
-  validates :address, presence: true, length: {maximum: 100}
 
   # def address
   # 	return self.street + self.district + self.city
