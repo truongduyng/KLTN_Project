@@ -8,7 +8,7 @@
     <div class="form-group" >
       <label class="control-label col-sm-2" for="lastname">Ho & Ten:</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Nhap ten" ng-model="user.fullname" required>
+        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Nhap ten" ng-model="user.fullname" required autofocus>
         <div class="has-error" data-ng-show="register_form.lastname.$dirty && register_form.lastname.$invalid">
           <span class="help-block" ng-show="register_form.lastname.$error.required">Vui long nhap ten</span>
         </div>

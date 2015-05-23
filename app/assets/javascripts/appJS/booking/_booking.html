@@ -1,11 +1,12 @@
 <div ng-show = "isfounddata">
 
-  <div class="marginbot20 margintop10">
+  <div class="marginbot30 margintop10">
     <h1 style="display:inline;">{{branch.branch.name}}</h1>
     <!-- <rating ng-model="rate" readonly="isReadonly" ng-hover="hoveringOver(value)" on-leave="ishoverstar = false"></rating>
     <span ng-hide = "ishoverstar">({{rate}}/5)</span>
     <span ng-show = "ishoverstar">({{overstar}}/5)</span>
     <a href="#/{{branch.branch.name}}/review">Reviews</a> -->
+    <div class="pull-right" flash-message="3000" ></div>
   </div>
 
   <div class="row margintop10">
@@ -68,20 +69,22 @@
 
   <div id='minibooking' class="boxbooking">
     <button type="button" class="close" style="color: red" aria-hidden="true" ng-click="close_minibooking()">&times;</button><br>
-    <p class="marginbot5">Thoi gian: {{ dt | date:'dd-MM-yyyy'}}, {{hour_begin}} - <select ng-options = "hour_end for hour_end in hour_end_list" ng-model= 'hour_end' ng-change='update_hour_end()'/></p>
-    <p class="marginbot5">Dia diem: <a href="">{{branch.branch.name}}</a></p>
+    <form>
+      <p class="marginbot5">Thoi gian: {{ dt | date:'dd-MM-yyyy'}}, {{hour_begin}} - <select ng-options = "hour_end for hour_end in hour_end_list" ng-model= 'hour_end' ng-change='update_hour_end()'/></p>
+      <p class="marginbot5">Dia diem: <a href="">{{branch.branch.name}}</a></p>
 
-    <div ng-show = "isnormaluser()"><p class="marginbot5">Dat boi: <a href="">{{customer_name}}</a>, sdt: {{customer_phone}} </p></div>
+      <div ng-show = "isnormaluser()"><p class="marginbot5">Dat boi: <a href="">{{customer_name}}</a>, sdt: {{customer_phone}} </p></div>
 
-    <div ng-show = "isadminuser()">
-      <p class="marginbot5">Dat boi:
-        <input class="customer" placeholder= 'nhap ten' ng-model='customer_name'></input>, sdt:
-        <input class="customer" placeholder= 'nhap sdt' ng-model='customer_phone' required></input>
-      </p>
-    </div>
+      <div ng-show = "isadminuser()">
+        <p class="marginbot5">Dat boi:
+          <input class="customer" placeholder= 'nhap ten' ng-model='customer_name' autofocus></input>, sdt:
+          <input class="customer" placeholder= 'nhap sdt' ng-model='customer_phone' required></input>
+        </p>
+      </div>
 
-    <p class="marginbot5">Gia: {{price}} (.000 VND)</p>
-    <button class="btn btn-default marginright20 margintop10" ng-click="ticket_create(dt,hour_begin,hour_end)">Đặt</button>
+      <p class="marginbot5">Gia: {{price}} (.000 VND)</p>
+      <button class="btn btn-default marginright20 margintop10" ng-click="ticket_create(dt,hour_begin,hour_end)">Đặt</button>
+    </form>
   </div>
 
   <div id='miniedit' class="boxbooking">

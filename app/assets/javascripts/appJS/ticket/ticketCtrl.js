@@ -58,7 +58,7 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
   var hour_begin = tickets.change_time_to_float($scope.ticket.begin_use_time.slice(11,16));
   var hour_end = tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16));
 
-  if (hour_begin-timenow < -10.0/60) {
+  if (hour_begin-timenow < -10.0/60 ) {
     $scope.hour_begin_list.push(tickets.hourtoview(hour_begin));
     $scope.hour_begin = $scope.hour_begin_list[0];
     $scope.hour_end_list.push(tickets.hourtoview(hour_end));
@@ -159,10 +159,15 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
       $scope.close_modal();
 
     }, function(error) {
-      alert("Ban can dang nhap de cap nhat lich dat!");
+      var message = '<strong>Gruh!</strong>Ban can dang nhap de cap nhat lich dat!';
       $modal.open({
         templateUrl: 'appJS/auth/_login.html',
-        controller: 'authCtrl'
+        controller: 'authCtrl',
+        resolve: {
+          message: function(){
+            return message;
+          }
+        }
       });
     });
 }

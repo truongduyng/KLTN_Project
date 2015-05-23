@@ -70,7 +70,7 @@ app.factory('tickets',['$http','Auth', function($http, Auth){
       clearviewTicket(object.tickets[i]._id.$oid);
       viewTicket(object.tickets[i]);
     };
-  }
+  };
 
   //Check time to change color of tr --------------------------------------
   function check_td_in_past(date){
@@ -98,7 +98,7 @@ app.factory('tickets',['$http','Auth', function($http, Auth){
         });
       }
     }
-  }
+  };
 
   function viewTicket(ticket){
     var begintime = object.change_time_to_float(ticket.begin_use_time.slice(11,16));
@@ -185,19 +185,19 @@ app.factory('tickets',['$http','Auth', function($http, Auth){
         $('div#'+ticket._id.$oid).addClass('ticket_done');
         break;
         }
-  }
+  };
 
   function clearviewTicket(ticket_id){
     $('div#'+ ticket_id).remove();
     $('i#'+ ticket_id +'_i').remove();
-  }
+  };
 
   object.hourtoview = function hourtoview(hour){
     if (hour-Math.floor(hour) > 0)
       return Math.floor(hour) + ':' + (hour-Math.floor(hour))*60;
     else
       return  Math.floor(hour)+ ':00';
-  }
+  };
 
   object.change_time_to_float = function change_time_to_float(mytime){
     if (mytime != null) {
@@ -205,6 +205,7 @@ app.factory('tickets',['$http','Auth', function($http, Auth){
       return parseFloat(time_split[0]) + (parseFloat(time_split[1])/60.0);
     };
     return null;
-  }
+  };
+
   return object;
 }]);

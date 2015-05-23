@@ -9,7 +9,7 @@
     <div class="form-group" >
       <label class="control-label col-sm-2" for="email">Email:</label>
       <div class="col-sm-10">
-        <input type="email" class="form-control" id="email" name="email" placeholder="Nhap email" ng-model="user.email" required  ensure-unique-data="{{user.email}}" >
+        <input type="email" class="form-control" id="email" name="email" placeholder="Nhap email" ng-model="user.email" required  ensure-unique-data="{{user.email}}" autofocus/>
         <div class="has-error" data-ng-show="login_form.email.$dirty && login_form.email.$invalid">
           <span class="help-block" ng-show="login_form.email.$error.required">Vui long nhap email</span>
           <span class="help-block" ng-show="login_form.email.$error.email">Dia chi email khong hop le</span>
@@ -21,7 +21,7 @@
     <div class="form-group" >
       <label class="control-label col-sm-2" for="password">Password:</label>
       <div class="col-sm-10">
-        <input type="password" class="form-control" id="password" name="password" placeholder="Nhap password" ng-model="user.password" required ng-minlength=8 ng-maxlength=20>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Nhap password" ng-model="user.password" required ng-minlength=8 ng-maxlength=20 />
         <div class="has-error" data-ng-show="login_form.password.$dirty && login_form.password.$invalid">
           <span class="help-block" ng-show="login_form.password.$error.required">Vui long nhap password</span>
           <span class="help-block" ng-show="login_form.password.$error.minlength">Password it nhat 8 ki tu</span>

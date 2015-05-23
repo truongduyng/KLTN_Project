@@ -1,5 +1,5 @@
-app.controller('navCtrl', ['$scope', 'Auth', '$http', 'tickets',
-  function($scope, Auth, $http, tickets) {
+app.controller('navCtrl', ['$scope', 'Auth', '$http', 'tickets', '$modal',
+  function($scope, Auth, $http, tickets, $modal) {
     $scope.signedIn = Auth.isAuthenticated;
     $scope.logout = Auth.logout;
 
@@ -8,6 +8,18 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'tickets',
     }, function(error) {
     });
 
+    $scope.open_signin = function(){
+      $modal.open({
+        templateUrl: 'appJS/auth/_login.html',
+        controller: 'authCtrl'
+      });
+    };
+    $scope.open_signup = function(){
+      $modal.open({
+        templateUrl: 'appJS/auth/_register.html',
+        controller: 'authCtrl'
+      });
+    };
 
     $scope.$on('devise:new-session', function(e, user) {
       $scope.user = user;

@@ -1,14 +1,16 @@
-app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','branch', '$interval', function($scope, $http, Auth, $modal, tickets, branch, $interval){
+app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','branch', '$interval','Flash', function($scope, $http, Auth, $modal, tickets, branch, $interval, Flash){
   $scope.rate = 4;
   $scope.isReadonly = false;
   $scope.dt = new Date();
   $scope.showtimeline = true;
   $scope.td_height = 20; //height of td
 
-  if (branch.data != "null"){
+  console.log(branch);
+  if (branch.data != null){
     $scope.branch = branch.data;
     tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
     $scope.isfounddata = true;
+    timeline();
   } else {
     $scope.isfounddata = false;
   }
@@ -133,6 +135,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       booking_top = booking_top>0? booking_top : 0;
       booking_right = booking_right>0? booking_right :0;
       $('#minibooking').css({top: booking_top, right: booking_right});
+      $('input.customer')[0].focus();
     }
   }
 
@@ -156,9 +159,17 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     Auth.currentUser().then(function(user) {
       var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_begin.split(":")[0],hour_begin.split(":")[1]);
       var endtime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_end.split(":")[0],hour_end.split(":")[1]);
+
+      if(isNaN($scope.customer_phone) || !$scope.customer_phone.match(/[0-9]{10,11}/)){
+        var message = '<strong>Hey!</strong> So dt chua chinh xac.';
+          Flash.create('danger', message, 'myalert');
+        return false;
+      }
+
       if ($scope.customer_name == null) {
         $scope.customer_name = "Khach";
       }
+
       tickets.create({
         begin_use_time: begintime,
         end_use_time: endtime,
@@ -174,11 +185,8 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       $scope.close_minibooking();
 
     }, function(error) {
-      alert("Ban can dang nhap de dat san!");
-      $modal.open({
-        templateUrl: 'appJS/auth/_login.html',
-        controller: 'authCtrl'
-      });
+      var message = '<strong>Gruh!</strong> Ban can dang nhap de dat san.';
+      Flash.create('danger', message, 'myalert');
     });
   };
 
@@ -196,13 +204,15 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       var hour_begin = tickets.change_time_to_float(ticket_del.begin_use_time.slice(11,16));
       if (user.role_name == 'user'){
         if (hour_begin-timenow < -10.0/60) {
-          alert("Khong the xoa ve da qua");
+          var message = '<strong>Gruh!</strong> Khong the xoa ve da qua.';
+          Flash.create('danger', message, 'myalert');
           $scope.close_miniedit();
           return false;
         }
 
         if(ticket_del.user_id == null || ticket_del.user_id.$oid != Auth._currentUser._id.$oid){
-          alert('Khong the xoa ve cua ng khac');
+          var message = '<strong>Gruh!</strong> Khong the xoa ve cua nguoi khac.';
+          Flash.create('danger', message, 'myalert');
           $scope.close_miniedit();
           return false;
         }
@@ -211,70 +221,68 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       tickets.delete($('p#ticket_id_hidden').html());
       $scope.close_miniedit();
     }, function(error) {
-      alert("Ban can dang nhap de huy!");
-      $modal.open({
-        templateUrl: 'appJS/auth/_login.html',
-        controller: 'authCtrl'
-      });
+      var message = '<strong>Gruh!</strong>Ban can dang nhap de huy san.';
+      Flash.create('danger', message, 'myalert');
     });
-};
+  };
 
-$scope.ticket_edit = function(){
-  var ticket_update = $modal.open({
-    templateUrl: "appJS/ticket/_ticket_update.html",
-    controller: "ticketCtrl",
-    resolve: {
-      ticket_id: function(){
-        return $('p#ticket_id_hidden').html();
-      },
-      branch: function(){
-        return $scope.branch;
-      },
-      dt: function(){
-        return $scope.dt;
+  $scope.ticket_edit = function(){
+    var ticket_update = $modal.open({
+      templateUrl: "appJS/ticket/_ticket_update.html",
+      controller: "ticketCtrl",
+      resolve: {
+        ticket_id: function(){
+          return $('p#ticket_id_hidden').html();
+        },
+        branch: function(){
+          return $scope.branch;
+        },
+        dt: function(){
+          return $scope.dt;
+        }
       }
+    });
+  };
+
+  var previouscolor = '';
+  $scope.showtimeintd = function(hour,element,show){
+    $td = $(element.currentTarget);
+    $th = $td.closest('table').find('th').eq($td.index()+1);
+    if(show){
+      previouscolor = $(element.currentTarget).css('background-color');
+      $(element.currentTarget).css('background-color','#fed559');
+      $(element.currentTarget).html('<strong>'+ $th.html() +'</strong>'+', '+'<strong>'+ tickets.hourtoview(hour) + '</strong>');
     }
-  });
-};
-
-
-var previouscolor = '';
-$scope.showtimeintd = function(hour,element,show){
-  $td = $(element.currentTarget);
-  $th = $td.closest('table').find('th').eq($td.index()+1);
-  if(show){
-    previouscolor = $(element.currentTarget).css('background-color');
-    $(element.currentTarget).css('background-color','#fed559');
-    $(element.currentTarget).html('<strong>'+ $th.html() +'</strong>'+', '+'<strong>'+ tickets.hourtoview(hour) + '</strong>');
+    else{
+      $(element.currentTarget).css('background-color',previouscolor);
+      $(element.currentTarget).html("");
+    }
   }
-  else{
-    $(element.currentTarget).css('background-color',previouscolor);
-    $(element.currentTarget).html("");
-  }
-}
 
 
-$scope.hoveringOver = function(value) {
-  $scope.overstar = value;
-  $scope.ishoverstar = true;
-};
+  $scope.hoveringOver = function(value) {
+    $scope.overstar = value;
+    $scope.ishoverstar = true;
+  };
 
   //Timeline---------------------------------------------------------------
-  if($scope.branch.assets.length * 160 > $('.calendar_content').width())
+  function timeline(){
+    if($scope.branch.assets.length * 160 > $('.calendar_content').width())
     $('.tablebooking').css({width: $scope.branch.assets.length * 160}); //160 is width of a td in style
 
-  var scrollheight = $scope.td_height*4*(24-0);
-  $('hr.timeline').css({width: $('div.calendar_content').get(0).scrollWidth});
+    var scrollheight = $scope.td_height*4*(24-0);
+    $('hr.timeline').css({width: $('div.calendar_content').get(0).scrollWidth});
 
-  var top_timeline = 23 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()))*scrollheight/(60*24)); // 23 is height of th
-  $('hr.timeline').animate({top: top_timeline},'fast');
-
-  $interval(function(){
-    top_timeline += Math.floor(5/(60*24)*scrollheight);
-
-    if (top_timeline >= scrollheight)
-      top_timeline = 23 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()))*scrollheight/(60*24));
+    var top_timeline = 23 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()))*scrollheight/(60*24)); // 23 is height of th
     $('hr.timeline').animate({top: top_timeline},'fast');
-  },1000*60*5);
+
+    $interval(function(){
+      top_timeline += Math.floor(5/(60*24)*scrollheight);
+
+      if (top_timeline >= scrollheight)
+        top_timeline = 23 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()))*scrollheight/(60*24));
+      $('hr.timeline').animate({top: top_timeline},'fast');
+    },1000*60*5);
+  }
 
 }]);
