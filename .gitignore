@@ -14,3 +14,6 @@
 
 # Ignore all image uploaded
 /public/uploads
+
+# Ignore all libraby
+/vendor/assets
