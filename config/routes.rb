@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'application#angular'
-  get 'bussiness-admin' => 'admin#index'
+  get 'bussiness-admin' => 'admin#bussiness_admin'
 
   resources 'branches'
   get '/:branch_url_alias' => 'branches#branch_details'

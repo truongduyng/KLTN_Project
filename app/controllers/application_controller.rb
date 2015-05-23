@@ -8,10 +8,6 @@ class ApplicationController < ActionController::Base
     render 'layouts/application'
   end
 
-  def admin
-    render 'layouts/admin'
-  end
-
   def not_found
     render(:file => "#{Rails.root}/public/404.html")
   end
