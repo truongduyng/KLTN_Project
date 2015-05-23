@@ -5,6 +5,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   $scope.showtimeline = true;
   $scope.td_height = 20; //height of td
 
+  console.log(branch);
   if (branch.data != null){
     $scope.branch = branch.data;
     tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
