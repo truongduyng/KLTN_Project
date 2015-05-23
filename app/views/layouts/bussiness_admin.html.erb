@@ -6,7 +6,7 @@
   <meta name="description" content="">
   <meta name="keyword" content="">
 
-  <title>Profile | Creative - Bootstrap 3 Responsive Admin Template</title>
+  <title>Sporta - Quan ly</title>
   <script src="https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=geometry"></script>
   <%= favicon_link_tag %>
 
@@ -16,26 +16,14 @@
 
 </head>
 
-<body ng-app="sportaBussinessAdmin" ng-controller="BAmainCtrl">
-
-  <!-- container section start -->
+<body ng-app="sportaBussinessAdmin" ng-controller="BAmainCtrl" class="skin-yellow">
   <section id="container" class="">
-    <!--header start-->
     <div ng-include="'adminJS/bussinessAdmin/header/_header.html'">
     </div>
-    <!--header end-->
-
-    <!--sidebar start-->
     <div data-ng-include="'adminJS/bussinessAdmin/sideBar/_side_bar.html'" scope="" onload=""></div>
-    <!--sidebar end-->
-
-    <!--main content start-->
     <section id="main-content">
       <ui-view></ui-view>
     </section>
-
-    <!--main content end-->
   </section>
-
 </body>
 </html>

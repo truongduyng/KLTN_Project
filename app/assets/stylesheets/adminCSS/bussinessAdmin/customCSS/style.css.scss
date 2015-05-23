@@ -1,0 +1,21 @@
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+ /*BEGIN For angularjs-bootstrap*/
+ a img{
+  cursor:pointer;
+ }
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+ .modal-backdrop {
+    background-color: #000;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1040;
+}
+ /*END For angularjs-bootstrap*/

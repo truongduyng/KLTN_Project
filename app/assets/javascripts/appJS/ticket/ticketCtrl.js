@@ -1,4 +1,4 @@
-app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch', 'Auth', '$modal', 'dt', function($scope, $http, tickets, ticket_id, branch, Auth, $modal, dt){
+app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch', 'Auth', '$modal', 'dt', 'Flash', function($scope, $http, tickets, ticket_id, branch, Auth, $modal, dt, Flash){
 
   $scope.branch = branch;
   $scope.hour_begin_list = [];
@@ -15,7 +15,7 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
   }
 
   $scope.update_price = function(){
-    $scope.price = calculate_price();
+    $scope.price = tickets.calculate_price($scope.hour_begin,$scope.hour_end,branch, $scope.ticket.asset_id.$oid);
   }
 
   // build $scope.hour_end_list
@@ -43,7 +43,7 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
       }
       else{
         $scope.hour_end = $scope.hour_end_list[0];
-        $scope.update_price();
+        $scope.price = tickets.calculate_price($scope.hour_begin,$scope.hour_end,branch, $scope.ticket.asset_id.$oid);
       }
       return true;
     }
@@ -52,7 +52,7 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
     }
   };
 
-  //================================================================================
+  //==============================================================================
   var timenow = dt.toJSON().slice(0,10) == dt_now? tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes()) : dt.toJSON().slice(0,10) < dt_now? 24 : 0 ;
 
   var hour_begin = tickets.change_time_to_float($scope.ticket.begin_use_time.slice(11,16));
@@ -89,42 +89,13 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
     }
     $scope.update_hour_end(true);
   }
-  //===================================================================================
 
+  //=============================================================================
   function customroundtime(time){
     var fraction = time - Math.floor(time);
     return fraction > 0.5? fraction > 0.75? Math.ceil(time):Math.floor(time)+0.5 : fraction > 0.25? Math.floor(time)+0.5:Math.floor(time);
   }
-  //=====================================================================================
-
-  function calculate_price(){
-    var hbegin = tickets.change_time_to_float($scope.hour_begin);
-    var hend = tickets.change_time_to_float($scope.hour_end);
-
-    for(i=0; i<$scope.branch.assets.length; i++){
-      if($scope.branch.assets[i]._id.$oid == $scope.ticket.asset_id.$oid){
-        for(j=0; j<$scope.branch.asset_categories.length; j++){
-          if($scope.branch.asset_categories[j]._id.$oid == $scope.branch.assets[i].asset_category_id.$oid){
-            var result_price = 0;
-            for(t=0;t<$scope.branch.asset_categories[j].fees.length;t++){
-              var begin_time_fee = tickets.change_time_to_float($scope.branch.asset_categories[j].fees[t].begin_time);
-              var end_time_fee = tickets.change_time_to_float($scope.branch.asset_categories[j].fees[t].end_time);
-              if (begin_time_fee<=hbegin && hbegin < end_time_fee){
-                if(hend <= end_time_fee){
-                  result_price += $scope.branch.asset_categories[j].fees[t].price*(hend-hbegin);
-                }
-                else{
-                  result_price += $scope.branch.asset_categories[j].fees[t].price*(end_time_fee-hbegin);
-                  hbegin = end_time_fee;
-                }
-              }
-            }
-            return Math.ceil(result_price);
-          }
-        }
-      }
-    }
-  }
+  //=============================================================================
 
   $scope.close_modal = function(){
     $scope.$close();
@@ -136,13 +107,15 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
 
       if (user.role_name == 'user'){
         if ( hour_begin-timenow < -10.0/60) {
-          alert("Khong the cap nhat ve da qua");
+          var message = '<strong>Hey!</strong> Khong the cap nhat ve da qua.';
+          Flash.create('danger', message, 'myalert');
           $scope.close_modal();
           return false;
         }
 
         if($scope.ticket.user_id == null || $scope.ticket.user_id.$oid != Auth._currentUser._id.$oid){
-          alert('Khong the cap nhat ve cua ng khac');
+          var message = '<strong>Hey!</strong> Khong the cap nhat ve cua ng khac.';
+          Flash.create('danger', message, 'myalert');
           $scope.close_modal();
           return false;
         }
@@ -159,15 +132,9 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
       $scope.close_modal();
 
     }, function(error) {
-      var message = '<strong>Gruh!</strong>Ban can dang nhap de cap nhat lich dat!';
       $modal.open({
         templateUrl: 'appJS/auth/_login.html',
-        controller: 'authCtrl',
-        resolve: {
-          message: function(){
-            return message;
-          }
-        }
+        controller: 'authCtrl'
       });
     });
 }

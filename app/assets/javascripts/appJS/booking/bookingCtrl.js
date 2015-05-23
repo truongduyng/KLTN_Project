@@ -5,7 +5,6 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   $scope.showtimeline = true;
   $scope.td_height = 20; //height of td
 
-  console.log(branch);
   if (branch.data != null){
     $scope.branch = branch.data;
     tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
@@ -81,42 +80,11 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
     if ($scope.hour_end_list.length) {
       $scope.hour_end = $scope.hour_end_list[0];
-      $scope.price = calculate_price();
+      $scope.price = tickets.calculate_price($scope.hour_begin,$scope.hour_end,$scope.branch, $scope.asset_id);
       return true;
     }
     else{
       return false;
-    }
-  }
-
-  function calculate_price(){
-    var hbegin = tickets.change_time_to_float($scope.hour_begin);
-    var hend = tickets.change_time_to_float($scope.hour_end);
-    for(i=0; i<$scope.branch.assets.length; i++){
-      if($scope.branch.assets[i]._id.$oid == $scope.asset_id){
-
-        for(j=0; j<$scope.branch.asset_categories.length; j++){
-          if($scope.branch.asset_categories[j]._id.$oid == $scope.branch.assets[i].asset_category_id.$oid){
-
-            var result_price = 0;
-
-            for(t=0;t<$scope.branch.asset_categories[j].fees.length;t++){
-              var begin_time_fee = tickets.change_time_to_float($scope.branch.asset_categories[j].fees[t].begin_time);
-              var end_time_fee = tickets.change_time_to_float($scope.branch.asset_categories[j].fees[t].end_time);
-              if (begin_time_fee<=hbegin && hbegin < end_time_fee){
-                if(hend <= end_time_fee){
-                  result_price += $scope.branch.asset_categories[j].fees[t].price*(hend-hbegin);
-                }
-                else{
-                  result_price += $scope.branch.asset_categories[j].fees[t].price*(end_time_fee-hbegin);
-                  hbegin = end_time_fee;
-                }
-              }
-            }
-            return Math.ceil(result_price);
-          }
-        }
-      }
     }
   }
 
@@ -142,7 +110,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   $scope.update_hour_end = function(){
     var hbegin = tickets.change_time_to_float($scope.hour_begin);
     var hend = tickets.change_time_to_float($scope.hour_end);
-    $scope.price = calculate_price();
+    $scope.price = tickets.calculate_price($scope.hour_begin,$scope.hour_end,$scope.branch, $scope.asset_id);
     $('div#ticket_temp').css('height', $scope.td_height*4*(hend-hbegin)-3);
   }
 
@@ -162,7 +130,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
       if(isNaN($scope.customer_phone) || !$scope.customer_phone.match(/[0-9]{10,11}/)){
         var message = '<strong>Hey!</strong> So dt chua chinh xac.';
-          Flash.create('danger', message, 'myalert');
+        Flash.create('danger', message, 'myalert');
         return false;
       }
 
@@ -185,8 +153,10 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       $scope.close_minibooking();
 
     }, function(error) {
-      var message = '<strong>Gruh!</strong> Ban can dang nhap de dat san.';
-      Flash.create('danger', message, 'myalert');
+      $modal.open({
+        templateUrl: 'appJS/auth/_login.html',
+        controller: 'authCtrl'
+      });
     });
   };
 
@@ -221,8 +191,10 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       tickets.delete($('p#ticket_id_hidden').html());
       $scope.close_miniedit();
     }, function(error) {
-      var message = '<strong>Gruh!</strong>Ban can dang nhap de huy san.';
-      Flash.create('danger', message, 'myalert');
+      $modal.open({
+        templateUrl: 'appJS/auth/_login.html',
+        controller: 'authCtrl'
+      });
     });
   };
 
