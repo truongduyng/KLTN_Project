@@ -14,6 +14,11 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'tickets', '$modal',
         controller: 'authCtrl'
       });
     };
+
+    $scope.isbussinessadmin = function(){
+      return ($scope.user != null && $scope.user.role_name == "bussiness admin")
+    };
+
     $scope.open_signup = function(){
       $modal.open({
         templateUrl: 'appJS/auth/_register.html',
@@ -23,22 +28,18 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'tickets', '$modal',
 
     $scope.$on('devise:new-session', function(e, user) {
       $scope.user = user;
-      tickets.update_view();
     });
 
     $scope.$on('devise:new-registration', function(e, user) {
       $scope.user = user;
-      tickets.update_view();
     });
 
     $scope.$on('devise:login', function(e, user) {
       $scope.user = user;
-      tickets.update_view();
     });
 
     $scope.$on('devise:logout', function(e, user) {
       $scope.user = {};
-      tickets.update_view();
     });
   }
   ]);

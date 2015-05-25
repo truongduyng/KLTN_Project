@@ -168,6 +168,8 @@ a.scrollup i:hover {
 	overflow: auto;
 	height: 510px;
 	position: relative;
+	background-color: #ffffff;
+	padding: 0 0 0 0;
 }
 
 /*post*/
@@ -272,5 +274,11 @@ i:hover{
 	height: 50px !important;
 	margin: 0 0 10px 0 !important;
 	z-index: 10;
-	position: relative;
+	position: absolute;
+	bottom: 80%;
+	right: 20px;
+}
+
+.everyweek{
+	display: none;
 }

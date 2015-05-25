@@ -2,10 +2,6 @@
 
   <div class="marginbot30 margintop10">
     <h1 style="display:inline;">{{branch.branch.name}}</h1>
-    <!-- <rating ng-model="rate" readonly="isReadonly" ng-hover="hoveringOver(value)" on-leave="ishoverstar = false"></rating>
-    <span ng-hide = "ishoverstar">({{rate}}/5)</span>
-    <span ng-show = "ishoverstar">({{overstar}}/5)</span>
-    <a href="#/{{branch.branch.name}}/review">Reviews</a> -->
   </div>
 
   <div class="row margintop10">
@@ -71,9 +67,10 @@
     <form>
       <p class="marginbot5">Thoi gian: {{ dt | date:'dd-MM-yyyy'}}, {{hour_begin}} - <select ng-options = "hour_end for hour_end in hour_end_list" ng-model= 'hour_end' ng-change='update_hour_end()'/></p>
       <p class="marginbot5">Dia diem: <a href="">{{branch.branch.name}}</a></p>
-
-      <div ng-show="signedIn()"><p class="marginbot5">Dat boi: <a href="">{{customer_name}}</a></p></div>
-
+      <p class="marginbot5">Dat boi:
+        <input class="customer" placeholder= 'nhap ten' ng-model='customer_name' autofocus></input>, sdt:
+        <input class="customer" placeholder= 'nhap sdt' ng-model='customer_phone' required></input>
+      </p>
       <p class="marginbot5">Gia: {{price}} (.000 VND)</p>
       <input type="checkbox" ng-model="iseveryweek" ng-change="viewweekbooking()"> Dat hang tuan<br>
       <div class="everyweek">

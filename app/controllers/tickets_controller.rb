@@ -13,16 +13,25 @@ class TicketsController < ApplicationController
   end
 
   def create
+    # byebug
+    create_param = ticket_param
+    create_result = []
+    while (create_param[:begin_use_time].to_time.to_i < create_param[:date_end_everyweek_booking].to_time.to_i)
+      if (current_user.role_name == 'user')
+        ticket = Ticket.new(create_param.merge({user_id: current_user.id, customer_name: current_user.fullname, customer_phone: current_user.phone}).except(:date_end_everyweek_booking))
+      else
+        ticket =  Ticket.new(create_param.except(:date_end_everyweek_booking));
+      end
 
-    if (current_user.role_name == 'user')
-      ticket = Ticket.new(ticket_param.merge(user_id: current_user.id))
-    else
-      ticket =  Ticket.new(ticket_param);
+      if ticket.valid?
+        ticket.save
+        create_result << ticket
+      end
+      create_param[:begin_use_time] = create_param[:begin_use_time].to_time + 7.days
+      create_param[:end_use_time] = create_param[:end_use_time].to_time + 7.days
     end
-
-    if ticket.valid?
-      ticket.save
-      render json: ticket, status: :created
+    if create_result.length > 0
+      render json: create_result[0], status: :created
     else
       render json: ticket.errors, status: :unprocessable_entity
     end
@@ -64,7 +73,7 @@ class TicketsController < ApplicationController
   private
   def ticket_param
     params.permit(:ticket_id, :begin_use_time, :end_use_time, :price, :status,
-      :branch_id, :asset_id, :customer_name, :customer_phone, :date)
+      :branch_id, :asset_id, :customer_name, :customer_phone, :date, :date_end_everyweek_booking)
   end
   def check_normal_user
     # byebug

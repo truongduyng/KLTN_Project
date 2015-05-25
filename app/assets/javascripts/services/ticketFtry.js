@@ -1,4 +1,4 @@
-app.factory('tickets',['$http','Auth', function($http, Auth){
+services.factory('tickets',['$http','Auth', function($http, Auth){
   var object = {
     tickets: [],
   };
@@ -57,19 +57,12 @@ app.factory('tickets',['$http','Auth', function($http, Auth){
         };
       }
       else{
-        alert(data.errors);
+
       }
     })
     .error(function(data){
       console.log(data);
     });
-  };
-
-  object.update_view = function(){
-    for (var i = 0; i < object.tickets.length; i++) {
-      clearviewTicket(object.tickets[i]._id.$oid);
-      viewTicket(object.tickets[i]);
-    };
   };
 
   object.hourtoview = function(hour){
@@ -174,7 +167,17 @@ app.factory('tickets',['$http','Auth', function($http, Auth){
       $('span#time_ticket').html(ticket.begin_use_time.slice(11,16)+ ' - '+ticket.end_use_time.slice(11,16));
       $('p#price_ticket').html('Gia: '+ ticket.price);
       $('p#ticket_id_hidden').html(ticket._id.$oid);
-      var edit_top = event.pageY - $(window).scrollTop()- $('#miniedit').height() - event.offsetY -10;
+
+      if(event.offsetY==undefined) // this works for Firefox
+      {
+        eventoffsetY = event.pageY-$('div#' + ticket._id.$oid).offset().top;
+      }
+      else
+      {
+        eventoffsetY = event.offsetY;
+      }
+      var edit_top = event.pageY - $(window).scrollTop()- $('#miniedit').height() - eventoffsetY -10;
+
       var edit_right = $(window).width() - event.pageX - $('#miniedit').width()/2;
       edit_top = edit_top>0? edit_top : 0;
       edit_right = edit_right>0? edit_right : 0;
@@ -197,7 +200,7 @@ app.factory('tickets',['$http','Auth', function($http, Auth){
     if(Auth._currentUser != null && Auth._currentUser.role_name == "bussiness admin"){
 
       $('.calendar_content').append(
-        $("<i class='fa fa-arrow-circle-o-right to_status_doing' id='" + ticket._id.$oid + "_i'></i>").click(function(){
+        $("<i class='fa fa-arrow-circle-o-right fa-1x to_status_doing' id='" + ticket._id.$oid + "_i'></i>").click(function(){
           object.update({
             ticket_id: ticket._id.$oid,
             status: "doing"

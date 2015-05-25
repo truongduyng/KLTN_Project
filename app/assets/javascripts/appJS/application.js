@@ -9,4 +9,5 @@
 //= require ngmap
 //= require angular-flash-alert/src/angular-flash
 //= require initModule
+//= require_tree ../services
 //= require_tree .

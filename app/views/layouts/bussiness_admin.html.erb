@@ -9,21 +9,37 @@
   <title>Sporta - Quan ly</title>
   <script src="https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=geometry"></script>
   <%= favicon_link_tag %>
-
   <%= stylesheet_link_tag    'adminCSS/bussinessAdmin/application', media: 'all'%>
-  <%= javascript_include_tag 'adminJS/bussinessAdmin/application' %>
   <%= csrf_meta_tags %>
 
 </head>
 
-<body ng-app="sportaBussinessAdmin" ng-controller="BAmainCtrl" class="skin-yellow">
-  <section id="container" class="">
-    <div ng-include="'adminJS/bussinessAdmin/header/_header.html'">
+<body ng-app="sportaBussinessAdmin" ng-controller="BAmainCtrl" class="skin-yellow sidebar-collapse">
+  <div class="wrapper">
+    <header class="main-header">
+      <div data-ng-include="'adminJS/bussinessAdmin/header/_header.html'"></div>
+    </header>
+
+    <aside class="main-sidebar">
+      <section class="sidebar">
+        <div data-ng-include="'adminJS/bussinessAdmin/sideBar/_side_bar.html'"></div>
+      </section>
+    </aside>
+
+    <div class="content-wrapper">
+      <section  class="content">
+        <div ui-view></div>
+      </section>
     </div>
-    <div data-ng-include="'adminJS/bussinessAdmin/sideBar/_side_bar.html'" scope="" onload=""></div>
-    <section id="main-content">
-      <ui-view></ui-view>
-    </section>
-  </section>
+
+    <div class="pull-right" flash-message="3000" ></div>
+
+    <footer class="main-footer">
+      Copyright &copy; 2015 <a href="#">Sporta
+    </a>
+  </footer>
+</div>
+
+<%= javascript_include_tag 'adminJS/bussinessAdmin/application' %>
 </body>
 </html>
