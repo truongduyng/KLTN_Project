@@ -67,3 +67,4 @@ gem 'websocket-rails'
 gem 'ckeditor'
 #for login facebok
 gem 'omniauth-facebook'
+gem 'sprockets', '2.12.3'

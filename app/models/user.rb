@@ -43,7 +43,7 @@ class User
   has_one :identity
   devise :omniauthable, :omniauth_providers => [:facebook]
   def self.from_omniauth(auth)
-      # byebug
+      byebug
       identity = Identity.where(provider: auth.provider, uid: auth.uid).first
       #Neu da login it 1 lan thi lay nguoi dung do
       if identity
