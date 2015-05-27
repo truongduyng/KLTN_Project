@@ -23,6 +23,7 @@ app.factory('myHttpInterceptor', ['$q', '$rootScope', function($q, $rootScope) {
 	return responseIntercepter;
 }]);
 
+
 app.config(['$httpProvider', function($httpProvider) {
 	$httpProvider.interceptors.push('myHttpInterceptor');
 }]);
@@ -51,22 +52,22 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	// 	controller: 'homeCtrl',
 	// });
 	$stateProvider.state("home", {
-				url: "/",
-				templateUrl: 'appJS/home/_home.html',
-				controller: 'homeCtrl',
-				resolve: {
-					posts: ['listPostService', function(listPostService) {
-						return listPostService.get_all(1);
-					}],
-					// currentUser: ['Auth', function(Auth) {
-					// 	Auth.currentUser()
-					// 		.then(function(user) {
-					// 			return user;
-					// 		}, function(error) {
+		url: "/",
+		templateUrl: 'appJS/home/_home.html',
+		controller: 'homeCtrl',
+		resolve: {
+			posts: ['listPostService', function(listPostService) {
+				return listPostService.get_all(1);
+			}],
+			// currentUser: ['Auth', function(Auth) {
+			// 	Auth.currentUser()
+			// 		.then(function(user) {
+			// 			return user;
+			// 		}, function(error) {
 
-					// 		});
-					// }],
-				}
+			// 		});
+			// }],
+		}
 	});
 
 
@@ -122,7 +123,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	// 	}
 	// });
 
-		
+
 
 	$stateProvider.state('notFound', {
 		url: '/khong-tim-thay-ket-qua',
@@ -238,9 +239,10 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		controller: 'chiTietKhTkDoanhNghiepCtrl',
 		resolve: {
 			bussinessRequest: ['KhTkDoanhNghiepService', '$stateParams',
-			 function(KhTkDoanhNghiepService, $stateParams){
-				return KhTkDoanhNghiepService.show($stateParams.id);
-			}]
+				function(KhTkDoanhNghiepService, $stateParams) {
+					return KhTkDoanhNghiepService.show($stateParams.id);
+				}
+			]
 		},
 		// access: {
 		// 	free: false,
@@ -252,8 +254,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		url: '/thong-bao/{notificationChangeId}',
 		templateUrl: 'appJS/thongBao/_thongBao.html',
 		controller: 'thongBaoCtrl',
-		resolve:{
-			notificationChange: ['thongBaoService', '$stateParams', function(thongBaoService, $stateParams){
+		resolve: {
+			notificationChange: ['thongBaoService', '$stateParams', function(thongBaoService, $stateParams) {
 				console.log("in resolve thong bao");
 				return thongBaoService.getNotificationChange($stateParams.notificationChangeId);
 			}]

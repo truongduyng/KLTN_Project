@@ -2,6 +2,9 @@ class CustomUsersController < ApplicationController
 	before_action :authenticate_user!, only: [:update, :change_password, :change_avatar]
 	before_action :find_user_and_check_with_current_user, only: [:update]
 	
+	#Neu la tai khoan facebook thi ko the doi password
+	before_action :is_account_facebook?, only: [:change_password]
+	
 	#get /custom_users/:username.json
 	def get_user_by_username
 		if params.has_key?(:username)
@@ -72,6 +75,17 @@ class CustomUsersController < ApplicationController
 			rescue Mongoid::Errors::DocumentNotFound
 				render nothing: true, status: :not_found, content_type: 'application/json'
 			end
+		end
+
+		def is_account_facebook?
+			begin
+				if current_user.identity
+					render json: {error: 'Không thể đổi password khi đăng nhập bằng tài khỏan facebook'}, status: :not_found, content_type: 'application/json'
+				end
+			rescue Mongoid::Errors::DocumentNotFound
+				render nothing: true, status: :not_found, content_type: 'application/json'
+			end
+
 		end
 
 end

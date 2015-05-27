@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   # #render plugin image browser thay vi load resource
   # get '/assets/ckeditor/plugins/imagebrowser/browser/browser.html' => 'admin#image_browser'
 
-  
+  #for login facebook
+  # devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
   resources :images
 
   resources :notification_categories do
@@ -118,7 +120,7 @@ Rails.application.routes.draw do
   # resources :informations
   get 'check/username' => 'user#check_username'
   get 'check/email' => 'user#check_email'
-  devise_for :users
+  devise_for :users,:controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   get 'bussiness-admin' => 'admin#bussiness_admin' 
   get 'system-admin' => 'admin#system_admin'
   root 'application#angular'

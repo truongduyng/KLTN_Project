@@ -34,7 +34,7 @@
                             <p>Địa chỉ: <span class="address">{{currentUser.address | notKnow}}</span></p>
                             <p>Điện thoại : <span class="phone">{{currentUser.phone | notKnow}}</span></p>
                             <a ng-if="permission.all" ng-click="showEditProfileModal()" class="btn btn-success" >Chỉnh sửa tài khoản</a>
-                            <a ng-if="permission.all" ng-click="showChangePasswordModal()" class="btn btn-success">Đổi mật khẩu</a>
+                            <a ng-if="permission.all && !currentUser.is_login_facebook" ng-click="showChangePasswordModal()" class="btn btn-success">Đổi mật khẩu</a>
                           </div>
                         </div>
                     </div>

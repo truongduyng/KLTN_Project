@@ -65,3 +65,5 @@ gem 'will_paginate', '~> 3.0.6'
 gem 'websocket-rails'
 
 gem 'ckeditor'
+#for login facebok
+gem 'omniauth-facebook'

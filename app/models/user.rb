@@ -39,7 +39,35 @@ class User
   field :address, type: String
   field :phone, type: String
   field :description, type: String
+  #for login facebook
+  has_one :identity
+  devise :omniauthable, :omniauth_providers => [:facebook]
+  def self.from_omniauth(auth)
+      # byebug
+      identity = Identity.where(provider: auth.provider, uid: auth.uid).first
+      #Neu da login it 1 lan thi lay nguoi dung do
+      if identity
+        user = identity.user
+      else
+        identity = Identity.create(provider: auth.provider, uid: auth.uid)
+        #Neu chua login lan nao thi tao nguoi dung moi 
+        user = User.new
+        user.password = Devise.friendly_token[0,20]
+        user.firstname = auth.info.first_name   # assuming the user model has a name
+        user.lastname = auth.info.last_name   # assuming the user model has a name
+        user.username = auth.uid
+        user.identity = identity
+        user.avatar = auth.info.image
+        user.save
+        identity.save
+      end
+      return user
+  end
 
+  #Skip email validation in devise
+  def email_required?
+    super && identity.nil?
+  end
   #Carrier wave
   mount_uploader :avatar, AvatarUploader
   

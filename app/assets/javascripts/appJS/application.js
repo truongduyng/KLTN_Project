@@ -44,5 +44,6 @@
 //= require ngmap
 //= require ./customJS/richmarker.js
 //= require ngstorage
+//= require angular-facebook
 //= require ./app.js
 //= require_tree .
