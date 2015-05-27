@@ -57,7 +57,6 @@ class User
         user.lastname = auth.info.last_name   # assuming the user model has a name
         user.username = auth.uid
         user.identity = identity
-        user.avatar = auth.info.image
         user.save
         identity.save
       end
@@ -68,8 +67,21 @@ class User
   def email_required?
     super && identity.nil?
   end
+  
+  # #Cho xu ly gan avatar tu facebook vao avatar 
+  # def skip
+  #  @skip || false
+  # end
+  # def skip_saving?
+  #   @skip
+  # end
+  
   #Carrier wave
   mount_uploader :avatar, AvatarUploader
+  
+  # #Cho xu ly gan avatar tu facebook vao avatar 
+  # skip_callback :store_avatar!, if: :skip_saving?
+
   
   #My validation
   validates :username, presence: true, uniqueness: true
