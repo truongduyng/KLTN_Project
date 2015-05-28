@@ -40,7 +40,6 @@ bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($statePr
   //     'themMoiChiNhanh@home':{
   //       templateUrl: 'adminJS/bussinessAdmin/quanLyChiNhanh/new/_new.html',
   //       controller: 'BAnewBranchCtrl',
-
   //     }
   //   }
   // });

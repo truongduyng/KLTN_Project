@@ -13,7 +13,6 @@ class TicketsController < ApplicationController
   end
 
   def create
-    # byebug
     create_param = ticket_param
     create_result = []
     while (create_param[:begin_use_time].to_time.to_i < create_param[:date_end_everyweek_booking].to_time.to_i)
@@ -40,7 +39,7 @@ class TicketsController < ApplicationController
   def update
 
     begin
-      ticket = Ticket.where(id: ticket_param[:ticket_id]).first
+      ticket = Ticket.find(ticket_param[:ticket_id])
       if (ticket_param.except(:ticket_id).length == 1 && ticket_param.except(:ticket_id).include?(:status))
         if ticket.update_attribute(:status, ticket_param.except(:ticket_id)[:status])
           render json: ticket, status: :ok
@@ -76,11 +75,11 @@ class TicketsController < ApplicationController
       :branch_id, :asset_id, :customer_name, :customer_phone, :date, :date_end_everyweek_booking)
   end
   def check_normal_user
-    # byebug
+
     if (current_user.role_name == 'user')
       ticket = Ticket.where(id: ticket_param[:ticket_id]).first
       if (ticket.user_id != current_user.id || ticket.status != 'new')
-        render json: {errors: "Khong the chinh sua ve cua nguoi khac"}
+        return false
       end
     end
   end

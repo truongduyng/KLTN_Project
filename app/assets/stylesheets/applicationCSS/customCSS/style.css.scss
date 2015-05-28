@@ -172,6 +172,11 @@ a.scrollup i:hover {
 	padding: 0 0 0 0;
 }
 
+.fee_content{
+	overflow-y: auto;
+	height: 210px;
+}
+
 /*post*/
 .post{
 	background: #f8f8f8;
@@ -194,6 +199,7 @@ a.scrollup i:hover {
 	padding: 0px 10px 10px 10px;
 	box-shadow: 2px 2px 5px #888888;
 	position: fixed;
+	width: 275px !important;
 	z-index: 4;
 }
 
@@ -273,7 +279,7 @@ i:hover{
 .myalert{
 	height: 50px !important;
 	margin: 0 0 10px 0 !important;
-	z-index: 10;
+	z-index: 100;
 	position: absolute;
 	bottom: 80%;
 	right: 20px;
@@ -281,4 +287,5 @@ i:hover{
 
 .everyweek{
 	display: none;
+	width: inherit !important;
 }

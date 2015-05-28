@@ -216,7 +216,7 @@ bussinessAdmin.controller('ticketCtrl', ['$scope', '$http', 'Auth', '$modal', 't
       if (top_timeline >= scrollheight)
         top_timeline = 23 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()))*scrollheight/(60*24));
       $('hr.timeline').animate({top: top_timeline},'fast');
+      tickets.check_td_in_past($scope.dt.toJSON().slice(0,10));
     },1000*60*5);
   }
-
 }]);

@@ -116,6 +116,9 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_begin.split(":")[0],hour_begin.split(":")[1]);
       var endtime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_end.split(":")[0],hour_end.split(":")[1]);
 
+      console.log($scope.dt_end_everyweek_booking);
+      $scope.dt_end_everyweek_booking.setHours(23,59,59,999);
+
       tickets.create({
         begin_use_time: begintime,
         end_use_time: endtime,
@@ -181,57 +184,57 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     );
 };
 
-$scope.ticket_edit = function(){
-  var ticket_update = $modal.open({
-    templateUrl: "appJS/ticket/_ticket_update.html",
-    controller: "ticketCtrl",
-    resolve: {
-      ticket_id: function(){
-        return $('p#ticket_id_hidden').html();
-      },
-      branch: function(){
-        return $scope.branch;
-      },
-      dt: function(){
-        return $scope.dt;
+  $scope.ticket_edit = function(){
+    var ticket_update = $modal.open({
+      templateUrl: "appJS/ticket/_ticket_update.html",
+      controller: "ticketCtrl",
+      resolve: {
+        ticket_id: function(){
+          return $('p#ticket_id_hidden').html();
+        },
+        branch: function(){
+          return $scope.branch;
+        },
+        dt: function(){
+          return $scope.dt;
+        }
       }
+    });
+  };
+
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    $scope.opened = true;
+  };
+
+  $scope.viewweekbooking = function(){
+    if ($scope.iseveryweek)
+      $('div.everyweek').css('display', 'inline');
+    else
+      $('div.everyweek').css('display', 'none');
+  }
+
+  var previouscolor = '';
+  $scope.showtimeintd = function(hour,element,show){
+    $td = $(element.currentTarget);
+    $th = $td.closest('table').find('th').eq($td.index()+1);
+    if(show){
+      previouscolor = $(element.currentTarget).css('background-color');
+      $(element.currentTarget).css('background-color','#fed559');
+      $(element.currentTarget).html('<strong>'+ $th.html() +'</strong>'+', '+'<strong>'+ tickets.hourtoview(hour) + '</strong>');
     }
-  });
-};
-
-$scope.open = function($event) {
-  $event.preventDefault();
-  $event.stopPropagation();
-  $scope.opened = true;
-};
-
-$scope.viewweekbooking = function(){
-  if ($scope.iseveryweek)
-    $('div.everyweek').css('display', 'inline');
-  else
-    $('div.everyweek').css('display', 'none');
-}
-
-var previouscolor = '';
-$scope.showtimeintd = function(hour,element,show){
-  $td = $(element.currentTarget);
-  $th = $td.closest('table').find('th').eq($td.index()+1);
-  if(show){
-    previouscolor = $(element.currentTarget).css('background-color');
-    $(element.currentTarget).css('background-color','#fed559');
-    $(element.currentTarget).html('<strong>'+ $th.html() +'</strong>'+', '+'<strong>'+ tickets.hourtoview(hour) + '</strong>');
+    else{
+      $(element.currentTarget).css('background-color',previouscolor);
+      $(element.currentTarget).html("");
+    }
   }
-  else{
-    $(element.currentTarget).css('background-color',previouscolor);
-    $(element.currentTarget).html("");
-  }
-}
 
 
-$scope.hoveringOver = function(value) {
-  $scope.overstar = value;
-  $scope.ishoverstar = true;
-};
+  $scope.hoveringOver = function(value) {
+    $scope.overstar = value;
+    $scope.ishoverstar = true;
+  };
 
   //Timeline---------------------------------------------------------------
   function timeline(){
@@ -250,7 +253,7 @@ $scope.hoveringOver = function(value) {
       if (top_timeline >= scrollheight)
         top_timeline = 23 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()))*scrollheight/(60*24));
       $('hr.timeline').animate({top: top_timeline},'fast');
+      tickets.check_td_in_past($scope.dt.toJSON().slice(0,10));
     },1000*60*5);
   }
-
 }]);

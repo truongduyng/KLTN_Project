@@ -16,7 +16,7 @@ services.factory('tickets',['$http','Auth', function($http, Auth){
         viewTicket(object.tickets[i]);
       };
 
-      check_td_in_past(ticket_query.date);
+      object.check_td_in_past(ticket_query.date);
     });
   };
 
@@ -112,7 +112,7 @@ services.factory('tickets',['$http','Auth', function($http, Auth){
   }
 
   //Check time to change color of tr --------------------------------------
-  function check_td_in_past(date){
+  object.check_td_in_past = function(date){
     var datenow = new Date();
 
     if (date < datenow.toJSON().slice(0,10)) {
