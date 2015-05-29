@@ -7,7 +7,6 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jbuilder'
-gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'font-awesome-sass'
 gem 'bootstrap-sass'
 gem 'angular-rails-templates'
@@ -16,6 +15,7 @@ gem 'devise'
 gem 'geocoder'
 gem 'websocket-rails'
 
+gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
   gem 'thin'

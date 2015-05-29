@@ -8,5 +8,5 @@ module TicketHelper
     def self.send_fail_message(ticket)
       send_message :create_fail, ticket, :namespace => :tickets
     end
-  end
+end
 end

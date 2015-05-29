@@ -4,7 +4,7 @@ var tickets = {
   completed: false
 }
 
-var dispatcher = new WebSocketRails('localhost:3456/websocket');
+var dispatcher = new WebSocketRails('localhost:3000/websocket');
 
 dispatcher.trigger('tickets.create', tickets);
 
