@@ -1,4 +1,7 @@
 class TicketsController < ApplicationController
+
+  include TicketHelper
+
   before_action :authenticate_user!, only: [:create, :update, :destroy]
   before_action :check_normal_user, only: [:update, :destroy]
 
@@ -30,8 +33,11 @@ class TicketsController < ApplicationController
       create_param[:end_use_time] = create_param[:end_use_time].to_time + 7.days
     end
     if create_result.length > 0
+      byebug
+      TicketSocket.send_success_message(ticket)
       render json: create_result[0], status: :created
     else
+      TicketSocket.send_fail_message(ticket)
       render json: ticket.errors, status: :unprocessable_entity
     end
   end

@@ -11,6 +11,7 @@
       </div>
 
       <h4 class="marginbot5">Bảng phí</h4>
+      <div class="fee_content">
       <ul>
         <li class="marginbot10" ng-repeat= "asset_category in branch.asset_categories">
           <span>{{asset_category.name}}</span>
@@ -26,6 +27,7 @@
           </table>
         </li>
       </ul>
+      </div>
     </div>
 
     <div class="calendar_content col-lg-9">
@@ -75,7 +77,7 @@
       <input type="checkbox" ng-model="iseveryweek" ng-change="viewweekbooking()"> Dat hang tuan<br>
       <div class="everyweek">
         <p class="input-group">
-          <input type="date" show-weeks = "false" placeholder="Ngay ket thuc..." class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="dt_end_everyweek_booking" is-open="opened" min-date="dt" close-text="Tat" clear-text = "Xoa" current-text="Hom nay"/>
+          <input type="text" show-weeks = "false" placeholder="Ngay ket thuc..." class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="dt_end_everyweek_booking" is-open="opened" min-date="dt" close-text="Tat" clear-text = "Xoa" current-text="Hom nay"/>
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>

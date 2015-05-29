@@ -10,4 +10,5 @@
 //= require angular-flash-alert/src/angular-flash
 //= require initModule
 //= require_tree ../services
+//= require ticket_realtime
 //= require_tree .

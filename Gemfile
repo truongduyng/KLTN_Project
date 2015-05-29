@@ -14,9 +14,11 @@ gem 'angular-rails-templates'
 gem 'angular_rails_csrf'
 gem 'devise'
 gem 'geocoder'
-gem 'thin'
+gem 'websocket-rails'
+
 
 group :development, :test do
+  gem 'thin'
   gem 'byebug'
   gem 'web-console'
   gem 'spring'
