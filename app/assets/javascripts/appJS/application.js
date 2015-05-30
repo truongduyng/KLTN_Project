@@ -10,5 +10,5 @@
 //= require angular-flash-alert/src/angular-flash
 //= require initModule
 //= require_tree ../services
-//= require ticket_realtime
+//= require websocket_rails/main
 //= require_tree .

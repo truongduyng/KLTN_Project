@@ -4,6 +4,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
   $scope.rate = 4;
   $scope.isReadonly = false;
+  $scope.mindate = new Date();
   $scope.dt = new Date();
   $scope.dt_end_everyweek_booking = $scope.dt;
   $scope.showtimeline = true;
@@ -11,6 +12,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
   if (branch.data != null){
     $scope.branch = branch.data;
+    tickets.channel =  tickets.dispatcher.subscribe($scope.branch.branch._id.$oid);
     tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
     $scope.isfounddata = true;
     timeline();
@@ -116,7 +118,6 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       var begintime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_begin.split(":")[0],hour_begin.split(":")[1]);
       var endtime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_end.split(":")[0],hour_end.split(":")[1]);
 
-      console.log($scope.dt_end_everyweek_booking);
       $scope.dt_end_everyweek_booking.setHours(23,59,59,999);
 
       tickets.create({
@@ -221,7 +222,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     $th = $td.closest('table').find('th').eq($td.index()+1);
     if(show){
       previouscolor = $(element.currentTarget).css('background-color');
-      $(element.currentTarget).css('background-color','#fed559');
+      $(element.currentTarget).css('background-color','#cee0f4');
       $(element.currentTarget).html('<strong>'+ $th.html() +'</strong>'+', '+'<strong>'+ tickets.hourtoview(hour) + '</strong>');
     }
     else{
@@ -230,19 +231,54 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     }
   }
 
-
   $scope.hoveringOver = function(value) {
     $scope.overstar = value;
     $scope.ishoverstar = true;
   };
+
+  //Real time -------------------------------------------------------------
+  tickets.channel.bind('create_ticket', function(ticket) {
+    if ($scope.dt.toJSON().slice(0,10) == ticket.begin_use_time.slice(0,10)){
+      tickets.tickets.push(ticket);
+      tickets.viewTicket(ticket);
+      console.log('realtime' + tickets.tickets.length);
+    }
+  });
+
+  tickets.channel.bind('update_ticket', function(ticket) {
+    if ($scope.dt.toJSON().slice(0,10) == ticket.begin_use_time.slice(0,10)){
+      tickets.clearviewTicket(ticket._id.$oid);
+      for (var i = 0; i < tickets.tickets.length; i++) {
+        if (tickets.tickets[i]._id.$oid == ticket._id.$oid) {
+          tickets.tickets[i] = ticket;
+          tickets.viewTicket(ticket);
+          break;
+        }
+      };
+      console.log('realtime' + tickets.tickets.length);
+    }
+  });
+
+  tickets.channel.bind('delete_ticket', function(ticket) {
+    if ($scope.dt.toJSON().slice(0,10) == ticket.begin_use_time.slice(0,10)){
+      tickets.clearviewTicket(ticket._id.$oid);
+      for (var i = 0; i < tickets.tickets.length; i++) {
+        if (tickets.tickets[i]._id.$oid == ticket._id.$oid) {
+          tickets.tickets.splice(i,1);
+          console.log('realtime' + tickets.tickets.length);
+          break;
+        }
+      };
+    }
+  });
 
   //Timeline---------------------------------------------------------------
   function timeline(){
     if($scope.branch.assets.length * 160 > $('.calendar_content').width())
     $('.tablebooking').css({width: $scope.branch.assets.length * 160}); //160 is width of a td in style
 
-  var scrollheight = $scope.td_height*4*(24-0);
-  $('hr.timeline').css({width: $('div.calendar_content').get(0).scrollWidth});
+    var scrollheight = $scope.td_height*4*(24-0);
+    $('hr.timeline').css({width: $('div.calendar_content').get(0).scrollWidth});
 
     var top_timeline = 23 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()))*scrollheight/(60*24)); // 23 is height of th
     $('hr.timeline').animate({top: top_timeline},'fast');
@@ -253,7 +289,8 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       if (top_timeline >= scrollheight)
         top_timeline = 23 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()))*scrollheight/(60*24));
       $('hr.timeline').animate({top: top_timeline},'fast');
-      tickets.check_td_in_past($scope.dt.toJSON().slice(0,10));
-    },1000*60*5);
+      tickets.check_td_in_past(new Date().toJSON().slice(0,10));
+      tickets.check_ticket_status(new Date());
+    },100*60*5);
   }
 }]);

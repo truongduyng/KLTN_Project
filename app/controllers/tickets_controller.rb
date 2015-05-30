@@ -1,9 +1,7 @@
 class TicketsController < ApplicationController
 
-  include TicketHelper
-
   before_action :authenticate_user!, only: [:create, :update, :destroy]
-  before_action :check_normal_user, only: [:update, :destroy]
+  before_action :check_right_ticket, only: [:update, :destroy]
 
   def show
 
@@ -33,11 +31,8 @@ class TicketsController < ApplicationController
       create_param[:end_use_time] = create_param[:end_use_time].to_time + 7.days
     end
     if create_result.length > 0
-      byebug
-      TicketSocket.send_success_message(ticket)
       render json: create_result[0], status: :created
     else
-      TicketSocket.send_fail_message(ticket)
       render json: ticket.errors, status: :unprocessable_entity
     end
   end
@@ -66,9 +61,12 @@ class TicketsController < ApplicationController
 
   def destroy
     begin
-      ticket = Ticket.where(id: ticket_param[:ticket_id]).first
+      ticket = Ticket.find(ticket_param[:ticket_id])
+
       if ticket.destroy
         render nothing: true, status: :ok, content_type: 'application/json'
+      else
+        render nothing: true, status: :unprocessable_entity, content_type: 'application/json'
       end
     rescue Exception => e
       render nothing: true, status: :not_found, content_type: 'application/json'
@@ -76,17 +74,20 @@ class TicketsController < ApplicationController
   end
 
   private
+
   def ticket_param
     params.permit(:ticket_id, :begin_use_time, :end_use_time, :price, :status,
       :branch_id, :asset_id, :customer_name, :customer_phone, :date, :date_end_everyweek_booking)
   end
-  def check_normal_user
 
+  def check_right_ticket
     if (current_user.role_name == 'user')
-      ticket = Ticket.where(id: ticket_param[:ticket_id]).first
+      ticket = Ticket.find(ticket_param[:ticket_id])
+
       if (ticket.user_id != current_user.id || ticket.status != 'new')
-        return false
+        render nothing: true, status: :unprocessable_entity, content_type: 'application/json'
       end
     end
   end
+
 end

@@ -8,6 +8,8 @@ bussinessAdmin.controller('ticketCtrl', ['$scope', '$http', 'Auth', '$modal', 't
 
   if (branch.data != null){
     $scope.branch = branch.data;
+
+    tickets.channel =  tickets.dispatcher.subscribe($scope.branch.branch._id.$oid);
     tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
     $scope.isfounddata = true;
     timeline();
@@ -23,6 +25,7 @@ bussinessAdmin.controller('ticketCtrl', ['$scope', '$http', 'Auth', '$modal', 't
       $scope.showtimeline = true;
     else
       $scope.showtimeline = false;
+    console.log($scope.branch.branch._id.$oid + $scope.dt.toJSON().slice(0,10));
     tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
   };
 
@@ -83,7 +86,6 @@ bussinessAdmin.controller('ticketCtrl', ['$scope', '$http', 'Auth', '$modal', 't
       booking_top = booking_top>0? booking_top : 0;
       booking_right = booking_right>0? booking_right :0;
       $('#minibooking').css({top: booking_top, right: booking_right});
-      $('input.customer')[0].focus();
     }
   }
 
@@ -118,6 +120,8 @@ bussinessAdmin.controller('ticketCtrl', ['$scope', '$http', 'Auth', '$modal', 't
         $scope.customer_name = "Khach";
       }
 
+      $scope.dt_end_everyweek_booking.setHours(23,59,59,999);
+
       tickets.create({
         begin_use_time: begintime,
         end_use_time: endtime,
@@ -133,6 +137,8 @@ bussinessAdmin.controller('ticketCtrl', ['$scope', '$http', 'Auth', '$modal', 't
       $scope.close_minibooking();
       $scope.iseveryweek = false;
       $('div.everyweek').css('display', 'none');
+      $scope.customer_name = null;
+      $scope.customer_phone = null;
       $scope.dt_end_everyweek_booking = $scope.dt;
 
     }, function(error) {
@@ -192,7 +198,7 @@ bussinessAdmin.controller('ticketCtrl', ['$scope', '$http', 'Auth', '$modal', 't
     $th = $td.closest('table').find('th').eq($td.index()+1);
     if(show){
       previouscolor = $(element.currentTarget).css('background-color');
-      $(element.currentTarget).css('background-color','#fed559');
+      $(element.currentTarget).css('background-color','#6ea6bf');
       $(element.currentTarget).html('<strong>'+ $th.html() +'</strong>'+', '+'<strong>'+ tickets.hourtoview(hour) + '</strong>');
     }
     else{
@@ -200,6 +206,42 @@ bussinessAdmin.controller('ticketCtrl', ['$scope', '$http', 'Auth', '$modal', 't
       $(element.currentTarget).html("");
     }
   }
+
+  //Real time -------------------------------------------------------------
+  tickets.channel.bind('create_ticket', function(ticket) {
+    if ($scope.dt.toJSON().slice(0,10) == ticket.begin_use_time.slice(0,10)){
+      tickets.tickets.push(ticket);
+      tickets.viewTicket(ticket);
+      console.log('realtime' + tickets.tickets.length);
+    }
+  });
+
+  tickets.channel.bind('update_ticket', function(ticket) {
+    if ($scope.dt.toJSON().slice(0,10) == ticket.begin_use_time.slice(0,10)){
+      tickets.clearviewTicket(ticket._id.$oid);
+      for (var i = 0; i < tickets.tickets.length; i++) {
+        if (tickets.tickets[i]._id.$oid == ticket._id.$oid) {
+          tickets.tickets[i] = ticket;
+          tickets.viewTicket(ticket);
+          break;
+        }
+      };
+      console.log('realtime' + tickets.tickets.length);
+    }
+  });
+
+  tickets.channel.bind('delete_ticket', function(ticket) {
+    if ($scope.dt.toJSON().slice(0,10) == ticket.begin_use_time.slice(0,10)){
+      tickets.clearviewTicket(ticket._id.$oid);
+      for (var i = 0; i < tickets.tickets.length; i++) {
+        if (tickets.tickets[i]._id.$oid == ticket._id.$oid) {
+          tickets.tickets.splice(i,1);
+          console.log('realtime' + tickets.tickets.length);
+          break;
+        }
+      };
+    }
+  });
 
   //Timeline---------------------------------------------------------------
   function timeline(){
@@ -216,7 +258,8 @@ bussinessAdmin.controller('ticketCtrl', ['$scope', '$http', 'Auth', '$modal', 't
       if (top_timeline >= scrollheight)
         top_timeline = 23 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()))*scrollheight/(60*24));
       $('hr.timeline').animate({top: top_timeline},'fast');
-      tickets.check_td_in_past($scope.dt.toJSON().slice(0,10));
+      tickets.check_td_in_past(new Date().toJSON().slice(0,10));
+      tickets.check_ticket_status(new Date());
     },1000*60*5);
   }
 }]);

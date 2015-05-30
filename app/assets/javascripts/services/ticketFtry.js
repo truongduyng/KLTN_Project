@@ -1,44 +1,39 @@
-services.factory('tickets',['$http','Auth', function($http, Auth){
+services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash){
   var object = {
     tickets: [],
+    dispatcher: new WebSocketRails('localhost:3000/websocket'),
+    channel: null
   };
 
   object.getTickets = function(ticket_query) {
 
     for (var i = 0; i < object.tickets.length; i++) {
-      clearviewTicket(object.tickets[i]._id.$oid);
+      object.clearviewTicket(object.tickets[i]._id.$oid);
     };
 
     return $http.get('/tickets/'+ticket_query.date+'/'+ticket_query.branch_id).success(function(data){
+
       angular.copy(data, object.tickets);
 
       for (var i = 0; i < object.tickets.length; i++) {
-        viewTicket(object.tickets[i]);
+        object.viewTicket(object.tickets[i]);
       };
 
       object.check_td_in_past(ticket_query.date);
+
     });
   };
 
   object.create = function(ticket){
     return $http.post('tickets.json', ticket).success(function(data){
-      object.tickets.push(data);
-      viewTicket(data);
+
+      object.dispatcher.trigger('tickets.create_ticket', data);
     });
   };
 
   object.update = function(ticket_update){
     return $http.post('tickets/update.json',ticket_update).success(function(data){
-
-      clearviewTicket(ticket_update.ticket_id);
-
-      for (var i = 0; i < object.tickets.length; i++) {
-        if (object.tickets[i]._id.$oid == data._id.$oid) {
-          object.tickets[i] = data;
-          viewTicket(data);
-          break;
-        }
-      };
+      object.dispatcher.trigger('tickets.update_ticket', data);
     });
   };
 
@@ -47,11 +42,10 @@ services.factory('tickets',['$http','Auth', function($http, Auth){
     .success(function(data){
 
       if (data.errors == null) {
-        clearviewTicket(ticket_id);
 
         for (var i = 0; i < object.tickets.length; i++) {
           if (object.tickets[i]._id.$oid == ticket_id) {
-            object.tickets.splice(i,1);
+            object.dispatcher.trigger('tickets.delete_ticket', object.tickets[i]);
             break;
           }
         };
@@ -61,7 +55,8 @@ services.factory('tickets',['$http','Auth', function($http, Auth){
       }
     })
     .error(function(data){
-      console.log(data);
+      var message = '<strong>Gruh!</strong> Khong the xoa ve o trang thai nay.';
+      Flash.create('danger', message, 'myalert');
     });
   };
 
@@ -111,6 +106,25 @@ services.factory('tickets',['$http','Auth', function($http, Auth){
     }
   }
 
+  object.check_ticket_status = function(now){
+    for (var i = 0; i < object.tickets.length; i++) {
+
+      if(object.tickets[i].status == 'new' && now.getTime() > new Date(object.tickets[i].begin_use_time).getTime() + 1000*60*10){
+        object.update({
+          ticket_id: object.tickets[i]._id.$oid,
+          status: "over"
+        });
+      }
+
+      if(object.tickets[i].status == 'doing' && now.getTime() > new Date(object.tickets[i].begin_use_time).getTime()){
+        object.update({
+          ticket_id: object.tickets[i]._id.$oid,
+          status: "waiting"
+        });
+      }
+    };
+  }
+
   //Check time to change color of tr --------------------------------------
   object.check_td_in_past = function(date){
     var datenow = new Date();
@@ -139,7 +153,7 @@ services.factory('tickets',['$http','Auth', function($http, Auth){
     }
   };
 
-  function viewTicket(ticket){
+  object.viewTicket = function(ticket){
     var begintime = object.change_time_to_float(ticket.begin_use_time.slice(11,16));
     if (ticket.begin_use_time.slice(0,10) == ticket.end_use_time.slice(0,10))
       var endtime = object.change_time_to_float(ticket.end_use_time.slice(11,16));
@@ -168,7 +182,7 @@ services.factory('tickets',['$http','Auth', function($http, Auth){
       $('p#price_ticket').html('Gia: '+ ticket.price);
       $('p#ticket_id_hidden').html(ticket._id.$oid);
 
-      if(event.offsetY==undefined) // this works for Firefox
+      if(event.offsetY == undefined) // this works for Firefox
       {
         eventoffsetY = event.pageY-$('div#' + ticket._id.$oid).offset().top;
       }
@@ -197,23 +211,23 @@ services.factory('tickets',['$http','Auth', function($http, Auth){
 
   switch(ticket.status) {
     case "new":
-    if(Auth._currentUser != null && Auth._currentUser.role_name == "bussiness admin"){
+      if(Auth._currentUser != null && Auth._currentUser.role_name == "bussiness admin"){
 
-      $('.calendar_content').append(
-        $("<i class='fa fa-arrow-circle-o-right fa-1x to_status_doing' id='" + ticket._id.$oid + "_i'></i>").click(function(){
-          object.update({
-            ticket_id: ticket._id.$oid,
-            status: "doing"
-          });
-        })
-        );
+        $('.calendar_content').append(
+          $("<i class='fa fa-arrow-circle-o-right ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
+            object.update({
+              ticket_id: ticket._id.$oid,
+              status: "doing"
+            });
+          })
+          );
 
-      $('i#' + ticket._id.$oid + '_i').css({
-        top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
-        left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
-      });
-    }
-    $('div#'+ticket._id.$oid).addClass('ticket_new');
+        $('i#' + ticket._id.$oid + '_i').css({
+          top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
+          left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
+        });
+      }
+      $('div#'+ticket._id.$oid).addClass('ticket_new');
     break;
 
     case "doing":
@@ -225,7 +239,23 @@ services.factory('tickets',['$http','Auth', function($http, Auth){
     break;
 
     case "waiting":
-    $('div#'+ticket._id.$oid).addClass('ticket_waiting');
+      if(Auth._currentUser != null && Auth._currentUser.role_name == "bussiness admin"){
+
+          $('.calendar_content').append(
+            $("<i class='fa fa-check-circle-o ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
+              object.update({
+                ticket_id: ticket._id.$oid,
+                status: "done"
+              });
+            })
+            );
+
+          $('i#' + ticket._id.$oid + '_i').css({
+            top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
+            left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
+          });
+        }
+      $('div#'+ticket._id.$oid).addClass('ticket_waiting');
     break;
 
     case "done":
@@ -234,7 +264,7 @@ services.factory('tickets',['$http','Auth', function($http, Auth){
   }
   };
 
-  function clearviewTicket(ticket_id){
+  object.clearviewTicket = function(ticket_id){
     $('div#'+ ticket_id).remove();
     $('i#'+ ticket_id +'_i').remove();
   };
