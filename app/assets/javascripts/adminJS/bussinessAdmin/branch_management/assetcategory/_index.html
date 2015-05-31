@@ -4,7 +4,7 @@
       <section>
         <header style="overflow:hidden;">
           <div style="float:right">
-            <a class="btn btn-primary" ng-click= "open_new()"><i class="fa fa-plus"></i> Thêm mới loại sân</a>
+            <a class="btn btn-primary" ng-click= "open_new()"><i class="fa fa-plus"></i></a>
           </div>
           <div style="clear:both; margin-bottom:2px;"></div>
 
@@ -32,7 +32,7 @@
                 <div class="btn-group" >
 
                   <a href="bussiness-admin#/quan-ly-loai-san/chinh-sua/{{category._id.$oid}}" class="btn btn-success">Sua loai san</a>
-                  <a  data-ng-click="toogleModalDeleteCategory(category)" class="btn btn-danger">Xoa</a>
+                  <a  data-ng-click="deleteCategory(category)" class="btn btn-danger">Xoa</a>
                 </div>
               </td>
             </tr>
@@ -69,90 +69,22 @@
       </div>
     </div>
   </section>
+  <script type="text/javascript">
+    $(function() {
+      $("#table1").tbltree();
+    });
 
-  <!-- Giai phap modal them xoa sua di voi moi moi item -->
-  <!-- Modal -->
-<!-- <div ng-include="'bussinessAdmin/quanlyloaisan/_modal.html'">
-</div> -->
-<!-- <section class="modals">
-  <modal title="Thêm giá cho loại sân {{$scope.myTitle}}" visible="showAddPriceModal">
-    <form class="form-horizontal" style="margin:0 15px;" name="addFeeForm">
-      <div class="form-group">
+  </script>
 
-        <table width="100%">
-          <tr>
-            <td style="text-align:center">Từ</td>
-            <td><input  data-ng-model="newFee.begin_time" id="begin_time" type="text" class="form-control" sprota-datepicker />
-              <td style="text-align:center">Tới</td>
-              <td>
-                <input ng-model="newFee.end_time" id="end_time" type="text" class="form-control" sprota-datepicker>
-                <td>
-                  <td style="text-align:center">Giá</td>
-                  <td><input  type="number" name="price" ng-model="newFee.price" id="input-price" type="text" class="form-control"></td>
-                </tr>
-              </table>
-            </div>
-            <div style="text-align: right;">
-              <button class="btn btn-success" data-ng-disabled="addFeeForm.price.$invalid" ng-click="addPrice()">Thêm</button>
-              <button class="btn btn-danger" data-dismiss="modal" ng-click="cancelAddPrice()">Thoát</button>
-            </div>
-          </form>
-        </modal>
-        <modal title="Ban co muon xoa loai san da chon khong ?" visible="showDeleteCategoryModal">
-          <div class="radio">
-            <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-              Chuyển các sân con thuộc loại sân bị xóa vào loại sân: </label>
-              <select multiple="" class="form-control">
-                <option>Sân 5 người</option>
-                <option>Sân 10 người</option>
-                <option>Sân 12 người</option>
-                <option>Sân tự do</option>
-              </select>
-            </div>
-            <div class="radio">
-              <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                Xóa toàn bộ các sân thuộc loại sân bị xóa </label>
-              </div>
-
-              <div style="text-align: right;">
-               <button class="btn btn-danger" ng-click="deleteCategory()">Xóa</button>
-               <button class="btn btn-success" data-dismiss="modal" data-ng-click="cancelDeleteCategory()">Thoát</button>
-             </div>
-           </modal>
-
-           <modal title="Xóa mục đã chọn ?" visible="showDeletePriceModel">
-            <div class="alert alert-info fade in" style="margin-bottom:-20px;">
-              <button data-dismiss="alert" class="close close-sm" type="button">
-                <i class="icon-remove"></i>
-              </button>
-              <strong>Chú ý:</strong>Bạn có muốn xóa mục đã chọn không ?
-            </div>
-            <div style="text-align: right; margin-top:40px">
-             <button class="btn btn-danger" ng-click="deletePrice()">Xóa</button>
-             <button class="btn btn-success" ng-click="cancelDeletePrice()">Thoát</button>
-           </div>
-         </modal>
-
-       </section> -->
-       <!--main content end-->
-       <script type="text/javascript">
-        $(function() {
-          $("#table1").tbltree();
-        });
-
-      </script>
-
-      <style type="text/css">
-        .modal-dialog {
-          margin: 0;
-          left: 30%;
-        }
-        .right-caret {
-          border-left: 4px solid @black;
-          border-right: 0;
-          border-top: 4px solid transparent;
-          border-bottom: 4px solid transparent;
-        }
-      </style>
+  <style type="text/css">
+    .modal-dialog {
+      margin: 0;
+      left: 30%;
+    }
+    .right-caret {
+      border-left: 4px solid @black;
+      border-right: 0;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+    }
+  </style>

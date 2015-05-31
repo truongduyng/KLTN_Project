@@ -1,4 +1,4 @@
-services.factory('assestCategoryService', ['$http', function($http) {
+services.factory('assetCategoryService', ['$http', function($http) {
 	var o = {
 		categories: [],
 
@@ -22,7 +22,7 @@ services.factory('assestCategoryService', ['$http', function($http) {
 	};
 
 	o.show = function(id) {
-		return $http.get("/assest_categories/" + id + ".json")
+		return $http.get("/asset_categories/" + id + ".json")
 			.then(function(response) {
 				console.log(response);
 				return response.data;
@@ -30,11 +30,11 @@ services.factory('assestCategoryService', ['$http', function($http) {
 			});
 	};
 
-	o.update = function(assestCategory) {
+	o.update = function(assetCategory) {
 		var id = assestCategory._id.$oid;
 		console.log(assestCategory);
 
-		return $http.put("/assest_categories/" + id + ".json", assestCategory)
+		return $http.put("/asset_categories/" + id + ".json", assetCategory)
 			.success(function(data){
 				console.log(data);
 			})
@@ -43,9 +43,9 @@ services.factory('assestCategoryService', ['$http', function($http) {
 			});
 	}
 
-	o.destroy = function(assestCategory) {
-		var id = assestCategory._id.$oid;
-		return $http.delete("/assest_categories/" + id + ".json")
+	o.destroy = function(assetCategory) {
+		var id = assetCategory._id.$oid;
+		return $http.delete("/asset_categories/" + id + ".json")
 			.success(function(data){
 				console.log(data);
 			})

@@ -81,11 +81,10 @@ class AssetCategoriesController < ApplicationController
   end
 
   def find_asset_category
-   begin
-    bussiness_id = current_user.bussiness.id
-    @asset_category = current_user.bussiness.asset_categories.find(params[:id])
-  rescue Mongoid::Errors::DocumentNotFound
-    render nothing: true, status: :not_found, content_type: 'application/json'
+    begin
+      @asset_category = AssetCategory.find(params[:id])
+    rescue Mongoid::Errors::DocumentNotFound
+      render nothing: true, status: :not_found, content_type: 'application/json'
+    end
   end
-end
 end

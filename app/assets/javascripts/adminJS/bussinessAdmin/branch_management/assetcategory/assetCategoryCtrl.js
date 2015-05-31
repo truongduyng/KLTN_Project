@@ -1,5 +1,5 @@
-bussinessAdmin.controller('assetCategoryCtrl', ['$scope', '$http', 'assestCategoryService', '$state', 'feeService', 'Flash', 'vndFilter', 'dateFilter', '$modal',
-  function($scope, $http, assestCategoryService, $state, feeService, Flash, vndFilter, dateFilter, $modal) {
+bussinessAdmin.controller('assetCategoryCtrl', ['$scope', '$http', 'assetCategoryService', '$state', 'feeService', 'Flash', 'vndFilter', 'dateFilter', '$modal',
+  function($scope, $http, assetCategoryService, $state, feeService, Flash, vndFilter, dateFilter, $modal) {
 
     $scope.open_new = function(){
       var assetCategory_new = $modal.open({
@@ -75,10 +75,8 @@ bussinessAdmin.controller('assetCategoryCtrl', ['$scope', '$http', 'assestCatego
   //end Cho modal them gia
 
   //Modal cho xoa loai hang san
-  $scope.deleteCategory = function() {
-    var category = $scope.selectedCategory;
-    assestCategoryService
-    .destroy(category)
+  $scope.deleteCategory = function(category) {
+    assetCategoryService.destroy(category)
     .success(function() {
       var index = $scope.categories.indexOf(category);
       $scope.categories.splice(index, 1);
@@ -96,18 +94,6 @@ bussinessAdmin.controller('assetCategoryCtrl', ['$scope', '$http', 'assestCatego
   $scope.cancelDeleteCategory = function() {
     $scope.selectedCategory = null;
     $scope.showDeleteCategoryModal = !$scope.showDeleteCategoryModal;
-  };
-
-  //End Modal cho xoa loai hang san
-  console.log($scope.categories);
-  $scope.newCategory = {
-    fees: [],
-  };
-
-  $scope.newFee = {
-    begin_time: "12:00am",
-    end_time: "12:00am",
-    price: 0,
   };
 }
 ]);
