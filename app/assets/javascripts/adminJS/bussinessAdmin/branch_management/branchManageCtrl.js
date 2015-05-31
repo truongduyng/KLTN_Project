@@ -2,4 +2,5 @@ bussinessAdmin.controller('branchManageCtrl', ['$scope', '$http', 'Auth', 'branc
   console.log(branch.data);
   $scope.branch = branch.data.branch;
   $scope.categories = branch.data.asset_categories;
+  $scope.assets = branch.data.asset;
 }]);

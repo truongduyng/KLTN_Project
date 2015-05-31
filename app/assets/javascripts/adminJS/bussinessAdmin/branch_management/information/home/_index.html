@@ -1,65 +1,61 @@
-<div class="col-lg-12" ng-controller = "BAbranchCtrl">
-  <section class="panel panel-success">
-        <header class="panel-heading" style="padding: 10px;">
-          <span>{{branch.name |notKnow }}</span>
-          <!-- BUTTON HIEN RA KHI HIEN THI -->
-          <div class="pull-right" ng-if="!branch.isEdit">
-            <button ng-click="onEdit(branch)" class="btn btn-primary"><span class="fa fa-edit"></span> Chỉnh sửa</button>
-            <button ng-click="onDeleteBranch(branch)" class="btn btn-danger"><span class="fa fa-trash"></span> Xóa</button>
-          </div>
-          <!-- BUTTON HIEN RA KHI CHINH SUA -->
-          <div class="pull-right" ng-if="branch.isEdit">
-            <button ng-click="saveEdittedBranch(branch)" class="btn btn-primary"><span class="fa fa-save"></span> Lưu <span ng-if="branch.isSaving" class="fa fa-spinner fa-spin"></span></button>
-            <button ng-click="cancelEdit(branch)" class="btn btn-danger"><span class="fa fa-undo"></span> Hủy</button>
-          </div>
-        </header>
-        <div class="panel-body">
-          <!-- BEGIN THONG TIN DE HIEN THI  -->
-          <div ng-if="!branch.isEdit" class="row">
-            <div class="col-sm-6">
-              <section class="panel panel-success">
-                <header class="panel-heading">Thông tin chung</header>
-                <div class="panel-body">
-                  <table class="table table-hover">
-                    <tbody>
-                      <tr>
-                        <th>Địa chỉ</th>
-                        <td>{{branch.address |notKnow }}</td>
-                      </tr>
-                      <tr>
-                        <th>Điện thoại</th>
-                        <td>{{branch.phone |notKnow }}</td>
-                      </tr>
-                      <tr>
-                        <th>Mô tả </th>
-                        <td>{{branch.description |notKnow }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </section>
+<div ng-controller = "BAbranchCtrl">
+  <section class="panel">
+    <div class="panel-body">
+      <!-- BEGIN THONG TIN DE HIEN THI  -->
+      <div ng-if="!branch.isEdit" class="row">
+        <div class="col-sm-6">
+          <section class="panel panel-success">
+            <header class="panel-heading">Thông tin chung</header>
+            <div class="panel-body">
+              <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <th>Địa chỉ</th>
+                    <td>{{branch.address |notKnow }}</td>
+                  </tr>
+                  <tr>
+                    <th>Điện thoại</th>
+                    <td>{{branch.phone |notKnow }}</td>
+                  </tr>
+                  <tr>
+                    <th>Mô tả </th>
+                    <td>{{branch.description |notKnow }}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="col-sm-6">
-              <section class="panel panel-success">
-                <header class="panel-heading">Vị trí</header>
-                <div class="panel-body">
-                  <div class="myMap" style="width:100%; height:300px;">
-                    <map zoom="17" center="{{branch.coordinates[1]}}, {{branch.coordinates[0]}}" branch="{{branch}}" onstate="home">
-                    </map>
-                  </div>
-                </div>
-              </section>
-            </div>
-          </div>
-          <!-- END THONG TIN DE HIEN THI  -->
-
-          <!-- BEGIN THONG TIN DE CHINH SUA CHI NHANH, CHI HIEN KHI NGUOI DUNG NHAN NUT CHINH SUA-->
-          <div ng-if="branch.isEdit" class="row"
-          ng-include="'adminJS/bussinessAdmin/branch_management/information/edit/_edit.html'">
+          </section>
         </div>
-        <!-- END THONG TIN DE CHINH SUA CHI NHANH, CHI HIEN KHI NGUOI DUNG NHAN NUT CHINH SUA-->
+        <div class="col-sm-6">
+          <section class="panel panel-success">
+            <header class="panel-heading">Vị trí</header>
+            <div class="panel-body">
+              <div class="myMap" style="width:100%; height:300px;">
+                <map zoom="17" center="{{branch.coordinates[1]}}, {{branch.coordinates[0]}}" branch="{{branch}}" onstate="home">
+                </map>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
-    </section>
+      <!-- END THONG TIN DE HIEN THI  -->
+
+      <!-- BEGIN THONG TIN DE CHINH SUA CHI NHANH, CHI HIEN KHI NGUOI DUNG NHAN NUT CHINH SUA-->
+      <div ng-if="branch.isEdit" class="row"
+      ng-include="'adminJS/bussinessAdmin/branch_management/information/edit/_edit.html'">
+    </div>
+    <!-- END THONG TIN DE CHINH SUA CHI NHANH, CHI HIEN KHI NGUOI DUNG NHAN NUT CHINH SUA-->
+    <div class="pull-left" ng-if="!branch.isEdit">
+      <button ng-click="onEdit(branch)" class="btn btn-primary"><span class="fa fa-edit"></span> Chỉnh sửa</button>
+      <button ng-click="onDeleteBranch(branch)" class="btn btn-danger"><span class="fa fa-trash"></span> Xóa</button>
+    </div>
+    <!-- BUTTON HIEN RA KHI CHINH SUA -->
+    <div class="pull-left" ng-if="branch.isEdit">
+      <button ng-click="saveEdittedBranch(branch)" class="btn btn-primary"><span class="fa fa-save"></span> Lưu <span ng-if="branch.isSaving" class="fa fa-spinner fa-spin"></span></button>
+      <button ng-click="cancelEdit(branch)" class="btn btn-danger"><span class="fa fa-undo"></span> Hủy</button>
+    </div>
+  </div>
+</section>
 </div>
 
 <!-- MARKER FOR MAP -->
@@ -77,23 +73,16 @@
     <button type="button" class="close"
     data-dismiss="modal" aria-hidden="true" ng-click="$close()">
     &times;
-    </button>
-    <h4 class="modal-title" id="myModalLabel">
-     Bạn có muốn xóa chi nhánh: {{branch.name}}
-   </h4>
-  </div>
-  <div class="modal-body">
-    <div>Xóa chi nhánh này sẽ xoá tất cả các loại sân, sân, vé và tất cả dữ liệu thuộc về chi nhánh</div>
-  </div>
-  <div class="modal-footer">
-    <button ng-click="deleteBranch()" class="btn btn-danger" ng-click="deleteCategory()">Xóa</button>
-    <button ng-click="$dismiss()" class="btn btn-success">Thoát</button>
-  </div>
+  </button>
+  <h4 class="modal-title" id="myModalLabel">
+   Bạn có muốn xóa chi nhánh: {{branch.name}}
+ </h4>
+</div>
+<div class="modal-body">
+  <div>Xóa chi nhánh này sẽ xoá tất cả các loại sân, sân, vé và tất cả dữ liệu thuộc về chi nhánh</div>
+</div>
+<div class="modal-footer">
+  <button ng-click="deleteBranch()" class="btn btn-danger" ng-click="deleteCategory()">Xóa</button>
+  <button ng-click="$dismiss()" class="btn btn-success">Thoát</button>
+</div>
 </script>
-<!-- <modal title="Ban co muon xoa loai san da chon khong ?" visible="showDeleteCategoryModal">
-
-
-      <div style="text-align: right;">
-
-      </div>
-</modal> -->

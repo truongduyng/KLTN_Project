@@ -29,12 +29,6 @@ bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', 
 		return marker;
 	};
 
-
-	// //cho chinh sua
-	// //Khoi tao isEdit mac dinh cho tat ca branch
-	// _.each($scope.branches, function(item){
-	// 	item.isEdit = false;
-	// });
 	$scope.branch.isEdit = false;
 
 	//Chinh sua 1 branch
@@ -79,7 +73,7 @@ bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', 
 					id: branch._id.$oid,
 				});
 				$state.go("home");
-				
+
 			});
 	};
 

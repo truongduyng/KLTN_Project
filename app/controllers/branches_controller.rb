@@ -75,7 +75,7 @@ class BranchesController < ApplicationController
       if @branch.save
         render 'show.json.jbuilder', status: :ok
       else
-        render json: @branch.errors, status: :bad_request    
+        render json: @branch.errors, status: :bad_request
       end
     else
       render json: @branch.errors, status: :bad_request
@@ -86,7 +86,7 @@ class BranchesController < ApplicationController
     @branch.destroy
     render nothing: true, status: :ok, content_type: 'application/json'
   end
-  
+
 
   private
     #CODE CUA TRUNG
@@ -96,7 +96,7 @@ class BranchesController < ApplicationController
         my_params.delete :latitude
         my_params.delete :longitude
         my_params[:coordinates] = coordinates
-        my_params 
+        my_params
     end
 
     def find_branch

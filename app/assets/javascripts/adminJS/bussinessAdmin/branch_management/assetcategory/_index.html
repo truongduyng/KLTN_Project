@@ -2,13 +2,6 @@
   <div class="row">
     <div class="col-lg-12">
       <section>
-        <header style="overflow:hidden;">
-          <div style="float:right">
-            <a class="btn btn-primary" ng-click= "open_new()"><i class="fa fa-plus"></i></a>
-          </div>
-          <div style="clear:both; margin-bottom:2px;"></div>
-
-        </header>
         <div class="table-responsive">
           <table id="table1" class="table table-bordered table-hover">
             <thead>
@@ -22,50 +15,42 @@
             </thead>
             <tbody >
 
-             <tr ng-repeat-start="(categoryIndex, category) in categories">
+              <tr ng-repeat-start="(categoryIndex, category) in categories">
+                <td style="cursor: pointer" data-ng-click="category.collapseRows = !category.collapseRows">
+                  <span class="tbltree-expander" data-ng-class="{'tbltree-expander-collapsed': !category.collapseRows, 'tbltree-expander-expanded': category.collapseRows}">
+                  </span>{{categoryIndex+1}}
+                </td>
+                <td>{{category.name}}</td>
+                <td>{{category.short_desc}}</td>
 
-              <td style="cursor: pointer" data-ng-click="category.collapseRows = !category.collapseRows"><span class="tbltree-expander" data-ng-class="{'tbltree-expander-collapsed': !category.collapseRows, 'tbltree-expander-expanded': category.collapseRows}"></span>{{categoryIndex}}</td>
-              <td>{{category.name}}</td>
-              <td>{{category.short_desc}}</td>
+                <td align="center" style="vertical-align:middle; max-width:100px;">
+                  <div class="btn-group" >
 
-              <td align="center" style="vertical-align:middle; max-width:100px;">
-                <div class="btn-group" >
+                  <a href="bussiness-admin#/quan-ly-loai-san/chinh-sua/{{category._id.$oid}}" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                    <a  data-ng-click="deleteCategory(category)" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                  </div>
+                </td>
+              </tr>
 
-                  <a href="bussiness-admin#/quan-ly-loai-san/chinh-sua/{{category._id.$oid}}" class="btn btn-success">Sua loai san</a>
-                  <a  data-ng-click="deleteCategory(category)" class="btn btn-danger">Xoa</a>
-                </div>
-              </td>
-            </tr>
-
-            <tr ng-repeat-end ng-repeat="(feeIndex, fee) in category.fees"  data-ng-show="category.collapseRows" >
-              <td>Từ </td>
-              <td  align="center">{{fee.begin_time | date:'shortTime'}} => {{fee.end_time | date:'shortTime'}}</td>
-              <td>{{fee.price | vnd}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-      </div>
+              <tr ng-repeat-end ng-repeat="(feeIndex, fee) in category.fees"  data-ng-show="category.collapseRows" >
+                <td>Từ </td>
+                <td  align="center">{{fee.begin_time | date:'shortTime'}} => {{fee.end_time | date:'shortTime'}}</td>
+                <td>{{fee.price | vnd}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pull-left">
+          <a class="btn btn-primary" ng-click= "open_new()"><i class="fa fa-plus"></i></a>
+        </div>
+      </section>
     </div>
-  </section>
-  <script type="text/javascript">
-    $(function() {
-      $("#table1").tbltree();
-    });
+  </div>
+</section>
 
-  </script>
 
-  <style type="text/css">
-    .modal-dialog {
-      margin: 0;
-      left: 30%;
-    }
-    .right-caret {
-      border-left: 4px solid @black;
-      border-right: 0;
-      border-top: 4px solid transparent;
-      border-bottom: 4px solid transparent;
-    }
-  </style>
+<script type="text/javascript">
+  $(function() {
+    $("#table1").tbltree();
+  });
+</script>

@@ -16,7 +16,6 @@ class AssetCategoriesController < ApplicationController
   end
 
   def create
-    byebug
     asset_category = AssetCategory.new(asset_category_params) do |ac|
       if params.has_key?(:fees) && !params[:fees].blank?
         params[:fees].each do |fee|
