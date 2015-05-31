@@ -1,4 +1,4 @@
-bussinessAdmin.controller('ticketCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','branch', '$interval','Flash', function($scope, $http, Auth, $modal, tickets, branch, $interval, Flash){
+bussinessAdmin.controller('ticketManageCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','branch', '$interval','Flash', function($scope, $http, Auth, $modal, tickets, branch, $interval, Flash){
   $scope.rate = 4;
   $scope.isReadonly = false;
   $scope.dt = new Date();

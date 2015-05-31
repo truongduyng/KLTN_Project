@@ -42,9 +42,6 @@
                     <p><span>Lĩnh vực</span>: {{user.bussiness.category}}</p>
                   </div>
                   <div class="bio-row">
-                    <p><span>Địa chỉ </span>: {{user.bussiness.address}}</p>
-                  </div>
-                  <div class="bio-row">
                     <p><span>Email </span>:{{user.email}}</p>
                   </div>
                   <div class="bio-row">
@@ -54,21 +51,6 @@
                     <p><span>Di động </span>:  TRONG</p>
                   </div>
                 </div>
-                <!-- Begin row cho bản đồ hiển thị địa chỉ doanh nghiệp -->
-                <div class="row">
-                  <div class="col-lg-12">
-                    <section class="panel">
-                      <header class="panel-heading"> Bản đồ vị trị</header>
-                      <div class="panel-body">
-                        <div class="main-map">
-                          <div id="mainMap" style="width:100%; height:365px; margin:0 auto;"></div>
-                        </div>
-                      </div>
-                    </section>
-
-                  </div>
-                </div>
-                <!-- End row cho bản đồ hiển thị địa chỉ doanh nghiệp -->
               </div>
             </section>
             <section>
@@ -118,113 +100,66 @@
                       </section>
                     </div>
                     <!-- End column cho thông tin chung -->
-
-                    <!-- Begin column cho thông tin địa chỉ -->
-                    <div class="col-lg-6">
-                      <section class="panel">
-                        <header class="panel-heading"> Chỉnh sửa thông tin địa chỉ </header>
-                        <div class="panel-body">
-                          <div class="form-group">
-                            <table width="100%">
-                              <tr>
-                                <td style="text-align:center">Địa chỉ</td>
-                                <td><input type="text" class="form-control">
-                                  <td>
-                                    <td><button type="button" class="btn btn-send">Tìm kiếm</button>
-                                      <td>
-                                      </tr>
-                                    </table>
-                                  </div>
-                                  <div class="form-group">
-                                    <div class="map">
-                                      <div id="googleMap" style="width:90%; height:365px; margin:0 auto;"></div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </section>
-                            </div>
-                            <!-- End column cho thông tin địa chỉ -->
-
-                          </div>
-                          <!-- end row cho thông tin chung và địa chỉ-->
-
-                          <!-- Begin row cho thông tin mô ta chi tiết -->
-                          <div class="row">
-                            <div class="col-lg-12">
-                              <section class="panel">
-                                <header class="panel-heading"> Thêm mô tả chi tiết </header>
-                                <div class="panel-body">
-                                  <!--- CKEditor-->
-                                  <div class="form-group">
-                                    <label class="control-label col-sm-2">Mô tả chỉ tiết</label>
-                                    <div class="col-sm-10">
-                                      <textarea class="form-control ckeditor" name="editor1" rows="6"
-                                      data-ng-model="bussiness.description"></textarea>
-
-                                    </div>
-                                  </div>
-                                  <!-- end CKEditor -->
-                                </section>
-                              </div>
-                            </div>
-                            <!-- End row cho thông tin mô ta chi tiết-->
-                            <div class="form-group">
-                              <div class="col-lg-offset-2 col-lg-10">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-danger" data-ng-click="clear()">Cancel</button>
-                              </div>
-                            </div>
-                          </form>
-                          <!-- end form chỉnh sửa thông tin -->
-                        </div>
-                      </section>
-                    </div>
-
-                    <!--- Edit account -->
-                    <div id="edit-account" class="tab-pane" data-ng-class="{active: tabSelected === 'edit-account'}">
-                      <section class="panel">
-                        <div class="panel-body bio-graph-info">
-                          <h1> Chỉnh sửa thông tin tài khoản</h1>
-                          <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                              <label class="col-lg-2 control-label">Password hiện tại</label>
-                              <div class="col-lg-6">
-                                <input type="password" class="form-control" id="f-name" placeholder=" ">
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-lg-2 control-label">Password mới</label>
-                              <div class="col-lg-6">
-                                <input type="password" class="form-control" id="l-name" placeholder=" ">
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-lg-2 control-label">Nhập lại password</label>
-                              <div class="col-lg-6">
-                                <input type="password" class="form-control" id="l-name" placeholder=" ">
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <div class="col-lg-offset-2 col-lg-10">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-danger" >Cancel</button>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                      </section>
-                    </div>
                   </div>
+                  <!-- end row cho thông tin chung và địa chỉ-->
 
-                  <!-- BEGIN DANH SACH CHI NHANH -->
+                    <div class="form-group">
+                      <div class="col-lg-offset-2 col-lg-10">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-danger" data-ng-click="clear()">Cancel</button>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- end form chỉnh sửa thông tin -->
+                </div>
+              </section>
+            </div>
+
+            <!--- Edit account -->
+            <div id="edit-account" class="tab-pane" data-ng-class="{active: tabSelected === 'edit-account'}">
+              <section class="panel">
+                <div class="panel-body bio-graph-info">
+                  <h1> Chỉnh sửa thông tin tài khoản</h1>
+                  <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label">Password hiện tại</label>
+                      <div class="col-lg-6">
+                        <input type="password" class="form-control" id="f-name" placeholder=" ">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label">Password mới</label>
+                      <div class="col-lg-6">
+                        <input type="password" class="form-control" id="l-name" placeholder=" ">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label">Nhập lại password</label>
+                      <div class="col-lg-6">
+                        <input type="password" class="form-control" id="l-name" placeholder=" ">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-lg-offset-2 col-lg-10">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-danger" >Cancel</button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </section>
             </div>
           </div>
-          <!-- END QUAN LY THONG TIN -->
 
           <!-- BEGIN DANH SACH CHI NHANH -->
-          <div ui-view="danhSachChiNhanh"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <!-- END QUAN LY THONG TIN -->
+
+  <!-- BEGIN DANH SACH CHI NHANH -->
+  <div ui-view="danhSachChiNhanh"></div>
       <!-- <div class="row danhsachchinhanh" ng-include="'adminJS/bussinessAdmin/quanLyChiNhanh/home/_index.html'">
     </div> -->
     <!-- END DANH SACH CHI NHANH -->

@@ -19,20 +19,32 @@ bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($statePr
     //   templateUrl: 'adminJS/bussinessAdmin/quanLyChiNhanh/home/_index.html',
     //   controller: 'BAbranchCtrl',
     // },
-    }
-  })
+  }
+})
 
   .state('ticket_management',{
-      url: '/quan-ly-ve/:branch_url_alias',
-      templateUrl: 'adminJS/bussinessAdmin/tickets_management/_ticket.html',
-      controller: 'ticketCtrl',
-      resolve: {
-        branch: function($http, $stateParams){
-          return $http.get("/"+$stateParams.branch_url_alias).success(function(data){
-            return data;
-         });
-        }}
-      })
+    url: '/quan-ly-ve/:branch_url_alias',
+    templateUrl: 'adminJS/bussinessAdmin/tickets_management/_ticket.html',
+    controller: 'ticketManageCtrl',
+    resolve: {
+      branch: function($http, $stateParams){
+        return $http.get("/"+$stateParams.branch_url_alias).success(function(data){
+          return data;
+        });
+      }}
+    })
+
+  .state('branch_management',{
+    url: '/quan-ly-chi-nhanh/:branch_url_alias',
+    templateUrl: 'adminJS/bussinessAdmin/branch_management/_branch_management.html',
+    controller: 'branchManageCtrl',
+    resolve: {
+      branch: function($http, $stateParams){
+        return $http.get("/"+$stateParams.branch_url_alias).success(function(data){
+          return data;
+        });
+      }}
+    })
 
   // $stateProvider.state("home.themMoiChiNhanh", {
   //   url: "",

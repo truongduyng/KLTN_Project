@@ -21,6 +21,7 @@ class Branch
 
   validates :name, :url_alias, :address, presence: true,  length: {maximum: 100}
   validates :address, presence: true, length: {maximum: 1000}
+  validates :url_alias, uniqueness: true
 
   # def address
   # 	return self.street + self.district + self.city
