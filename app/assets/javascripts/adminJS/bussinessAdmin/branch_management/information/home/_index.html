@@ -55,7 +55,7 @@
 
           <!-- BEGIN THONG TIN DE CHINH SUA CHI NHANH, CHI HIEN KHI NGUOI DUNG NHAN NUT CHINH SUA-->
           <div ng-if="branch.isEdit" class="row"
-          ng-include="'adminJS/bussinessAdmin/quanLyChiNhanh/edit/_edit.html'">
+          ng-include="'adminJS/bussinessAdmin/branch_management/information/edit/_edit.html'">
         </div>
         <!-- END THONG TIN DE CHINH SUA CHI NHANH, CHI HIEN KHI NGUOI DUNG NHAN NUT CHINH SUA-->
       </div>
@@ -77,24 +77,18 @@
     <button type="button" class="close"
     data-dismiss="modal" aria-hidden="true" ng-click="$close()">
     &times;
-  </button>
-  <h4 class="modal-title" id="myModalLabel">
-   Bạn có muốn xóa chi nhánh: {{branch.name}}
- </h4>
-</div>
-<div class="modal-body">
-  <div class="radio">
-    <p>Chuyển các sân thuộc chi nhánh này vào chi nhánh:</p>
-    <select ng-model="selectedChoice" class="form-control">
-      <option ng-selected="selectedChoice == item.value"  ng-repeat="item in branches" value="{{item.value}}">{{item.name}}</option>
-    </select>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">
+     Bạn có muốn xóa chi nhánh: {{branch.name}}
+   </h4>
   </div>
-
-</div>
-<div class="modal-footer">
-  <button ng-click="deleteBranch()" class="btn btn-danger" ng-click="deleteCategory()">Xóa</button>
-  <button ng-click="$dismiss()" class="btn btn-success">Thoát</button>
-</div>
+  <div class="modal-body">
+    <div>Xóa chi nhánh này sẽ xoá tất cả các loại sân, sân, vé và tất cả dữ liệu thuộc về chi nhánh</div>
+  </div>
+  <div class="modal-footer">
+    <button ng-click="deleteBranch()" class="btn btn-danger" ng-click="deleteCategory()">Xóa</button>
+    <button ng-click="$dismiss()" class="btn btn-success">Thoát</button>
+  </div>
 </script>
 <!-- <modal title="Ban co muon xoa loai san da chon khong ?" visible="showDeleteCategoryModal">
 

@@ -48,6 +48,7 @@ bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', 
 	//save branch
 	$scope.saveEdittedBranch = function(branch){
 		branch.iSaving = true;
+		console.log("updated branch: ", branch);
 		branchService.update(branch).success(function(){
 			branch.isSaving = false;
 		});
@@ -68,16 +69,17 @@ bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', 
 				resolve:{
 					branch: [function(){
 						return branch;
-					}],
-					branches: [function(){
-						return _.without($scope.branches, branch);
 					}]
 				}
 			});
 			//Thanh cong thi xoa chi nhanh ra khoi hien thi
-			modalInstance.result.then(function(){
-				var index = $scope.branches.indexOf(branch);
-				$scope.branches.splice(index, 1);
+			modalInstance.result.then(function(branch){
+				console.log("Xoa thanh cong chi nhanh: ", branch.name);
+				$scope.$root.$broadcast("onDeleteBranchEvent",{
+					id: branch._id.$oid,
+				});
+				$state.go("home");
+				
 			});
 	};
 
@@ -85,27 +87,12 @@ bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', 
 
 
 bussinessAdmin.controller('BAdeleteBranchCtrl',
- ['$scope', 'branch', 'branches', '$modalInstance', 'BAbranchService',
- function($scope, branch, branches, $modalInstance, branchService) {
+ ['$scope', 'branch', '$modalInstance', 'BAbranchService',
+ function($scope, branch, $modalInstance, branchService) {
 	$scope.branch = branch;
-	//Chuyen ds branches thanh dang name,value cho de hien thi
-	$scope.branches = _.map(branches, function(item){
-		return {
-			name: item.name,
-			value: item._id.$oid,
-		}
-	});
-	//Them tuy chon all vao danh sach chon
-	$scope.branches.splice($scope.branches.length,0, {
-		name: 'Xóa tất cả sân cùng chi nhánh',
-		value: 'all',
-	});
-	//Khoi tao gia tri mac dinh
-	$scope.selectedChoice = $scope.branches[0].value;
-
 	//Xoa chi nhanh
 	$scope.deleteBranch = function(){
-		branchService.destroy($scope.branch, $scope.selectedChoice).success(function(){
+		branchService.destroy($scope.branch).success(function(){
 			 $modalInstance.close(branch);
 		});
 	};
