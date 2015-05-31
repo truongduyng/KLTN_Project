@@ -1,11 +1,11 @@
-bussinessAdmin.controller('modalCtrl', ['$scope', 'assestCategoryService', 'feeService', 'Flash', 'branch', function($scope, assestCategoryService, feeService, Flash, branch) {
+bussinessAdmin.controller('modalCtrl', ['$scope', 'assetCategoryService', 'feeService', 'Flash', 'branch', function($scope, assetCategoryService, feeService, Flash, branch) {
 
   $scope.newCategory = {
     fees: [],
   };
   $scope.createAssestCategory = function() {
     console.log({name: $scope.newCategory.name, short_desc: $scope.newCategory.short_desc, branch_id: branch._id.$oid, fees: $scope.newCategory.fees});
-    assestCategoryService.create({name: $scope.newCategory.name, short_desc: $scope.newCategory.short_desc, branch_id: branch._id.$oid, fees: $scope.newCategory.fees})
+    assetCategoryService.create({name: $scope.newCategory.name, short_desc: $scope.newCategory.short_desc, branch_id: branch._id.$oid, fees: $scope.newCategory.fees})
     .success(function() {
       Flash.success = "Thêm mới thành công loại sân: " + $scope.newCategory.name;
       $scope.$close();
