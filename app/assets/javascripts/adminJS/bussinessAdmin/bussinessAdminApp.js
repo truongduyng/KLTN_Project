@@ -48,6 +48,12 @@ bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($statePr
       }
     }
   })
+  
+  .state("new_branch", {
+    url: '/them-moi-chi-nhanh',
+    templateUrl: 'adminJS/bussinessAdmin/branch_management/information/new/_new.html',
+    controller: 'BAnewBranchCtrl',
+  })
 
   // $stateProvider.state("home.themMoiChiNhanh", {
   //   url: "",

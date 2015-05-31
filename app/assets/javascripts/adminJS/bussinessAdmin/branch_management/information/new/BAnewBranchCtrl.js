@@ -1,9 +1,10 @@
 bussinessAdmin.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'logoFilter',
 	'BAbranchService', '$state',
  function($scope, geocodingService, logoFilter, branchService, $state) {
+	
 	$scope.branch = {
-
 	};
+
 	console.log("branches: ", $scope.branches);
 	
 	//Dia chi cho tim kiem vi tri
@@ -83,7 +84,7 @@ bussinessAdmin.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'log
 			marker.setMap(null);
 		}
 		//Tao ra marker tai vi tri moi
-		marker = createMarker(position.lat, position.lng, $scope.bussiness.avatar.url);
+		marker = createMarker(position.lat, position.lng, "notKnowAvatar");
 		marker.setMap($scope.map);
 		$scope.map.setCenter(marker.getPosition());
 		$scope.map.setZoom(17);
@@ -97,13 +98,24 @@ bussinessAdmin.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'log
 
 
 	$scope.isSaving = false;
+	
 	$scope.createBranch = function(){
 		$scope.isSaving = true;
 		console.log("new branch: ", $scope.branch);
 		branchService.create($scope.branch).success(function(){
 			$scope.isSaving = false;
-			$scope.branches.splice(0, 0, $scope.branch);
-			$state.go("home");
+			
+			//Thong bao 1 branch dc them moi de cap nhat sidebar
+			$scope.$root.$broadcast("onAddNewBranchEvent", {
+				_id: {
+					$oid: $scope.branch._id.$oid,
+				},
+				name: $scope.branch.name,
+				url_alias: $scope.branch.url_alias,
+			});
+			//Di toi branch da dc them moi
+			$state.go("branch_management", {branch_url_alias: $scope.branch.url_alias});
+
 		}).error(function(error){
 			$scope.isSaving = false;
 		});

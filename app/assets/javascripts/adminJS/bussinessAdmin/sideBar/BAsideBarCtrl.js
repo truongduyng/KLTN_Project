@@ -19,4 +19,10 @@ bussinessAdmin.controller('BAsideBarCtrl', ['$scope', 'BAsideBarService', functi
 			}
 		});
 	});
+
+	//Lang nghe su kien khi them moi 1 branch
+	$scope.$on('onAddNewBranchEvent', function(event, data){
+		console.log("data in onAddNewBranchEvent: ", data);
+		$scope.branches.splice($scope.branches.length, 0, data);
+	});
 }]);

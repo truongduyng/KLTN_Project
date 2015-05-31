@@ -12,7 +12,7 @@
         <ul class="treeview-menu">
           <li ng-if="isLoadingBranches"><p><i class="fa fa-spinner fa-spin"></i></p></li>
           <li ng-repeat="(index, branch) in branches"><a ui-sref="branch_management({branch_url_alias: branch.url_alias})">{{index}}. {{branch.name}}</a></li>
-           <li><a><i class="fa fa-plus"></i> Thêm mới</a></li>
+           <li><a ui-sref="new_branch"><i class="fa fa-plus"></i> Thêm mới</a></li>
         </ul>
       </li>
       <li><a href="#"><i class='fa fa-link'></i> <span>Thông tin doanh nghiep</span></a></li>

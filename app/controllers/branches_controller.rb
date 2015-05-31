@@ -82,29 +82,6 @@ class BranchesController < ApplicationController
     end
   end
 
-  #DELETE /branches/:id.json?newBranch="id"
-  # def destroy
-  #   # render json: params, status: :ok
-  #   #Neu lua chon la xoa tat ca san cung vs chi nhanh thi don gian destroy chi nhanh
-  #   if params[:newBranch] == 'all'
-  #     if @branch.assests
-  #       @branch.assests.destroy_all
-  #     end
-  #     @branch.destroy
-  #     render nothing: true, status: :ok, content_type: 'application/json'
-  #   else
-  #     #B1: Chuyen tat ca san thuoc chi nhanh bi xoa sang chi nhanh moi
-  #     newBranch = Branch.find(params[:newBranch])
-  #     @branch.assests.each do |assest|
-  #       assest.branch_id = newBranch.id
-  #       assest.save
-  #     end
-  #     #B2: Tien hanh xoa chi nhanh
-  #     @branch.destroy
-  #     render nothing: true, status: :ok, content_type: 'application/json'
-  #   end
-  # end
-  
   def destroy
     @branch.destroy
     render nothing: true, status: :ok, content_type: 'application/json'
@@ -114,7 +91,7 @@ class BranchesController < ApplicationController
   private
     #CODE CUA TRUNG
     def branch_params
-        my_params = params.permit(:name, :address, :phone, :latitude, :longitude)
+        my_params = params.permit(:name, :address, :phone, :latitude, :longitude, :url_alias)
         coordinates = [my_params[:longitude], my_params[:latitude]]
         my_params.delete :latitude
         my_params.delete :longitude
