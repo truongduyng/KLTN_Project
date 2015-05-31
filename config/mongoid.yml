@@ -5,7 +5,7 @@ development:
     default:
       # Defines the name of the default database that Mongoid can connect to.
       # (required).
-      database: sporta_development
+      database: sprota_development
       # Provides the hosts the default session can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
@@ -51,14 +51,14 @@ development:
     # scope_overwrite_exception: false
 
     # Use Active Support's time zone in conversions. (default: true)
-    use_activesupport_time_zone: true
+    # use_activesupport_time_zone: true
 
     # Ensure all times are UTC in the app side. (default: false)
-    use_utc: false
+    # use_utc: false
 test:
   sessions:
     default:
-      database: sporta_test
+      database: sprota_test
       hosts:
         - localhost:27017
       options:

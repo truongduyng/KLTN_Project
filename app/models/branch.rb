@@ -1,6 +1,7 @@
 class Branch
   include Mongoid::Document
   include Geocoder::Model::Mongoid
+  include Mongoid::Timestamps
 
   field :name, type: String
   field :phone, type: String
@@ -10,14 +11,14 @@ class Branch
   field :begin_work_time, type: String
   field :end_work_time, type: String
 
-  geocoded_by :address
-  after_validation :geocode
+  # geocoded_by :address
+  # after_validation :geocode
   index({ coordinates: "2d" }, { min: -180, max: 180 })
 
   belongs_to :bussiness
-  has_many :assets
-  has_many :asset_categories
-  has_many :tickets
+  has_many :assets, dependent: :destroy
+  has_many :asset_categories, dependent: :destroy
+  has_many :tickets, dependent: :destroy
 
   validates :name, :url_alias, :address, presence: true,  length: {maximum: 100}
   validates :address, presence: true, length: {maximum: 1000}

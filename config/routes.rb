@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'admin-bussiness' => 'application#adminbussines'
 
   resources 'branches'
+  
   get 'search(/:lat/:lng/:distance)' => 'branches#search', constraints:{ lat: /[0-9\.]+/, lng: /[0-9\.]+/, distance: /[0-9\.]+/ }
   get 'searchnameadd(/:search_query)' => 'branches#search'
 

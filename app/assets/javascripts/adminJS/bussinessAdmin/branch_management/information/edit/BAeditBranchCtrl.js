@@ -3,10 +3,12 @@ bussinessAdmin.controller('BAeditBranchCtrl', ['$scope', 'geocodingService', 'lo
  function($scope, geocodingService, logoFilter, branchService, $state) {
 	//Dia chi cho tim kiem vi tri
 	$scope.address = "";
+	
 	//Gan form vao scope hien tai
 	$scope.$watch('newBranchAddressForm', function(newValue, oldValue, scope) {
 		$scope.newBranchAddressForm = newValue;
 	});
+
 	//Theo doi neu branch.address thay doi thi cap nhat $scope.address neu no ko dirty
 	$scope.$watch('branch.address', function(newValue, oldValue, scope) {
 		console.log("newBranchAddressForm:", $scope.newBranchAddressForm.address.$dirty);
@@ -28,8 +30,8 @@ bussinessAdmin.controller('BAeditBranchCtrl', ['$scope', 'geocodingService', 'lo
 		$scope.map = map;
 		//Danh dau marker tai vi tri cua branch
 		setMarker({
-			lat: $scope.branch.latitude,
-			lng: $scope.branch.longitude,
+			lat: $scope.branch.coordinates[1],
+			lng: $scope.branch.coordinates[0],
 		});
 	});
 
@@ -83,7 +85,7 @@ bussinessAdmin.controller('BAeditBranchCtrl', ['$scope', 'geocodingService', 'lo
 			marker.setMap(null);
 		}
 		//Tao ra marker tai vi tri moi
-		marker = createMarker(position.lat, position.lng, $scope.bussiness.avatar.url);
+		marker = createMarker(position.lat, position.lng, "notKnow");
 		marker.setMap($scope.map);
 		$scope.map.setCenter(marker.getPosition());
 		$scope.map.setZoom(17);

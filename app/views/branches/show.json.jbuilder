@@ -1,0 +1,1 @@
+json.extract! @branch, :_id, :name, :address, :phone, :coordinates, :created_at, :updated_at

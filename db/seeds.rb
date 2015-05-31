@@ -2,6 +2,7 @@
   Role.find_or_create_by({name: role})
 end
 
+byebug
 user = User.create() do |u|
   u.email = "ntduy@sporta.vn"
   u.username = 'ntduy'
