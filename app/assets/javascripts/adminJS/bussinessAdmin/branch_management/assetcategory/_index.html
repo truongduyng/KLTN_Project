@@ -25,16 +25,16 @@
 
                 <td align="center" style="vertical-align:middle; max-width:100px;">
                   <div class="btn-group" >
-
-                  <a href="bussiness-admin#/quan-ly-loai-san/chinh-sua/{{category._id.$oid}}" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                    <a data-ng-click="open_edit(category)" class="btn btn-success"><i class="fa fa-edit"></i></a>
                     <a  data-ng-click="deleteCategory(category)" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                   </div>
                 </td>
+
               </tr>
 
               <tr ng-repeat-end ng-repeat="(feeIndex, fee) in category.fees"  data-ng-show="category.collapseRows" >
                 <td>Từ </td>
-                <td  align="center">{{fee.begin_time | date:'shortTime'}} => {{fee.end_time | date:'shortTime'}}</td>
+                <td  align="center">{{fee.begin_time | date:'shortTime'}} tới {{fee.end_time | date:'shortTime'}}</td>
                 <td>{{fee.price | vnd}}</td>
               </tr>
             </tbody>

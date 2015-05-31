@@ -24,18 +24,20 @@ services.factory('assetCategoryService', ['$http', function($http) {
   o.show = function(id) {
     return $http.get("/asset_categories/" + id + ".json")
     .then(function(response) {
-      console.log(response);
       return response.data;
     });
   };
 
   o.update = function(assetCategory) {
-    var id = assestCategory._id.$oid;
-    console.log(assestCategory);
+    var id = assetCategory._id.$oid;
 
     return $http.put("/asset_categories/" + id + ".json", assetCategory)
     .success(function(data){
-      console.log(data);
+      for (var i = 0; i < o.categories.length; i++) {
+        if (o.categories[i]._id.$oid == data._id.$oid){
+          o.categories[i] = data;
+        }
+      };
     })
     .error(function(error){
       console.log(error);
@@ -46,12 +48,11 @@ services.factory('assetCategoryService', ['$http', function($http) {
     var id = assetCategory._id.$oid;
     return $http.delete("/asset_categories/" + id + ".json")
     .success(function(data){
-      console.log(data);
+
     })
     .error(function(error){
       console.log(error);
     });
-
   };
 
   return o;

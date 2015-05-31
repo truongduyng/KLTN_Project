@@ -2,20 +2,52 @@ bussinessAdmin.controller('assetCategoryCtrl', ['$scope', '$http', 'assetCategor
   function($scope, $http, assetCategoryService, $state, feeService, Flash, vndFilter, dateFilter, $modal) {
 
     $scope.open_new = function(){
+
       var assetCategory_new = $modal.open({
-        templateUrl: "adminJS/bussinessAdmin/branch_management/assetcategory/_new.html",
-        controller: "newassetcategoryCtrl",
+        templateUrl: "adminJS/bussinessAdmin/branch_management/assetcategory/new_edit/_neworedit.html",
+        controller: "neworeditassetcategoryCtrl",
         size: 'lg',
         resolve:{
           branch: function(){
             return $scope.branch;
+          },
+          assetCategory: function(){
+            return null;
           }
         }
       });
+
       assetCategory_new.result.then(function (cate) {
         $scope.categories.push(cate);
       }, function () {
-        $log.info('Modal dismissed at: ' + new Date());
+
+      });
+    }
+
+    $scope.open_edit = function(cate){
+
+      var assetCategory_edit = $modal.open({
+        templateUrl: "adminJS/bussinessAdmin/branch_management/assetcategory/new_edit/_neworedit.html",
+        controller: "neworeditassetcategoryCtrl",
+        size: 'lg',
+        resolve:{
+          branch: function(){
+            return $scope.branch;
+          },
+          assetCategory: function(){
+            return cate;
+          }
+        }
+      });
+
+      assetCategory_edit.result.then(function (cate_edited) {
+        for (var i = 0; i < $scope.categories.length; i++) {
+          if ($scope.categories[i]._id.$oid == cate_edited._id.$oid){
+            $scope.categories[i] = cate_edited;
+          }
+        };
+      }, function (){
+
       });
     }
 

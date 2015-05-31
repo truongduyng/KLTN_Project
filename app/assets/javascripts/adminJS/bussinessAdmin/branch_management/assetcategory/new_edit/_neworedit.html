@@ -51,10 +51,10 @@
                 <td>
                   <td style="text-align:center">Giá</td>
                   <td>
-                    <input  type="number" name="price" ng-model="price" id="input-price" type="text">.000 VND
+                    <input  type="number" name="price" ng-model="price" id="input-price" type="text" required>.000 VND
                   </td>
                   <td>
-                    <button data-ng-click="addFee()" id="btn-add-time" type="button" class="btn btn-send" data-ng-disabled="assestCategoryForm.price.$invalid">Thêm</button>
+                    <button data-ng-click="addFee()" id="btn-add-time" type="button" class="btn btn-send"><i class="fa fa-plus"></i></button>
                   </td>
                 </td>
               </tr>
@@ -78,7 +78,6 @@
                   <td>{{fee.price | vnd}}</td>
                   <td><a data-ng-click="removeFee(fee)" my-id="btn-delete-time"><i class="btn btn-danger fa fa-times"></i></a></td>
                 </tr>
-
               </tbody>
             </table>
           </div>
@@ -90,6 +89,7 @@
 
 <div class="modal-footer">
   <div style="float:right">
-    <a data-ng-disabled="assestCategoryForm.$invalid" data-ng-click="createAssestCategory()" class="btn btn-success" style="padding-right:40px;"><span class="icon_floppy"></span> Lưu</a>
+    <a ng-show="isnew" data-ng-click="createAssetCategory()" class="btn btn-success">Them <i class="fa fa-save"></i></a>
+    <a ng-hide="isnew" data-ng-click="updateAssetCategory()" class="btn btn-success">Luu <i class="fa fa-save"></i></a>
   </div>
 </div>

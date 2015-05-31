@@ -38,26 +38,22 @@ class AssetCategoriesController < ApplicationController
   def update
     result = @asset_category.update_attributes(asset_category_params)
     if result
+      @asset_category.fees.destroy_all
       if params.has_key?(:fees) && !params[:fees].blank?
-				#Delete all fees and renew
-       @asset_category.fees.destroy_all
-       params[:fees].each do |fee|
-         @asset_category.fees << Fee.new() do |f|
-          f.begin_time = Time.parse(fee[:begin_time])
-          f.end_time = Time.parse(fee[:end_time])
-          f.price = fee[:price]
+        params[:fees].each do |fee|
+          @asset_category.fees << Fee.new() do |f|
+            f.begin_time = fee[:begin_time]
+            f.end_time = fee[:end_time]
+            f.price = fee[:price]
+          end
         end
       end
-    else
-				#delete all fees
-       @asset_category.fees.destroy_all
-     end
 
-     render json: @asset_category, status: :ok
-   else
-     render json: @asset_category.errors, status: :unprocessable_entity
-   end
- end
+      render json: @asset_category, status: :ok
+    else
+      render json: @asset_category.errors, status: :unprocessable_entity
+    end
+  end
 
 	#/asset_categories/:id.(:format)
   def destroy
