@@ -41,25 +41,6 @@
               <td>Từ </td>
               <td  align="center">{{fee.begin_time | date:'shortTime'}} => {{fee.end_time | date:'shortTime'}}</td>
               <td>{{fee.price | vnd}}</td>
-              <td align="center" style="vertical-align:middle; max-width:100px;">
-                <div class="btn-group">
-                  <a data-ng-click="toogleAddPriceModel(category)"  class="btn btn-primary">Sua gia</a>
-                  <a data-ng-click="toogleDeletePriceModal(category, fee)" class="btn btn-danger">Xoa</a>
-                </div>
-                  <!--   <modal title="Xóa mục đã chọn ?" visible="fee.showDeletePriceModel">
-                      <div class="alert alert-info fade in" style="margin-bottom:-20px;">
-                                            <button data-dismiss="alert" class="close close-sm" type="button">
-                                                <i class="icon-remove"></i>
-                                            </button>
-                                            <strong>Chú ý:</strong>Bạn có muốn xóa fee co {{fee.price}} đã chọn không ?
-                      </div>
-                      <div style="text-align: right; margin-top:40px">
-                           <button class="btn btn-danger">Xóa</button>
-                            <button class="btn btn-success" data-dismiss="modal">Thoát</button>
-                      </div>
-                    </modal> -->
-
-                  </td>
                 </tr>
               </tbody>
             </table>
