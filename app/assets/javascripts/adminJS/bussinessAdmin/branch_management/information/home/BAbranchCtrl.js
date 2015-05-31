@@ -83,8 +83,11 @@ bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', 
 			//Thanh cong thi xoa chi nhanh ra khoi hien thi
 			modalInstance.result.then(function(branch){
 				console.log("Xoa thanh cong chi nhanh: ", branch.name);
-				// var index = $scope.branches.indexOf(branch);
-				// $scope.branches.splice(index, 1);
+				$scope.$root.$broadcast("onDeleteBranchEvent",{
+					id: branch._id.$oid,
+				});
+				$state.go("home");
+				
 			});
 	};
 

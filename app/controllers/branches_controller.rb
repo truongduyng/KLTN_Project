@@ -1,12 +1,16 @@
 class BranchesController < ApplicationController
-  before_action :authenticate_user!, only: [:index,:show, :create, :update, :destroy]
-  before_action :check_role_bussiness_admin, only: [:index, :show,:create, :update, :destroy]
+  before_action :authenticate_user!, only: [:index,:show, :create, :update, :destroy, :list_branch_names]
+  before_action :check_role_bussiness_admin, only: [:index, :show,:create, :update, :destroy, :list_branch_names]
   before_action :find_branch, only: [:update, :destroy]
 
 	#/branches.json
   def index
     @branches = current_user.bussiness.branches
     render json: @branches
+  end
+
+  def list_branch_names
+    @branches = current_user.bussiness.branches
   end
 
   def show

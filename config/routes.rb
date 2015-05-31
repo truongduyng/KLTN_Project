@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   root 'application#angular'
   get 'admin-bussiness' => 'application#adminbussines'
 
-  resources 'branches'
+  resources 'branches' do 
+    collection do
+      get 'list_branch_names'
+    end
+  end
   
   get 'search(/:lat/:lng/:distance)' => 'branches#search', constraints:{ lat: /[0-9\.]+/, lng: /[0-9\.]+/, distance: /[0-9\.]+/ }
   get 'searchnameadd(/:search_query)' => 'branches#search'
