@@ -16,33 +16,30 @@ class AssetCategoriesController < ApplicationController
   end
 
   def create
-		#Can thay the bang strong_parameter ?????
-   asset_category = AssetCategory.new(asset_category_params) do |ac|
-     ac.bussiness_id = current_user.bussiness.id
-     if params.has_key?(:fees) && !params[:fees].blank?
-      params[:fees].each do |fee|
-       ac.fees << Fee.new() do |f|
-        f.begin_time = Time.parse(fee[:begin_time])
-        f.end_time = Time.parse(fee[:end_time])
-        f.price = fee[:price]
+    byebug
+    asset_category = AssetCategory.new(asset_category_params) do |ac|
+      if params.has_key?(:fees) && !params[:fees].blank?
+        params[:fees].each do |fee|
+          ac.fees << Fee.new() do |f|
+            f.begin_time = fee[:begin_time]
+            f.end_time = fee[:end_time]
+            f.price = fee[:price]
+          end
+        end
       end
     end
+
+    if asset_category.save
+      render json: asset_category, status: :created
+    else
+      render json: asset_category.errors, status: :unprocessable_entity
+    end
   end
-end
 
-if asset_category.save
- render json: asset_category, status: :created
-else
- render json: asset_category.errors, status: :unprocessable_entity
-end
-end
-
-def update
-  result = @asset_category.update_attributes(asset_category_params)
-
-		#Update fees
-   if result
-    if params.has_key?(:fees) && !params[:fees].blank?
+  def update
+    result = @asset_category.update_attributes(asset_category_params)
+    if result
+      if params.has_key?(:fees) && !params[:fees].blank?
 				#Delete all fees and renew
        @asset_category.fees.destroy_all
        params[:fees].each do |fee|
@@ -65,21 +62,15 @@ def update
 
 	#/asset_categories/:id.(:format)
   def destroy
-		#cho nay xet chuyen san sang loai hang khac
-   @asset_category.destroy
-   render nothing: true, status: :ok, content_type: 'application/json'
- end
+    @asset_category.destroy
+    render nothing: true, status: :ok, content_type: 'application/json'
+  end
 
 
- private
- def asset_category_params
-			# params.require(:asset_category)
-			# .permit(:name, :short_desc, :description, {fees: [:begin_time, :end_time, :price]})
-			# params.require(:asset_category)
-			# .permit(:name, :short_desc, :description, fees: [:begin_time, :end_time, :price])
-      params.require(:asset_category)
-      .permit(:name, :short_desc, :description)
-    end
+  private
+  def asset_category_params
+    params.require(:asset_category).permit(:name, :short_desc, :description, :branch_id)
+  end
 
 		#Da test
    def check_role_bussiness_admin
@@ -90,11 +81,10 @@ def update
   end
 
   def find_asset_category
-   begin
-    bussiness_id = current_user.bussiness.id
-    @asset_category = current_user.bussiness.asset_categories.find(params[:id])
-  rescue Mongoid::Errors::DocumentNotFound
-    render nothing: true, status: :not_found, content_type: 'application/json'
+    begin
+      @asset_category = AssetCategory.find(params[:id])
+    rescue Mongoid::Errors::DocumentNotFound
+      render nothing: true, status: :not_found, content_type: 'application/json'
+    end
   end
-end
 end
