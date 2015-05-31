@@ -3,6 +3,7 @@ class AssetsController < ApplicationController
   before_action :check_role_bussiness_admin
   before_action :check_asset_with_current_user, only: [:create]
   before_action :find_asset, only: [:show, :update, :destroy]
+
   def index
     assets = [];
 

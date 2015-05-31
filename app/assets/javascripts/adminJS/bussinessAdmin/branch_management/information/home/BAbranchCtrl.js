@@ -2,15 +2,8 @@ bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', 
 	'BAbranchService', '$modal',
 	function($scope, logoFilter, $location, $state, branchService, $modal) {
 
-	// $scope.branches = bussinessService.bussiness.branches;
-	// console.log("branches: ", $scope.branches);
-
-	console.log("branch: ", $scope.branch);
-
-
 	//Su kien khi load map thanh cong
 	$scope.$on('mapInitialized', function(event, map) {
-		console.log("map.onstate", map.onstate);
 		//Do su kien mapInitialized duoc goi trong nhieu nest view con nen phai xem xet cho hop ly ko thoi bi loi
 		if(map.onstate != 'home'){
 			return;
@@ -22,13 +15,12 @@ bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', 
 	});
 
 	function createMarker(lat, lng, image) {
-		console.log("lat:", lat);
+
 		var position = new google.maps.LatLng(lat, lng);
 		//Gan anh cho html layout cua marker
 		$("#customMarker").find('.img-avatar').attr("src", logoFilter(image)).html();
 		//Lay html
 		var HtmlLayout = $("#customMarker").html();
-		console.log("htmlLayout: ", HtmlLayout);
 		var marker = new RichMarker({
 			position: position,
 			flat: true,
