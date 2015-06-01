@@ -208,11 +208,19 @@ i:hover{
   height: 50px !important;
   margin: 0 0 10px 0 !important;
   z-index: 10000 !important;
-  position: absolute;
+  position: fixed;
   bottom: 80%;
   right: 20px;
 }
 
 .everyweek{
   display: none;
+}
+
+.price{
+  background-color: #f0ede5;
+}
+
+.danger{
+  color: #e74c3c;
 }

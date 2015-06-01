@@ -14,7 +14,7 @@ class BranchesController < ApplicationController
   end
 
   def show
-    @branch = Branch.where(id: branch_param[:id])
+    @branch = Branch.where(id: branch_params[:id])
     if @branch.first
       render json: @branch, status: :ok
     else
@@ -25,7 +25,7 @@ class BranchesController < ApplicationController
   def branch_details
 
     @branch_details= {}
-    branch = Branch.where(url_alias: branch_param[:branch_url_alias]).first
+    branch = Branch.where(url_alias: branch_params[:branch_url_alias]).first
     if branch.present?
       @branch_details[:branch]= branch
       @branch_details[:asset_categories] = branch.asset_categories
@@ -38,7 +38,7 @@ class BranchesController < ApplicationController
   end
 
   def search
-    branches = Branch.search(branch_param)
+    branches = Branch.search(branch_params)
     result = []
     if branches.present?
       branches.each do |branch|
@@ -60,7 +60,7 @@ class BranchesController < ApplicationController
   #POST /branches.json
   def create
 
-    @branch = Branch.new branch_param.except(*[:lat, :lng]).merge(coordinates: [branch_param[:lng], branch_param[:lat]])
+    @branch = Branch.new branch_params.except(*[:lat, :lng]).merge(coordinates: [branch_params[:lng], branch_params[:lat]])
     @branch.bussiness_id = current_user.bussiness.id
 
     if @branch.save
@@ -72,7 +72,7 @@ class BranchesController < ApplicationController
 
   #PUT /branches/:id.json
   def update
-    if @branch.update_attributes(branch_param.except(*[:lat, :lng]).merge(coordinates: [branch_param[:lng], branch_param[:lat]]))
+    if @branch.update_attributes(branch_params.except(*[:lat, :lng]).merge(coordinates: [branch_params[:lng], branch_params[:lat]]))
       render 'show.json.jbuilder', status: :ok
     else
       render json: @branch.errors, status: :bad_request
@@ -95,7 +95,7 @@ class BranchesController < ApplicationController
       end
     end
 
-    def branch_param
+    def branch_params
       params.permit(:id, :lat,:lng, :distance, :search_query, :branch_url_alias, :name, :phone, :address, :begin_work_time, :end_work_time, :url_alias)
     end
 

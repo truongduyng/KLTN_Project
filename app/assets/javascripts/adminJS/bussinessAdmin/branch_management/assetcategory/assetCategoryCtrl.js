@@ -1,5 +1,5 @@
-bussinessAdmin.controller('assetCategoryCtrl', ['$scope', '$http', 'assetCategoryService', '$state', 'feeService', 'Flash', 'vndFilter', 'dateFilter', '$modal',
-  function($scope, $http, assetCategoryService, $state, feeService, Flash, vndFilter, dateFilter, $modal) {
+bussinessAdmin.controller('assetCategoryCtrl', ['$scope', 'assetCategoryService', 'feeService', 'Flash', 'vndFilter', 'dateFilter', '$modal',
+  function($scope, assetCategoryService, feeService, Flash, vndFilter, dateFilter, $modal){
 
     $scope.open_new = function(){
 
@@ -65,5 +65,4 @@ bussinessAdmin.controller('assetCategoryCtrl', ['$scope', '$http', 'assetCategor
     });
   };
 
-}
-]);
+}]);

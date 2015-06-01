@@ -2,7 +2,6 @@ bussinessAdmin.controller('BAsideBarCtrl', ['$scope', 'BAsideBarService', functi
 	$scope.isLoadingBranches = true;
 	sideBarService.get_list_branches().success(function(data){
 		$scope.isLoadingBranches = false;
-		console.log("branches in scope:", $scope.branches);
 	});
 	$scope.branches = sideBarService.branches;
 

@@ -1,4 +1,3 @@
-# json.extract! @branches, :_id, :name, :url_alias
 json.array! @branches do |branch|
 	json._id branch.id
 	json.name branch.name

@@ -57,6 +57,7 @@ class AssetCategoriesController < ApplicationController
 
 	#/asset_categories/:id.(:format)
   def destroy
+    @asset_category.assets.destroy_all
     @asset_category.destroy
     render nothing: true, status: :ok, content_type: 'application/json'
   end

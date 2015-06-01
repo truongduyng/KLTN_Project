@@ -1,7 +1,6 @@
 class Asset
   include Mongoid::Document
   field :name, type: String
-  field :quantity, type: Integer, default: ->{1}
   field :description, type: String
 
   has_many :tickets

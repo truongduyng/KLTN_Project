@@ -5,18 +5,9 @@ class AssetsController < ApplicationController
   before_action :find_asset, only: [:show, :update, :destroy]
 
   def index
-    assets = [];
 
-    bussiness = current_user.bussiness
-    bussiness.branches.each do |branch|
-      assets << branch.assets
-    end
-    render json: assets
   end
 
-	#chua kiem tra before_action
-	#da test
-	#/assets/:id.json
   def show
     @asset = Asset.find(params[:id])
   end
@@ -26,7 +17,7 @@ class AssetsController < ApplicationController
     @asset = Asset.new(asset_params)
 
     if @asset.save
-      render :show, status: :created, location: @asset
+      render json: @asset, status: :created
     else
       render json: @asset.errors, status: :unprocessable_entity
     end
@@ -35,7 +26,7 @@ class AssetsController < ApplicationController
 	#PUT /assets/:id.json
   def update
     if @asset.update_attributes(asset_params)
-      render :show, status: :ok, location: @asset
+      render json: @asset, status: :updated
     else
       render json: @asset.errors, status: :unprocessable_entity
     end
@@ -46,20 +37,13 @@ class AssetsController < ApplicationController
     render nothing: true, status: :ok, content_type: 'application/json'
   end
 
-	#/assets/get-assets-by-category.json
-  def get_assets_by_category
-    bussiness = current_user.bussiness
-    @asset_categories = bussiness.asset_categories
-  end
-
   private
   def asset_params
-    params.require(:asset).permit(:name, :quantity, :description,:branch_id, :asset_category_id)
+    params.require(:asset).permit(:name, :description, :branch_id, :asset_category_id)
   end
 
   def check_role_bussiness_admin
-    if current_user.role.name == 'bussiness admin'
-    else
+    if current_user.role.name != 'bussiness admin'
       render nothing: true, status: :not_found, content_type: 'application/json'
     end
   end
@@ -69,7 +53,7 @@ class AssetsController < ApplicationController
       bussiness = current_user.bussiness
       branch = Branch.find(params[:branch_id])
       asset_category  = AssetCategory.find(params[:asset_category_id])
-      if bussiness.id != branch.bussiness.id || bussiness.id  != asset_category.bussiness.id
+      if bussiness.id != branch.bussiness.id || branch.id  != asset_category.branch.id
         render nothing: true, status: :not_found, content_type: 'application/json'
       end
     rescue Mongoid::Errors::DocumentNotFound
