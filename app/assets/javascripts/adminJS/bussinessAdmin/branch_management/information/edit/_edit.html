@@ -4,37 +4,54 @@
       <header class="panel-heading">Thông tin chung</header>
       <div class="panel-body">
         <form name="newBranchForm" novalidate class="form-horizontal " method="get">
+
           <div class="form-group">
-            <label class="col-sm-2 control-label">Tên chi nhánh*</label>
-            <div class="col-sm-10">
+            <label class="col-sm-3 control-label">Tên chi nhánh*</label>
+            <div class="col-sm-9">
               <input ng-model="branch.name" name="name" required type="text" class="form-control">
               <div ng-show="newBranchForm.name.$dirty && newBranchForm.name.$invalid">
                 <span  style="color:#FF0000" ng-show="newBranchForm.name.$error.required">Vui lòng nhập tên của chi nhánh</span>
               </div>
             </div>
-
           </div>
+
           <div class="form-group">
-            <label class="col-sm-2 control-label">Địa chỉ*</label>
-            <div class="col-sm-10">
+            <label class="col-sm-3 control-label">Địa chỉ*</label>
+            <div class="col-sm-9">
               <input ng-model="branch.address" name="address" required type="text" class="form-control">
               <div ng-show="newBranchForm.address.$dirty && newBranchForm.address.$invalid">
                 <span  style="color:#FF0000" ng-show="newBranchForm.address.$error.required">Vui lòng nhập địa chỉ của chi nhánh</span>
               </div>
             </div>
           </div>
+
           <div class="form-group">
-            <label class="col-sm-2 control-label">Điện thoại</label>
-            <div class="col-sm-10">
+            <label class="col-sm-3 control-label">Điện thoại*</label>
+            <div class="col-sm-9">
               <input ng-model="branch.phone" name="phone" type="text" class="form-control">
             </div>
           </div>
+
           <div class="form-group">
-            <label class="col-sm-2 control-label">Mô tả</label>
-            <div class="col-sm-10">
-              <textarea ng-model="branch.description" name="description" class="form-control" cols="50" rows="4"></textarea>
+            <label class="col-sm-3 control-label">Địa chỉ đặt sân*</label>
+            <div class="col-sm-9">
+              <strong class="pull-left margintop10">http://sporta.vn/</strong>
+              <input ng-model="branch.url_alias" name="url_alias" required type="text" class="pull-left">
+              <div ng-show="newBranchForm.url_alias.$dirty && newBranchForm.url_alias.$invalid">
+                <span  style="color:#FF0000" ng-show="newBranchForm.url_alias.$error.required">Vui lòng nhập địa chỉ đặt sân của chi nhánh</span>
+              </div>
             </div>
           </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Thời gian hoạt động*</label>
+            <div class="col-sm-9 margintop10">
+              <select  ng-model="branch.begin_work_time" id="begin_work_time" ng-options="begin_work_time for begin_work_time in time_list">
+              </select> <span> tới </span>
+              <select  ng-model="branch.end_work_time" id="end_work_time" ng-options="end_work_time for end_work_time in time_list">
+              </select>
+            </div>
+            </div>
         </form>
       </div>
     </section>

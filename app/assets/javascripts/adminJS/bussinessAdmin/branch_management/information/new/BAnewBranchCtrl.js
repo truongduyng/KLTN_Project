@@ -1,12 +1,11 @@
-bussinessAdmin.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'logoFilter',
-	'BAbranchService', '$state',
- function($scope, geocodingService, logoFilter, branchService, $state) {
-	
-	$scope.branch = {
-	};
+bussinessAdmin.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'logoFilter','BAbranchService', '$state', function($scope, geocodingService, logoFilter, branchService, $state){
 
-	console.log("branches: ", $scope.branches);
-	
+  $scope.branch = {};
+
+  $scope.time_list = "0:00 0:30 1:00 1:30 2:00 2:30 3:00 3:30 4:00 4:30 5:00 5:30 6:00 6:30 7:00 7:30 8:00 8:30 9:00 9:30 10:00 10:30 11:00 11:30 12:00 12:30 13:00 13:30 14:00 14:30 15:00 15:30 16:00 16:30 17:00 17:30 18:00 18:30 19:00 19:30 20:00 20:30 21:00 21:30 22:00 22:30 23:00 23:30 24:00".split(" ");
+  $scope.branch.begin_work_time = "7:00";
+  $scope.branch.end_work_time = "24:00";
+
 	//Dia chi cho tim kiem vi tri
 	$scope.address = "";
 	//Gan form vao scope hien tai
@@ -23,7 +22,7 @@ bussinessAdmin.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'log
 		if (!$scope.newBranchAddressForm.address.$dirty) {
 			$scope.address = newValue;
 		}
-			
+
 	});
 
 	//Bat su kien load map thanh cong
@@ -77,8 +76,8 @@ bussinessAdmin.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'log
 
 	var marker = null;
 	function setMarker(position) {
-		$scope.branch.latitude = position.lat;
-		$scope.branch.longitude = position.lng;
+		$scope.branch.lat = position.lat;
+		$scope.branch.lng = position.lng;
 		//Bo marker cu
 		if (marker) {
 			marker.setMap(null);
@@ -88,7 +87,7 @@ bussinessAdmin.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'log
 		marker.setMap($scope.map);
 		$scope.map.setCenter(marker.getPosition());
 		$scope.map.setZoom(17);
-		//Dang ki su kien dragend cho marker de lay vi tri moi	
+		//Dang ki su kien dragend cho marker de lay vi tri moi
 		google.maps.event.addListener(marker, 'dragend', function() {
 			$scope.branch.latitude = marker.getPosition().lat();
 			$scope.branch.longitude = marker.getPosition().lng();
@@ -98,13 +97,13 @@ bussinessAdmin.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'log
 
 
 	$scope.isSaving = false;
-	
+
 	$scope.createBranch = function(){
 		$scope.isSaving = true;
 		console.log("new branch: ", $scope.branch);
 		branchService.create($scope.branch).success(function(){
 			$scope.isSaving = false;
-			
+
 			//Thong bao 1 branch dc them moi de cap nhat sidebar
 			$scope.$root.$broadcast("onAddNewBranchEvent", {
 				_id: {

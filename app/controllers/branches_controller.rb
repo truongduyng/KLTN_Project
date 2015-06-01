@@ -23,7 +23,7 @@ class BranchesController < ApplicationController
   end
 
   def branch_details
-    # byebug
+
     @branch_details= {}
     branch = Branch.where(url_alias: branch_param[:branch_url_alias]).first
     if branch.present?
@@ -59,8 +59,10 @@ class BranchesController < ApplicationController
   #Cho them, xoa, sua branch
   #POST /branches.json
   def create
-    @branch = Branch.new branch_params
+
+    @branch = Branch.new branch_param.except(*[:lat, :lng]).merge(coordinates: [branch_param[:lng], branch_param[:lat]])
     @branch.bussiness_id = current_user.bussiness.id
+
     if @branch.save
       render 'show.json.jbuilder', status: :created
     else
@@ -70,13 +72,8 @@ class BranchesController < ApplicationController
 
   #PUT /branches/:id.json
   def update
-    if @branch.update_attributes(branch_params)
-      @branch.coordinates = branch_params[:coordinates]
-      if @branch.save
-        render 'show.json.jbuilder', status: :ok
-      else
-        render json: @branch.errors, status: :bad_request
-      end
+    if @branch.update_attributes(branch_param.except(*[:lat, :lng]).merge(coordinates: [branch_param[:lng], branch_param[:lat]]))
+      render 'show.json.jbuilder', status: :ok
     else
       render json: @branch.errors, status: :bad_request
     end
@@ -89,15 +86,6 @@ class BranchesController < ApplicationController
 
 
   private
-    #CODE CUA TRUNG
-    def branch_params
-        my_params = params.permit(:name, :address, :phone, :latitude, :longitude, :url_alias)
-        coordinates = [my_params[:longitude], my_params[:latitude]]
-        my_params.delete :latitude
-        my_params.delete :longitude
-        my_params[:coordinates] = coordinates
-        my_params
-    end
 
     def find_branch
       @branch = Branch.find(params[:id])
@@ -107,10 +95,10 @@ class BranchesController < ApplicationController
       end
     end
 
-    #CODE CUA DUY
     def branch_param
-      params.permit(:id, :lat,:lng, :distance, :search_query, :branch_url_alias)
+      params.permit(:id, :lat,:lng, :distance, :search_query, :branch_url_alias, :name, :phone, :address, :begin_work_time, :end_work_time, :url_alias)
     end
+
   	#Da test
     def check_role_bussiness_admin
       if current_user.role.name == 'bussiness admin'
@@ -119,4 +107,4 @@ class BranchesController < ApplicationController
      end
    end
 
-end
+ end
