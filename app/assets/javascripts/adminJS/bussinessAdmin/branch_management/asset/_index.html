@@ -1,0 +1,69 @@
+<section ng-controller= "assetCtrl">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <section class="panel">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Sân</th>
+                <th>Loai</th>
+                <th>Mo ta</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="(assetIndex, asset) in assets">
+                <td>
+                  {{assetIndex + 1}}
+                </td>
+                <td>{{asset.name}}</td>
+                <td>
+                  {{asset.asset_category.name}}
+                </td>
+                <td>
+                  {{asset.description}}
+                </td>
+                <td align="center" style="vertical-align:middle; max-width:100px;">
+                  <div class="btn-group">
+                    <a data-placement="top" ng-click="open_edit(asset)" class="tooltips">
+                      <i class="fa fa-edit"></i>
+                    </a>
+                    <a ng-click="OpenDeleteAssetModal(asset)" class="tooltips">
+                      <i class="fa fa-trash danger" ></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="pull-left marginbot20">
+        <a ng-click="open_new()" class="btn btn-success"><i class="fa fa-plus"></i></a>
+      </div>
+
+      <div ng-show="show_new_edit_asset">
+        <div ng-include = "'adminJS/bussinessAdmin/branch_management/asset/new_edit/_new_edit.html'"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script type="text/ng-template" id="deleteAsset.html">
+  <div class="modal-body row">
+    <div class= "col-lg-12">
+      <div class="margintop10">
+        <strong>Chú ý:</strong>Bạn có muốn xóa sân đã chọn không ?</strong>
+      </div>
+      <div class="pull-right margintop10">
+        <button ng-click="ok()" class="btn btn-danger">Xóa</button>
+        <button class="btn btn-warning" ng-click="cancel()">Thoát</button>
+      </div>
+    </div>
+  </div>
+</script>

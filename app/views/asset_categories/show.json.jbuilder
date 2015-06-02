@@ -1,0 +1,1 @@
+# json.fees @assest_category.fees, :begin_time, :end_time, :price

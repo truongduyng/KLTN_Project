@@ -25,8 +25,9 @@ class AssetsController < ApplicationController
 
 	#PUT /assets/:id.json
   def update
+
     if @asset.update_attributes(asset_params)
-      render json: @asset, status: :updated
+      render json: @asset, status: :ok
     else
       render json: @asset.errors, status: :unprocessable_entity
     end
