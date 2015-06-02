@@ -17,7 +17,10 @@ class AssetsController < ApplicationController
     @asset = Asset.new(asset_params)
 
     if @asset.save
-      render json: @asset, status: :created
+      # render json: @asset, status: :created
+      respond_to do |format|
+        format.json
+      end
     else
       render json: @asset.errors, status: :unprocessable_entity
     end

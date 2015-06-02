@@ -32,6 +32,7 @@ bussinessAdmin.controller('assetCtrl', ['$scope', 'assetService', 'Flash', '$mod
          $scope.assets.splice(index, 1);
        });
       }, 500);
+      $scope.close();
     }).error(function(){
      Flash.create('danger', "Xảy ra lỗi khi xóa sân " + $scope.selectedAsset.name, 'myalert');
    });
@@ -66,6 +67,7 @@ bussinessAdmin.controller('assetCtrl', ['$scope', 'assetService', 'Flash', '$mod
       asset_category_id: $scope.asset.asset_category._id.$oid
     }).success(function(data){
 
+      console.log(data);
       $scope.assets.push(data);
       Flash.create('success', "Thêm mới thành công " + $scope.asset.name, 'myalert');
       $scope.close();
@@ -104,6 +106,8 @@ bussinessAdmin.controller('assetCtrl', ['$scope', 'assetService', 'Flash', '$mod
   //----
 
   $scope.close = function(){
+    $('.fa-minus').addClass('fa-plus');
+    $('.fa-minus').removeClass('fa-minus ');
     $scope.show_new_edit_asset = false;
   }
 
