@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col-lg-12">
 
-      <div class="form-group marginbot10">
+      <div class="row padding10">
         <div class="col-sm-2">
           <label>Tên loại*</label>
         </div>
@@ -19,7 +19,7 @@
         </div>
       </div>
 
-      <div class="form-group margintop10">
+      <div class="row padding10">
         <div class="col-sm-2">
           <label>Mô tả</label>
         </div>
@@ -31,8 +31,8 @@
       </div>
 
 
-      <div class="form-group">
-        <div class="">
+      <div class="row padding10">
+        <div class="col-sm-12">
           <table width="100%">
             <tr>
               <td style="text-align:center">Từ</td>
@@ -56,29 +56,30 @@
               </td>
             </tr>
           </table>
-        </div>
 
-        <div class="form-group table-responsive">
-          <table id="time-table" class="table table-bordered table-hover my-table">
-            <thead>
-              <tr>
-                <th>Từ</th>
-                <th>Tới</th>
-                <th>Giá</th>
-                <th>Xóa</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr data-ng-repeat="fee in newCategory.fees">
-                <td>{{fee.begin_time | date: 'shortTime'}}</td>
-                <td>{{fee.end_time | date: 'shortTime'}}</td>
-                <td>{{fee.price | vnd}}</td>
-                <td><a data-ng-click="removeFee(fee)" my-id="btn-delete-time"><i class="btn btn-danger fa fa-times"></i></a></td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive padding10">
+            <table id="time-table" class="table table-bordered table-hover my-table">
+              <thead>
+                <tr>
+                  <th>Từ</th>
+                  <th>Tới</th>
+                  <th>Giá</th>
+                  <th>Xóa</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-ng-repeat="fee in newCategory.fees">
+                  <td>{{fee.begin_time | date: 'shortTime'}}</td>
+                  <td>{{fee.end_time | date: 'shortTime'}}</td>
+                  <td>{{fee.price | vnd}}</td>
+                  <td><a data-ng-click="removeFee(fee)" my-id="btn-delete-time"><i class="btn btn-danger fa fa-times"></i></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+
       <div class="pull-right">
         <a ng-show="isnew" data-ng-click="createAssetCategory()" class="btn btn-success">Them <i class="fa fa-save"></i></a>
         <a ng-hide="isnew" data-ng-click="updateAssetCategory()" class="btn btn-success">Luu <i class="fa fa-save"></i></a>
