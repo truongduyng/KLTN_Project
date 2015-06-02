@@ -274,8 +274,8 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
   //Timeline---------------------------------------------------------------
   function timeline(){
-    if($scope.branch.assets.length * 160 > $('.calendar_content').width())
-    $('.tablebooking').css({width: $scope.branch.assets.length * 160}); //160 is width of a td in style
+    if($scope.branch.assets.length * 170 > $('.calendar_content').width())
+    $('.tablebooking').css({width: $scope.branch.assets.length * 170}); //160 is width of a td in style
 
     var scrollheight = $scope.td_height*4*(24-0);
     $('hr.timeline').css({width: $('div.calendar_content').get(0).scrollWidth});

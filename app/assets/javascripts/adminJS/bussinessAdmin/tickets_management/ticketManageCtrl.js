@@ -147,65 +147,65 @@ bussinessAdmin.controller('ticketManageCtrl', ['$scope', '$http', 'Auth', '$moda
         controller: 'authCtrl'
       });
     });
-  };
+};
 
-  $scope.ticket_delete = function(){
-    Auth.currentUser().then(function(user) {
-      tickets.delete($('p#ticket_id_hidden').html());
-      $scope.close_miniedit();
-    }, function(error) {
-      $modal.open({
-        templateUrl: 'appJS/auth/_login.html',
-        controller: 'authCtrl'
-      });
+$scope.ticket_delete = function(){
+  Auth.currentUser().then(function(user) {
+    tickets.delete($('p#ticket_id_hidden').html());
+    $scope.close_miniedit();
+  }, function(error) {
+    $modal.open({
+      templateUrl: 'appJS/auth/_login.html',
+      controller: 'authCtrl'
     });
-  };
+  });
+};
 
-  $scope.ticket_edit = function(){
-    var ticket_update = $modal.open({
-      templateUrl: "adminJS/bussinessAdmin/tickets_management/_ticket_update.html",
-      controller: "ticket_updateCtrl",
-      resolve: {
-        ticket_id: function(){
-          return $('p#ticket_id_hidden').html();
-        },
-        branch: function(){
-          return $scope.branch;
-        },
-        dt: function(){
-          return $scope.dt;
-        }
+$scope.ticket_edit = function(){
+  var ticket_update = $modal.open({
+    templateUrl: "adminJS/bussinessAdmin/tickets_management/_ticket_update.html",
+    controller: "ticket_updateCtrl",
+    resolve: {
+      ticket_id: function(){
+        return $('p#ticket_id_hidden').html();
+      },
+      branch: function(){
+        return $scope.branch;
+      },
+      dt: function(){
+        return $scope.dt;
       }
-    });
-  };
-
-  $scope.open = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    $scope.opened = true;
-  };
-
-  $scope.viewweekbooking = function(){
-    if ($scope.iseveryweek)
-      $('div.everyweek').css('display', 'inline');
-    else
-      $('div.everyweek').css('display', 'none');
-  }
-
-  var previouscolor = '';
-  $scope.showtimeintd = function(hour,element,show){
-    $td = $(element.currentTarget);
-    $th = $td.closest('table').find('th').eq($td.index()+1);
-    if(show){
-      previouscolor = $(element.currentTarget).css('background-color');
-      $(element.currentTarget).css('background-color','#6ea6bf');
-      $(element.currentTarget).html('<strong>'+ $th.html() +'</strong>'+', '+'<strong>'+ tickets.hourtoview(hour) + '</strong>');
     }
-    else{
-      $(element.currentTarget).css('background-color',previouscolor);
-      $(element.currentTarget).html("");
-    }
+  });
+};
+
+$scope.open = function($event) {
+  $event.preventDefault();
+  $event.stopPropagation();
+  $scope.opened = true;
+};
+
+$scope.viewweekbooking = function(){
+  if ($scope.iseveryweek)
+    $('div.everyweek').css('display', 'inline');
+  else
+    $('div.everyweek').css('display', 'none');
+}
+
+var previouscolor = '';
+$scope.showtimeintd = function(hour,element,show){
+  $td = $(element.currentTarget);
+  $th = $td.closest('table').find('th').eq($td.index()+1);
+  if(show){
+    previouscolor = $(element.currentTarget).css('background-color');
+    $(element.currentTarget).css('background-color','#6ea6bf');
+    $(element.currentTarget).html('<strong>'+ $th.html() +'</strong>'+', '+'<strong>'+ tickets.hourtoview(hour) + '</strong>');
   }
+  else{
+    $(element.currentTarget).css('background-color',previouscolor);
+    $(element.currentTarget).html("");
+  }
+}
 
   //Real time -------------------------------------------------------------
   tickets.channel.bind('create_ticket', function(ticket) {
@@ -245,6 +245,9 @@ bussinessAdmin.controller('ticketManageCtrl', ['$scope', '$http', 'Auth', '$moda
 
   //Timeline---------------------------------------------------------------
   function timeline(){
+
+    if($scope.branch.assets.length * 170 < $('.calendar_content').width())
+      $('.tablebooking').css({width: $('.calendar_content').width()});
 
     var scrollheight = $scope.td_height*4*(24-0);
     $('hr.timeline').css({width: 170*$scope.branch.assets.length + 50});
