@@ -14,8 +14,8 @@ class BranchesController < ApplicationController
   end
 
   def show
-    @branch = Branch.where(id: branch_params[:id])
-    if @branch.first
+    @branch = Branch.find(branch_params[:id])
+    if @branch
       render json: @branch, status: :ok
     else
       render nothing: true, status: :not_found, content_type: 'application/json'
@@ -25,7 +25,7 @@ class BranchesController < ApplicationController
   def branch_details
 
     @branch_details= {}
-    branch = Branch.where(url_alias: branch_params[:branch_url_alias]).first
+    branch = Branch.find_by(url_alias: branch_params[:branch_url_alias])
     if branch.present?
       @branch_details[:branch]= branch
       @branch_details[:asset_categories] = branch.asset_categories
@@ -54,7 +54,6 @@ class BranchesController < ApplicationController
     end
     render json: result
   end
-
 
   #Cho them, xoa, sua branch
   #POST /branches.json
@@ -87,24 +86,24 @@ class BranchesController < ApplicationController
 
   private
 
-    def find_branch
-      @branch = Branch.find(params[:id])
+  def branch_params
+    params.permit(:id, :lat,:lng, :distance, :search_query, :branch_url_alias, :name, :phone, :address, :begin_work_time, :end_work_time, :url_alias)
+  end
+
+  def find_branch
+    @branch = Branch.find(params[:id])
       #KO dc chinh sua chi nhanh cua nguoi khac
       if @branch.bussiness.id != current_user.bussiness.id
         render nothing: true, status: :not_found, content_type: 'application/json'
       end
     end
 
-    def branch_params
-      params.permit(:id, :lat,:lng, :distance, :search_query, :branch_url_alias, :name, :phone, :address, :begin_work_time, :end_work_time, :url_alias)
+  #Da test
+  def check_role_bussiness_admin
+    if current_user.role.name == 'bussiness admin'
+    else
+      render json: {}, status: :not_found
     end
+  end
 
-  	#Da test
-    def check_role_bussiness_admin
-      if current_user.role.name == 'bussiness admin'
-      else
-       render json: {}, status: :not_found
-     end
-   end
-
- end
+end
