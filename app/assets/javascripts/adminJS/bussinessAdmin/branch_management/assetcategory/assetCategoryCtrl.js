@@ -51,7 +51,21 @@ bussinessAdmin.controller('assetCategoryCtrl', ['$scope', 'assetCategoryService'
       });
     }
 
-  //Modal cho xoa loai hang san
+  $scope.opendeleteCategory = function (category) {
+
+    var deletecategory = $modal.open({
+      templateUrl: 'deletecategory.html',
+      controller: 'deletecategoryCtrl',
+      size: 'sm'
+    });
+
+    deletecategory.result.then(function () {
+      $scope.deleteCategory(category);
+    }, function () {
+
+    });
+  };
+
   $scope.deleteCategory = function(category) {
     assetCategoryService.destroy(category)
     .success(function() {
@@ -66,3 +80,14 @@ bussinessAdmin.controller('assetCategoryCtrl', ['$scope', 'assetCategoryService'
   };
 
 }]);
+
+bussinessAdmin.controller('deletecategoryCtrl', function ($scope, $modalInstance) {
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss(false);
+  };
+});
