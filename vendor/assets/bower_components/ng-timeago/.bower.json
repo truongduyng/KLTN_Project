@@ -21,6 +21,5 @@
   },
   "_source": "git://github.com/uttesh/ngtimeago.git",
   "_target": "~0.0.2",
-  "_originalSource": "ng-timeago",
-  "_direct": true
+  "_originalSource": "ng-timeago"
 }

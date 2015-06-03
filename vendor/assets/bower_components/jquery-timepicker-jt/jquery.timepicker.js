@@ -1,5 +1,5 @@
 /*!
- * jquery-timepicker v1.6.7 - A jQuery timepicker plugin inspired by Google Calendar. It supports both mouse and keyboard navigation.
+ * jquery-timepicker v1.6.12 - A jQuery timepicker plugin inspired by Google Calendar. It supports both mouse and keyboard navigation.
  * Copyright (c) 2015 Jon Thornton - http://jonthornton.github.com/jquery-timepicker/
  * License: MIT
  */
@@ -158,7 +158,7 @@
 				if (_getTimeValue(self)) {
 					selected = _findRow(self, list, _time2int(_getTimeValue(self)));
 				} else if (settings.scrollDefault) {
-					selected = _findRow(self, list, settings.scrollDefault);
+					selected = _findRow(self, list, settings.scrollDefault());
 				}
 			}
 
@@ -256,10 +256,14 @@
 				return null;
 			}
 
+			var offset = _time2int(time_string);
+			if (offset === null) {
+				return null;
+			}
+
 			if (!relative_date) {
 				relative_date = new Date();
 			}
-			var offset = _time2int(time_string);
 
 			// construct a Date with today's date, and offset's time
 			var time = new Date(relative_date);
@@ -280,6 +284,10 @@
 				var prettyTime = _roundAndFormatTime(_time2int(value), settings)
 			} else {
 				var prettyTime = _int2time(_time2int(value), settings);
+			}
+
+			if (value && prettyTime === null && settings.noneOption) {
+				prettyTime = value;
 			}
 
 			_setTimeValue(self, prettyTime);
@@ -343,15 +351,18 @@
 		}
 
 		if (settings.scrollDefault == 'now') {
-			settings.scrollDefault = _time2int(new Date());
-		} else if (settings.scrollDefault) {
-			settings.scrollDefault = _time2int(settings.scrollDefault);
+			settings.scrollDefault = function() {
+				return settings.roundingFunction(_time2int(new Date()), settings);
+			}
+		} else if (settings.scrollDefault && typeof settings.scrollDefault != 'function') {
+			var val = settings.scrollDefault;
+			settings.scrollDefault = function() {
+				return settings.roundingFunction(_time2int(val), settings);
+			}
 		} else if (settings.minTime) {
-			settings.scrollDefault = settings.minTime;
-		}
-
-		if (settings.scrollDefault) {
-			settings.scrollDefault = settings.roundingFunction(settings.scrollDefault, settings);
+			settings.scrollDefault = function() {
+				return settings.roundingFunction(settings.minTime, settings);
+			}
 		}
 
 		if ($.type(settings.timeFormat) === "string" && settings.timeFormat.match(/[gh]/)) {
@@ -966,13 +977,13 @@
 	function _int2time(seconds, settings)
 	{
 		if (seconds === null) {
-			return;
+			return null;
 		}
 
 		var time = new Date(_baseDate.valueOf() + (seconds*1000));
 
 		if (isNaN(time.getTime())) {
-			return;
+			return null;
 		}
 
 		if ($.type(settings.timeFormat) === "function") {
@@ -1054,7 +1065,7 @@
 			return timeString.getHours()*3600 + timeString.getMinutes()*60 + timeString.getSeconds();
 		}
 
-		timeString = timeString.toLowerCase().replace('.', '');
+		timeString = timeString.toLowerCase().replace(/[\s\.]/g, '');
 
 		// if the last character is an "a" or "p", add the "m"
 		if (timeString.slice(-1) == 'a' || timeString.slice(-1) == 'p') {
@@ -1068,7 +1079,7 @@
 			_lang.PM.replace('.', '')+')?';
 
 		// try to parse time input
-		var pattern = new RegExp('^'+ampmRegex+'\\s*([0-2]?[0-9])\\W?([0-5][0-9])?\\W?([0-5][0-9])?\\s*'+ampmRegex+'$');
+		var pattern = new RegExp('^'+ampmRegex+'([0-2]?[0-9])\\W?([0-5][0-9])?\\W?([0-5][0-9])?'+ampmRegex+'$');
 
 		var time = timeString.match(pattern);
 		if (!time) {
@@ -1095,7 +1106,7 @@
 
 		// if no am/pm provided, intelligently guess based on the scrollDefault
 		if (!ampm && settings && settings._twelveHourTime && settings.scrollDefault) {
-			var delta = timeInt - settings.scrollDefault;
+			var delta = timeInt - settings.scrollDefault();
 			if (delta < 0 && delta >= _ONE_DAY / -2) {
 				timeInt = (timeInt + (_ONE_DAY / 2)) % _ONE_DAY;
 			}

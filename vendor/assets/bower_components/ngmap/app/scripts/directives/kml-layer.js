@@ -20,7 +20,7 @@
  * Example: 
  *
  *   <map zoom="11" center="[41.875696,-87.624207]">
- *     <kml-layer url="http://gmaps-samples.googlecode.com/svn/trunk/ggeoxml/cta.kml" ></kml-layer>
+ *     <kml-layer url="https://gmaps-samples.googlecode.com/svn/trunk/ggeoxml/cta.kml" ></kml-layer>
  *    </map>
  */
 /*jshint -W089*/
@@ -48,7 +48,7 @@ ngMap.directive('kmlLayer', ['Attr2Options', function(Attr2Options) {
 
       var kmlLayer = getKmlLayer(options, events);
       mapController.addObject('kmlLayers', kmlLayer);
-      parser.observeAttrSetObj(orgAttrs, attrs, kmlLayer);  //observers
+      mapController.observeAttrSetObj(orgAttrs, attrs, kmlLayer);  //observers
       element.bind('$destroy', function() {
         mapController.deleteObject('kmlLayers', kmlLayer);
       });

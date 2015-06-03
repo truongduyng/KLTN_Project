@@ -143,6 +143,5 @@ Rails.application.routes.draw do
 
   get 'check/username' => 'users#check_username'
   get 'check/email' => 'users#check_email'
-  devise_for :users
   get '/:branch_url_alias' => 'branches#branch_details', constraints: {branch_url_alias: /(?!websocket$).*/}, as: 'booking_address'
 end
