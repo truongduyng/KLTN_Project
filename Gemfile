@@ -28,14 +28,10 @@ group :production do
   gem 'rails_12factor'
 end
 
-
-gem 'angular-rails-templates'
-gem 'angular_rails_csrf'
-gem 'devise'
 # #for strong parameters with complex object
 # gem 'strong_parameters'
 #for upload file
-gem 'angularjs-file-upload-rails', '~> 1.1.6'
+gem 'angularjs-file-upload-rails'
 # gem 'carrierwave'
 gem 'mongoid-grid_fs', github: 'ahoward/mongoid-grid_fs'
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
@@ -46,13 +42,10 @@ gem 'mongoid_paranoia'
 
 #for paginate voi mongoid
 gem 'will_paginate_mongoid'
-gem 'will_paginate', '~> 3.0.6'
+gem 'will_paginate'
 
-
-#For websocket 
-gem 'websocket-rails'
 
 gem 'ckeditor'
 #for login facebok
 gem 'omniauth-facebook'
-gem 'sprockets', '2.12.3'
+gem 'sprockets'

@@ -272,7 +272,7 @@ PLATFORMS
 DEPENDENCIES
   angular-rails-templates
   angular_rails_csrf
-  angularjs-file-upload-rails (~> 1.1.6)
+  angularjs-file-upload-rails
   bootstrap-sass
   byebug
   carrierwave-mongoid
@@ -294,10 +294,10 @@ DEPENDENCIES
   sass-rails
   sdoc (~> 0.4.0)
   spring
-  sprockets (= 2.12.3)
+  sprockets
   thin
   uglifier
   web-console
   websocket-rails
-  will_paginate (~> 3.0.6)
+  will_paginate
   will_paginate_mongoid

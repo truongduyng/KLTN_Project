@@ -8,26 +8,26 @@ class User
   #callback
   before_create :set_default_role
   before_save :check_gender
-  
+
   #relationships
   # belongs_to :role
   #do thay doi nen can thay check role o bussiness admin, co the dung 1 controller bussiness admin de lam dieu nay thay
-  
+
   ##BC
-  has_and_belongs_to_many :roles 
+  has_and_belongs_to_many :roles
   # belongs_to :role, primary_key: "name", foreign_key: "role_name"
   ##EC
   has_one :bussiness
 
   ##BN
-  embeds_one :information 
+  embeds_one :information
   has_many :tickets
   ##EN
   has_many :posts, class_name: 'Post', inverse_of: :user
   has_many :favorite_posts
   #Moi nguoi co the co nhieu yeu cau, boi vi neu 1 yeu cau ko dc chap thuan thi co the gui yeu cau khac
   has_many :bussiness_requests
-  
+
   #notification system
   #1 nguoi co nhieu thong bao
   has_many :notifications, class_name: 'Notification', inverse_of: :target_user
@@ -58,7 +58,7 @@ class User
         user = identity.user
       else
         identity = Identity.create(provider: auth.provider, uid: auth.uid)
-        #Neu chua login lan nao thi tao nguoi dung moi 
+        #Neu chua login lan nao thi tao nguoi dung moi
         user = User.new
         user.password = Devise.friendly_token[0,20]
         ##BC
@@ -78,19 +78,19 @@ class User
   def email_required?
     super && identity.nil?
   end
-  
-  # #Cho xu ly gan avatar tu facebook vao avatar 
+
+  # #Cho xu ly gan avatar tu facebook vao avatar
   # def skip
   #  @skip || false
   # end
   # def skip_saving?
   #   @skip
   # end
-  
+
   #Carrier wave
   mount_uploader :avatar, AvatarUploader
-  
-  # #Cho xu ly gan avatar tu facebook vao avatar 
+
+  # #Cho xu ly gan avatar tu facebook vao avatar
   # skip_callback :store_avatar!, if: :skip_saving?
 
   #My validation
@@ -125,7 +125,7 @@ class User
   # field :failed_attempts, type: Integer, default: 0 # Only if lock strategy is :failed_attempts
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
-  
+
   #PUBLIC METHOD
   def is_system_admin?
       if self.roles
@@ -151,7 +151,7 @@ class User
       end
   end
 
-  #Tao ra channel vs name la id cho moi user. 
+  #Tao ra channel vs name la id cho moi user.
   #Do do nguoi dung chi co the subcribe toi channel ma co user.id == channel_name
   def can_subcribe_channel? channel_name
     # if channel_name == 'notifications'
@@ -177,7 +177,7 @@ class User
       #Gender phai la nam hoac nu
       if !self.gender.nil? && (!self.gender.strip || self.gender != 'Nam' || self.gender != 'Nữ')
         self.gender = '';
-      end 
+      end
 
     end
 

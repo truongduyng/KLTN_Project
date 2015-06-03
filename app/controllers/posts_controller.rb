@@ -13,10 +13,10 @@ class PostsController < ApplicationController
 		# render json: @posts, status: :ok
 	end
 
-	def show	
+	def show
 	end
 
-	def create 
+	def create
 		@post = Post.new(post_params)
 		@post.user = current_user
 		if @post.save
@@ -42,7 +42,7 @@ class PostsController < ApplicationController
 				deleted_photos[:deleted_photos].each do |photo_id|
 					begin
 						photo = @post.photos.find(photo_id)
-						photo.destroy	
+						photo.destroy
 					rescue Mongoid::Errors::DocumentNotFound
 					end
 				end
@@ -59,7 +59,7 @@ class PostsController < ApplicationController
 		FavoritePost.where(post_id: @post.id).destroy_all
 		#Neu photo ko embeded in post thi xoa lun photo
 		@post.destroy
-		render nothing: true, status: :ok, content_type: 'application/json' 
+		render nothing: true, status: :ok, content_type: 'application/json'
 	end
 
 	#/posts/:id/add_photo
@@ -75,7 +75,7 @@ class PostsController < ApplicationController
 	end
 
 	#DELETE /posts/:id/delete_photo
-	def delete_photo	
+	def delete_photo
 		begin
 			@photo = @post.photos.find(params[:photo_id])
 			@photo.destroy
@@ -111,7 +111,7 @@ class PostsController < ApplicationController
 	#/posts/:id/unlike
 	def unlike
 		like = @post.likes.where('user_id' => current_user.id).first
-		if like	
+		if like
 			#Xoa thong bao neu co the
 			#Neu thong bao do chua dc load va xem (is_new = true) thi xoa no di, con neu da dc xem rui thi coi nhu la lich su
 			if @post.user != current_user
@@ -127,7 +127,7 @@ class PostsController < ApplicationController
 			render nothing: true, status: :ok, content_type: 'application/json'
 		else
 			render nothing: true, status: :bad_request, content_type: 'application/json'
-		end		
+		end
 	end
 
 	# /posts/:id/get_k_first_like.json
@@ -181,7 +181,7 @@ class PostsController < ApplicationController
 	#cho trang profile
 	#Lay tat ca nhung post boi username
 	# #GET /posts/get_posts_by_username/:username
-	# def get_posts_by_username 
+	# def get_posts_by_username
 	# 	@posts = User.where(username: )
 	# end
 
@@ -210,7 +210,7 @@ class PostsController < ApplicationController
 			end
 			render 'get_posts_by_username.json.jbuilder', status: :ok
 		else
-			render nothing: true, status: :not_found, content_type: 'application/json'	
+			render nothing: true, status: :not_found, content_type: 'application/json'
 		end
 	end
 
@@ -224,11 +224,11 @@ class PostsController < ApplicationController
 			@total = user.favorite_posts.count
 			render 'get_favorite_posts_by_username.json.jbuilder', status: :ok
 		else
-			render nothing: true, status: :not_found, content_type: 'application/json'	
+			render nothing: true, status: :not_found, content_type: 'application/json'
 		end
 	end
 
-	
+
 	private
 		def post_params
 			params.require(:post).permit(:title, :body)
@@ -294,7 +294,7 @@ class PostsController < ApplicationController
 			end
 		end
 
-		
+
 end
 
 
