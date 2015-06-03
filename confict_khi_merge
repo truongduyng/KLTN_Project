@@ -50,7 +50,7 @@ CONFLICT (modify/delete): app/views/assests/get_assests_by_category.json.jbuilde
 Auto-merging app/models/user.rb
 CONFLICT (content): Merge conflict in app/models/user.rb
 
-H
+
 Auto-merging app/models/role.rb
 CONFLICT (content): Merge conflict in app/models/role.rb
 
@@ -64,12 +64,20 @@ CONFLICT (content): Merge conflict in app/models/branch.rb
 
 
 
+H
 Removing app/models/assest_category.rb
 Removing app/models/assest.rb
 Removing app/helpers/home_helper.rb
 Removing app/controllers/user_controller.rb
 CONFLICT (modify/delete): app/controllers/fees_controller.rb deleted in HEAD and modified in merge_bussiness_admin. Version merge_bussiness_admin of app/controllers/fees_controller.rb left in tree.
+
+
+
 CONFLICT (modify/delete): app/controllers/bussinesses_controller.rb deleted in HEAD and modified in merge_bussiness_admin. Version merge_bussiness_admin of app/controllers/bussinesses_controller.rb left in tree.
+
+
+
+
 CONFLICT (modify/delete): app/controllers/branches_controller.rb deleted in HEAD and modified in merge_bussiness_admin. Version merge_bussiness_admin of app/controllers/branches_controller.rb left in tree.
 Auto-merging app/controllers/application_controller.rb
 CONFLICT (content): Merge conflict in app/controllers/application_controller.rb
