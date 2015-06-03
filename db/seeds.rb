@@ -1,14 +1,33 @@
-['user', 'bussiness admin', 'system admin'].each do |role|
-  Role.find_or_create_by({name: role})
-end
+# ['user', 'bussiness admin', 'system admin'].each do |role|
+#   Role.find_or_create_by({name: role})
+# end
 
-user = User.create() do |u|
-  u.email = "ntduy@sporta.vn"
-  u.username = 'ntduy'
-  u.password = '123456789'
-  u.fullname = 'Nguyen Truong Duy'
-  u.phone = "01633248188"
-end
+# user = User.create() do |u|
+#   u.email = "ntduy@sporta.vn"
+#   u.username = 'ntduy'
+#   u.password = '123456789'
+#   u.fullname = 'Nguyen Truong Duy'
+#   u.phone = "01633248188"
+# end
+
+
+# user = User.create() do |u|
+#   u.email = "trung_nh93@yahoo.com"
+#   u.username = 'trung_nh93'
+#   u.password = '123456789'
+#   u.fullname = 'Nguyen Huu Trung 1'
+#   u.phone = "01633248188"
+# end
+
+# user = User.create() do |u|
+#   u.email = "trungnguyenhuu@gmail.com"
+#   u.username = 'trungnguyenhuu'
+#   u.password = '123456789'
+#   u.fullname = 'Nguyen Huu Trung 2'
+#   u.phone = "01633248188"
+# end
+
+
 
 # #Khoi tao information for user
 # <<<<<<< HEAD
@@ -308,3 +327,30 @@ end
 # Asset.create(name: "San 11", description: "San gan nhi", branch_id: branch.id, asset_category_id: ac.id)
 # Asset.create(name: "San 12", description: "San gan ba", branch_id: branch.id, asset_category_id: ac.id)
 # >>>>>>> merge_bussiness_admin
+
+
+
+
+#TAO RE NHIEU POST DE TEST
+# trungnguyenhuu = User.where(username: 'trungnguyenhuu').first
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 10', body: 'Body 5', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 11', body: 'Body 6', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 12', body: 'Body 7', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 13', body: 'Body 8', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 14', body: 'Body 5', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 15', body: 'Body 6', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 16', body: 'Body 7', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 17', body: 'Body 8', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 18', body: 'Body 5', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 19', body: 'Body 6', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 20', body: 'Body 7', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 21', body: 'Body 8', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 22', body: 'Body 5', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 23', body: 'Body 6', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 24', body: 'Body 7', post_status_id: PostStatus.publishedStatus)
+# trungnguyenhuu.posts << Post.new(title: 'post chua duyet 25', body: 'Body 8', post_status_id: PostStatus.publishedStatus)
+
+
+# Post.all.each do |p|
+# 	p.update_attributes(post_status_id: PostStatus.publishedStatus.id)
+# end

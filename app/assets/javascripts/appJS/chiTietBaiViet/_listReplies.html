@@ -21,7 +21,7 @@
     
          <div id="{{reply._id.$oid}}" class="media" ng-repeat-start="reply in comment.replies | orderBy: '-created_at'">
             <div class="media-left">
-              <a href="#">
+              <a ui-sref="trangCaNhan({username: reply.user.username})">
                <img class="img-circle" class="media-object" src="{{reply.user.avatar.url | logo}}" fallback-src="sportaLogo"
                alt="Generic placeholder image" width="64px" height="64px">
               </a>

@@ -6,6 +6,7 @@ json.triggers @notification_change.distinct_triggers_by_user do |trigger|
 	json.trigger_user do 
 		json._id trigger.trigger_user.id
 		json.username trigger.trigger_user.username
+		json.fullname trigger.trigger_user.fullname
 		json.avatar trigger.trigger_user.avatar.url
 	end
 	if trigger.trigger_source_id
