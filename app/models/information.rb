@@ -13,7 +13,5 @@ class Information
   field :description, type: String
   field :bussiness_name, type: String
 
-  field :created_at, type: DateTime
-  field :updated_at, type: DateTime
   embedded_in :user
 end

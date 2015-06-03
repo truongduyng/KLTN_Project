@@ -1,48 +1,9 @@
-<!-- <div data-ng-controller="webSocketCtrl">
-    <input type="text" ng-model="message">
-    <button class="btn btn-success" ng-click="onSendMessage()">Send</button>
-    <ol>
-        <li ng-repeat="message in messages">
-          <div ng-if="message.user == user"><span>Tôi:</span><span>{{message.content}}</span></div>
-          <div  ng-if="message.user != user"><span>{{message.user}}:</span><span>{{message.content}}</span></div>
-        </li>
-    </ol>
-</div>
-<button class="btn btn-success" ng-click="scrollTo()">scroll</button>
- -->
+<div ng-include="'appJS/map/_map.html'"></div>
 
-
-<!-- BC -->
-<!-- MAP HERE -->
-<div class="row">
-  <div class="col-sm-12">
-    <div ng-controller="mapCtrl" class="map">
-          <map center="current-position"
-           geo-fallback-center="[16.0667, 108.2333]"
-           geo-callback="callbackFunc()"
-           min-zoom ="5"
-           zoom="5"
-           max-zoom = "18"
-           disable-default-u-i="true"
-           style='height: 500px;'>
-            <!-- <custom-control id="home" position="BOTTOM_LEFT" index="1">
-              <form ng-submit = "search_address()">
-                <input type="text" id="Geo  Search" class="form-control" placeholder = "Tìm kiếm địa chỉ" style= "width: 250px; margin-bottom: 5px; font-size: 14px;" ng-model = "query_address"/>
-              </form>
-            </custom-control> -->
-          </map>
-    </div>
-  </div>
-</div>
-<!-- BAN DO O DAY -->
-<!-- EC -->
-
-
-<!-- POST O DAY-->
-<div class="row">
+<div class="row margintop10">
       <!-- GROUP -->
       <div class="col-sm-2">
-           <section ng-include="'appJS/modules/_groupModule.html'"></section>
+           <div ng-include="'appJS/club/_club.html'"></div>
            <section ng-include="'appJS/modules/_vietBaiModule.html'"></section>
       </div>
       <!-- END GROUP -->
