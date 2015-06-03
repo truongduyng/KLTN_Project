@@ -116,7 +116,7 @@ Auto-merging app/assets/javascripts/appJS/nav/navCtrl.js
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/nav/navCtrl.js
 
 
-HERE
+
 Auto-merging app/assets/javascripts/appJS/nav/_nav.html
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/nav/_nav.html
 
@@ -133,18 +133,38 @@ CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/home/_home.ht
 
 
 
-
+HERE
 CONFLICT (rename/delete): app/assets/javascripts/appJS/auth/directives/modal.js deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/javascripts/appJS/auth/directives/modal.js left in tree.
+
+
+
 Auto-merging app/assets/javascripts/appJS/auth/directives/ensureUnique.js
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/auth/directives/ensureUnique.js
+
+
+
+
 Auto-merging app/assets/javascripts/appJS/auth/authCtrl.js
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/auth/authCtrl.js
+
+
+
 Auto-merging app/assets/javascripts/appJS/auth/_register.html
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/auth/_register.html
+
+
+
+
 Auto-merging app/assets/javascripts/appJS/auth/_login.html
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/auth/_login.html
+
+
+
+
+
 Auto-merging app/assets/javascripts/appJS/application.js
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/application.js
+
 Auto-merging app/assets/javascripts/appJS/app.js
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/app.js
 Auto-merging app/assets/javascripts/adminJS/systemAdmin/header/header.js
@@ -166,3 +186,11 @@ CONFLICT (content): Merge conflict in Gemfile
 Auto-merging .gitignore
 CONFLICT (content): Merge conflict in .gitignore
 Automatic merge failed; fix conflicts and then commit the result
+
+
+
+
+
+///TIEM AN SAI TRONG
+model User, Role, Route
+app/assets/javascripts/appJS/auth/authCtrl.js va cac qua trinh lien quan den dang nhap, dang ki
