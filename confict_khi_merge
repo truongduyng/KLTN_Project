@@ -83,16 +83,27 @@ CONFLICT (modify/delete): app/controllers/branches_controller.rb deleted in HEAD
 
 
 
-H
+
 Auto-merging app/controllers/application_controller.rb
 CONFLICT (content): Merge conflict in app/controllers/application_controller.rb
 
 
-
+H
 CONFLICT (modify/delete): app/controllers/admin_controller.rb deleted in merge_bussiness_admin and modified in HEAD. Version HEAD of app/controllers/admin_controller.rb left in tree.
+
+
+
 CONFLICT (modify/delete): app/assets/stylesheets/applicationCSS/customCSS/style.css deleted in merge_bussiness_admin and modified in HEAD. Version HEAD of app/assets/stylesheets/applicationCSS/customCSS/style.css left in tree.
+
+
+
+
 Auto-merging app/assets/stylesheets/applicationCSS/application.css
 CONFLICT (content): Merge conflict in app/assets/stylesheets/applicationCSS/application.css
+
+
+
+H
 Auto-merging app/assets/stylesheets/adminCSS/bussinessAdmin/customCSS/style-responsive.css
 CONFLICT (rename/delete): app/assets/stylesheets/adminCSS/bussinessAdmin/customCSS/admin-style.css deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/stylesheets/adminCSS/bussinessAdmin/customCSS/admin-style.css left in tree.
 CONFLICT (rename/delete): app/assets/stylesheets/adminCSS/bussinessAdmin/application.css deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/stylesheets/adminCSS/bussinessAdmin/application.css left in tree.
