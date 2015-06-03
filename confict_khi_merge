@@ -182,7 +182,6 @@ CONFLICT (rename/delete): app/assets/javascripts/adminJS/systemAdmin/customJS/sc
 
 
 
-HERE
 CONFLICT (rename/delete): app/assets/javascripts/adminJS/systemAdmin/customJS/jquery.nicescroll.js deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/javascripts/adminJS/systemAdmin/customJS/jquery.nicescroll.js left in tree.
 
 
@@ -217,11 +216,19 @@ CONFLICT (rename/delete): app/assets/javascripts/adminJS/bussinessAdmin/branch_m
 
 
 
+HERE
 Removing app/assets/images/application/01.jpg
 Auto-merging Gemfile.lock
 CONFLICT (content): Merge conflict in Gemfile.lock
+
+
+
+
 Auto-merging Gemfile
 CONFLICT (content): Merge conflict in Gemfile
+
+
+
 Auto-merging .gitignore
 CONFLICT (content): Merge conflict in .gitignore
 Automatic merge failed; fix conflicts and then commit the result
@@ -236,3 +243,5 @@ Automatic merge failed; fix conflicts and then commit the result
 3. Co the loi ben trong app/assets/javascripts/appJS/application.js cho require //= require_tree ../services, //= require websocket_rails/main, //= require jquery.min
 
 4. Co the sai do conflict nay ko hieu la gi: CONFLICT (rename/rename): Rename "app/assets/javascripts/adminJS/application.js"->"app/assets/javascripts/adminJS/systemAdmin/application.js" in branch "HEAD" rename "app/assets/javascripts/adminJS/application.js"->"app/assets/javascripts/adminJS/bussinessAdmin/application.js" in "merge_bussiness_admin"
+
+5. Co the bi loi do conflict ko hieu:  CONFLICT (content): Merge conflict in Gemfile.lock

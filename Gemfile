@@ -27,7 +27,7 @@ end
 group :production do
   gem 'rails_12factor'
 end
-<<<<<<< HEAD
+
 
 gem 'angular-rails-templates'
 gem 'angular_rails_csrf'
@@ -56,5 +56,3 @@ gem 'ckeditor'
 #for login facebok
 gem 'omniauth-facebook'
 gem 'sprockets', '2.12.3'
-=======
->>>>>>> merge_bussiness_admin
