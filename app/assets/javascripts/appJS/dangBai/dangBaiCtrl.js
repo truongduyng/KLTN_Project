@@ -48,7 +48,7 @@ app.controller('dangBaiCtrl', ['$scope', 'postService', 'flash', '$q', 'FileUplo
 
 		$scope.uploader.onBeforeUploadItem = function(file) {
 			file.headers = {
-				'X-CSRF-TOKEN': $cookies['XSRF-TOKEN'],
+				'X-CSRF-TOKEN': $cookies.get('XSRF-TOKEN'),
 			};
 			file.url = "/posts/" + $scope.post.id + '/add_photo.json';
 		};

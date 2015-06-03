@@ -52,7 +52,7 @@ app.controller('editPostCtrl', ['$scope', 'editPostService', 'FileUploader', 'Fl
 
 		$scope.uploader.onBeforeUploadItem = function(file) {
 			file.headers = {
-				'X-CSRF-TOKEN': $cookies['XSRF-TOKEN'],
+				'X-CSRF-TOKEN': $cookies.get('XSRF-TOKEN'),
 			};
 			file.url = "/posts/" + $scope.post._id.$oid + '/add_photo.json';
 		};

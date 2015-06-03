@@ -29,7 +29,7 @@
                   <img fallback-src="sportaLogo" ng-src="{{currentUser.avatar.avatar.url |logo}}" class="img-circle profile-picture" width="64px" height="64px">
                 </div>
                 <div class="col-xs-10">
-                  <span class="owner-bai-viet">{{currentUser.firstname| fullname: currentUser.lastname}}</span>
+                  <span class="owner-bai-viet">{{currentUser.fullname}}</span>
                   <span>{{post.updated_at | timeago}}</span>
                   <span class="label pull-right" ng-class="{'label-success': post.published, 'label-danger': !post.published}">{{post.status.name}}</span>
                 </div>

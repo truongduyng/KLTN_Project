@@ -23,8 +23,8 @@
                   </div>
                   
                   <div class="media-body">
-                    <div>
-                      <a ui-sref="trangCaNhan({username: post.user.username})"><h5  style="color:#337ab7;"  class="media-heading pull-left">{{post.user.username}}</h5></a>
+                    <div class="user-title">
+                      <a ui-sref="trangCaNhan({username: post.user.username})"><h5  style="color:#337ab7;"  class="media-heading pull-left">{{post.user.fullname}}</h5></a>
                       <!-- Simple dropdown -->
                       <span ng-if="signedIn && currentUser != null && currentUser._id.$oid != post.user._id.$oid" class="dropdown pull-right" dropdown on-toggle="toggled(open)" style="margin-top: -8px;">
                         <a href class="dropdown-toggle" dropdown-toggle>
@@ -170,6 +170,10 @@
 
 
 <style type="text/css">
-
-
+.media-body {
+    box-sizing: border-box;
+    float: left;
+    padding-left: 10px;
+    width: 85%;
+}
 </style>
