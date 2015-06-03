@@ -161,7 +161,6 @@ CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/auth/_login.h
 
 
 
-HERE
 Auto-merging app/assets/javascripts/appJS/application.js
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/application.js
 
@@ -183,14 +182,41 @@ CONFLICT (rename/delete): app/assets/javascripts/adminJS/systemAdmin/customJS/sc
 
 
 
+HERE
 CONFLICT (rename/delete): app/assets/javascripts/adminJS/systemAdmin/customJS/jquery.nicescroll.js deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/javascripts/adminJS/systemAdmin/customJS/jquery.nicescroll.js left in tree.
+
+
+
 CONFLICT (rename/rename): Rename "app/assets/javascripts/adminJS/application.js"->"app/assets/javascripts/adminJS/systemAdmin/application.js" in branch "HEAD" rename "app/assets/javascripts/adminJS/application.js"->"app/assets/javascripts/adminJS/bussinessAdmin/application.js" in "merge_bussiness_admin"
+
+
+
 CONFLICT (modify/delete): app/assets/javascripts/adminJS/bussinessAdmin/sideBar/_side_bar.html deleted in HEAD and modified in merge_bussiness_admin. Version merge_bussiness_admin of app/assets/javascripts/adminJS/bussinessAdmin/sideBar/_side_bar.html left in tree.
+
+
+
 CONFLICT (modify/delete): app/assets/javascripts/adminJS/bussinessAdmin/home/services/bussinessService.js deleted in HEAD and modified in merge_bussiness_admin. Version merge_bussiness_admin of app/assets/javascripts/adminJS/bussinessAdmin/home/services/bussinessService.js left in tree.
+
+
+
+
 CONFLICT (modify/delete): app/assets/javascripts/adminJS/bussinessAdmin/home/_home.html deleted in HEAD and modified in merge_bussiness_admin. Version merge_bussiness_admin of app/assets/javascripts/adminJS/bussinessAdmin/home/_home.html left in tree.
+
+
+
 CONFLICT (rename/delete): app/assets/javascripts/adminJS/bussinessAdmin/customJS/jquery.tbltree.js deleted in HEAD and renamed in merge_bussiness_admin. Version merge_bussiness_admin of app/assets/javascripts/adminJS/bussinessAdmin/customJS/jquery.tbltree.js left in tree.
+
+
+
 CONFLICT (rename/delete): app/assets/javascripts/adminJS/bussinessAdmin/branch_management/assetcategory/services/feeService.js deleted in HEAD and renamed in merge_bussiness_admin. Version merge_bussiness_admin of app/assets/javascripts/adminJS/bussinessAdmin/branch_management/assetcategory/services/feeService.js left in tree.
+
+
+
 CONFLICT (rename/delete): app/assets/javascripts/adminJS/bussinessAdmin/branch_management/assetcategory/directives/numericOnly.js deleted in HEAD and renamed in merge_bussiness_admin. Version merge_bussiness_admin of app/assets/javascripts/adminJS/bussinessAdmin/branch_management/assetcategory/directives/numericOnly.js left in tree.
+
+
+
+
 Removing app/assets/images/application/01.jpg
 Auto-merging Gemfile.lock
 CONFLICT (content): Merge conflict in Gemfile.lock
@@ -209,3 +235,4 @@ Automatic merge failed; fix conflicts and then commit the result
 2. app/assets/javascripts/appJS/auth/authCtrl.js va cac qua trinh lien quan den dang nhap, dang ki
 3. Co the loi ben trong app/assets/javascripts/appJS/application.js cho require //= require_tree ../services, //= require websocket_rails/main, //= require jquery.min
 
+4. Co the sai do conflict nay ko hieu la gi: CONFLICT (rename/rename): Rename "app/assets/javascripts/adminJS/application.js"->"app/assets/javascripts/adminJS/systemAdmin/application.js" in branch "HEAD" rename "app/assets/javascripts/adminJS/application.js"->"app/assets/javascripts/adminJS/bussinessAdmin/application.js" in "merge_bussiness_admin"
