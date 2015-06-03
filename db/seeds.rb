@@ -11,8 +11,8 @@ user = User.create() do |u|
 end
 
 #Khoi tao information for user
-# user = User.first
-# user.create_information(job: 'Thiet ke web', phone: '06824562')
+user = User.first
+user.create_information(job: 'Thiet ke web', phone: '06824562')
 
 # Gan role system admin for first user
 user = User.first
