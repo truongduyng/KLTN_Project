@@ -100,7 +100,7 @@ class BranchesController < ApplicationController
 
   #Da test
   def check_role_bussiness_admin
-    if current_user.role.name == 'bussiness admin'
+    if current_user.is_bussiness_admin?
     else
       render json: {}, status: :not_found
     end

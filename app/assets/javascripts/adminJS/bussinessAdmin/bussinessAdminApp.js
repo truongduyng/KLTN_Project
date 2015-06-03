@@ -49,6 +49,5 @@ bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($statePr
     url: '/them-moi-chi-nhanh',
     templateUrl: 'adminJS/bussinessAdmin/branch_management/information/new/_new.html',
     controller: 'BAnewBranchCtrl',
-  })
-
+  });
 }]);
