@@ -133,7 +133,7 @@ CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/home/_home.ht
 
 
 
-HERE
+
 CONFLICT (rename/delete): app/assets/javascripts/appJS/auth/directives/modal.js deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/javascripts/appJS/auth/directives/modal.js left in tree.
 
 
@@ -161,15 +161,28 @@ CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/auth/_login.h
 
 
 
-
+HERE
 Auto-merging app/assets/javascripts/appJS/application.js
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/application.js
 
+
+
+
 Auto-merging app/assets/javascripts/appJS/app.js
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/app.js
+
+
+
+
 Auto-merging app/assets/javascripts/adminJS/systemAdmin/header/header.js
 Auto-merging app/assets/javascripts/adminJS/systemAdmin/header/_header.html
 CONFLICT (rename/delete): app/assets/javascripts/adminJS/systemAdmin/customJS/scripts.js deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/javascripts/adminJS/systemAdmin/customJS/scripts.js left in tree.
+
+
+
+
+
+
 CONFLICT (rename/delete): app/assets/javascripts/adminJS/systemAdmin/customJS/jquery.nicescroll.js deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/javascripts/adminJS/systemAdmin/customJS/jquery.nicescroll.js left in tree.
 CONFLICT (rename/rename): Rename "app/assets/javascripts/adminJS/application.js"->"app/assets/javascripts/adminJS/systemAdmin/application.js" in branch "HEAD" rename "app/assets/javascripts/adminJS/application.js"->"app/assets/javascripts/adminJS/bussinessAdmin/application.js" in "merge_bussiness_admin"
 CONFLICT (modify/delete): app/assets/javascripts/adminJS/bussinessAdmin/sideBar/_side_bar.html deleted in HEAD and modified in merge_bussiness_admin. Version merge_bussiness_admin of app/assets/javascripts/adminJS/bussinessAdmin/sideBar/_side_bar.html left in tree.
@@ -192,5 +205,7 @@ Automatic merge failed; fix conflicts and then commit the result
 
 
 ///TIEM AN SAI TRONG
-model User, Role, Route
-app/assets/javascripts/appJS/auth/authCtrl.js va cac qua trinh lien quan den dang nhap, dang ki
+1. model User, Role, Route
+2. app/assets/javascripts/appJS/auth/authCtrl.js va cac qua trinh lien quan den dang nhap, dang ki
+3. Co the loi ben trong app/assets/javascripts/appJS/application.js cho require //= require_tree ../services, //= require websocket_rails/main, //= require jquery.min
+
