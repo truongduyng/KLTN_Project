@@ -250,7 +250,7 @@ $scope.showtimeintd = function(hour,element,show){
       $('.tablebooking').css({width: $('.calendar_content').width()});
 
     var scrollheight = $scope.td_height*4*(24-0);
-    $('hr.timeline').css({width: 170*$scope.branch.assets.length + 50});
+    $('hr.timeline').css({width: $('.tablebooking').width()});
 
     var top_timeline = 23 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()))*scrollheight/(60*24)); // 23 is height of th
     $('hr.timeline').animate({top: top_timeline},'fast');
