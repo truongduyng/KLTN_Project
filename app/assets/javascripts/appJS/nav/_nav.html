@@ -11,38 +11,15 @@
     </ul>
   </li>
   
-  <li ng-hide="signedIn()"><a ng-click="onLogin()" style="cursor:pointer;">Đăng nhập</a></li>
-  <li ng-hide="signedIn()"><a ng-click="onRegister()" style="cursor:pointer;">Đăng kí</a></li>
 
+  <li ng-hide="signedIn()"><a href="" ng-click= "open_signin()" >Đăng nhập</a></li>
+  <li ng-hide="signedIn()"><a href="" ng-click= "open_signup()" >Đăng kí</a></li>
 
-  <li ng-controller="notificationCtrl" ng-if="signedIn()">
-    <a ng-click="onDisplayNotifications()" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" >Thông báo <span class="badge" ng-class="{badge: true, 'blue-badge': newNotificationsCount >= 1}">{{newNotificationsCount}}</span> <span ng-if="isLoading" class="fa fa-spinner fa-pulse fa-fw"></span></a>
-        <div class="dropdown-menu notifications" role="menu" aria-labelledby="dropdownMenu1">
-            <!--  <ul class="list-notifications">
-                   <li role="presentation">
-                      <a role="menuitem" tabindex="-1" href="#">
-                        <div class="notification-item" style="">
-                            <div  class="col-xs-2"><img width="50px" height="50px" src="<%= image_path('application/myimg/01.jpg') %>"></div>               
-                            <div class="col-xs-10">
-                                <div>Nguyễn Hữu Trung đã thích bài viết của bạn</div>
-                                <small>Khoảng 1 giờ trước</small>
-                            </div>
-                        </div>
-                      </a>
-                  </li>
-                  
-                  <li role="presentation">
-                      <a role="menuitem" tabindex="-1" href="#">
-                          <div class="notification-item" style="">
-                              <div  class="col-xs-2"><img width="50px" height="50px" src="<%= image_path('application/myimg/01.jpg') %>"></div>               
-                              <div class="col-xs-10">
-                                  <div>Nguyễn Hữu Trung đã thích bài viết của bạn</div>
-                                  <small>Khoảng 1 giờ trước</small>
-                              </div>
-                          </div>
-                      </a>
-                  </li>
-            </ul> -->
+  <li ng-controller="notificationCtrl" ng-if="signedIn()" dropdown>
+      <a ng-click="onDisplayNotifications()" href class="dropdown-toggle" dropdown-toggle>
+        Thông báo <span class="badge" ng-class="{badge: true, 'blue-badge': newNotificationsCount >= 1}">{{newNotificationsCount}}</span> <span ng-if="isLoading" class="fa fa-spinner fa-pulse fa-fw"></span>
+      </a>
+      <div class="dropdown-menu notifications" role="menu" aria-labelledby="dropdownMenu1">
               <ul class="list-notifications">
                   <li style="border:none;" role="presentation" ng-if="notifications == null || notifications.length == 0">
                         <div class="notification-item" style="">
@@ -252,11 +229,27 @@
 
                   </li>
               </ul>
-            <a ng-if="notifications.length >= 15" class="see-all" style="display:block;border-top: 1px solid #c5c5c5; text-align:center; cursor:pointer; text-decoration:none;"><strong>Xem tất cả</strong></a>
-          </div>
-   </li>
+              <a ng-if="notifications.length >= 15" class="see-all" style="display:block;border-top: 1px solid #c5c5c5; text-align:center; cursor:pointer; text-decoration:none;"><strong>Xem tất cả</strong></a>
+      </div>
+  </li>
+
+  <li ng-show = "signedIn()">
+     <a ui-sref="trangCaNhan({username: user.username})">{{user.fullname}}</a>
+  </li>
+
+
+  <li ng-show ="signedIn()" class="dropdown" dropdown>
+      <a href class="dropdown-toggle" dropdown-toggle>
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <li ng-hide="isbussinessadmin()"><a style="cursor:pointer;" href="#/dang-ky-doanh-nghiep">đăng ký doanh nghiệp</a></li>
+        <li ng-show="isbussinessadmin()"><a style="cursor:pointer;" href="/admin-bussiness">Quan ly doanh nghiệp</a></li>
+        <li ng-show="signedIn()"><a style="cursor:pointer;" ng-click="logout()">Thoát</a></li>
+      </ul>
+  </li>
    
-    <li class="dropdown" dropdown >
+    <!-- <li class="dropdown" dropdown >
        <a href class="dropdown-toggle" dropdown-toggle>
           <span>{{user.firstname}}  {{user.lastname}}<span>
         </a>
@@ -268,10 +261,13 @@
                 <a href="/bussiness-admin#/">Trang quản trị</a>
               </li>
         </ul>
-    </li>
+    </li> -->
+
+   
+    
    <!-- <li ng-show="signedIn()"><a href="/bussiness-admin#/">{{user.username}}</a></li> -->
   <!-- <li ng-show="signedIn()"><a href="/bussiness-admin#/">{{user.username}}</a></li> -->
-  <li ng-show="signedIn()"><a style="cursor:pointer;" ng-click="logout()">Thoát</a></li>
+    <!-- <li ng-show="signedIn()"><a style="cursor:pointer;" ng-click="logout()">Thoát</a></li> -->
 </ul>
 
 <style type="text/css">

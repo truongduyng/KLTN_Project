@@ -14,8 +14,8 @@ class User
   #do thay doi nen can thay check role o bussiness admin, co the dung 1 controller bussiness admin de lam dieu nay thay
   
   ##BC
-  # has_and_belongs_to_many :roles 
-  belongs_to :role, primary_key: "name", foreign_key: "role_name"
+  has_and_belongs_to_many :roles 
+  # belongs_to :role, primary_key: "name", foreign_key: "role_name"
   ##EC
   has_one :bussiness
 

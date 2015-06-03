@@ -20,8 +20,8 @@ class Role
   
   field :name, type: String
   ##BC
-  # has_and_belongs_to_many :users
-  has_many :users
+  has_and_belongs_to_many :users
+  # has_many :users
   ##EC
   
   def self.bussiness_admin_role
