@@ -1,6 +1,5 @@
 
 <ul class="nav navbar-nav navbar-right" style="margin-top:2px;" ng-controller="navCtrl">
-<<<<<<< HEAD
  <!--  <button class="btn btn-success" ng-click="loadNotifications()">Load notification</button> -->
   
   <li class="active"><a ui-sref="home">Trang chủ</a></li>
@@ -287,58 +286,3 @@ ul.list-notifications li:first-child{
 }
 </style>
 
-<!-- 
-THEM TRANG HIEN THI CHI TIET YEU CAU KICH HOAT TAI KHOAN: KHI KICH HOAT XONG CHUYEN DEN TRANG DO
-TRONG TRANG THONG BAO CHI CAN DE LINK DEN CHI TIET DOI TUONG BI TAC DONG -->
-=======
-
-  <li ng-hide="signedIn()"><a href="" ng-click= "open_signin()" >Đăng nhập</a></li>
-  <li ng-hide="signedIn()"><a href="" ng-click= "open_signup()" >Đăng kí</a></li>
-
-  <!-- with logined -->
-  <li ng-show="signedIn()">
-    <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" >Thông báo <span class="badge">4</span></a>
-    <div class="dropdown-menu notifications" role="menu" aria-labelledby="dropdownMenu1">
-      <ul class="list-notifications">
-
-        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-          <div class="notification-item" style="">
-            <div  class="col-xs-2"><!-- avatar --></div>
-            <div class="col-xs-10">
-              <div>Nguyễn Hữu Trung đã thích bài viết của bạn</div>
-              <small>Khoảng 1 giờ trước</small>
-            </div>
-          </div>
-        </a></li>
-
-        <li role="presentation">
-          <a role="menuitem" tabindex="-1" href="#">
-            <div class="notification-item" style="">
-              <div  class="col-xs-2"><!-- avatar --></div>
-              <div class="col-xs-10">
-                <div>Nguyễn Hữu Trung đã thích bài viết của bạn</div>
-                <small>Khoảng 1 giờ trước</small>
-              </div>
-            </div>
-          </a>
-        </li>
-      </ul>
-      <a class="see-all" style="display:block;border-top: 1px solid #c5c5c5; text-align:center; cursor:pointer; text-decoration:none;"><strong>Xem tất cả</strong></a>
-    </div>
-  </li>
-
-  <li ng-show = "signedIn()">
-    <a href="/{{user.username}}">{{user.username}}</a>
-  </li>
-  <li ng-show ="signedIn()">
-    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-      <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu" role="menu">
-      <li ng-hide="isbussinessadmin()"><a style="cursor:pointer;" href="#/dang-ky-doanh-nghiep">đăng ký doanh nghiệp</a></li>
-      <li ng-show="isbussinessadmin()"><a style="cursor:pointer;" href="/admin-bussiness">Quan ly doanh nghiệp</a></li>
-      <li ng-show="signedIn()"><a style="cursor:pointer;" ng-click="logout()">Thoát</a></li>
-    </ul>
-  </li>
-</ul>
->>>>>>> merge_bussiness_admin

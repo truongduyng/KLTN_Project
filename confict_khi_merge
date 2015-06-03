@@ -103,7 +103,7 @@ CONFLICT (content): Merge conflict in app/assets/stylesheets/applicationCSS/appl
 
 
 
-HERE
+
 Auto-merging app/assets/stylesheets/adminCSS/bussinessAdmin/customCSS/style-responsive.css
 CONFLICT (rename/delete): app/assets/stylesheets/adminCSS/bussinessAdmin/customCSS/admin-style.css deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/stylesheets/adminCSS/bussinessAdmin/customCSS/admin-style.css left in tree.
 
@@ -116,13 +116,24 @@ Auto-merging app/assets/javascripts/appJS/nav/navCtrl.js
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/nav/navCtrl.js
 
 
-
+HERE
 Auto-merging app/assets/javascripts/appJS/nav/_nav.html
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/nav/_nav.html
+
+
+
 Auto-merging app/assets/javascripts/appJS/home/homeCtrl.js
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/home/homeCtrl.js
+
+
+
 Auto-merging app/assets/javascripts/appJS/home/_home.html
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/home/_home.html
+
+
+
+
+
 CONFLICT (rename/delete): app/assets/javascripts/appJS/auth/directives/modal.js deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/javascripts/appJS/auth/directives/modal.js left in tree.
 Auto-merging app/assets/javascripts/appJS/auth/directives/ensureUnique.js
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/auth/directives/ensureUnique.js

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 app.controller('homeCtrl', ['$scope', '$http', 'FileUploader', '$interval', '$state', '$location',
     '$anchorScroll',
     function($scope, $http, FileUploader, $interval, $state, $location, $anchorScroll) {
@@ -83,7 +82,4 @@ app.controller('homeCtrl', ['$scope', '$http', 'FileUploader', '$interval', '$st
         };
     }
 ]);
-=======
-app.controller('homeCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth){
-}]);
->>>>>>> merge_bussiness_admin
+
