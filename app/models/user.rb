@@ -3,10 +3,11 @@ class User
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  :recoverable, :rememberable, :trackable, :validatable
 
   #callback
   before_create :set_default_role
+<<<<<<< HEAD
   before_save :check_gender
   
 
@@ -30,10 +31,17 @@ class User
   has_and_belongs_to_many :followed_posts, class_name: 'Post', inverse_of: :followers
   #1 nguoi co nhieu image (test)
   has_many :images
+=======
+  #relationships
+  belongs_to :role, primary_key: "name", foreign_key: "role_name"
+  embeds_one :information
+  has_one :bussiness
+  has_many :tickets
+>>>>>>> merge_bussiness_admin
   #My field
-  field :firstname, type: String
-  field :lastname, type: String
+  field :fullname, type: String
   field :username, type: String
+<<<<<<< HEAD
   field :avatar, type: String
   field :gender, type: String #can cho nam hoac nu
   field :address, type: String
@@ -83,10 +91,14 @@ class User
   # skip_callback :store_avatar!, if: :skip_saving?
 
   
+=======
+  field :phone, type: String
+
+>>>>>>> merge_bussiness_admin
   #My validation
-  validates :username, presence: true, uniqueness: true
-  validates :firstname, presence: true
-  validates :lastname, presence: true
+  validates :username, :email, presence: true, uniqueness: true
+  validates :fullname, :phone, presence: true
+
   ## Database authenticatable
   field :email,              type: String, default: ""
   field :encrypted_password, type: String, default: ""
@@ -115,6 +127,7 @@ class User
   # field :failed_attempts, type: Integer, default: 0 # Only if lock strategy is :failed_attempts
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
+<<<<<<< HEAD
 
   #PUBLIC METHOD
   def is_system_admin?
@@ -172,4 +185,11 @@ class User
     end
 
    
+=======
+  private
+  def set_default_role
+    self.role ||= Role.where(name: 'user').first
+  end
+
+>>>>>>> merge_bussiness_admin
 end

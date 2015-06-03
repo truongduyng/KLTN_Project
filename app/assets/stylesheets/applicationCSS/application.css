@@ -9,12 +9,17 @@
  * compiled file so the styles you add here take precedence over styles defined in any styles
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
+<<<<<<< HEAD
  *= require bootstrap/dist/css/bootstrap
  *= require jquery-timepicker-jt
  *= require jquery-timepicker-jt/lib/bootstrap-datepicker
  *= require applicationCSS/customCSS/style
  *= require bootstrap-social
  *= require_tree ./customCSS/semanticUI/
+=======
+ *= require jquery-ui
+ *= require angular-flash-alert/src/angular-flash
+>>>>>>> merge_bussiness_admin
  *= require_tree .
  *= require_self
  */

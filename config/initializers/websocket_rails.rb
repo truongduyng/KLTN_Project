@@ -16,6 +16,15 @@ WebsocketRails.setup do |config|
   # Start the standalone server with rake websocket_rails:start_server
   # * Requires Redis
   config.standalone = false
+<<<<<<< HEAD
+=======
+  # config.standalone_port = 3001
+  # Uncomment and edit to point to a different redis instance.
+  # Will not be used unless standalone or synchronization mode
+  # is enabled.
+
+  # config.redis_options = {:host => 'localhost', :port => '3001'}
+>>>>>>> merge_bussiness_admin
 
   # Change to true to enable channel synchronization between
   # multiple server instances.
@@ -25,10 +34,14 @@ WebsocketRails.setup do |config|
   # Prevent Thin from daemonizing (default is true)
   # config.daemonize = false
 
+<<<<<<< HEAD
   # Uncomment and edit to point to a different redis instance.
   # Will not be used unless standalone or synchronization mode
   # is enabled.
   # config.redis_options = {:host => 'localhost', :port => '6379'}
+=======
+
+>>>>>>> merge_bussiness_admin
 
   # By default, all subscribers in to a channel will be removed
   # when that channel is made private. If you don't wish active
@@ -37,7 +50,11 @@ WebsocketRails.setup do |config|
   # config.keep_subscribers_when_private = false
 
   # Set to true if you wish to broadcast channel subscriber_join and
+<<<<<<< HEAD
   # subscriber_part events. All subscribers of a channel will be 
+=======
+  # subscriber_part events. All subscribers of a channel will be
+>>>>>>> merge_bussiness_admin
   # notified when other clients join and part the channel. If you are
   # using the UserManager, the current_user object will be sent along
   # with the event.

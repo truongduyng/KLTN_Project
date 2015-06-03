@@ -1,0 +1,71 @@
+<section ng-controller= "assetCategoryCtrl">
+  <div class="row panel">
+    <div class="col-lg-12">
+      <section>
+        <div class="table-responsive">
+          <table id="table1" class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th><i></i> Loại sân</th>
+                <th><i></i> Giá</th>
+                <th><i></i> </th>
+              </tr>
+            </thead>
+            <tbody >
+
+              <tr ng-repeat-start="(categoryIndex, category) in categories">
+                <td>
+                  {{categoryIndex+1}}
+                </td>
+                <td>{{category.name}}</td>
+                <td style="cursor: pointer" data-ng-click="category.collapseRows = !category.collapseRows">
+                  <span class="tbltree-expander" data-ng-class="{'tbltree-expander-collapsed': !category.collapseRows, 'tbltree-expander-expanded': category.collapseRows}">
+                  </span>
+                  {{category.short_desc}}
+                </td>
+
+                <td align="center" style="vertical-align:middle; max-width:100px;">
+                  <div class="btn-group" >
+                    <a data-ng-click="open_edit(category)"><i class="fa fa-edit"></i></a>
+                    <a  data-ng-click="opendeleteCategory(category)"><i class="fa fa-trash danger"></i></a>
+                  </div>
+                </td>
+
+              </tr>
+
+              <tr ng-repeat-end ng-repeat="(feeIndex, fee) in category.fees"  data-ng-show="category.collapseRows" class="price">
+                <td colspan="2"  align="center">Từ {{fee.begin_time | date:'shortTime'}} tới {{fee.end_time | date:'shortTime'}}</td>
+                <td colspan="3">{{fee.price | vnd}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pull-left">
+          <a class="btn btn-primary" ng-click= "open_new()"><i class="fa fa-plus"></i></a>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
+
+<script type="text/javascript">
+  $(function() {
+    $("#table1").tbltree();
+  });
+</script>
+
+<script type="text/ng-template" id="deletecategory.html">
+  <div class="modal-body row">
+    <div class= "col-lg-12">
+      <div class="margintop10">
+        <strong>Chú ý:</strong>Bạn có muốn xóa loại sân đã chọn không ?</strong>
+      </div>
+      <div class="pull-right margintop10">
+        <button ng-click="ok()" class="btn btn-danger">Xóa</button>
+        <button class="btn btn-warning" ng-click="cancel()">Thoát</button>
+      </div>
+    </div>
+  </div>
+</script>

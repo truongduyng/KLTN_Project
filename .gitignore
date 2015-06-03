@@ -11,6 +11,10 @@
 /log/*
 !/log/.keep
 /tmp
+<<<<<<< HEAD
 
 # Ignore all image uploaded
+=======
+/vendor/assets/bower_components
+>>>>>>> merge_bussiness_admin
 /public/uploads

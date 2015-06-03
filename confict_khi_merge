@@ -1,0 +1,100 @@
+Auto-merging db/seeds.rb
+CONFLICT (content): Merge conflict in db/seeds.rb
+Removing config/unicorn.rb
+Auto-merging config/routes.rb
+CONFLICT (content): Merge conflict in config/routes.rb
+
+
+Auto-merging config/initializers/websocket_rails.rb
+CONFLICT (add/add): Merge conflict in config/initializers/websocket_rails.rb
+Auto-merging config/events.rb
+CONFLICT (add/add): Merge conflict in config/events.rb
+Auto-merging config/environments/development.rb
+CONFLICT (content): Merge conflict in config/environments/development.rb
+Auto-merging config/application.rb
+Auto-merging bower.json
+CONFLICT (content): Merge conflict in bower.json
+Removing app/views/layouts/tmp.html.erb
+Auto-merging app/views/layouts/bussiness_admin.html.erb
+CONFLICT (add/add): Merge conflict in app/views/layouts/bussiness_admin.html.erb
+Auto-merging app/views/layouts/application.html.erb
+CONFLICT (content): Merge conflict in app/views/layouts/application.html.erb
+Removing app/views/devise/unlocks/new.html.erb
+Removing app/views/devise/shared/_links.html.erb
+Removing app/views/devise/registrations/new.html.erb
+Removing app/views/devise/registrations/edit.html.erb
+Removing app/views/devise/passwords/new.html.erb
+Removing app/views/devise/passwords/edit.html.erb
+Removing app/views/devise/mailer/unlock_instructions.html.erb
+Removing app/views/devise/mailer/reset_password_instructions.html.erb
+Removing app/views/devise/mailer/confirmation_instructions.html.erb
+Removing app/views/devise/confirmations/new.html.erb
+Auto-merging app/views/branches/show.json.jbuilder
+CONFLICT (add/add): Merge conflict in app/views/branches/show.json.jbuilder
+CONFLICT (modify/delete): app/views/assests/show.json.jbuilder deleted in merge_bussiness_admin and modified in HEAD. Version HEAD of app/views/assests/show.json.jbuilder left in tree.
+CONFLICT (modify/delete): app/views/assests/get_assests_by_category.json.jbuilder deleted in merge_bussiness_admin and modified in HEAD. Version HEAD of app/views/assests/get_assests_by_category.json.jbuilder left in tree.
+Auto-merging app/models/user.rb
+CONFLICT (content): Merge conflict in app/models/user.rb
+Auto-merging app/models/role.rb
+CONFLICT (content): Merge conflict in app/models/role.rb
+Auto-merging app/models/bussiness.rb
+CONFLICT (content): Merge conflict in app/models/bussiness.rb
+Auto-merging app/models/branch.rb
+CONFLICT (content): Merge conflict in app/models/branch.rb
+Removing app/models/assest_category.rb
+Removing app/models/assest.rb
+Removing app/helpers/home_helper.rb
+Removing app/controllers/user_controller.rb
+CONFLICT (modify/delete): app/controllers/fees_controller.rb deleted in HEAD and modified in merge_bussiness_admin. Version merge_bussiness_admin of app/controllers/fees_controller.rb left in tree.
+CONFLICT (modify/delete): app/controllers/bussinesses_controller.rb deleted in HEAD and modified in merge_bussiness_admin. Version merge_bussiness_admin of app/controllers/bussinesses_controller.rb left in tree.
+CONFLICT (modify/delete): app/controllers/branches_controller.rb deleted in HEAD and modified in merge_bussiness_admin. Version merge_bussiness_admin of app/controllers/branches_controller.rb left in tree.
+Auto-merging app/controllers/application_controller.rb
+CONFLICT (content): Merge conflict in app/controllers/application_controller.rb
+CONFLICT (modify/delete): app/controllers/admin_controller.rb deleted in merge_bussiness_admin and modified in HEAD. Version HEAD of app/controllers/admin_controller.rb left in tree.
+CONFLICT (modify/delete): app/assets/stylesheets/applicationCSS/customCSS/style.css deleted in merge_bussiness_admin and modified in HEAD. Version HEAD of app/assets/stylesheets/applicationCSS/customCSS/style.css left in tree.
+Auto-merging app/assets/stylesheets/applicationCSS/application.css
+CONFLICT (content): Merge conflict in app/assets/stylesheets/applicationCSS/application.css
+Auto-merging app/assets/stylesheets/adminCSS/bussinessAdmin/customCSS/style-responsive.css
+CONFLICT (rename/delete): app/assets/stylesheets/adminCSS/bussinessAdmin/customCSS/admin-style.css deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/stylesheets/adminCSS/bussinessAdmin/customCSS/admin-style.css left in tree.
+CONFLICT (rename/delete): app/assets/stylesheets/adminCSS/bussinessAdmin/application.css deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/stylesheets/adminCSS/bussinessAdmin/application.css left in tree.
+Removing app/assets/javascripts/home.coffee
+Auto-merging app/assets/javascripts/appJS/nav/navCtrl.js
+CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/nav/navCtrl.js
+Auto-merging app/assets/javascripts/appJS/nav/_nav.html
+CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/nav/_nav.html
+Auto-merging app/assets/javascripts/appJS/home/homeCtrl.js
+CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/home/homeCtrl.js
+Auto-merging app/assets/javascripts/appJS/home/_home.html
+CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/home/_home.html
+CONFLICT (rename/delete): app/assets/javascripts/appJS/auth/directives/modal.js deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/javascripts/appJS/auth/directives/modal.js left in tree.
+Auto-merging app/assets/javascripts/appJS/auth/directives/ensureUnique.js
+CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/auth/directives/ensureUnique.js
+Auto-merging app/assets/javascripts/appJS/auth/authCtrl.js
+CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/auth/authCtrl.js
+Auto-merging app/assets/javascripts/appJS/auth/_register.html
+CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/auth/_register.html
+Auto-merging app/assets/javascripts/appJS/auth/_login.html
+CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/auth/_login.html
+Auto-merging app/assets/javascripts/appJS/application.js
+CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/application.js
+Auto-merging app/assets/javascripts/appJS/app.js
+CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/app.js
+Auto-merging app/assets/javascripts/adminJS/systemAdmin/header/header.js
+Auto-merging app/assets/javascripts/adminJS/systemAdmin/header/_header.html
+CONFLICT (rename/delete): app/assets/javascripts/adminJS/systemAdmin/customJS/scripts.js deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/javascripts/adminJS/systemAdmin/customJS/scripts.js left in tree.
+CONFLICT (rename/delete): app/assets/javascripts/adminJS/systemAdmin/customJS/jquery.nicescroll.js deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/javascripts/adminJS/systemAdmin/customJS/jquery.nicescroll.js left in tree.
+CONFLICT (rename/rename): Rename "app/assets/javascripts/adminJS/application.js"->"app/assets/javascripts/adminJS/systemAdmin/application.js" in branch "HEAD" rename "app/assets/javascripts/adminJS/application.js"->"app/assets/javascripts/adminJS/bussinessAdmin/application.js" in "merge_bussiness_admin"
+CONFLICT (modify/delete): app/assets/javascripts/adminJS/bussinessAdmin/sideBar/_side_bar.html deleted in HEAD and modified in merge_bussiness_admin. Version merge_bussiness_admin of app/assets/javascripts/adminJS/bussinessAdmin/sideBar/_side_bar.html left in tree.
+CONFLICT (modify/delete): app/assets/javascripts/adminJS/bussinessAdmin/home/services/bussinessService.js deleted in HEAD and modified in merge_bussiness_admin. Version merge_bussiness_admin of app/assets/javascripts/adminJS/bussinessAdmin/home/services/bussinessService.js left in tree.
+CONFLICT (modify/delete): app/assets/javascripts/adminJS/bussinessAdmin/home/_home.html deleted in HEAD and modified in merge_bussiness_admin. Version merge_bussiness_admin of app/assets/javascripts/adminJS/bussinessAdmin/home/_home.html left in tree.
+CONFLICT (rename/delete): app/assets/javascripts/adminJS/bussinessAdmin/customJS/jquery.tbltree.js deleted in HEAD and renamed in merge_bussiness_admin. Version merge_bussiness_admin of app/assets/javascripts/adminJS/bussinessAdmin/customJS/jquery.tbltree.js left in tree.
+CONFLICT (rename/delete): app/assets/javascripts/adminJS/bussinessAdmin/branch_management/assetcategory/services/feeService.js deleted in HEAD and renamed in merge_bussiness_admin. Version merge_bussiness_admin of app/assets/javascripts/adminJS/bussinessAdmin/branch_management/assetcategory/services/feeService.js left in tree.
+CONFLICT (rename/delete): app/assets/javascripts/adminJS/bussinessAdmin/branch_management/assetcategory/directives/numericOnly.js deleted in HEAD and renamed in merge_bussiness_admin. Version merge_bussiness_admin of app/assets/javascripts/adminJS/bussinessAdmin/branch_management/assetcategory/directives/numericOnly.js left in tree.
+Removing app/assets/images/application/01.jpg
+Auto-merging Gemfile.lock
+CONFLICT (content): Merge conflict in Gemfile.lock
+Auto-merging Gemfile
+CONFLICT (content): Merge conflict in Gemfile
+Auto-merging .gitignore
+CONFLICT (content): Merge conflict in .gitignore
+Automatic merge failed; fix conflicts and then commit the result

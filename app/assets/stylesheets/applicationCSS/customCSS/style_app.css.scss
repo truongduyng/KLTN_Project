@@ -1,0 +1,278 @@
+/* ==== Google font ==== */
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+/* ===================================
+1. General
+==================================== */
+body { padding-top: 70px; }
+
+
+body {
+	font-family:'Patrick Hand SC', Arial, sans-serif;
+	font-size:14px;
+	font-weight:300;
+	line-height:1.6em;
+	color:#656565;
+}
+
+a:active {
+	outline:0;
+}
+
+.clear {
+	clear:both;
+}
+
+h1,h2, h3, h4, h5, h6 {
+	font-family:'Patrick Hand SC', Arial, sans-serif;
+	font-weight:700;
+	line-height:1.1em;
+	color:#333;
+	margin-bottom: 20px;
+}
+
+/* ===================================
+2. layout
+==================================== */
+.largecontainer {
+	padding:0 10px 0 10px;
+	position: relative
+}
+/*
+.container {
+	padding:0 20px 0 20px;
+	position:relative;
+}
+*/
+#wrapper{
+	width:100%;
+	margin:0;
+	padding:0;
+}
+
+
+.scrollup{
+	position  :fixed;
+	width     :32px;
+	height    :32px;
+	bottom    :0px;
+	right     :20px;
+	background: #222;
+}
+
+a.scrollup {
+	outline:0;
+	text-align: center;
+}
+
+a.scrollup:hover,a.scrollup:active,a.scrollup:focus {
+	opacity:1;
+	text-decoration:none;
+}
+a.scrollup i {
+	margin-top: 10px;
+	color: #fff;
+}
+a.scrollup i:hover {
+	text-decoration:none;
+}
+
+/* =============================
+20. Spacer, margin
+============================= */
+
+.clear-marginbot{
+	margin-bottom:0;
+}
+
+.marginbot5{
+	margin-bottom:5px;
+}
+
+.marginbot10{
+	margin-bottom:10px;
+}
+.marginbot20{
+	margin-bottom:20px;
+}
+.marginbot30{
+	margin-bottom:30px;
+}
+.marginbot40{
+	margin-bottom:40px;
+}
+
+.clear-margintop{
+	margin-top:0;
+}
+
+.margintop10{
+	margin-top:10px;
+}
+
+.margintop20{
+	margin-top:20px;
+}
+
+.margintop30{
+	margin-top:30px;
+}
+
+.margintop40{
+	margin-top:40px;
+}
+
+.marginright20{
+	margin-right: 20px;
+}
+
+.marginleft20{
+	margin-left: 20px;
+}
+.marginleft5{
+	margin-left: 5px;
+}
+
+.padding10 {
+	padding: 10px 0 0 0;
+}
+
+.coverimg
+{
+	width: 100%;
+	height: 250px;
+}
+
+/*Style of table booking*/
+.tablebooking {
+	width: 100%;
+	table-layout: absolute;
+}
+
+.tablebooking th, .tablebooking td{
+	border: 1.5px solid #DDDDDD;
+	border-collapse: collapse;
+	height: 20px !important;
+	width: 170px !important;
+	/*background-color: #FFFFFF;*/
+}
+
+.tablebooking td{
+	font-size: 14px;
+	line-height: 1.4em;
+}
+
+.calendar_content{
+	overflow: auto;
+	height: 510px;
+	position: relative;
+	background-color: #ffffff;
+	padding: 0 0 0 0;
+}
+
+.fee_content{
+	overflow-y: auto;
+	height: 210px;
+}
+
+/*post*/
+.post{
+	background: #f8f8f8;
+	width: 100%;
+	padding: 10px 10px 10px 10px;
+}
+/*comment*/
+.comment{
+	width: 93%;
+}
+.postcontent
+{
+
+}
+
+/*boxbooking*/
+.boxbooking {
+	display: none;
+	background: #f8f8f8;
+	padding: 0px 10px 10px 10px;
+	box-shadow: 2px 2px 5px #888888;
+	position: fixed;
+	width: 275px !important;
+	z-index: 4;
+}
+
+.ticket {
+	z-index: 1;
+	position: absolute;
+	display: none;
+	color: black;
+}
+
+.ticket_new {
+	background-color: rgba(57,116,216,0.6);
+	border: 1px rgba(57,116,216,0.6) solid;
+	display: inline;
+}
+
+.ticket_doing {
+	background-color: rgba(123, 209, 72,0.6);
+	border: 1px rgba(123, 209, 72,0.6) solid;
+	display: inline;
+}
+
+.ticket_waiting {
+  background-color: rgba(221, 75, 63,0.6);
+  border: 1px rgba(221, 75, 63,0.6) solid;
+  display: inline;
+}
+
+.ticket_over {
+  background-color: rgba(251, 215, 91,0.6);
+  border: 1px rgba(251, 215, 91,0.6) solid;
+  display: inline;
+}
+
+.ticket_done {
+	background-color: rgba(112, 113, 117,0.6);
+	border: 1px rgba(234, 234, 234,0.8) solid;
+	display: inline;
+}
+
+i:hover{
+	color: rgb(65, 171, 107);
+	cursor: pointer;
+}
+
+.timeline{
+	background-color: #e75177;
+	margin: 0 0 0 0;
+	height: 1px;
+	top: 0px;
+	border: 0px;
+	z-index: 3;
+	position: relative;
+}
+
+.inthepast{
+	background-color: rgba(227, 227, 227, 0.3);
+}
+
+.myalert{
+	height: 50px !important;
+	margin: 0 0 10px 0 !important;
+	z-index: 100;
+	position: absolute;
+	bottom: 80%;
+	right: 20px;
+}
+
+.everyweek{
+	display: none;
+	width: inherit !important;
+}
+
+.close{
+	color: red;
+}

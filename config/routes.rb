@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
-
-
-  # #render plugin image browser thay vi load resource
-  # get '/assets/ckeditor/plugins/imagebrowser/browser/browser.html' => 'admin#image_browser'
-
-  #for login facebook
-  # devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-
+ 
+  #BN
+  resources 'branches' do
+    collection do
+      get 'list_branch_names'
+    end
+  end
+  #EN
+  
   resources :images
 
   resources :notification_categories do
@@ -101,81 +102,47 @@ Rails.application.routes.draw do
     end
   end
 
-  resources 'branches'
-  resources 'assests' do
+  get 'search(/:lat/:lng/:distance)' => 'branches#search', constraints:{ lat: /[0-9\.]+/, lng: /[0-9\.]+/, distance: /[0-9\.]+/ }
+  get 'searchnameadd(/:search_query)' => 'branches#search'
+
+  #BC
+  resources 'assets' do
     collection do
-      get 'get-assests-by-category'
+      get 'get-assets-by-category'
     end
   end
+  #EC
 
-  resources 'assest_categories' do
+  resources 'asset_categories' do
     resources 'fees'
   end
-  post 'bussinesses/new' => 'bussinesses#new'
+
+  get 'tickets/:date/:branch_id' => 'tickets#show'
+  post 'tickets' => 'tickets#create'
+  post 'tickets/update' => 'tickets#update'
+  delete 'tickets/:ticket_id' => 'tickets#destroy'
+
+  get 'dang-ky-doanh-nghiep' => 'bussinesses#new'
+  post 'bussiness-create' => 'bussinesses#create'
   put 'bussinesses/update' => 'bussinesses#update'
   get 'bussinesses/show' => 'bussinesses#show'
 
   post 'infomations/edit' => 'informations#edit'
   get 'informations/show' => 'informations#show'
+
   # resources :informations
   get 'check/username' => 'user#check_username'
   get 'check/email' => 'user#check_email'
   devise_for :users,:controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  ###
   get 'bussiness-admin' => 'admin#bussiness_admin' 
   get 'system-admin' => 'admin#system_admin'
   root 'application#angular'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
-
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
+  get 'check/username' => 'users#check_username'
+  get 'check/email' => 'users#check_email'
+  devise_for :users
+  get '/:branch_url_alias' => 'branches#branch_details', constraints: {branch_url_alias: /(?!websocket$).*/}, as: 'booking_address'
 end

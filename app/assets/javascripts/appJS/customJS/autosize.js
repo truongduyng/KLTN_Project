@@ -1,7 +1,6 @@
 (function (root, factory) {
 	'use strict';
-
-	if (typeof define === 'function' && define.amd) {
+  if (typeof define === 'function' && define.amd) {
 		// AMD. Register as an anonymous module.
 		define([], factory);
 	} else if (typeof exports === 'object') {
@@ -14,20 +13,20 @@
 		root.autosize = factory();
   }
 }(this, function () {
-	function main(ta) {
-		if (!ta || !ta.nodeName || ta.nodeName !== 'TEXTAREA' || ta.hasAttribute('data-autosize-on')) { return; }
+  function main(ta) {
+    if (!ta || !ta.nodeName || ta.nodeName !== 'TEXTAREA' || ta.hasAttribute('data-autosize-on')) { return; }
 
-		var maxHeight;
-		var heightOffset;
+    var maxHeight;
+    var heightOffset;
 
-		function init() {
-			var style = window.getComputedStyle(ta, null);
+    function init() {
+     var style = window.getComputedStyle(ta, null);
 
-			if (style.resize === 'vertical') {
-				ta.style.resize = 'none';
-			} else if (style.resize === 'both') {
-				ta.style.resize = 'horizontal';
-			}
+     if (style.resize === 'vertical') {
+      ta.style.resize = 'none';
+    } else if (style.resize === 'both') {
+      ta.style.resize = 'horizontal';
+    }
 
 			// horizontal overflow is hidden, so break-word is necessary for handling words longer than the textarea width
 			ta.style.wordWrap = 'break-word';
@@ -44,7 +43,7 @@
 			ta.style.width = width;
 
 			maxHeight = style.maxHeight !== 'none' ? parseFloat(style.maxHeight) : false;
-			
+
 			if (style.boxSizing === 'content-box') {
 				heightOffset = -(parseFloat(style.paddingTop)+parseFloat(style.paddingBottom));
 			} else {
@@ -58,7 +57,7 @@
 			var startHeight = ta.style.height;
 			var htmlTop = document.documentElement.scrollTop;
 			var bodyTop = document.body.scrollTop;
-			
+
 			ta.style.height = 'auto';
 
 			var endHeight = ta.scrollHeight+heightOffset;
@@ -120,7 +119,7 @@
 		ta.style.overflow = 'hidden';
 		ta.style.overflowY = 'hidden';
 
-		init();		
+		init();
 	}
 
 	// Do nothing in IE8 or lower

@@ -1,0 +1,230 @@
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+/*BEGIN For angularjs-bootstrap*/
+a img{
+  cursor:pointer;
+}
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+.modal-backdrop {
+  background-color: #000;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1040;
+}
+/*END For angularjs-bootstrap*/
+
+.clear-marginbot{
+  margin-bottom:0;
+}
+
+.marginbot5{
+  margin-bottom:5px;
+}
+
+.marginbot10{
+  margin-bottom:10px;
+}
+.marginbot20{
+  margin-bottom:20px;
+}
+.marginbot30{
+  margin-bottom:30px;
+}
+.marginbot40{
+  margin-bottom:40px;
+}
+
+.clear-margintop{
+  margin-top:0;
+}
+
+.margintop10{
+  margin-top:10px;
+}
+
+.margintop20{
+  margin-top:20px;
+}
+
+.margintop30{
+  margin-top:30px;
+}
+
+.margintop40{
+  margin-top:40px;
+}
+
+.marginright20{
+  margin-right: 20px;
+}
+
+.marginleft20{
+  margin-left: 20px;
+}
+.marginleft5{
+  margin-left: 5px;
+}
+
+.padding10 {
+  padding: 10px 0 0 0;
+}
+
+.coverimg
+{
+  width: 100%;
+  height: 250px;
+}
+
+/*Style of table booking*/
+.tablebooking {
+  width: 100px;
+  table-layout: fixed !important;
+}
+
+.tablebooking th, .tablebooking td{
+  border: 1.5px solid #DDDDDD;
+  border-collapse: collapse;
+  height: 20px !important;
+  width: 170px !important;
+}
+
+.tablebooking td{
+  font-size: 14px;
+  line-height: 1.4em;
+
+}
+
+.calendar_content{
+  overflow: auto;
+  height: 510px;
+  position: relative;
+  background-color: #ffffff;
+  padding: 0 0 0 0;
+}
+.fee_content{
+  overflow-y: auto;
+  height: 210px;
+}
+
+/*boxbooking*/
+.boxbooking {
+  display: none;
+  background: #f8f8f8;
+  padding: 0px 10px 10px 10px;
+  box-shadow: 2px 2px 5px #888888;
+  position: fixed;
+  width: 430px;
+  z-index: 9000 !important;
+}
+
+#miniedit{
+  width: 270px !important;
+  z-index: 9 !important;
+}
+
+.ticket {
+  z-index: 1;
+  position: absolute;
+  display: none;
+  color: black;
+}
+
+.ticket_new {
+  background-color: rgba(57,116,216,0.6);
+  border: 1px rgba(57,116,216,0.6) solid;
+  display: inline;
+}
+
+.ticket_doing {
+  background-color: rgba(123, 209, 72,0.6);
+  border: 1px rgba(123, 209, 72,0.6) solid;
+  display: inline;
+}
+
+.ticket_waiting {
+  background-color: rgba(221, 75, 63,0.6);
+  border: 1px rgba(221, 75, 63,0.6) solid;
+  display: inline;
+}
+
+.ticket_over {
+  background-color: rgba(251, 215, 91,0.6);
+  border: 1px rgba(251, 215, 91,0.6) solid;
+  display: inline;
+}
+
+.ticket_done {
+  background-color: rgba(112, 113, 117,0.6);
+  border: 1px rgba(234, 234, 234,0.8) solid;
+  display: inline;
+}
+
+i:hover{
+  color: rgb(65, 171, 107);
+  cursor: pointer;
+}
+
+.timeline{
+  background-color: #e75177;
+  margin: 0 0 0 0;
+  height: 2px;
+  top: 0px;
+  border: 0px;
+  z-index: 3;
+  position: relative;
+}
+
+.ticket_status_icon{
+  position: absolute;
+  color: black;
+  font-size: 20px;
+  z-index: 2;
+}
+
+.inthepast{
+  background-color: rgba(225,225,225, 0.3) !important;
+}
+
+.customer{
+  border-radius: 10px !important;
+  border: 1px solid #8AC007;
+  width: 160px !important;
+}
+
+.customer:focus{
+  outline: none !important;
+  border-radius: 10px;
+  border: 1px solid #366378;
+}
+
+.myalert{
+  height: 50px !important;
+  margin: 0 0 10px 0 !important;
+  z-index: 10000 !important;
+  position: fixed;
+  bottom: 80%;
+  right: 20px;
+}
+
+.everyweek{
+  display: none;
+}
+
+.price{
+  background-color: #f5f5f5;
+}
+
+.danger{
+  color: #e74c3c;
+}
+
+.success{
+  color: #53b67c;
+}

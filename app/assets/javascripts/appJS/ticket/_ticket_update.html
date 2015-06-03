@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <button type="button" class="close" aria-hidden="true" ng-click="close_modal()">&times;</button>
+  <h3>Chi tiet </h3>
+</div>
+<div class="modal-body row">
+  <div class="col-lg-12">
+    <i class="fa fa-clock-o fa-2x marginbot10"></i>
+    <span>{{ dt | date:'dd-MM-yyyy'}},</span>
+    <select ng-options = "hour_begin for hour_begin in hour_begin_list" ng-model= 'hour_begin' ng-change='update_hour_end(false)'/>
+    <select ng-options = "hour_end for hour_end in hour_end_list" ng-model= 'hour_end' ng-change='update_price()'/>
+    <br><i class="fa fa-futbol-o fa-2x marginbot10"></i>
+    <span style="display:inline">{{branch.branch.name}} tai {{branch.branch.address}}</span>
+
+    <br><i class="fa fa-user fa-2x marginbot10"></i>
+    <img src="" alt="ava">
+    <span style="display:inline">{{ticket.customer_name}} , Số ĐT: <strong style="color: #0078ad">{{ticket.customer_phone}}</strong></span>
+    <br><i class="fa fa-bell fa-2x marginbot10"></i>
+    <input type="radio" value="taisan" checked>Thanh toán tại sân
+    <!-- <input type="radio" name="" value="" placeholder="">Thanh toán điện tử <br> -->
+    <br><i class="fa fa-money fa-2x marginbot10"></i>
+    <span>{{price}}.000 VND</span>
+    <br>
+    <button class="btn btn-theme margintop10 pull-left" ng-click="update_ticket(hour_begin, hour_end)">Cap nhat</button>
+  </div>
+</div>

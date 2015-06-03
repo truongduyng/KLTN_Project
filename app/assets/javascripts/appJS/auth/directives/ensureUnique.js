@@ -20,8 +20,12 @@ app.directive('ensureUnique', ['$http', function($http) {
               });
         }
       };
+<<<<<<< HEAD
 
       scope.$watch(attrs.ngModel, checkUnique);
+=======
+      scope.$watch(attrs.ngModel, checkUsername);
+>>>>>>> merge_bussiness_admin
     }
   }
 }]);

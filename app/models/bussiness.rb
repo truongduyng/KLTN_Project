@@ -1,4 +1,5 @@
 class Bussiness
+<<<<<<< HEAD
 	include Mongoid::Document
 	field :name, type: String
 	#address bo thay the boi address cua branch
@@ -26,3 +27,16 @@ class Bussiness
 	# 		self.avatar = current_user.avatar
 	# 	end
 end
+=======
+  include Mongoid::Document
+  field :name, type: String
+  field :address, type: String
+  field :phone, type: String
+  field :category, type: String #Linh vuc
+  field :short_desc, type: String
+  field :description, type: String
+
+  belongs_to :user
+  has_many :branches
+end
+>>>>>>> merge_bussiness_admin

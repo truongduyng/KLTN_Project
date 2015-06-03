@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="row" style="margin-top:-15px;">
     <!-- BEGIN LEFT COLUMN -->
     <div class="col-md-2">
@@ -104,3 +105,85 @@
       <!-- END RIGHT COLUMN -->
 </div>
 
+=======
+<div class="modal-header">
+  <button type="button" class="close" aria-hidden="true" ng-click="close_modal()">&times;</button>
+  <h1>Đăng kí</h1>
+</div>
+<div class="modal-body">
+  <form  class="form-horizontal" role="form" name="register_form" ng-controller="authCtrl">
+    <!-- Ten -->
+    <div class="form-group" >
+      <label class="control-label col-sm-2" for="lastname">Ho & Ten:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Nhap ten" ng-model="user.fullname" required autofocus>
+        <div class="has-error" data-ng-show="register_form.lastname.$dirty && register_form.lastname.$invalid">
+          <span class="help-block" ng-show="register_form.lastname.$error.required">Vui long nhap ten</span>
+        </div>
+      </div>
+    </div>
+    <!-- User name -->
+    <div class="form-group" >
+      <label class="control-label col-sm-2" for="username">Username:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="username" name="username" placeholder="Nhap username" ng-model="user.username" ensure-unique="username" ensure-unique-data="{{user.username}}" required ng-minlength=3 ng-maxlength=20>
+        <div class="has-error" data-ng-show="register_form.username.$dirty && register_form.username.$invalid">
+          <span class="help-block" ng-show="register_form.username.$error.required">Vui long nhap username</span>
+          <span class="help-block" ng-show="register_form.username.$error.minlength">Username it nhat 3 ki tu</span>
+          <span class="help-block" ng-show="register_form.username.$error.maxlength">Username toi da 20 ki tu</span>
+          <span class="help-block" ng-show="register_form.username.$error.unique">Username da ton tai</span>
+        </div>
+      </div>
+    </div>
+    <!-- Email -->
+    <div class="form-group" >
+      <label class="control-label col-sm-2" for="email">Email:</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" id="email" name="email" placeholder="Nhap email" ng-model="user.email" required ensure-unique="email" ensure-unique-data="{{user.email}}" >
+        <div class="has-error" data-ng-show="register_form.email.$dirty && register_form.email.$invalid">
+          <span class="help-block" ng-show="register_form.email.$error.required">Vui long nhap email</span>
+          <span class="help-block" ng-show="register_form.email.$error.email">Dia chi email khong hop le</span>
+          <span class="help-block" ng-show="register_form.username.$error.unique">Email da ton tai</span>
+        </div>
+      </div>
+    </div>
+    <!-- phone -->
+    <div class="form-group" >
+      <label class="control-label col-sm-2" for="email">Email:</label>
+      <div class="col-sm-10">
+      <input type="phone" class="form-control" id="phone" name="phone" placeholder="Nhap phone" ng-model="user.phone" required>
+      </div>
+    </div>
+    <!-- Password -->
+    <div class="form-group" >
+      <label class="control-label col-sm-2" for="password">Password:</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Nhap password" ng-model="user.password" required ng-minlength=8 ng-maxlength=20>
+        <div class="has-error" data-ng-show="register_form.password.$dirty && register_form.password.$invalid">
+          <span class="help-block" ng-show="register_form.password.$error.required">Vui long nhap password</span>
+          <span class="help-block" ng-show="register_form.password.$error.minlength">Password it nhat 8 ki tu</span>
+          <span class="help-block" ng-show="register_form.password.$error.maxlength">Password nhieu nhat 20 ki tu</span>
+        </div>
+      </div>
+    </div>
+    <!-- confirmation_password -->
+    <div class="form-group" >
+      <label class="control-label col-sm-2" for="password">Xac nhan password:</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="confirmation_password" name="confirmation_password" placeholder="Nhap lai password" ng-model="user.confirmation_password" required ng-minlength=8 ng-maxlength=20 confirmation-password orginal-password="user.password">
+        <div class="has-error" data-ng-show="register_form.confirmation_password.$dirty && register_form.confirmation_password.$invalid">
+          <span class="help-block" ng-show="register_form.confirmation_password.$error.required">Vui long nhap password xac nhan</span>
+          <span class="help-block" ng-show="register_form.confirmation_password.$error.minlength">Password xac nhan it nhat 8 ki tu</span>
+          <span class="help-block" ng-show="register_form.confirmation_password.$error.maxlength">Password xac nhan nhieu nhat 20 ki tu</span>
+          <span class="help-block" ng-show="register_form.confirmation_password.$error.confirmation_password">Password khong khop</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-2">
+        <button type="submit" ng-click="register()" class="btn btn-success" ng-disabled="register_form.$invalid">Đăng kí</button>
+      </div>
+    </div>
+  </form>
+</div>
+>>>>>>> merge_bussiness_admin

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
@@ -26,9 +27,20 @@
 //= require bootstrap/dist/js/bootstrap
 //= require angular-bootstrap
 //= require angular-ui-router
+=======
+//= require jquery.min
+//= require jquery-ui/autocomplete
+//= require bootstrap-sprockets
+//= require angular
+//= require angular-bootstrap
+>>>>>>> merge_bussiness_admin
 //= require angular-rails-templates
 //= require angular-devise
+//= require angular-ui-router
+//= require ngmap
+//= require angular-flash-alert/src/angular-flash
 //= require initModule
+<<<<<<< HEAD
 //= require jquery-timepicker-jt
 //= require jquery-timepicker-jt/lib/bootstrap-datepicker
 //= require angular-flash
@@ -46,4 +58,8 @@
 //= require ngstorage
 //= require angular-facebook
 //= require ./app.js
+=======
+//= require_tree ../services
+//= require websocket_rails/main
+>>>>>>> merge_bussiness_admin
 //= require_tree .
