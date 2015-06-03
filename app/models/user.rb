@@ -7,16 +7,22 @@ class User
 
   #callback
   before_create :set_default_role
-<<<<<<< HEAD
   before_save :check_gender
   
-
   #relationships
   # belongs_to :role
   #do thay doi nen can thay check role o bussiness admin, co the dung 1 controller bussiness admin de lam dieu nay thay
-  has_and_belongs_to_many :roles 
-  #embeds_one :information 
+  
+  ##BC
+  # has_and_belongs_to_many :roles 
+  belongs_to :role, primary_key: "name", foreign_key: "role_name"
+  ##EC
   has_one :bussiness
+
+  ##BN
+  embeds_one :information 
+  has_many :tickets
+  ##EN
   has_many :posts, class_name: 'Post', inverse_of: :user
   has_many :favorite_posts
   #Moi nguoi co the co nhieu yeu cau, boi vi neu 1 yeu cau ko dc chap thuan thi co the gui yeu cau khac
@@ -31,17 +37,11 @@ class User
   has_and_belongs_to_many :followed_posts, class_name: 'Post', inverse_of: :followers
   #1 nguoi co nhieu image (test)
   has_many :images
-=======
-  #relationships
-  belongs_to :role, primary_key: "name", foreign_key: "role_name"
-  embeds_one :information
-  has_one :bussiness
-  has_many :tickets
->>>>>>> merge_bussiness_admin
+
+
   #My field
   field :fullname, type: String
   field :username, type: String
-<<<<<<< HEAD
   field :avatar, type: String
   field :gender, type: String #can cho nam hoac nu
   field :address, type: String
@@ -90,11 +90,6 @@ class User
   # #Cho xu ly gan avatar tu facebook vao avatar 
   # skip_callback :store_avatar!, if: :skip_saving?
 
-  
-=======
-  field :phone, type: String
-
->>>>>>> merge_bussiness_admin
   #My validation
   validates :username, :email, presence: true, uniqueness: true
   validates :fullname, :phone, presence: true
@@ -127,8 +122,7 @@ class User
   # field :failed_attempts, type: Integer, default: 0 # Only if lock strategy is :failed_attempts
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
-<<<<<<< HEAD
-
+  
   #PUBLIC METHOD
   def is_system_admin?
       if self.roles
@@ -184,12 +178,4 @@ class User
 
     end
 
-   
-=======
-  private
-  def set_default_role
-    self.role ||= Role.where(name: 'user').first
-  end
-
->>>>>>> merge_bussiness_admin
 end

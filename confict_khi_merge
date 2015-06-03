@@ -36,22 +36,21 @@ CONFLICT (content): Merge conflict in app/views/layouts/application.html.erb
 
 
 
-H
+
 Auto-merging app/views/branches/show.json.jbuilder
 CONFLICT (add/add): Merge conflict in app/views/branches/show.json.jbuilder
 
 
 CONFLICT (modify/delete): app/views/assests/show.json.jbuilder deleted in merge_bussiness_admin and modified in HEAD. Version HEAD of app/views/assests/show.json.jbuilder left in tree.
 
-
-
-
-
 CONFLICT (modify/delete): app/views/assests/get_assests_by_category.json.jbuilder deleted in merge_bussiness_admin and modified in HEAD. Version HEAD of app/views/assests/get_assests_by_category.json.jbuilder left in tree.
 
 
+H
 Auto-merging app/models/user.rb
 CONFLICT (content): Merge conflict in app/models/user.rb
+
+
 Auto-merging app/models/role.rb
 CONFLICT (content): Merge conflict in app/models/role.rb
 Auto-merging app/models/bussiness.rb
