@@ -61,8 +61,11 @@ class User
         #Neu chua login lan nao thi tao nguoi dung moi 
         user = User.new
         user.password = Devise.friendly_token[0,20]
-        user.firstname = auth.info.first_name   # assuming the user model has a name
-        user.lastname = auth.info.last_name   # assuming the user model has a name
+        ##BC
+        # user.firstname = auth.info.first_name   # assuming the user model has a name
+        # user.lastname = auth.info.last_name   # assuming the user model has a name
+        user.fullname = auth.info.first_name + " " + auth.info.last_name
+        ##EC
         user.username = auth.uid
         user.identity = identity
         user.save
