@@ -9,9 +9,11 @@ class Ticket
   field :customer_name, type: String
   field :customer_phone, type: String
 
-  belongs_to :user, dependent: :nullify
-  belongs_to :branch
-  belongs_to :asset, dependent: :nullify
+  belongs_to :user, dependent: :nullify, index: true
+  belongs_to :branch, index: true
+  belongs_to :asset, dependent: :nullify, index: true
+
+  index({begin_use_time: 1})
 
   validates :begin_use_time, :end_use_time, :price, :status, :customer_phone, presence: true
   validates_format_of :customer_phone, with: /\A\d{10,11}\z/
