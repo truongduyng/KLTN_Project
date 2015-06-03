@@ -17,24 +17,22 @@ Auto-merging config/environments/development.rb
 CONFLICT (content): Merge conflict in config/environments/development.rb
 
 
+
 Auto-merging config/application.rb
 Auto-merging bower.json
 CONFLICT (content): Merge conflict in bower.json
+
+
+
 Removing app/views/layouts/tmp.html.erb
 Auto-merging app/views/layouts/bussiness_admin.html.erb
 CONFLICT (add/add): Merge conflict in app/views/layouts/bussiness_admin.html.erb
+
+
 Auto-merging app/views/layouts/application.html.erb
 CONFLICT (content): Merge conflict in app/views/layouts/application.html.erb
-Removing app/views/devise/unlocks/new.html.erb
-Removing app/views/devise/shared/_links.html.erb
-Removing app/views/devise/registrations/new.html.erb
-Removing app/views/devise/registrations/edit.html.erb
-Removing app/views/devise/passwords/new.html.erb
-Removing app/views/devise/passwords/edit.html.erb
-Removing app/views/devise/mailer/unlock_instructions.html.erb
-Removing app/views/devise/mailer/reset_password_instructions.html.erb
-Removing app/views/devise/mailer/confirmation_instructions.html.erb
-Removing app/views/devise/confirmations/new.html.erb
+
+
 Auto-merging app/views/branches/show.json.jbuilder
 CONFLICT (add/add): Merge conflict in app/views/branches/show.json.jbuilder
 CONFLICT (modify/delete): app/views/assests/show.json.jbuilder deleted in merge_bussiness_admin and modified in HEAD. Version HEAD of app/views/assests/show.json.jbuilder left in tree.
