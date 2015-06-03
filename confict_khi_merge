@@ -7,10 +7,16 @@ CONFLICT (content): Merge conflict in config/routes.rb
 
 Auto-merging config/initializers/websocket_rails.rb
 CONFLICT (add/add): Merge conflict in config/initializers/websocket_rails.rb
+
+
 Auto-merging config/events.rb
 CONFLICT (add/add): Merge conflict in config/events.rb
+
+
 Auto-merging config/environments/development.rb
 CONFLICT (content): Merge conflict in config/environments/development.rb
+
+
 Auto-merging config/application.rb
 Auto-merging bower.json
 CONFLICT (content): Merge conflict in bower.json

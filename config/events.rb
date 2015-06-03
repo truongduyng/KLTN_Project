@@ -1,5 +1,5 @@
 WebsocketRails::EventMap.describe do
-<<<<<<< HEAD
+
   # You can use this file to map incoming events to controller actions.
   # One event can be mapped to any number of controller actions. The
   # actions will be executed in the order they were subscribed.
@@ -34,11 +34,9 @@ WebsocketRails::EventMap.describe do
   #     subscribe :subscribe_private, :to => AuthorizationController, :with_method => :on_subscribe_private
   # end
   
-=======
   namespace :tickets do
     subscribe :create_ticket, :to => WebsocketController, :with_method => :create_ticket
     subscribe :update_ticket, :to => WebsocketController, :with_method => :update_ticket
     subscribe :delete_ticket, :to => WebsocketController, :with_method => :delete_ticket
   end
->>>>>>> merge_bussiness_admin
 end

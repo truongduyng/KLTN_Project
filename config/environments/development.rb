@@ -38,11 +38,12 @@ Rails.application.configure do
 
   #For devise
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-<<<<<<< HEAD
+
 
   #For websocket
   #Remove the Rack::Lock middleware
-=======
->>>>>>> merge_bussiness_admin
+
+  ##BN
   config.middleware.delete Rack::Lock
+  ##EN
 end
