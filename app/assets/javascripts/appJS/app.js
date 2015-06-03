@@ -1,3 +1,5 @@
+console.log("in app.js");
+
 //Loai bo angularMoment, ngFileUpload
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angularFileUpload',
 	'angular-flash.service', 'angular-flash.flash-alert-directive', 'unsavedChanges', 'sporta.directives',
@@ -9,7 +11,6 @@ var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angul
 
 //For intercept $http
 app.factory('myHttpInterceptor', ['$q', '$rootScope', function($q, $rootScope) {
-
 	var responseIntercepter = {
 		responseError: function(rejection) {
 			if (rejection.config.url.startsWith("/users/sign_in.json")) {} else {
