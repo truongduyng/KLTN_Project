@@ -4,21 +4,16 @@
     <meta charset="utf-8">
     <title>Sporta</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    
-   <!-- <script src="http://maps.google.com/maps/api/js"></script> -->
-   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">  
-    <!-- css -->
+    <meta name="description" content=""/>
 
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=geometry"></script>
     <%= favicon_link_tag %>
 
     <%= stylesheet_link_tag    'applicationCSS/application', media: 'all'%>
     <%= csrf_meta_tags %>
-   
+
   </head>
     <body ng-controller="mainCtrl">
-      {{2+3}} 
       <!-- SOME LINKS TO REMEMBER -->
       <!-- <img src="<%= image_path('application/01.jpg') %>" />
       <%= image_tag "application/01.jpg" %> -->
@@ -29,7 +24,7 @@
         <!-- BC -->
         <!-- <nav class="navbar navbar-default navbar-fixed-top">
               <div class="container" >
-                
+
                 <div class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
@@ -40,8 +35,8 @@
                   <a class="navbar-brand" href="#"><img alt="Brand" src="<%= image_path('application/myimg/football_icon.png')%>" width="45px" height="45px" style="margin-top:-10px;">
         </a>
                 </div>
-            
-              
+
+
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <p class="navbar-text" style="margin-left:-2px;"><b style="font-size:1.4em;">SPORTA</b></p>
                   <form class="navbar-form navbar-left" role="search">
@@ -50,10 +45,10 @@
                     </div>
                     <button type="submit" class="btn btn-success">Tìm kiếm</button>
                   </form>
-                
-             
+
+
                  <div ng-include="'appJS/nav/_nav.html'"></div>
-                
+
                 </div>
               </div>
         </nav> -->
@@ -72,7 +67,7 @@
         <footer data-ng-include="'appJS/footer/_footer.html'"></footer>
         <!-- END FOOTER -->
 
-        <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a> 
+        <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
 
         <!-- BC -->
         <!-- MODALS HERE -->
@@ -88,7 +83,7 @@
         <%= javascript_include_tag 'appJS/application' %>
         <script src="http://code.angularjs.org/1.4.0-rc.2/i18n/angular-locale_vi-vn.js"></script>
         <!-- EN -->
-        
+
         <script>
           /*For textarea*/
           autosize(document.querySelectorAll('textarea'));

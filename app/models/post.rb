@@ -1,13 +1,13 @@
-class Post 
+class Post
 	include Mongoid::Document
 	include Mongoid::Timestamps
 	include Mongoid::Paranoia
-	
+
 	field :title, type: String
 	field :body, type: String
 	#Chi test nen de default la true, mac dinh la false
 	belongs_to :post_status
-	
+
 	embeds_many :photos
 	belongs_to :user, class_name: 'User', inverse_of: :posts
 	has_many :comments, dependent: :destroy
@@ -36,7 +36,7 @@ class Post
 		deny_status = PostStatus.deny_status
 		self.any_of({post_status_id: publishedStatus.id}, {post_status_id: deny_status.id})
 	}
-	
+
 	#validate
 	validates :title, presence: true
 	validates :body, presence: true

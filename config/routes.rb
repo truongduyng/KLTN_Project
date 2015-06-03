@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
- 
+
   #BN
   resources 'branches' do
     collection do
@@ -7,12 +7,12 @@ Rails.application.routes.draw do
     end
   end
   #EN
-  
+
   resources :images
 
   resources :notification_categories do
   end
-  
+
   resources :notifications do
     member do
       put 'watched'
@@ -23,14 +23,14 @@ Rails.application.routes.draw do
       put 'bo_new'
     end
   end
-  
+
   resources :system_admin_bussiness_requests do
     member do
       put 'accept'
       put 'deny'
     end
   end
-  
+
   resources :bussiness_requests
   resources :system_admin_posts do
     member do
@@ -49,15 +49,16 @@ Rails.application.routes.draw do
       put 'remove'
     end
   end
+
   get '/posts/:username/get_favorite_posts_by_username' => 'posts#get_favorite_posts_by_username'
   get '/posts/:username/get_posts_by_username' => 'posts#get_posts_by_username'
-  
+
   get 'custom_users/:username' => 'custom_users#get_user_by_username'
-  
+
   get '/posts/:id/get_k_first_like/:number' => 'posts#get_k_first_like'
   get '/comments/:id/get_k_first_like/:number' => 'comments#get_k_first_like'
   get '/comments/:comment_id/replies/:id/get_k_first_like/:number' => 'replies#get_k_first_like'
-  
+
   resources :custom_users do
     collection do
       put 'change_password'
@@ -91,7 +92,7 @@ Rails.application.routes.draw do
     collection do
       get 'get_posts_by_current_user'
     end
-    
+
     resources :comments do
       member do
         put 'like'
@@ -135,11 +136,9 @@ Rails.application.routes.draw do
   get 'check/email' => 'user#check_email'
   devise_for :users,:controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   ###
-  get 'bussiness-admin' => 'admin#bussiness_admin' 
+  get 'bussiness-admin' => 'admin#bussiness_admin'
   get 'system-admin' => 'admin#system_admin'
   root 'application#angular'
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
 
   get 'check/username' => 'users#check_username'
   get 'check/email' => 'users#check_email'

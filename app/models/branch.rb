@@ -20,10 +20,10 @@ class Branch
   end
 
   after_validation :geocode
-
   index({ coordinates: "2d" }, { min: -180, max: 180 })
 
   belongs_to :bussiness
+
   has_many :assets, dependent: :destroy
   has_many :asset_categories, dependent: :destroy
   has_many :tickets, dependent: :destroy

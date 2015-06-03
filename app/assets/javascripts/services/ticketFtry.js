@@ -205,13 +205,14 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
     height: ticket_td.offsetHeight*4*(endtime-begintime)-3
   });
 
-  if(Auth._currentUser != null && Auth._currentUser.role_name == "bussiness admin"){
+  if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 ){
     $('div#' + ticket._id.$oid + ' span.private_info').css('display', 'inline');
   }
 
   switch(ticket.status) {
     case "new":
-      if(Auth._currentUser != null && Auth._currentUser.role_name == "bussiness admin"){
+
+      if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1){
 
         $('.calendar_content').append(
           $("<i class='fa fa-arrow-circle-o-right ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
@@ -239,7 +240,7 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
     break;
 
     case "waiting":
-      if(Auth._currentUser != null && Auth._currentUser.role_name == "bussiness admin"){
+      if(Auth._currentUser != null && Auth._currentUser.roles.name == "bussiness admin"){
 
           $('.calendar_content').append(
             $("<i class='fa fa-check-circle-o ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){

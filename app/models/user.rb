@@ -168,7 +168,7 @@ class User
 
   private
     def set_default_role
-      #chua test cho nay
+      self.roles ||= []
       self.roles << Role.where(name: 'user').first
       # self.role ||= Role.where(name: 'user').first
     end

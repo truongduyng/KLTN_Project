@@ -1,6 +1,3 @@
-console.log("in app.js");
-
-//Loai bo angularMoment, ngFileUpload
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angularFileUpload',
 	'angular-flash.service', 'angular-flash.flash-alert-directive', 'unsavedChanges', 'sporta.directives',
 	'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging',
@@ -49,11 +46,6 @@ app.config(function(flashProvider) {
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-	// $stateProvider.state("home", {
-	// 	url: "/",
-	// 	templateUrl: 'appJS/home/_home.html',
-	// 	controller: 'homeCtrl',
-	// });
 	$stateProvider.state("home", {
 		url: "/",
 		templateUrl: 'appJS/home/_home.html',
@@ -164,7 +156,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	// 		 	if(searchObj.page && (searchObj.module == null || searchObj.module == 'bai-viet-ca-nhan')){
 	// 		 		page = searchObj.page;
 	// 		 	}
-	// 			return baiVietCaNhanService.index($stateParams.username, page, $rootScope.rootPageConfig.pageSize);		
+	// 			return baiVietCaNhanService.index($stateParams.username, page, $rootScope.rootPageConfig.pageSize);
 	// 		}],
 
 	// 		favoritePosts: ['baiVietYeuThichService', '$stateParams', '$rootScope', '$location',
@@ -174,7 +166,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	// 		 	if(searchObj.page && searchObj.module == 'bai-viet-yeu-thich'){
 	// 		 		page = searchObj.page;
 	// 		 	}
-	// 			return baiVietYeuThichService.get($stateParams.username, page, $rootScope.rootPageConfig.pageSize);		
+	// 			return baiVietYeuThichService.get($stateParams.username, page, $rootScope.rootPageConfig.pageSize);
 	// 		}],
 
 	// 		authenUser: ['Auth', function(Auth){

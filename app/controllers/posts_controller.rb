@@ -10,7 +10,6 @@ class PostsController < ApplicationController
 	#Get all published post for display on home
 	def index
 		@posts = Post.published.desc(:updated_at).paginate(page: params[:page], per_page: 9)
-		# render json: @posts, status: :ok
 	end
 
 	def show

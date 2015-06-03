@@ -23,17 +23,20 @@ class BranchesController < ApplicationController
   end
 
   def branch_details
-
-    @branch_details= {}
-    branch = Branch.find_by(url_alias: branch_params[:branch_url_alias])
-    if branch.present?
-      @branch_details[:branch]= branch
-      @branch_details[:asset_categories] = branch.asset_categories
-      @branch_details[:assets] = branch.assets
-      render json: @branch_details
-    else
+    begin
+      @branch_details= {}
+      if branch = Branch.find_by(url_alias: branch_params[:branch_url_alias])
+        @branch_details[:branch]= branch
+        @branch_details[:asset_categories] = branch.asset_categories
+        @branch_details[:assets] = branch.assets
+        render json: @branch_details
+      else
+        render nothing: true, status: :not_found, content_type: 'application/json'
+      end
+    rescue Exception => e
       render nothing: true, status: :not_found, content_type: 'application/json'
     end
+
 
   end
 

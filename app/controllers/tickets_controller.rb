@@ -17,10 +17,10 @@ class TicketsController < ApplicationController
     create_param = ticket_param
     create_result = []
     while (create_param[:begin_use_time].to_time.to_i < create_param[:date_end_everyweek_booking].to_time.to_i)
-      if (current_user.role_name == 'user')
-        ticket = Ticket.new(create_param.merge({user_id: current_user.id, customer_name: current_user.fullname, customer_phone: current_user.phone}).except(:date_end_everyweek_booking))
-      else
+      if (current_user.is_bussiness_admin?)
         ticket =  Ticket.new(create_param.except(:date_end_everyweek_booking));
+      else
+        ticket = Ticket.new(create_param.merge({user_id: current_user.id, customer_name: current_user.fullname, customer_phone: current_user.phone}).except(:date_end_everyweek_booking))
       end
 
       if ticket.valid?
@@ -81,7 +81,7 @@ class TicketsController < ApplicationController
   end
 
   def check_right_ticket
-    if (current_user.role_name == 'user')
+    if (!current_user.is_bussiness_admin?)
       ticket = Ticket.find(ticket_param[:ticket_id])
 
       if (ticket.user_id != current_user.id || ticket.status != 'new')
