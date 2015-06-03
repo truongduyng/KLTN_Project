@@ -27,7 +27,11 @@ class Role
   def self.bussiness_admin_role
   	self.where(name: 'bussiness admin').first
   end
-  
+
+  def self.system_admin_role
+    self.where(name: 'system admin').first
+  end  
+
   ##BN
   validates :name, uniqueness: true
   ##EN

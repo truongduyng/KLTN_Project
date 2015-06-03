@@ -37,11 +37,17 @@ class SystemAdminBussinessRequestsController < SystemAdminController
 				branch = Branch.new
 				branch.name = 'Chi nhánh 1'
 				branch.address = @bussiness_request.address
-				branch.latitude = @bussiness_request.latitude
-				branch.longitude = @bussiness_request.longitude
+				# branch.latitude = @bussiness_request.latitude
+				# branch.longitude = @bussiness_request.longitude
+				branch.coordinates = [@bussiness_request.longitude, @bussiness_request.latitude]
 				branch.bussiness_id = bussiness.id
+				#tao url_alias tam
+				branch.url_alias = "chi_nhanh_" + branch.id
+				branch.begin_work_time = "8:00"
+				branch.end_work_time = "21:00"
+				
+				if branch.save(validate: false)
 
-				if branch.save
 					@bussiness_request.status_id =  BussinessRequestStatus.da_duyet_status.id
 					@bussiness_request.timeless.save
 					#Tao ra thong bao 

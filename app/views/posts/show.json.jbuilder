@@ -70,6 +70,7 @@ json.comments @post.comments do |comment|
 			json.url comment.user.avatar.url
 		end 
 		json.username comment.user.username
+		json.fullname comment.user.fullname
 	end
 	json.created_at comment.created_at
 	json.updated_at comment.updated_at

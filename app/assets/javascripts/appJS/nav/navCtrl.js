@@ -142,7 +142,16 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', 'ti
       }else{
         return false;
       }
-      // return ($scope.user != null && $scope.user.role_name == "bussiness admin")
+    };
+    
+    $scope.isSystemAdmin = function() {
+      if($scope.user){
+        return _.some($scope.user.roles, function(role){
+          return role.name == 'system admin';
+        });
+      }else{
+        return false;
+      }
     };
 
     $scope.open_signup = function() {

@@ -71,7 +71,7 @@
                                         <td style="max-width:250px;">{{item.name}}</td>
                                         <td style="max-width:250px;">{{item.category}}</td>
                                         <td>{{item.description | shortDesc}}</td>
-                                        <td>{{item.user.username}}</td>
+                                        <td>{{item.user.fullname}}</td>
                                         <td>{{item.created_at| date:'dd/mm/yyyy, h:mm a'}}</td>
                                         <td> 
                                             <input ng-click="ontoggleBussinessRequest(item)" ng-model="item.isChecked" class="tgl tgl-skewed" id="{{item._id.$oid}}" type="checkbox">
@@ -137,7 +137,7 @@
                                                           </tr>
                                                           <tr>
                                                               <th>Thành viên</th>
-                                                              <td>{{item.user.username}}</td>
+                                                              <td>{{item.user.fullname}}</td>
                                                           </tr>
                                                            <tr>
                                                               <th>Ngày gửi yêu cầu</th>

@@ -22,7 +22,7 @@
                           <a ui-sref="trangCaNhan({username: post.user.username})">
                             <div class="post-owner-image"><img class="img-thumbnail" ng-src="{{post.user.avatar.url}}" width="60px" height="60px"></div>
                           </a>
-                          <div class="post-owner-info" ><a ui-sref="trangCaNhan({username: post.user.username})"> <span style="font-size:1.2em; font-style:bold; display:block;"><b>{{post.user.firstname | fullname: post.user.lastname}}</b></a></span> <span>{{post.updated_at |timeago}}</span> </div>
+                          <div class="post-owner-info" ><a ui-sref="trangCaNhan({username: post.user.username})"> <span style="font-size:1.2em; font-style:bold; display:block;"><b>{{post.user.fullname}}</b></a></span> <span>{{post.updated_at |timeago}}</span> </div>
                       </div>
               </div>
         </div>

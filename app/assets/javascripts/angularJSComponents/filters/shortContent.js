@@ -6,9 +6,7 @@ filters.filter("shortContent", [function() {
 			for (var i= 0; i < length; i++) {
 				result = result + " " + words[i];
 			}
-			if(!have_more){
-				result = result + " ...";
-			}
+			result = result + " ...";
 		} else {
 			result = content;
 		}

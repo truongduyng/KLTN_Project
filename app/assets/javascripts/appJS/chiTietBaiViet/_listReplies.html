@@ -31,7 +31,7 @@
                     <!-- Neu ma edit thi .for-display style="display:none;" -->
                           <div  class="for-display" ng-hide="reply.isEdit" >
                               <div class="media-body-header">
-                                  <h5  class="media-heading">{{reply.user.username}}</h5>
+                                  <h5  class="media-heading">{{reply.user.fullname}}</h5>
                                   <div class="edit-delete" ng-show="currentUser._id.$oid == reply.user._id.$oid">
                                       <a ng-init="reply.isEdit=false" ng-click="reply.isEdit =  true" class="btn btn-xs">Sửa</a>
                                       <a confirmed-click="deleteReply(comment, reply)" ng-confirm-click="Bạn có muốn xóa hay không ?" class="btn btn-xs">Xóa</a>
