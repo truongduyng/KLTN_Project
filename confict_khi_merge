@@ -88,7 +88,7 @@ Auto-merging app/controllers/application_controller.rb
 CONFLICT (content): Merge conflict in app/controllers/application_controller.rb
 
 
-H
+
 CONFLICT (modify/delete): app/controllers/admin_controller.rb deleted in merge_bussiness_admin and modified in HEAD. Version HEAD of app/controllers/admin_controller.rb left in tree.
 
 
@@ -103,13 +103,20 @@ CONFLICT (content): Merge conflict in app/assets/stylesheets/applicationCSS/appl
 
 
 
-H
+HERE
 Auto-merging app/assets/stylesheets/adminCSS/bussinessAdmin/customCSS/style-responsive.css
 CONFLICT (rename/delete): app/assets/stylesheets/adminCSS/bussinessAdmin/customCSS/admin-style.css deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/stylesheets/adminCSS/bussinessAdmin/customCSS/admin-style.css left in tree.
+
+
 CONFLICT (rename/delete): app/assets/stylesheets/adminCSS/bussinessAdmin/application.css deleted in merge_bussiness_admin and renamed in HEAD. Version HEAD of app/assets/stylesheets/adminCSS/bussinessAdmin/application.css left in tree.
+
+
 Removing app/assets/javascripts/home.coffee
 Auto-merging app/assets/javascripts/appJS/nav/navCtrl.js
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/nav/navCtrl.js
+
+
+
 Auto-merging app/assets/javascripts/appJS/nav/_nav.html
 CONFLICT (content): Merge conflict in app/assets/javascripts/appJS/nav/_nav.html
 Auto-merging app/assets/javascripts/appJS/home/homeCtrl.js
