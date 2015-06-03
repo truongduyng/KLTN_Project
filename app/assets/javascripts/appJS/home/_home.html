@@ -1,44 +1,7 @@
-<!-- BAN DO O DAY -->
-<div ng-controller="mapCtrl">
-  <map center="current-position"
-   geo-fallback-center="[16.0667, 108.2333]"
-   geo-callback="callbackFunc()"
-   min-zoom ="5"
-   zoom="5"
-   max-zoom = "18"
-   disable-default-u-i="true"
-   style='height: 500px;'>
-    <!-- <custom-control id="home" position="BOTTOM_LEFT" index="1">
-      <form ng-submit = "search_address()">
-        <input type="text" id="Geo  Search" class="form-control" placeholder = "Tìm kiếm địa chỉ" style= "width: 250px; margin-bottom: 5px; font-size: 14px;" ng-model = "query_address"/>
-      </form>
-    </custom-control> -->
-  </map>
-</div>
+<div ng-include="'appJS/map/_map.html'"></div>
 
-<!-- POST O DAY-->
-<div class="row">
-  <!-- GROUP -->
+<div class="row margintop10">
   <div class="col-sm-2">
-    <div class="groups">
-      <span class="header" style="font-weight:bold; font-size:1.2em; padding:5px;display:block;">Nhóm</span>
-      <ul class="link-list">
-        <li>
-          <a href="#"><span class="glyphicon glyphicon-leaf"></span> Hội đá bóng nguy hiểm</a>
-        </li>
-        <li>
-          <a href="#"><span class="glyphicon glyphicon-leaf"></span> Hội đá bóng nguy hiểm</a>
-        </li>
-        <li>
-          <a href="#"><span class="glyphicon glyphicon-leaf"></span> Hội tán gãu thể thao</a>
-        </li>
-        <li>
-          <a href="#"><span class="glyphicon glyphicon-leaf"></span> Hội đá bóng</a>
-        </li>
-      </ul>
-      <button style="margin-top:10px;" type="button" class="btn btn-block btn-success">
-        <span class="glyphicon glyphicon-plus"></span> Tạo nhóm
-      </button>
-    </div>
+    <div ng-include="'appJS/club/_club.html'"></div>
   </div>
 </div>

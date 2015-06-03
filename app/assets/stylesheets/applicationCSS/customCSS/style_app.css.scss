@@ -38,20 +38,19 @@ h1,h2, h3, h4, h5, h6 {
 ==================================== */
 .largecontainer {
 	padding:0 10px 0 10px;
-	position: relative
+	position: relative;
 }
-/*
+
 .container {
 	padding:0 20px 0 20px;
 	position:relative;
 }
-*/
+
 #wrapper{
 	width:100%;
 	margin:0;
 	padding:0;
 }
-
 
 .scrollup{
 	position  :fixed;
@@ -223,15 +222,15 @@ a.scrollup i:hover {
 }
 
 .ticket_waiting {
-  background-color: rgba(221, 75, 63,0.6);
-  border: 1px rgba(221, 75, 63,0.6) solid;
-  display: inline;
+	background-color: rgba(221, 75, 63,0.6);
+	border: 1px rgba(221, 75, 63,0.6) solid;
+	display: inline;
 }
 
 .ticket_over {
-  background-color: rgba(251, 215, 91,0.6);
-  border: 1px rgba(251, 215, 91,0.6) solid;
-  display: inline;
+	background-color: rgba(251, 215, 91,0.6);
+	border: 1px rgba(251, 215, 91,0.6) solid;
+	display: inline;
 }
 
 .ticket_done {
@@ -275,4 +274,43 @@ i:hover{
 
 .close{
 	color: red;
+}
+
+/*club*/
+ul.list-club{
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+ul.list-club li a{
+	text-decoration: none;
+	color: #333333;
+}
+
+ul.list-club li a:hover{
+	text-decoration: none;
+	color: #333333;
+}
+
+ul.list-club li:hover{
+	background-color: #cee0f4;
+}
+
+ul.list-club li{
+	padding: 3px 0 2px 0;
+}
+
+span.club-header{
+	font-size:18px;
+	color: #366378;
+}
+
+.newclubmodal{
+	width: 400px;
+	height: 200px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -100px;
+	margin-left: -200px;
 }
