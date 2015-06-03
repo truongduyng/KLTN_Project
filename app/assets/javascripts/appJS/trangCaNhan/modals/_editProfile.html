@@ -10,22 +10,12 @@
 <div class="modal-body">
         <form novalidate name="editProfileForm" class="form-horizontal" role="form">
             <div class="form-group">
-              <label class="control-label col-sm-2" for="firstname">Họ:</label>
+              <label class="control-label col-sm-2" for="fullname">Họ tên:</label>
               <div class="col-sm-10">
-                <input ng-model="user.firstname" required name="firstname" type="text" class="form-control" id="firstname" placeholder="Họ">
-                <div ng-show="editProfileForm.firstname.$dirty && editProfileForm.firstname.$invalid">
-                   <span style="color: 'red';" class="help-block" ng-show="editProfileForm.firstname.$error.required">Tên không được trống</span>
+                <input ng-model="user.fullname" required name="fullname" type="text" class="form-control" id="fullname" placeholder="Họ tên">
+                <div ng-show="editProfileForm.fullname.$dirty && editProfileForm.fullname.$invalid">
+                   <span style="color: 'red';" class="help-block" ng-show="editProfileForm.fullname.$error.required">Họ tên không được trống</span>
                 </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-2" for="lastname">Tên:</label>
-              <div class="col-sm-10">
-                <input ng-model="user.lastname" required name="lastname" type="text" class="form-control" id="lastname" placeholder="Tên">
-                <div ng-show="editProfileForm.lastname.$dirty && editProfileForm.lastname.$invalid">
-                   <span style="color: 'red';" class="help-block" ng-show="editProfileForm.lastname.$error.required">Tên không được trống</span>
-                </div>
-               
               </div>
             </div>
             <div class="form-group">

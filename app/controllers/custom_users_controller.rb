@@ -63,7 +63,7 @@ class CustomUsersController < ApplicationController
 
 	private
 		def user_params
-			params.require(:custom_user).permit(:firstname, :lastname, :gender, :address, :phone, :description)
+			params.require(:custom_user).permit(:fullname, :gender, :address, :phone, :description)
 		end
 
 		def find_user_and_check_with_current_user

@@ -243,8 +243,9 @@
         <span class="caret"></span>
       </a>
       <ul class="dropdown-menu" role="menu">
-        <li ng-hide="isbussinessadmin()"><a style="cursor:pointer;" href="#/dang-ky-doanh-nghiep">đăng ký doanh nghiệp</a></li>
-        <li ng-show="isbussinessadmin()"><a style="cursor:pointer;" href="/admin-bussiness">Quan ly doanh nghiệp</a></li>
+        <li><a ui-sref="trangCaNhan({username: user.username})">Trang cá nhân</a></li>
+        <li ng-hide="isbussinessadmin()"><a style="cursor:pointer;" ui-sref="khTkDoanhNghiep">đăng ký doanh nghiệp</a></li>
+        <li ng-show="isbussinessadmin()"><a style="cursor:pointer;" href="/admin-bussiness">Quản lý doanh nghiệp</a></li>
         <li ng-show="signedIn()"><a style="cursor:pointer;" ng-click="logout()">Thoát</a></li>
       </ul>
   </li>

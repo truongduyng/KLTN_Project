@@ -1,5 +1,6 @@
 app.controller('changeAvatarCtrl', ['$scope', 'FileUploader', '$cookies', '$modalInstance', '$rootScope'
 	, function($scope, FileUploader, $cookies, $modalInstance, $rootScope) {
+	
 	//Cho anh avatar
 	$scope.uploader = new FileUploader();
 	$scope.myImage = '';
@@ -17,7 +18,7 @@ app.controller('changeAvatarCtrl', ['$scope', 'FileUploader', '$cookies', '$moda
 	//Callback duoc goi truoc khi upload
 	$scope.uploader.onBeforeUploadItem = function(item) {
 		item.headers = {
-			'X-CSRF-TOKEN': $cookies['XSRF-TOKEN'],
+			'X-CSRF-TOKEN': $cookies.get('XSRF-TOKEN'),
 		};
 		item.file.name = $scope.fileName;
 		item.url = "/custom_users/change_avatar.json";

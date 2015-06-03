@@ -1,4 +1,4 @@
-json.extract! @user, :_id, :address, :avatar, :description, :email, :firstname, :lastname, :gender, :phone, :roles, :username
+json.extract! @user, :_id, :address, :avatar, :description, :email, :fullname, :gender, :phone, :roles, :username
 if @user.identity
 	json.is_login_facebook true
 else

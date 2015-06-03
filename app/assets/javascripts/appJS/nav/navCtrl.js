@@ -135,7 +135,14 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', 'ti
     };
 
     $scope.isbussinessadmin = function() {
-      return ($scope.user != null && $scope.user.role_name == "bussiness admin")
+      if($scope.user){
+        return _.some($scope.user.roles, function(role){
+          return role.name == 'bussiness admin';
+        });
+      }else{
+        return false;
+      }
+      // return ($scope.user != null && $scope.user.role_name == "bussiness admin")
     };
 
     $scope.open_signup = function() {
@@ -145,5 +152,11 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', 'ti
       });
     };
     ////EN
+
+    //Cap nhat $scope.user trong navBar khi thay doi thong tin user dau do
+    $scope.$on('onChangeUserProfile', function(event, user){
+      console.log("onChangeUserProfile: ", user);
+      angular.copy(user, $scope.user);
+    });
 
   }]);
