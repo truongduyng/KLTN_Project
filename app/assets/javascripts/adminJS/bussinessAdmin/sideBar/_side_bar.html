@@ -6,14 +6,14 @@
         <ul class="treeview-menu">
           <!-- <li><a href="#/quan-ly-ve/chinhanh1">Chi nhanh 1</a></li> -->
           <li ng-if="isLoadingBranches"><p><i class="fa fa-spinner fa-spin"></i></p></li>
-          <li ng-repeat="(index, branch) in branches"><a ui-sref="ticket_management({branch_url_alias: branch.url_alias})">{{index}}. {{branch.name}}</a></li>
+          <li ng-repeat="(index, branch) in branches"><a ui-sref="ticket_management({branch_url_alias: branch.url_alias})">{{branch.name}}</a></li>
         </ul>
       </li>
       <li class="treeview">
         <a href="#/"><i class='fa fa-link'></i> <span>Quản lý chi nhánh</span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li ng-if="isLoadingBranches"><p><i class="fa fa-spinner fa-spin"></i></p></li>
-          <li ng-repeat="(index, branch) in branches"><a ui-sref="branch_management({branch_url_alias: branch.url_alias})">{{index}}. {{branch.name}}</a></li>
+          <li ng-repeat="(index, branch) in branches"><a ui-sref="branch_management({branch_url_alias: branch.url_alias})">{{branch.name}}</a></li>
            <li><a ui-sref="new_branch"><i class="fa fa-plus"></i> Thêm mới</a></li>
         </ul>
       </li>
