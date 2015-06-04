@@ -2,7 +2,6 @@ bussinessAdmin.factory('BAbranchService', ['$http', function($http) {
 	var o = {};
 
 	o.create = function(branch) {
-		console.log(branch);
 		var url = "/branches.json";
 		var promise = $http.post(url, branch).success(function(data) {
 			angular.copy(data, branch);

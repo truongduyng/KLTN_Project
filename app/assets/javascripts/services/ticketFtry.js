@@ -51,7 +51,7 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
         };
       }
       else{
-        console.log(data.e)
+        // console.log(data.e);
       }
     })
     .error(function(data){

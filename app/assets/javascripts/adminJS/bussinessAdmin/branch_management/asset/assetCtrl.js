@@ -67,7 +67,6 @@ bussinessAdmin.controller('assetCtrl', ['$scope', 'assetService', 'Flash', '$mod
       asset_category_id: $scope.asset.asset_category._id.$oid
     }).success(function(data){
 
-      console.log(data);
       $scope.assets.push(data);
       Flash.create('success', "Thêm mới thành công " + $scope.asset.name, 'myalert');
       $scope.close();

@@ -38,6 +38,7 @@ class User
   #1 nguoi co nhieu image (test)
   has_many :images
 
+  has_and_belongs_to_many :clubs, class_name: 'Club'
 
   #My field
   field :fullname, type: String
@@ -114,6 +115,9 @@ class User
   field :last_sign_in_at,    type: Time
   field :current_sign_in_ip, type: String
   field :last_sign_in_ip,    type: String
+
+  ## index
+  index({fullname: 1})
 
   ## Confirmable
   # field :confirmation_token,   type: String

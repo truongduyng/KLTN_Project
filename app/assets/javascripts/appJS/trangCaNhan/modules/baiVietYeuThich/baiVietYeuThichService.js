@@ -16,7 +16,6 @@ app.factory('baiVietYeuThichService', ['$http', '$q', function($http, $q) {
 		var promise = $http.get(url + query, {
 			timeout: canceller.promise
 		}).success(function(data) {
-			console.log("baiVietYeuThichService on success");
 			angular.copy(data.posts, o.posts);
 			o.total = data.total;
 		});

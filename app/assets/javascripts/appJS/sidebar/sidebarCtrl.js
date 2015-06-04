@@ -1,4 +1,8 @@
-app.controller('sidebarCtrl',['$scope', '$modal', 'clubs', function($scope, $modal, clubs){
+app.controller('sidebarCtrl',['$scope', '$modal', 'clubs', '$state', function($scope, $modal, clubs, $state){
+
+  clubs.index().success(function(data){
+    $scope.clubs = data;
+  });
 
   $scope.opennewclub = function(){
     var newclubmodal = $modal.open({
@@ -9,7 +13,9 @@ app.controller('sidebarCtrl',['$scope', '$modal', 'clubs', function($scope, $mod
     });
 
     newclubmodal.result.then(function (club) {
-      clubs.create(club);
+      clubs.create(club).success(function(){
+
+      });
     }, function () {
     });
   }
@@ -24,6 +30,7 @@ app.controller('newclubmodalCtrl', function($scope, $modalInstance, $http){
     members: []
   };
 
+  $scope.users_list= [];
   $scope.users_list= [];
 
   $scope.show_recommend_user= function(){
@@ -41,8 +48,10 @@ app.controller('newclubmodalCtrl', function($scope, $modalInstance, $http){
   }
 
   $scope.add_to_members = function(user){
+    console.log(user);
     if($scope.club.members.indexOf(user) == -1){
-      $scope.club.members.push(user._id.$oid);
+      $scope.club.members.push(user.fullname);
+
     }
     $scope.users_list = [];
     $scope.user_find = "";

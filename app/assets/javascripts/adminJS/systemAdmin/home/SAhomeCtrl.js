@@ -151,7 +151,6 @@ app.controller('SAhomeCtrl', ['$scope', function($scope) {
 
 	// Integrate Rails CSRF token into file upload dialogs (link, image, attachment and flash)
 	CKEDITOR.on('dialogDefinition', function(ev) {
-		console.log("in dialogDefinition: ", ev);
 		// Take the dialog name and its definition from the event data.
 		var dialogName = ev.data.name;
 		var dialogDefinition = ev.data.definition;
@@ -163,7 +162,6 @@ app.controller('SAhomeCtrl', ['$scope', function($scope) {
 
 			if (upload && upload.filebrowser && upload.filebrowser['params'] === undefined) {
 				upload.filebrowser['params'] = config.filebrowserParams();
-				console.log("upload.filebrowser: ", upload.filebrowser);
 				upload.action = config.addQueryString(upload.action, upload.filebrowser['params']);
 			}
 		}

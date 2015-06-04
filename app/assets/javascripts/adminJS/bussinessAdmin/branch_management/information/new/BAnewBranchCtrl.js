@@ -14,7 +14,7 @@ bussinessAdmin.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'log
 	});
 	//Theo doi neu branch.address thay doi thi cap nhat $scope.address neu no ko dirty
 	$scope.$watch('branch.address', function(newValue, oldValue, scope) {
-		console.log("newBranchAddressForm:", $scope.newBranchAddressForm.address.$dirty);
+
 		if (!$scope.address) {
 			$scope.address = '';
 		}
@@ -91,7 +91,7 @@ bussinessAdmin.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'log
 		google.maps.event.addListener(marker, 'dragend', function() {
 			$scope.branch.latitude = marker.getPosition().lat();
 			$scope.branch.longitude = marker.getPosition().lng();
-			console.log("new branch: ", $scope.branch);
+
 		});
 	};
 
@@ -100,7 +100,7 @@ bussinessAdmin.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'log
 
 	$scope.createBranch = function(){
 		$scope.isSaving = true;
-		console.log("new branch: ", $scope.branch);
+
 		branchService.create($scope.branch).success(function(){
 			$scope.isSaving = false;
 

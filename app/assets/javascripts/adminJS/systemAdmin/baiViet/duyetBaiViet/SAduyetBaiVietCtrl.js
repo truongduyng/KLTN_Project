@@ -27,7 +27,6 @@ app.controller('SAduyetBaiVietCtrl', ['$scope', 'SAduyetBaiVietService', '$modal
 			for (var i = 0; i < $scope.posts.length; i++) {
 				if ($scope.posts[i]._id.$oid == post._id.$oid) {
 					$scope.posts[i].isChecked = false;
-					console.log("title: ", $scope.posts[i].title);
 					break;
 				}
 			};
@@ -141,7 +140,6 @@ app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interva
 		var currentIndex = $scope.listPhotos.indexOf(photo);
 
 		$scope.previous = function() {
-			console.log("in previous");
 			if (currentIndex >= 1) {
 				currentIndex--;
 			} else {

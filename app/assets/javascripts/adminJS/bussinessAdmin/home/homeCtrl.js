@@ -20,7 +20,7 @@ bussinessAdmin.controller('homeCtrl', ['$scope', '$http', 'bussinessService', 'u
 					scrollTop: $("#informationPos").offset().top
 				});
 
-				console.log(response);
+
 			}, function(error) {
 				console.log(error);
 			});
@@ -29,8 +29,6 @@ bussinessAdmin.controller('homeCtrl', ['$scope', '$http', 'bussinessService', 'u
 	};
 
 	$scope.clear = function(){
-		//Clear du lieu
-		console.log("on clear");
 		angular.copy(bussinessService.bussiness, $scope.bussiness);
 		$('html, body').animate({
 					scrollTop: $("#informationPos").offset().top

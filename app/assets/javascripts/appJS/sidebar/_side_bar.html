@@ -7,17 +7,8 @@
     </div>
   </span>
   <ul class="list-club">
-    <li>
-      <a href="#"><i class="fa fa-users"></i> Hội đá bóng nguy hiểm</a>
-    </li>
-    <li>
-      <a href="#"><i class="fa fa-users"></i> Hội đá bóng nguy hiểm</a>
-    </li>
-    <li>
-      <a href="#"><i class="fa fa-users"></i> Hội tán gãu thể thao</a>
-    </li>
-    <li>
-      <a href="#"><i class="fa fa-users"></i> Hội đá bóng</a>
+    <li ng-repeat = "club in clubs">
+      <a href="#"><i class="fa fa-users"></i> {{club.name}}</a>
     </li>
   </ul>
 </div>

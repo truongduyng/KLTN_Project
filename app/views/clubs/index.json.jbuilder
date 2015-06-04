@@ -1,0 +1,1 @@
+json.array! @clubs, :id, :name

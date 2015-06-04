@@ -7,11 +7,11 @@ app.controller('SAmauThongBaoCtrl', ['$scope', 'SAmauThongBaoService', '$cookies
 		$scope.onSelectNC = function(nc) {
 			$scope.selectedNC = nc;
 			$scope.content = $scope.selectedNC.notification_template.content;
-			console.log("content: ", $scope.content);
+
 		};
 
 		$scope.save = function() {
-			console.log("content in save: ", $scope.content);
+
 			mauThongBaoService.update($scope.selectedNC, $scope.content).success(function() {
 				$scope.content = "";
 				$scope.selectedNC = null;
@@ -81,7 +81,6 @@ app.controller('SAmauThongBaoCtrl', ['$scope', 'SAmauThongBaoService', '$cookies
 
 		// Integrate Rails CSRF token into file upload dialogs (link, image, attachment and flash)
 		CKEDITOR.on('dialogDefinition', function(ev) {
-			console.log("in dialogDefinition: ", ev);
 			// Take the dialog name and its definition from the event data.
 			var dialogName = ev.data.name;
 			var dialogDefinition = ev.data.definition;
@@ -93,7 +92,7 @@ app.controller('SAmauThongBaoCtrl', ['$scope', 'SAmauThongBaoService', '$cookies
 
 				if (upload && upload.filebrowser && upload.filebrowser['params'] === undefined) {
 					upload.filebrowser['params'] = config.filebrowserParams();
-					console.log("upload.filebrowser: ", upload.filebrowser);
+
 					upload.action = config.addQueryString(upload.action, upload.filebrowser['params']);
 				}
 			}

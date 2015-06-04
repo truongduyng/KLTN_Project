@@ -6,9 +6,7 @@ services.factory('assetService', ['$http', function($http) {
 
   o.show = function(id){
     return $http.get("/assets/" + id + ".json").success(function(data){
-      console.log(data);
     }).error(function(data){
-      console.log(data);
     })
   };
 

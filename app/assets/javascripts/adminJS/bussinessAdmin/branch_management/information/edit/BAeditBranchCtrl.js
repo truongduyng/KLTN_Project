@@ -14,7 +14,7 @@ bussinessAdmin.controller('BAeditBranchCtrl', ['$scope', 'geocodingService', 'lo
 
 	//Theo doi neu branch.address thay doi thi cap nhat $scope.address neu no ko dirty
 	$scope.$watch('branch.address', function(newValue, oldValue, scope) {
-		console.log("newBranchAddressForm:", $scope.newBranchAddressForm.address.$dirty);
+
 		if (!$scope.address) {
 			$scope.address = '';
 		}
@@ -96,7 +96,6 @@ bussinessAdmin.controller('BAeditBranchCtrl', ['$scope', 'geocodingService', 'lo
 		google.maps.event.addListener(marker, 'dragend', function() {
 			$scope.branch.lat = marker.getPosition().lat();
 			$scope.branch.lng = marker.getPosition().lng();
-			console.log("new branch: ", $scope.branch);
 		});
 	};
 

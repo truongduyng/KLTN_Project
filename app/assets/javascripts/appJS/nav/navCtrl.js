@@ -87,8 +87,7 @@
 // >>>>>>> merge_bussiness_admin
 
 
-app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', 'tickets', '$modal',
-  function($scope, Auth, $http, notificationService, tickets, $modal) {
+app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', 'tickets', '$modal', function($scope, Auth, $http, notificationService, tickets, $modal) {
     $scope.signedIn = Auth.isAuthenticated;
     $scope.logout = Auth.logout;
 

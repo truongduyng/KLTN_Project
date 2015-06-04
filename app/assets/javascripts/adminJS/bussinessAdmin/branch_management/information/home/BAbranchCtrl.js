@@ -42,7 +42,6 @@ bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', 
 	//save branch
 	$scope.saveEdittedBranch = function(branch){
 		branch.iSaving = true;
-		console.log("updated branch: ", branch);
 		branchService.update(branch).success(function(){
 			branch.isSaving = false;
 		});
@@ -68,7 +67,6 @@ bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', 
 			});
 			//Thanh cong thi xoa chi nhanh ra khoi hien thi
 			modalInstance.result.then(function(branch){
-				console.log("Xoa thanh cong chi nhanh: ", branch.name);
 				$scope.$root.$broadcast("onDeleteBranchEvent",{
 					id: branch._id.$oid,
 				});

@@ -19,7 +19,7 @@
       <div class="col-sm-9">
 
         <ul class="list_user_choosen">
-          <li class="member_list" ng-repeat="member in club.members"><i class="fa fa-times" ng-click="remove_member(member)"></i> {{member.fullname}}</li>
+          <li class="member_list" ng-repeat="member in club.members"><i class="fa fa-times" ng-click="remove_member(member)"></i> {{member}}</li>
         </ul>
 
         <input type="text" class="form-control" ng-model="user_find" ng-change="find_user()">

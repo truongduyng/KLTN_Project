@@ -31,7 +31,6 @@ bussinessAdmin.controller('ticketManageCtrl', ['$scope', '$http', 'Auth', '$moda
       $scope.showtimeline = true;
     else
       $scope.showtimeline = false;
-    console.log($scope.branch.branch._id.$oid + $scope.dt.toJSON().slice(0,10));
     tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
   };
 
@@ -218,7 +217,6 @@ $scope.showtimeintd = function(hour,element,show){
     if ($scope.dt.toJSON().slice(0,10) == ticket.begin_use_time.slice(0,10)){
       tickets.tickets.push(ticket);
       tickets.viewTicket(ticket);
-      console.log('realtime' + tickets.tickets.length);
     }
   });
 
@@ -232,7 +230,6 @@ $scope.showtimeintd = function(hour,element,show){
           break;
         }
       };
-      console.log('realtime' + tickets.tickets.length);
     }
   });
 
@@ -242,7 +239,6 @@ $scope.showtimeintd = function(hour,element,show){
       for (var i = 0; i < tickets.tickets.length; i++) {
         if (tickets.tickets[i]._id.$oid == ticket._id.$oid) {
           tickets.tickets.splice(i,1);
-          console.log('realtime' + tickets.tickets.length);
           break;
         }
       };
