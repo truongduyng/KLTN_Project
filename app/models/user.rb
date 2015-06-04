@@ -51,7 +51,7 @@ class User
   has_one :identity
   devise :omniauthable, :omniauth_providers => [:facebook]
   def self.from_omniauth(auth)
-      byebug
+      # byebug
       identity = Identity.where(provider: auth.provider, uid: auth.uid).first
       #Neu da login it 1 lan thi lay nguoi dung do
       if identity
@@ -68,7 +68,7 @@ class User
         ##EC
         user.username = auth.uid
         user.identity = identity
-        user.save
+        user.save(validate: false)
         identity.save
       end
       return user
@@ -95,8 +95,8 @@ class User
 
   #My validation
   validates :username, :email, presence: true, uniqueness: true
-  validates :fullname, :phone, presence: true
-
+  validates :fullname, presence: true
+  validates :phone, presence: true
   ## Database authenticatable
   field :email,              type: String, default: ""
   field :encrypted_password, type: String, default: ""
