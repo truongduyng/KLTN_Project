@@ -16,12 +16,12 @@
                     <!-- BEGIN COL FOR INFO PICTURE -->
                     <div class="col-xs-3">
                       <img width="128px" fallback-src="sportaLogo" ng-src="{{currentUser.avatar.avatar.url|logo}}" class="img-responsive center-block img-circle profile-picture">
-                      
+
                       <!-- FOR CHANGE PROFILE PICTURE -->
                       <div ng-if="permission.all" style="text-align: center; margin-top: 48px;">
                         <a ng-click="showChangeAvatarModal()" class="btn btn-primary" tooltip="Thay ảnh đại diện"><span class="glyphicon glyphicon-edit"></span></a>
                       </div>
-                      
+
                     </div>
                     <!-- END COL FOR INFO PICTURE -->
                     <!-- BEGIN COL FOR INFORMATION -->
@@ -70,7 +70,7 @@
                     </tabset>
               </div>
           </div>
-        
+
           </div>
           <!-- END THONG TIN CA NHAN -->
 
@@ -79,12 +79,6 @@
 
     </div>
      <!-- END MAIN COLUMN -->
-
-      <!-- BEGIN RIGHT COLUMN -->
-      <div class="col-md-4">  
-        <section ng-include="'appJS/modules/postSearchModules/_postSearchModule.html'"></section>
-      </div>
-      <!-- END RIGHT COLUMN -->
 </div>
 
  <style>

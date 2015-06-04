@@ -17,11 +17,11 @@
                <li class="media">
                   <div class="media-left">
                     <a ui-sref="trangCaNhan({username: post.user.username})">
-                     <img fallback-src="sportaLogo"  class="img-circle img-responsive profile-picture" class="media-object" ng-src="{{post.user.avatar.url | logo}}" 
+                     <img fallback-src="sportaLogo"  class="img-circle img-responsive profile-picture" class="media-object" ng-src="{{post.user.avatar.url | logo}}"
                      alt="Generic placeholder image" width="64px" height="64px" style="min-width: 44px; min-height: 44px;">
                     </a>
                   </div>
-                  
+
                   <div class="media-body">
                     <div class="user-title">
                       <a ui-sref="trangCaNhan({username: post.user.username})"><h5  style="color:#337ab7;"  class="media-heading pull-left">{{post.user.fullname}}</h5></a>
@@ -49,7 +49,7 @@
                       <!-- BEGIN HIEN THI CHO BAI VIET KHONG DUOC PUBLISH -->
                       <div section-id="for-not-published" ng-if="!post.published">
                           <div class="likes">
-                            <div role="group" class="btn-group pull-left">  
+                            <div role="group" class="btn-group pull-left">
                                                         <a class="btn btn-default" ui-sref="editPost({id: post._id.$oid})"><span class="glyphicon glyphicon-edit"></span> Sửa bài viết</a>
                                                         <a ng-confirm-click="Bạn có muốn xóa bài viết hay không ?" confirmed-click="delete()" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Xóa bài viết</a>
                             </div>
@@ -64,7 +64,7 @@
                                 <!-- like su dung glyphicon glyphicon-thumbs-up va .like-icon, unlike thi su dung glyphicon glyphicon-thumbs-down va unlike-icon -->
                                 <span tooltip="Thích" ng-hide="post.isLiked" class="glyphicon glyphicon-thumbs-up like-icon" ng-click="likePost()"></span>
                                 <span tooltip="Bỏ thích" ng-show="post.isLiked" class="glyphicon glyphicon-thumbs-down unlike-icon" ng-click="unlikePost()"></span>
-                                
+
                                 <a  ng-mouseenter="getKFirstLikes()"  tooltip-html-unsafe="{{likesHtml}}" ng-click="showAllLikes()" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>
 
                                 <button  ng-hide="post.isFavorited" ng-click="favorite()" class="btn btn-success"><span>Lưu bài viết</span></button>
@@ -75,8 +75,8 @@
                       <!-- END HIEN THI CHO BAI VIET DUOC PUBLISH, CHO PHEP LIKE, COMMENT, ... -->
 
                     </div>
-                
-                    
+
+
                </li>
           </ul>
 
@@ -87,11 +87,6 @@
     </div>
       <!-- END MAIN COLUMN -->
 
-      <!-- BEGIN RIGHT COLUMN -->
-      <div class="col-md-4">  
-        <section ng-include="'appJS/modules/postSearchModules/_postSearchModule.html'"></section>
-      </div>
-      <!-- END RIGHT COLUMN -->
   </div>
 
 
@@ -117,7 +112,7 @@
      <!-- BEGIN MODAL HIEN THI DANH SACH NGUOI THICH -->
      <script type="text/ng-template" id="showAllLikesModal.html">
               <div class="modal-header">
-                  <button type="button" class="close" 
+                  <button type="button" class="close"
                      data-dismiss="modal" aria-hidden="true" ng-click="$close()">
                         &times;
                   </button>
@@ -138,15 +133,15 @@
                             <strong>{{like.user | displayName}}</strong>
                           </div>
                           </a>
-                         
+
                     </div>
-                 
+
                   </div>
 
             </div>
      </script>
      <!-- END MODAL HIEN THI DANH SACH NGUOI THICH -->
-   
+
 
 
 </div>
