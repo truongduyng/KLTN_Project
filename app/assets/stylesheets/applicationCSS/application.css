@@ -10,10 +10,8 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
 
- *= require bootstrap/dist/css/bootstrap
  *= require jquery-ui
  *= require angular-flash-alert/src/angular-flash
- *= require applicationCSS/customCSS/style
  *= require bootstrap-social
  *= require_tree ./customCSS/semanticUI/
  *= require_tree .

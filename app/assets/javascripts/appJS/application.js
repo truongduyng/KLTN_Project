@@ -14,7 +14,6 @@
 //= require jquery.min
 //= require jquery_ujs
 //= require jquery-ui/autocomplete
-//= require bootstrap-sprockets
 //= require_tree ../extendJavascript
 //= require ./customJS/websocket_rails/websocket_rails.js
 //= require ./customJS/websocket_rails/event.js
@@ -24,7 +23,6 @@
 //= require ./customJS/websocket_rails/channel.js
 //= require underscore
 //= require angular
-//= require bootstrap/dist/js/bootstrap
 //= require angular-bootstrap
 //= require angular-ui-router
 //= require angular-rails-templates
@@ -36,18 +34,17 @@
 //= require angular-flash
 //= require angular-file-upload
 //= require angular-unsavedChanges/dist/unsavedChanges
-//= require angular-flash-alert
 //= require angular-cookies
 //= require angular-sanitize
 //= require_tree ../angularJSComponents
 //= require ng-timeago
 //= require angular-paging
 //= require ngInfiniteScroll
-//= require ngmap
 //= require ./customJS/richmarker.js
 //= require ngstorage
 //= require angular-facebook
 //= require ./app.js
 //= require_tree ../services
 //= require websocket_rails/main
+//= require ./customJS/select2.min
 //= require_tree .
