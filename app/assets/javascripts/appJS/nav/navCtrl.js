@@ -137,17 +137,17 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', 'ti
     $scope.isbussinessadmin = function() {
       if($scope.user){
         return _.some($scope.user.roles, function(role){
-          return role.name == 'bussiness admin';
+          return role == 'bussiness admin';
         });
       }else{
         return false;
       }
     };
-    
+
     $scope.isSystemAdmin = function() {
       if($scope.user){
         return _.some($scope.user.roles, function(role){
-          return role.name == 'system admin';
+          return role == 'system admin';
         });
       }else{
         return false;

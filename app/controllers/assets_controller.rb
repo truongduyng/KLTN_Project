@@ -47,7 +47,7 @@ class AssetsController < ApplicationController
   end
 
   def check_role_bussiness_admin
-    if current_user.role.name != 'bussiness admin'
+    if !current_user.is_bussiness_admin?
       render nothing: true, status: :not_found, content_type: 'application/json'
     end
   end
