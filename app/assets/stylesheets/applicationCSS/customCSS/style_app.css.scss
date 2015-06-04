@@ -309,3 +309,34 @@ span.club-header{
 .addmember{
 	width: inherit;
 }
+
+ul.list_user_recommend{
+	list-style-type: none;
+	padding-left: 0px;
+	width: 419px;
+	box-shadow: 2px 2px 2px #888888;
+	background-color: #f5f5f5;
+	position: absolute;
+	height: 200;
+	overflow-y: auto;
+	z-index: 5;
+}
+
+ul.list_user_recommend li:hover{
+	background-color: #cee0f4;
+}
+
+.member_list{
+	display: block;
+	float: left;
+	background-color: #366378;
+	color: white;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.list_user_choosen{
+	list-style-type: none;
+	padding-left: 0px;
+	width: 100%;
+}

@@ -108,11 +108,11 @@ Rails.application.routes.draw do
 
   #BC
   resources 'assets' do
-    collection do
-      get 'get-assets-by-category'
-    end
   end
   #EC
+
+  resources 'clubs' do
+  end
 
   resources 'asset_categories' do
     resources 'fees'
@@ -140,5 +140,7 @@ Rails.application.routes.draw do
 
   get 'check/username' => 'users#check_username'
   get 'check/email' => 'users#check_email'
+  get 'find_users/:username' => 'users#find_user_by_username'
+
   get '/:branch_url_alias' => 'branches#branch_details', constraints: {branch_url_alias: /(?!websocket$).*/}, as: 'booking_address'
 end
