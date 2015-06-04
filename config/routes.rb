@@ -132,8 +132,6 @@ Rails.application.routes.draw do
   get 'informations/show' => 'informations#show'
 
   # resources :informations
-  get 'check/username' => 'user#check_username'
-  get 'check/email' => 'user#check_email'
   devise_for :users,:controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   ###
   get 'bussiness-admin' => 'admin#bussiness_admin'

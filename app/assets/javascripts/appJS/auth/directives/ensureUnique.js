@@ -7,7 +7,7 @@ app.directive('ensureUnique', ['$http', function($http) {
         if (attrs.ensureUnique == '') {
           c.$setValidity('unique', true);
         } else {
-          $http.get("/check/" + attrs.ensureUnique, {
+          $http.get("/check/" + attrs.ensureUnique + ".json", {
               params: {
                 field: attrs.ensureUniqueData,
               }
@@ -21,36 +21,12 @@ app.directive('ensureUnique', ['$http', function($http) {
         }
       };
 
-      //// BC
       scope.$watch(attrs.ngModel, checkUnique);
-      // scope.$watch(attrs.ngModel, checkUsername);
-      ////EC
-      
     }
   }
 }]);
 
-
-//Directive nay ko chinh xac, do code cung scope.user.password, no dc su cho modal login, register nen
-//co gi sai thi quay lai cho nay xem
-// app.directive('confirmationPassword', [function() {
-//   return {
-//     require: 'ngModel',
-//     restrict: 'A',
-//     link: function(scope, iElement, iAttrs, ctrl) {
-//       scope.$watch(iAttrs.ngModel, function(newValue, oldValue, scope) {
-//         if (newValue == scope.user.password) {
-//           ctrl.$setValidity('confirmation_password', true);
-//         } else {
-//           ctrl.$setValidity('confirmation_password', false);
-//         };
-//       });
-//     }
-//   };
-// }]);
-
-//Phien ban nay cai thien hon no lay gia tri password cu thong qua scope[iAttrs.orginalPassword] nen
-// tinh tai su dung cao
+//Xac nhan password neu password la thuoc tinh cua scope
 app.directive('confirmationPassword', [function() {
   return {
     require: 'ngModel',
@@ -66,3 +42,23 @@ app.directive('confirmationPassword', [function() {
     }
   };
 }]);
+
+
+
+//Xac nhan password neu password la thuoc tinh cua user
+app.directive('newConfirmationPassword', [function() {
+  return {
+    require: 'ngModel',
+    restrict: 'A',
+    link: function(scope, iElement, iAttrs, ctrl) {
+      scope.$watch(iAttrs.ngModel, function(newValue, oldValue, scope) {
+        if (newValue == scope.user[iAttrs.orginalPassword]) {
+          ctrl.$setValidity('confirmation_password', true);
+        } else {
+          ctrl.$setValidity('confirmation_password', false);
+        };
+      });
+    }
+  };
+}]);
+
