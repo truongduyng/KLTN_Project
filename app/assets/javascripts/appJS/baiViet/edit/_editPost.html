@@ -9,7 +9,7 @@
     <div class="col-md-6 detail-main-column">
       <span style="border: 1px solid #337AB7; display:block;margin:0px -15px; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>CHỈNH SỬA BÀI VIẾT</strong></span>
 
-       
+
       <div class="row">
             <div class="panel panel-primary">
               <div class="panel-heading">
@@ -22,8 +22,8 @@
                   </div>
                   <div class="post-form-content">
                     <textarea  name="body" style="border:none;padding: 6px 12px;display:block;" placeholder="Nội dung bài viết" ng-model="post.body" required></textarea>
-                    
-                    <div  class="post-form-images"> 
+
+                    <div  class="post-form-images">
                       <span class="image" ng-repeat="photo in post.photos">
                         <button ng-hide="photo.isUploading" ng-click="removeImage(photo)" aria-hidden="true" class="close" type="button">×</button>
                         <img src="{{photo.image.large_thumb.url}}" width="100px" height='100px'>
@@ -34,11 +34,11 @@
                         <button ng-hide="photo.isUploading" ng-click="photo.remove()" aria-hidden="true" class="close" type="button">×</button>
                         <div ng-thumb="{file: photo._file, height: 100, width:100}" ng-show="uploader.isHTML5"></div>
                        </span>
-                        <!-- END anh moi duoc them vao--> 
+                        <!-- END anh moi duoc them vao-->
                     </div>
 
                   </div>
-                  
+
                   <div ng-show="uploader.isUploading" style="margin: 0px 10px;margin-bottom: -10px;">
                     <div class="progress">
                       <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" ng-style="{'width': uploader.progress + '%'}" style="width: 0%;">
@@ -58,19 +58,13 @@
                 </form>
               </div>
             </div>
-        
+
        </div>
        <div class="row">
-         <div flash-message="5000" ></div> 
+         <div flash-message="5000" ></div>
        </div>
     </div>
       <!-- END MAIN COLUMN -->
-
-      <!-- BEGIN RIGHT COLUMN -->
-      <div class="col-md-4">  
-        <section ng-include="'appJS/modules/postSearchModules/_postSearchModule.html'"></section>
-      </div>
-      <!-- END RIGHT COLUMN -->
   </div>
 </div>
 

@@ -86,16 +86,11 @@
                               <button  ng-click="sendBussinessRequest()" data-ng-disabled="bussinessRequestForm.$invalid || !bussinessRequest.latitude || !bussinessRequest.longitude" type="submit" class="btn btn-success btn-block">Gửi yêu cầu</button>
                               <div flash-message="20000"></div>
                       </form>
-                  </div>  
+                  </div>
              </div>
-            
+
       </div>
         <!-- END MAIN COLUMN -->
-
-      <div class="col-md-4">  
-           <section ng-include="'appJS/modules/postSearchModules/_postSearchModule.html'"></section>
-          
-      </div>
 </div>
 
  <div  id="customMarker" style="display:none;">
@@ -104,7 +99,7 @@
           <img style="display:block;z-index: 100;" width="100px" height="100px" src="/assets/application/placeholder/marker_layout.png">
       </div>
  </div>
-  
+
 <style type="text/css">
   #map map{
     width: 100%;
