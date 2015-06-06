@@ -20,11 +20,11 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 			});
 		};
 
-		//Cho luoc do csdl trigger_users 
+		//Cho luoc do csdl trigger_users
 		$scope.onWatched = function(notification) {
 			notificationService.watched(notification);
 		};
-		
+
 		//Danh dau tat ca notification la dc dc load va xem boi nguoi dung
 		$scope.onDisplayNotifications = function() {
 			//B1: Kiem tra thu co notification_change moi hay ko
@@ -47,13 +47,13 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 			dispatcher = new WebSocketRails('localhost:3000/websocket');
 
 			dispatcher.on_open = function(data) {
-				console.log('Connection has been established: ', data);
+
 			};
 
 			user_channel = dispatcher.subscribe_private($scope.user._id.$oid, function(user) {
 				// success callback
-				console.log("on subscribe_private success:", user);
-				console.log(user._id.$oid + "Has joined the channel");
+				// console.log("on subscribe_private success:", user);
+				// console.log(user._id.$oid + "Has joined the channel");
 			}, function(reason) {
 				// failure callback
 				console.log("on subscribe_private fail");
@@ -73,7 +73,7 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 					$scope.newNotificationsCount++;
 				});
 				//B4: Hien thi ket qua ra console
-				console.log("on newNotification: ", newNotification);
+				// console.log("on newNotification: ", newNotification);
 			});
 			//Su kien khi 1 notification thay doi: vi du 1 notification change chua dc xem
 			//va no cap nhat trigger
@@ -90,7 +90,7 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 					});
 				});
 				//B4: Hien thi ket qua ra console
-				console.log("on updatedNotification: ", updatedNotification);
+				// console.log("on updatedNotification: ", updatedNotification);
 			});
 
 

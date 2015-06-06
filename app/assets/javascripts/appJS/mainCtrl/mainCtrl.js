@@ -1,6 +1,6 @@
 //Controller nay la controller cha cho tat ca controller
 //Khi 1 rejection trong resolve xay ra thi ca controller va view ko bao gio dc load
-//do do de lang nghe su kien $stateChangeError thi ta phai tao mainCtrl la controller cha 
+//do do de lang nghe su kien $stateChangeError thi ta phai tao mainCtrl la controller cha
 //cho tat ca controller va lang nghe su kien do
 
 app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '$stateParams', '$location', '$anchorScroll',
@@ -13,7 +13,7 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '
 			if (toState.access != null && !toState.access.free && !Auth.isAuthenticated()) {
 				var isLogin = toState.name === "login";
 				if (isLogin) {
-					return; // no need to redirect anymore 
+					return; // no need to redirect anymore
 				}
 				event.preventDefault(); // stop current execution
 				Flash.create("danger", "Bạn cần đăng nhập để truy cập trang này");
@@ -21,7 +21,6 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '
 			}
 			//Kiem tra neu da chung thuc thi ko the toi 2 trang login va register
 			if (Auth.isAuthenticated()) {
-				console.log("is Authenticated");
 				if (toState.name == 'login' || toState.name == 'register') {
 					event.preventDefault();
 					$state.go("home");
@@ -58,7 +57,7 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '
 	});
 
 
-	//Cau hinh pageConfig chung 
+	//Cau hinh pageConfig chung
 	$rootScope.rootPageConfig = {
 		currentPage: 1,
 		pageSize: 5,

@@ -7,8 +7,8 @@
     </div>
   </span>
   <ul class="list-club">
-    <li ng-repeat = "club in clubs">
-      <a href="#"><i class="fa fa-users"></i> {{club.name}}</a>
+    <li ng-repeat = "club in clubs" ng-click="gotoclub(club.id.$oid)">
+      <a><i class="fa fa-users"></i> {{club.name}}</a>
     </li>
   </ul>
 </div>

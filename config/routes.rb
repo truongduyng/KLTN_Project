@@ -112,6 +112,11 @@ Rails.application.routes.draw do
   #EC
 
   resources 'clubs' do
+    member do
+      post 'addmember'
+      post 'removemember'
+      post 'makeadmin'
+    end
   end
 
   resources 'asset_categories' do

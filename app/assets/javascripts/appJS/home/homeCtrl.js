@@ -30,14 +30,12 @@ app.controller('homeCtrl', ['$scope', '$http', 'FileUploader', '$interval', '$st
   $scope.uploader.filters.push({
     name: 'imageFilter',
     fn: function(item /*{File|FileLikeObject}*/ , options) {
-      console.log(item);
       var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
       return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
     }
   });
 
   $scope.onClearQueue = function() {
-    console.log("on clear queue");
     $scope.uploader.clearQueue();
   };
 
@@ -73,7 +71,6 @@ app.controller('homeCtrl', ['$scope', '$http', 'FileUploader', '$interval', '$st
 
   $scope.$on('mapInitialized', function(event, map) {
     $scope.map = map;
-    console.log("map: ", $scope.map);
   });
 
   $scope.clickMarker = function() {

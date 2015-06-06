@@ -255,9 +255,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		}
 	});
 
-
-
-	////BN
 	$stateProvider.state('booking', {
 		url: '/:branch_url_alias',
 		templateUrl: 'appJS/booking/_booking.html',
@@ -271,7 +268,19 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		}
 	});
 
-	////EN
+	$stateProvider.state('club', {
+		url: '/club/:club_id',
+		templateUrl: 'appJS/club/_club.html',
+		controller: 'clubCtrl',
+		resolve: {
+			club: function($http, $stateParams) {
+				return $http.get("/clubs/" + $stateParams.club_id + ".json").success(function(data) {
+					return data;
+				});
+			}
+		}
+	});
+
 	//Khoi phuc
 	$urlRouterProvider.otherwise('/');
 }]);

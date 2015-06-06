@@ -13,11 +13,15 @@ app.controller('sidebarCtrl',['$scope', '$modal', 'clubs', '$state', function($s
     });
 
     newclubmodal.result.then(function (club) {
-      clubs.create(club).success(function(){
-
+      clubs.create(club).success(function(result){
+        $state.go('club',{club_id: result._id.$oid});
       });
     }, function () {
     });
+  }
+
+  $scope.gotoclub = function(club_id){
+    $state.go('club',{club_id: club_id});
   }
 
 }]);
@@ -30,7 +34,6 @@ app.controller('newclubmodalCtrl', function($scope, $modalInstance, $http){
     members: []
   };
 
-  $scope.users_list= [];
   $scope.users_list= [];
 
   $scope.show_recommend_user= function(){
