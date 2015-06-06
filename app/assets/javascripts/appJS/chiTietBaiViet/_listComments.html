@@ -13,7 +13,7 @@
     </div>
     <div style="float:right; width:10%;"><button data-ng-disabled="isCommenting || !comment.content" ng-click="addComment()" style=" height:64px; width:100%;" class="btn btn-primary pull-right"> Gửi </button></div>
     <div class="clearfix"></div>
-    
+
   </div>
   <!-- END COMMENT BOX -->
 
@@ -36,7 +36,7 @@
                   <a ng-click="comment.isEdit = true" class="btn btn-xs">Sửa</a>
                   <a confirmed-click="deleteComment(comment)"  ng-confirm-click="Bạn có muốn xóa comment này không ?"  class="btn btn-xs">Xóa</a>
                 </div>
-                
+
               </div>
               <div class="media-body-content">
                   {{comment.content}}
@@ -69,24 +69,24 @@
           <!-- BEGIN DANH SACH REPLIES -->
           <section id="listReplies" ng-include="'appJS/chiTietBaiViet/_listReplies.html'" ng-controller="replyCtrl"></section>
            <!-- END DANH SACH REPLIES -->
-         
+
         </div>
     </div>
   </div>
   <hr ng-repeat-end class="hr-no-margin-top">
  <!-- END COMMENT 2 -->
- 
+
 </div>
 <!-- END LIST COMMENTS -->
 
 <script type="text/javascript">
      autosize(document.querySelectorAll('textarea'));
 
-     $(document).ready(function() {
-       $('[data-toggle="tooltip"]').tooltip({
-         placement: 'top'
-       });
-     });
+     // $(document).ready(function() {
+     //   $('[data-toggle="tooltip"]').tooltip({
+     //     placement: 'top'
+     //   });
+     // });
 
      //For modal
      $(document).ready(function() {
