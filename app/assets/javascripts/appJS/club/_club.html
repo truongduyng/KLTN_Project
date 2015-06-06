@@ -2,79 +2,118 @@
   <div class="col-lg-10 pull-right">
     <img class="coverimg" src="" alt="">
     <h3 class="club_name">{{club.name}}</h3>
+    <button class="btn btn-default leave_club_btn" ng-click="leave_club()" >Roi CLB</button>
   </div>
-
 </div>
+
 <section id="content">
   <div class="container margintop10">
     <div class="row">
-
-     <div class="col-md-2">
-       <section ng-include="'appJS/sidebar/_side_bar.html'"></section>
-     </div>
-
-     <div class="col-lg-6">
-      <div class="post">
-        <div style="height: 58px">
-          <div class="pull-left">
-            <img src="" alt="">
-          </div>
-          <div class="pull-left marginleft5">
-            <a href="#">Nguyen Truong Duy</a><br>
-            <a href="#">12/12/2112</a>
-          </div>
-        </div>
-        <div class="postcontent margintop10">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-        </div>
-        <a href="#">like</a><span>  .  </span>
-        <a href="#">comment</a><span>  .  </span>
-        <a href="#">share</a><br>
-        <img src="" alt="" width="6%">
-        <input class="comment margintop5 field" type="text" name="" value="" placeholder="comment here">
+      <div class="col-md-2">
+        <section ng-include="'appJS/sidebar/_side_bar.html'"></section>
       </div>
+
+      <div class="col-lg-6">
+        <tabset>
+          <tab>
+            <tab-heading>
+            <i class="fa fa-pencil"></i>Thao luan
+          </tab-heading>
+          <div class="post margintop10">
+            <div style="height: 58px">
+              <div class="pull-left">
+                <img src="" alt="">
+              </div>
+              <div class="pull-left marginleft5">
+                <a href="#">Nguyen Truong Duy</a><br>
+                <a href="#">12/12/2112</a>
+              </div>
+            </div>
+            <div class="postcontent margintop10">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+            </div>
+            <a href="#">like</a><span>  .  </span>
+            <a href="#">comment</a><span>  .  </span>
+            <img src="" alt="" width="6%">
+            <input class="comment margintop5 field" type="text" name="" value="" placeholder="comment here">
+          </div>
+        </tab>
+        <tab ng-show="current_user_is_admin()">
+          <tab-heading>
+          Chinh sua
+        </tab-heading>
+
+        <div class="row padding10">
+          <div class="col-sm-3">
+            <label>Tên CLB*</label>
+          </div>
+          <div class="col-sm-9">
+            <input name="name" type="text" class="form-control" data-ng-model="club_update.name" required>
+          </div>
+        </div>
+        <div class="row padding10">
+          <div class="col-sm-3">
+            <label>Mô tả</label>
+          </div>
+
+          <div class="col-sm-9">
+            <textarea  rows="4" cols="50" class="form-control" data-ng-model="club_update.description">
+            </textarea>
+          </div>
+        </div>
+        <div class="pull-right margintop20">
+          <button class="btn btn-primary" ng-click="update_club()">Luu</button>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+
+
+  <div class="col-lg-4">
+    <div>
+      <label>Thanh vien</label>
+      <label class="pull-right">{{club.members.length}}</label>
+      <input ng-show="current_user_is_admin()" type="text" placeholder=" + them thanh vien..." class="form-control" ng-model="user_find" ng-change="find_user()">
+
+      <ul ng-show="show_recommend_user()" class="list_user_recommend">
+        <li ng-repeat="user in users_list" ng-click= "add_to_members(user)">{{user.fullname}}</li>
+      </ul>
+
+      <ul class="list_user_choosen margintop10">
+        <li class="member_list" ng-repeat="member in club.members">
+          <span ng-show="current_user_is_admin()" class="dropdown" dropdown on-toggle="toggled(open)" >
+            <a href class="dropdown-toggle" dropdown-toggle>
+              <i class="fa fa fa-cog" style="color: white;"></i>
+            </a>
+            <ul class="dropdown-menu" style="z-index: 5; color: black;">
+              <li>
+                <i class="fa fa-times" ng-click= "remove_member(member)"> Xoa thanh vien</i>
+              </li>
+              <li ng-hide = 'member_is_admin(member.id.$oid)'>
+                <i class="fa fa-hand-o-right" ng-click= "make_admin(member)"> Chi dinh la admin</i>
+              </li>
+              <li ng-show = 'member_is_admin(member.id.$oid)'>
+                <i class="fa fa-hand-o-right" ng-click= "remove_admin(member)"> Chi dinh la thanh vien</i>
+              </li>
+            </ul>
+          </span>
+
+          {{member.fullname}}
+        </li>
+      </ul>
     </div>
-    <div class="col-lg-4">
-      <div>
-        <label>Thanh vien</label>
-        <label class="pull-right">{{club.members.length}}</label>
-        <input type="text" placeholder=" + them thanh vien..." class="form-control" ng-model="user_find" ng-change="find_user()">
+    <div class="about" style="width: 100%; float: left;">
+      <hr>
+      <label>Mo ta</label>
+      <p>{{club.description}}</p>
 
-        <ul ng-show="show_recommend_user()" class="list_user_recommend">
-          <li ng-repeat="user in users_list" ng-click= "add_to_members(user)">{{user.fullname}}</li>
-        </ul>
-
-        <ul class="list_user_choosen margintop10">
-          <li class="member_list" ng-repeat="member in club.members">
-            <span class="dropdown" dropdown on-toggle="toggled(open)" >
-              <a href class="dropdown-toggle" dropdown-toggle>
-                <i class="fa fa fa-cog" style="color: white;"></i>
-              </a>
-              <ul class="dropdown-menu" style="z-index: 5; color: black;">
-                <li>
-                  <i class="fa fa-times" ng-click= "remove_member(member)"> Xoa thanh vien</i>
-                </li>
-                <li>
-                  <i class="fa fa-hand-o-right" ng-click= "make_admin(member)"> Chi dinh la admin</i>
-                </li>
-              </ul>
-            </span>
-
-            {{member.fullname}}
-          </li>
-        </ul>
-      </div>
-      <div class="about" style="width: 100%; float: left;">
-        <hr>
-        <label>Mo ta</label>
-        <p>{{club.description}}</p>
-      </div>
     </div>
   </div>
+</div>
 </section>

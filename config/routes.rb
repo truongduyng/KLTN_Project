@@ -116,6 +116,7 @@ Rails.application.routes.draw do
       post 'addmember'
       post 'removemember'
       post 'makeadmin'
+      post 'removeadmin'
     end
   end
 

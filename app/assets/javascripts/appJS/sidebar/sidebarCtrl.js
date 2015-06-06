@@ -54,7 +54,6 @@ app.controller('newclubmodalCtrl', function($scope, $modalInstance, $http){
     console.log(user);
     if($scope.club.members.indexOf(user) == -1){
       $scope.club.members.push(user.fullname);
-
     }
     $scope.users_list = [];
     $scope.user_find = "";

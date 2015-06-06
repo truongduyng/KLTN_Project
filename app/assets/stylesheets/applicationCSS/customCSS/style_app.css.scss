@@ -15,6 +15,7 @@ body {
 	font-weight:300;
 	line-height:1.6em;
 	color:#656565;
+	min-height: 100%;
 }
 
 a:active {
@@ -349,12 +350,12 @@ ul.list_user_recommend li:hover{
 }
 
 .myalert{
-  height: 50px !important;
-  margin: 0 0 10px 0 !important;
-  z-index: 10000 !important;
-  position: fixed;
-  bottom: 80%;
-  right: 20px;
+	height: 50px !important;
+	margin: 0 0 10px 0 !important;
+	z-index: 10000 !important;
+	position: fixed;
+	bottom: 80%;
+	right: 20px;
 }
 
 .club_name{
@@ -363,4 +364,18 @@ ul.list_user_recommend li:hover{
 	bottom: 0px;
 	left: 0px;
 	padding-left: 20px;
+}
+
+.leave_club_btn{
+	position: absolute;
+	z-index: 2;
+	bottom: 0px;
+	right: 0px;
+	margin-right: 40px;
+	margin-bottom: 20px;
+	padding-right: 20px;
+}
+
+footer{
+
 }
