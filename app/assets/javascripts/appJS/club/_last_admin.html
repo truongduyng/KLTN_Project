@@ -1,0 +1,31 @@
+<div class="modal-header" style="background-color: #cee0f4">
+  <span style="font-size: 18px; text-color: black;">Chi dinh thanh vien quan tri moi</span>
+</div>
+<div class="modal-body row">
+  <div class= "col-lg-12">
+
+    <div class="row padding10">
+      <div class="col-sm-3">
+        <label>Chi dinh thanh vien quan tri</label>
+      </div>
+      <div class="col-sm-9">
+
+        <input type="text" placeholder="Tim thanh vien" class="form-control" ng-model="member_find" ng-change="find_member()">
+
+        <ul ng-show="show_recommend_members()" class="list_user_recommend">
+          <li ng-repeat="member in members_list" ng-click= "add_to_admins(member)">{{member.fullname}}</li>
+        </ul>
+
+        <ul class="list_user_choosen">
+          <li class="member_list" ng-repeat="admin in admins"><i class="fa fa-times" ng-click="remove_admin(admin)"></i> {{admin}}</li>
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">Roi khoi</button>
+  <button class="btn btn-default" ng-click="cancel()">Huy</button>
+</div>

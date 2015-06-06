@@ -117,6 +117,7 @@ Rails.application.routes.draw do
       post 'removemember'
       post 'makeadmin'
       post 'removeadmin'
+      get 'find_members/:member_name' => 'clubs#find_members'
     end
   end
 

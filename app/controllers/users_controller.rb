@@ -6,7 +6,7 @@ class UsersController < ActionController::Base
   def find_user_by_username
     begin
 
-      @results =  User.any_of({fullname: /#{params[:username]}/i}).to_a
+      @results =  User.any_of({fullname: /#{params[:username]}/i}).limit(7).to_a
       @results.delete(current_user)
 
     rescue Exception => e

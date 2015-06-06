@@ -1,6 +1,7 @@
 class ClubsController < ApplicationController
   before_action :authenticate_user!
-  before_action :is_admin?, only: [:addmember, :removemember, :makeadmin, :removeadmin, :update]
+  before_action :is_admin?, only: [:addmember, :makeadmin, :removeadmin, :update]
+  before_action :can_remove_member?, only: [:removemember]
   before_action :is_member?, only: [:show]
 
   def index
@@ -31,6 +32,17 @@ class ClubsController < ApplicationController
     end
   end
 
+  def find_members
+    begin
+      @club = Club.find(club_params[:id])
+      @results =  @club.members.any_of({fullname: /#{params[:member_name]}/i}).limit(7).to_a
+      @results.delete(current_user)
+      render template: "users/find_user_by_username.json.jbuilder"
+    rescue Exception => e
+      render json: ""
+    end
+  end
+
   def addmember
     begin
       member =  User.find(club_params[:member_id])
@@ -47,21 +59,23 @@ class ClubsController < ApplicationController
 
   def removemember
     begin
-      member =  User.find(club_params[:member_id])
-      if @club.members.include? member
+      byebug
+      if @club.members.include? @member
 
-        @club.members.delete(member)
+        @club.members.delete(@member)
 
         if @club.members.count == 0
           @club.destroy
           render json: nil, status: :ok
         end
 
-        if @club.admins.include? member.id
-          @club.admins.delete(admin.id)
+        if @club.admins.include? @member.id
+          @club.admins.delete(@member.id)
 
           if @club.admins.count == 0
-            @club.admins << club_params[:admin_id]
+            User.where(:fullname.in => club_params[:admins]).each do |admin|
+              @club.admins << admin.id
+            end
             @club.save
           end
 
@@ -112,7 +126,7 @@ class ClubsController < ApplicationController
   private
   def club_params
     params[:members] ||= []
-    params.permit(:id, :name, :description, :member_id, :admin_id, members: [])
+    params.permit(:id, :name, :description, :member_id, :admins => [], :members => [])
   end
 
   def is_member?
@@ -134,6 +148,18 @@ class ClubsController < ApplicationController
       end
     rescue Exception => e
       render nothing: true, status: :not_found
+    end
+  end
+
+  def can_remove_member?
+    begin
+      @club = Club.find(club_params[:id])
+      @member =  User.find(club_params[:member_id])
+      if !(@member.id == current_user.id || @club.admins.include?(current_user.id))
+        render nothing: true, status: :bad_request
+      end
+    rescue Exception => e
+
     end
   end
 

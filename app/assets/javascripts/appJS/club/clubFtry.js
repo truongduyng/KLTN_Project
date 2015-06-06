@@ -38,8 +38,8 @@ services.factory('clubs',['$http', function($http){
     })
   }
 
-  o.removemember = function(club_id, member_id, admin_id){
-    return $http.post('clubs/' + club_id + '/removemember.json', {member_id: member_id, admin_id: admin_id}).success(function(){
+  o.removemember = function(club_id, member_id, admins){
+    return $http.post('clubs/' + club_id + '/removemember.json', {member_id: member_id, admins: admins}).success(function(){
     })
     .error(function(){
     })

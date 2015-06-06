@@ -22,6 +22,54 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
 
   $scope.leave_club = function(){
 
+    if ($scope.current_user_is_admin() && $scope.club.admins.length == 1 && $scope.club.members.length > 1) {
+
+      var last_admin_modal = $modal.open({
+        templateUrl: 'appJS/club/_last_admin.html',
+        controller: 'lastadminCtrl',
+        resolve:{
+          club_id: function(){
+            return $scope.club.id.$oid
+          }
+        }
+      });
+
+      last_admin_modal.result.then(function (admins) {
+        clubs.removemember($scope.club.id.$oid, Auth._currentUser._id.$oid, admins).success(function(result){
+          $state.go('home');
+        })
+        .error(function(){
+        })
+      }, function () {
+      });
+    };
+
+    if ($scope.club.members.length == 1) {
+      var last_member_modal = $modal.open({
+        templateUrl: 'appJS/club/_last_member.html',
+        controller: 'lastmemberCtrl'
+      });
+
+      last_member_modal.result.then(function () {
+        clubs.removemember($scope.club.id.$oid, Auth._currentUser._id.$oid, null).success(function(result){
+          $state.go('home');
+        })
+        .error(function(){
+        })
+      }, function () {
+      });
+    };
+
+    if ($scope.club.admins.length > 1 && $scope.club.members.length > 1) {
+      clubs.removemember($scope.club.id.$oid, Auth._currentUser._id.$oid, null).success(function(result){
+
+        $state.go('home');
+
+      })
+      .error(function(){
+      })
+    };
+
   }
 
   $scope.show_recommend_user= function(){
@@ -41,10 +89,10 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
 
     if(!ismemberof($scope.club.members, user.id.$oid)){
       clubs.addmember($scope.club.id.$oid, user.id.$oid).success(function(result){
-        if (result.status = "ok"){
-          $scope.club.members.push(user);
-          Flash.create('success', 'Bingo! Them thanh vien ' + user.fullname + "thanh cong!", 'myalert');
-        }
+
+        $scope.club.members.push(user);
+        Flash.create('success', 'Bingo! Them thanh vien ' + user.fullname + "thanh cong!", 'myalert');
+
       })
     }else{
       Flash.create('success', user.fullname + " da la thanh vien cua clb", 'myalert');
@@ -58,6 +106,11 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
     clubs.removemember($scope.club.id.$oid, member.id.$oid, null).success(function(result){
       if (result.status = "ok"){
         $scope.club.members.splice($scope.club.members.indexOf(member),1);
+
+        if ($scope.club.members.length == 0){
+          $state.go('home');
+        }
+
         Flash.create('success', "khai tru thanh vien " + member.fullname + " thanh cong!", 'myalert');
       }
     })
@@ -69,10 +122,10 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
   $scope.make_admin = function(member){
 
     clubs.makeadmin($scope.club.id.$oid, member.id.$oid).success(function(result){
-      if (result.status = "ok"){
-        $scope.club.admins.push({id:member.id});
-        Flash.create('success', "Chi dinh " + member.fullname + " thanh admin thanh cong!", 'myalert');
-      }
+
+      $scope.club.admins.push({id:member.id});
+      Flash.create('success', "Chi dinh " + member.fullname + " thanh admin thanh cong!", 'myalert');
+
     })
     .error(function(){
       Flash.create('danger', "Chi dinh that bai!", 'myalert');
@@ -86,10 +139,10 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
     }
 
     clubs.removeadmin($scope.club.id.$oid, member.id.$oid).success(function(result){
-      if (result.status = "ok"){
-        $scope.club.admins.splice($scope.club.admins.indexOf(member.id),1);
-        Flash.create('success', "Chi dinh " + member.fullname + "la thanh vien thanh cong!", 'myalert');
-      }
+
+      $scope.club.admins.splice($scope.club.admins.indexOf(member.id),1);
+      Flash.create('success', "Chi dinh " + member.fullname + "la thanh vien thanh cong!", 'myalert');
+
     })
     .error(function(){
       Flash.create('danger', "Chi dinh that bai!", 'myalert');
@@ -114,4 +167,56 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
     return result;
   }
 
+}]);
+
+app.controller('lastmemberCtrl', function($scope, $modalInstance, $http){
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+
+app.controller('lastadminCtrl',['$scope', '$modalInstance', '$http', 'club_id', function($scope, $modalInstance, $http, club_id){
+
+  $scope.admins = [];
+  $scope.members_list = [];
+  console.log(club_id);
+
+  $scope.show_recommend_members= function(){
+    return $scope.members_list.length > 0;
+  }
+
+  $scope.find_member = function(){
+    $scope.members_list = [];
+    if($scope.member_find != ""){
+      $http.get("clubs/"+ club_id +"/find_members/"+$scope.member_find+".json").success(function(data){
+        $scope.members_list = data;
+      });
+    }
+  }
+
+  $scope.add_to_admins = function(member){
+    console.log(member);
+    if($scope.admins.indexOf(member) == -1){
+      $scope.admins.push(member.fullname);
+    }
+    $scope.members_list = [];
+    $scope.member_find = "";
+  }
+
+  $scope.remove_admin = function(admin){
+    $scope.club.members.splice($scope.admins.indexOf(admin),1);
+  }
+
+  $scope.ok = function () {
+    $modalInstance.close($scope.admins);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
 }]);
