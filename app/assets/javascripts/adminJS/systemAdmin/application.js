@@ -36,4 +36,5 @@
 //= require ./customJS/richmarker.js
 //= require angular-ckeditor
 //= require ./systemAdminApp.js
+//= require ../../angular-locale_vi-vn
 //= require_tree .

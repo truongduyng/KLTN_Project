@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery.min
 //= require jquery_ujs
-//= require jquery-ui/autocomplete
 //= require_tree ../extendJavascript
 //= require ./customJS/websocket_rails/websocket_rails.js
 //= require ./customJS/websocket_rails/event.js
@@ -27,7 +26,6 @@
 //= require angular-ui-router
 //= require angular-rails-templates
 //= require angular-devise
-//= require angular-ui-router
 //= require ngmap
 //= require angular-flash-alert/src/angular-flash
 //= require initModule
@@ -47,4 +45,5 @@
 //= require_tree ../services
 //= require websocket_rails/main
 //= require ./customJS/select2.min
+//= require ../angular-locale_vi-vn
 //= require_tree .

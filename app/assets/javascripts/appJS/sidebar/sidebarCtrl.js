@@ -46,7 +46,7 @@ app.controller('newclubmodalCtrl', function($scope, $modalInstance, $http){
       $http.get("/find_users/"+$scope.user_find+".json").success(function(data){
 
         $scope.users_list = data;
-     });
+      });
     }
   }
 

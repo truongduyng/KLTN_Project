@@ -81,7 +81,7 @@
       <label class="pull-right">{{club.members.length}}</label>
       <input ng-show="current_user_is_admin()" type="text" placeholder=" + them thanh vien..." class="form-control" ng-model="user_find" ng-change="find_user()">
 
-      <ul ng-show="show_recommend_user()" class="list_user_recommend">
+      <ul ng-show="show_recommend_user()" class="list_recommend">
         <li ng-repeat="user in users_list" ng-click= "add_to_members(user)">{{user.fullname}}</li>
       </ul>
 

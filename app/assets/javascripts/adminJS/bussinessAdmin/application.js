@@ -27,5 +27,6 @@
 //= require ./bussinessAdminApp.js
 //= require websocket_rails/main
 //= require_tree ../../services
+//= require ../../angular-locale_vi-vn
 //= require_tree ../../angularJSComponents
 //= require_tree .

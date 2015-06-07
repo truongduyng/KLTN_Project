@@ -12,7 +12,7 @@
 
         <input type="text" placeholder="Tim thanh vien" class="form-control" ng-model="member_find" ng-change="find_member()">
 
-        <ul ng-show="show_recommend_members()" class="list_user_recommend">
+        <ul ng-show="show_recommend_members()" class="list_recommend">
           <li ng-repeat="member in members_list" ng-click= "add_to_admins(member)">{{member.fullname}}</li>
         </ul>
 
