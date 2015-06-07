@@ -3,12 +3,8 @@ class ApplicationController < ActionController::Base
   respond_to :html, :json
   layout false
 
-  def angular
+  def home
     render 'layouts/application'
-  end
-
-  def adminbussines
-    render "layouts/bussiness_admin"
   end
 
   def bussiness_admin

@@ -2,7 +2,7 @@
   <div class="col-lg-10 pull-right">
     <img class="coverimg" src="" alt="">
     <h3 class="club_name">{{club.name}}</h3>
-    <button class="btn btn-default leave_club_btn" ng-click="leave_club()" >Roi CLB</button>
+    <button class="btn btn-default leave_club_btn" ng-click="leave_club()" >Rời CLB</button>
   </div>
 </div>
 
@@ -17,7 +17,7 @@
         <tabset>
           <tab>
             <tab-heading>
-            <i class="fa fa-pencil"></i>Thao luan
+            <i class="fa fa-pencil"></i> Thảo luận
           </tab-heading>
           <div class="post margintop10">
             <div style="height: 58px">
@@ -46,7 +46,7 @@
         </tab>
         <tab ng-show="current_user_is_admin()">
           <tab-heading>
-          Chinh sua
+          Chỉnh sửa
         </tab-heading>
 
         <div class="row padding10">
@@ -68,7 +68,7 @@
           </div>
         </div>
         <div class="pull-right margintop20">
-          <button class="btn btn-primary" ng-click="update_club()">Luu</button>
+          <button class="btn btn-primary" ng-click="update_club()">Lưu</button>
         </div>
       </tab>
     </tabset>
@@ -77,7 +77,7 @@
 
   <div class="col-lg-4">
     <div>
-      <label>Thanh vien</label>
+      <label>Thành viên</label>
       <label class="pull-right">{{club.members.length}}</label>
       <input ng-show="current_user_is_admin()" type="text" placeholder=" + them thanh vien..." class="form-control" ng-model="user_find" ng-change="find_user()">
 
@@ -93,13 +93,13 @@
             </a>
             <ul class="dropdown-menu" style="z-index: 5; color: black;">
               <li>
-                <i class="fa fa-times" ng-click= "remove_member(member)"> Xoa thanh vien</i>
+                <i class="fa fa-times" ng-click= "remove_member(member)"> Xóa thành viên</i>
               </li>
               <li ng-hide = 'member_is_admin(member.id.$oid)'>
-                <i class="fa fa-hand-o-right" ng-click= "make_admin(member)"> Chi dinh la admin</i>
+                <i class="fa fa-hand-o-right" ng-click= "make_admin(member)"> Chỉ định là quản trị</i>
               </li>
               <li ng-show = 'member_is_admin(member.id.$oid)'>
-                <i class="fa fa-hand-o-right" ng-click= "remove_admin(member)"> Chi dinh la thanh vien</i>
+                <i class="fa fa-hand-o-right" ng-click= "remove_admin(member)"> Chỉ định là thành viên</i>
               </li>
             </ul>
           </span>
@@ -110,7 +110,7 @@
     </div>
     <div class="about" style="width: 100%; float: left;">
       <hr>
-      <label>Mo ta</label>
+      <label>Mô tả</label>
       <p>{{club.description}}</p>
 
     </div>

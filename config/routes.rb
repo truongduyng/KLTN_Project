@@ -143,7 +143,7 @@ Rails.application.routes.draw do
   ###
   get 'bussiness-admin' => 'application#bussiness_admin'
   get 'system-admin' => 'application#system_admin'
-  root 'application#angular'
+  root 'application#home'
 
   get 'check/username' => 'users#check_username'
   get 'check/email' => 'users#check_email'

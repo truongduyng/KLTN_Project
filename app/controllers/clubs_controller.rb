@@ -59,7 +59,7 @@ class ClubsController < ApplicationController
 
   def removemember
     begin
-      byebug
+      # byebug
       if @club.members.include? @member
 
         @club.members.delete(@member)
@@ -126,7 +126,7 @@ class ClubsController < ApplicationController
   private
   def club_params
     params[:members] ||= []
-    params.permit(:id, :name, :description, :member_id, :admins => [], :members => [])
+    params.permit(:id, :name, :description, :admin_id, :member_id, :admins => [], :members => [])
   end
 
   def is_member?

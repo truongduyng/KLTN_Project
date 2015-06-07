@@ -13,10 +13,10 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
   $scope.update_club = function(){
     clubs.update($scope.club_update).success(function(result){
       $scope.club = result;
-      Flash.create('success', "Cap nhat thong tin CLB thanh cong!", 'myalert');
+      Flash.create('success', "Cập nhật thông tin CLB thành công!", 'myalert');
     })
     .error(function(){
-      Flash.create('danger', "Cap nhat thong tin CLB that bai!", 'myalert');
+      Flash.create('danger', "Cập nhật thông tin CLB thất bại!", 'myalert');
     })
   }
 
@@ -91,11 +91,11 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
       clubs.addmember($scope.club.id.$oid, user.id.$oid).success(function(result){
 
         $scope.club.members.push(user);
-        Flash.create('success', 'Bingo! Them thanh vien ' + user.fullname + "thanh cong!", 'myalert');
+        Flash.create('success', 'Bingo! Thêm thành viên ' + user.fullname + " thành công!", 'myalert');
 
       })
     }else{
-      Flash.create('success', user.fullname + " da la thanh vien cua clb", 'myalert');
+      Flash.create('success', user.fullname + " đã là thành viên của CLB.", 'myalert');
     }
     $scope.users_list = [];
     $scope.user_find = "";
@@ -111,11 +111,11 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
           $state.go('home');
         }
 
-        Flash.create('success', "khai tru thanh vien " + member.fullname + " thanh cong!", 'myalert');
+        Flash.create('success', "Khai trừ thành viên " + member.fullname + " thành công!", 'myalert');
       }
     })
     .error(function(){
-      Flash.create('danger', "loai " + member.fullname + " that bai!", 'myalert');
+      Flash.create('danger', "Loại " + member.fullname + " thất bại!", 'myalert');
     })
   }
 
@@ -124,28 +124,28 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
     clubs.makeadmin($scope.club.id.$oid, member.id.$oid).success(function(result){
 
       $scope.club.admins.push({id:member.id});
-      Flash.create('success', "Chi dinh " + member.fullname + " thanh admin thanh cong!", 'myalert');
+      Flash.create('success', "Chỉ định " + member.fullname + " thành quản trị thành công!", 'myalert');
 
     })
     .error(function(){
-      Flash.create('danger', "Chi dinh that bai!", 'myalert');
+      Flash.create('danger', "Chỉ định thất bại!", 'myalert');
     })
   }
 
   $scope.remove_admin = function(member){
     if($scope.club.admins.length == 1){
-      Flash.create('warning', "Can it nhat mot 1 admin cho CLB", 'myalert');
+      Flash.create('warning', "Cần ít nhất một quản trị viên cho CLB!", 'myalert');
       return false;
     }
 
     clubs.removeadmin($scope.club.id.$oid, member.id.$oid).success(function(result){
 
       $scope.club.admins.splice($scope.club.admins.indexOf(member.id),1);
-      Flash.create('success', "Chi dinh " + member.fullname + "la thanh vien thanh cong!", 'myalert');
+      Flash.create('success', "Chỉ định " + member.fullname + " là thành viên thành công!", 'myalert');
 
     })
     .error(function(){
-      Flash.create('danger', "Chi dinh that bai!", 'myalert');
+      Flash.create('danger', "Chỉ định thất bại!", 'myalert');
     })
   }
 
