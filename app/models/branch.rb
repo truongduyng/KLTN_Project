@@ -56,13 +56,19 @@ class Branch
   # end
 
   def self.search(param_search)
+    # byebug
     if param_search[:lat]
+
       return Branch.near([param_search[:lat].to_f, param_search[:lng].to_f], param_search[:distance].to_f, order:"distance")
-    else
-      if param_search[:search_query] == "all"
-        return Branch.all
-      end
-      return Branch.near(param_search[:search_query], 2, order:"distance")
     end
+
+    if param_search[:search_query]
+      result = Branch.near(param_search[:search_query], 2, order:"distance").to_a + Branch.any_of(
+        {name: /#{param_search[:search_query]}/i},
+        {address: /#{param_search[:search_query]}/i}).limit(7).to_a
+      return result
+    end
+
+    return nil
   end
 end

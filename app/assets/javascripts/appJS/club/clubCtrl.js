@@ -8,6 +8,8 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
     description: $scope.club.description
   };
 
+  $('ul.list_recommend').width($('input#user_find').outerWidth());
+
   $scope.users_list= [];
 
   $scope.update_club = function(){

@@ -6,7 +6,7 @@ app.controller('headerCtrl', ['$scope', '$http','$state', function($scope, $http
   $('ul.list_recommend').width($('div#search_box').width());
 
   $scope.search = function(){
-    $http.get("/searchnameadd/all").success(function(data){
+    $http.get("/searchnameadd/"+ $scope.search_query).success(function(data){
       console.log(data);
       $scope.results = data;
     });
@@ -17,8 +17,11 @@ app.controller('headerCtrl', ['$scope', '$http','$state', function($scope, $http
   }
 
   $scope.blurred = function(){
-
     // $scope.isfocus = false;
+  }
+
+  $scope.hovering_result = function(){
+    $scope.isfocus = true;
   }
 
   $scope.show_recommend_result = function(){

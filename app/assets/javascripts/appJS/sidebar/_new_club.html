@@ -21,12 +21,13 @@
         <ul class="list_user_choosen">
           <li class="member_list" ng-repeat="member in club.members"><i class="fa fa-times" ng-click="remove_member(member)"></i> {{member}}</li>
         </ul>
-        <div id="text_box_user_find">
-          <input type="text" placeholder= "Tìm kiếm thành viên..." class="form-control" ng-model="user_find" ng-change="find_user()">
-        </div>
-        <ul ng-show="show_recommend_user()" class="list_recommend">
-          <li ng-repeat="user in users_list" ng-click= "add_to_members(user)">{{user.fullname}}</li>
-        </ul>
+
+        <input type="text" placeholder= "Tìm kiếm thành viên..." class="form-control" ng-model="user_find" ng-change="find_user()">
+
+
+          <ul ng-show="show_recommend_user()" class="list_recommend" style="width: 419px;">
+            <li ng-repeat="user in users_list" ng-click= "add_to_members(user)">{{user.fullname}}</li>
+          </ul>
 
       </div>
     </div>

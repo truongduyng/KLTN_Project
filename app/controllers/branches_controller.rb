@@ -43,6 +43,7 @@ class BranchesController < ApplicationController
   def search
     branches = Branch.search(branch_params)
     result = []
+    # byebug
     if branches.present?
       branches.each do |branch|
         result << {
