@@ -1,6 +1,6 @@
 app.controller('authCtrl', ['$scope', 'Auth', '$state', '$modal', '$rootScope', 'Flash',
 	function($scope, Auth, $state, $modal, $rootScope, Flash) {
-		
+
 		$scope.user = {};
 
 		$scope.close_modal = function() {

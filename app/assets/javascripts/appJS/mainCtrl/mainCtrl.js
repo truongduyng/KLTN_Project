@@ -6,8 +6,10 @@
 app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '$stateParams', '$location', '$anchorScroll',
 	function($scope, $rootScope, $state, Auth, Flash, $stateParams, $location, $anchorScroll) {
 
-	$rootScope.$on('$stateChangeStart',
-		function(event, toState, toParams, fromState, fromParams) {
+		$scope.signedIn = Auth.isAuthenticated;
+
+		$rootScope.$on('$stateChangeStart',
+			function(event, toState, toParams, fromState, fromParams) {
 			//Kiem tra trang thai cua route hay page co yeu cau login hay ko
 			//Sau do goi form login, va dua vao thuoc tinh co load lai trang hay de biet cach load trang
 			if (toState.access != null && !toState.access.free && !Auth.isAuthenticated()) {
@@ -29,7 +31,7 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '
 		});
 
 
-	$rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+		$rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
 		//Loi nay xay ra khi resolve khi load controller bi hong
 		if (error.status == '404') {
 			$state.go('notFound')
@@ -46,8 +48,8 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '
 		// }
 	});
 
-	$rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
-		console.log("scrollTo: ", $stateParams.scrollTo);
+		$rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
+			console.log("scrollTo: ", $stateParams.scrollTo);
 		//Cho scroll khi xem thong bao
 		if ($stateParams.scrollTo) {
 			$location.hash($stateParams.scrollTo);

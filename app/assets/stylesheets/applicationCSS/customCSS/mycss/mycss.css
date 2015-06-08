@@ -6,12 +6,12 @@
 }
 .post-form{
 	width:100%;
-	//border: solid thin #ABABAB;
+	border: solid thin #ABABAB;
 	border:none;
 	border-radius:5px;
 	display:block;
 	overflow:hidden;
-	
+
 }
 .post-form .post-form-header{
 }
@@ -28,7 +28,7 @@
 	resize: none;
 	overflow: hidden;
 	display:block;
-	
+
 }
 .post-form .post-form-images{
 }
@@ -79,12 +79,12 @@
 .post-form-bottom{
 	background-color: #E8E9EB;
 	overflow:hidden;
-	
+
 }
 .post-form-bottom button{
 	float:right;
 	min-width:100px;
-	
+
 }
 
 /*End For post form*/

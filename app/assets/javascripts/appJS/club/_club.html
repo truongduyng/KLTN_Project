@@ -1,5 +1,5 @@
-<div class="container">
-  <div class="col-lg-10 pull-right">
+<div class="row">
+  <div class="col-lg-12 pull-right">
     <img class="coverimg" src="" alt="">
     <h3 class="club_name">{{club.name}}</h3>
     <button class="btn btn-default leave_club_btn" ng-click="leave_club()" >Rời CLB</button>
@@ -7,13 +7,10 @@
 </div>
 
 <section id="content">
-  <div class="container margintop10">
+  <div class="margintop10">
     <div class="row">
-      <div class="col-md-2">
-        <section ng-include="'appJS/sidebar/_side_bar.html'"></section>
-      </div>
 
-      <div class="col-lg-6">
+      <div class="col-lg-8">
         <tabset>
           <tab>
             <tab-heading>

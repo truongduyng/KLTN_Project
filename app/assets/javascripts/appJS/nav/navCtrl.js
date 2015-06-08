@@ -107,10 +107,12 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', 'ti
 
     $scope.$on('devise:login', function(e, user) {
       $scope.user = user;
+      // $('div.post-item-container').addClass('col-sm-4');
     });
 
     $scope.$on('devise:logout', function(e, user) {
       $scope.user = {};
+      // $('div.post-item-container').addClass('col-sm-3');
     });
 
     $scope.onLogin = function() {

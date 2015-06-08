@@ -1,81 +1,62 @@
 <!DOCTYPE html>
 <html ng-app="sportApp">
-  <head>
-    <meta charset="utf-8">
-    <title>Sporta</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content=""/>
+<head>
+  <meta charset="utf-8">
+  <title>Sporta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content=""/>
 
-    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=geometry"></script>
-    <%= favicon_link_tag %>
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=geometry"></script>
+  <%= favicon_link_tag %>
 
-    <%= stylesheet_link_tag    'applicationCSS/application', media: 'all'%>
-    <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag    'applicationCSS/application', media: 'all'%>
+  <%= csrf_meta_tags %>
 
-  </head>
-    <body ng-controller="mainCtrl">
-      <!-- SOME LINKS TO REMEMBER -->
-      <!-- <img src="<%= image_path('application/01.jpg') %>" />
-      <%= image_tag "application/01.jpg" %> -->
-      <!-- <img src="/assets/application/01.jpg">  -->
-      <!-- END SOME LINKS TO REMEMBER -->
+</head>
+<body ng-controller="mainCtrl">
 
 
-        <!-- BC -->
-        <!-- <nav class="navbar navbar-default navbar-fixed-top">
-              <div class="container" >
+  <header data-ng-include="'appJS/header/_header.html'"></header>
 
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="#"><img alt="Brand" src="<%= image_path('application/myimg/football_icon.png')%>" width="45px" height="45px" style="margin-top:-10px;">
-        </a>
-                </div>
-
-
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <p class="navbar-text" style="margin-left:-2px;"><b style="font-size:1.4em;">SPORTA</b></p>
-                  <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Tìm kiếm sân">
-                    </div>
-                    <button type="submit" class="btn btn-success">Tìm kiếm</button>
-                  </form>
-
-
-                 <div ng-include="'appJS/nav/_nav.html'"></div>
-
-                </div>
-              </div>
-        </nav> -->
-        <header data-ng-include="'appJS/header/_header.html'"></header>
-        <!-- EC -->
-
-        <!-- CONTENT HERE -->
-        <div class="container">
+  <!-- CONTENT HERE -->
+  <div class="container">
+    <div class="row">
+      <div ng-show="signedIn()">
+        <div class="col-sm-2">
+          <div>
+            <div ng-include="'appJS/sidebar/_side_bar.html'"></div>
+            <section ng-include="'appJS/modules/_vietBaiModule.html'"></section>
+          </div>
+        </div>
+        <div class="col-sm-10">
           <ui-view></ui-view>
         </div>
-        <!-- END CONTENT -->
-        <!-- BN -->
-        <div class="pull-right" flash-message="3000" ></div>
-        <!-- EN -->
-        <!-- FOOTER HERE  -->
-        <footer data-ng-include="'appJS/footer/_footer.html'"></footer>
-        <!-- END FOOTER -->
+      </div>
+      <div ng-hide="signedIn()">
+        <div class="col-sm-12">
+          <ui-view></ui-view>
+        </div>
+      </div>
+    </div>
 
-        <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+  </div>
+  <!-- END CONTENT -->
+  <!-- BN -->
+  <div class="pull-right" flash-message="3000" ></div>
+  <!-- EN -->
+  <!-- FOOTER HERE  -->
+  <footer data-ng-include="'appJS/footer/_footer.html'"></footer>
+  <!-- END FOOTER -->
 
-        <%= javascript_include_tag 'appJS/application' %>
+  <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
 
-        <script>
-          /*For textarea*/
-          autosize(document.querySelectorAll('textarea'));
-          NotifierjsConfig.position = ["bottom", "right"];
-        </script>
+  <%= javascript_include_tag 'appJS/application' %>
 
-    </body>
+  <script>
+    /*For textarea*/
+    autosize(document.querySelectorAll('textarea'));
+    NotifierjsConfig.position = ["bottom", "right"];
+  </script>
+
+</body>
 </html>
