@@ -17,11 +17,18 @@ app.controller('headerCtrl', ['$scope', '$http','$state', function($scope, $http
   }
 
   $scope.blurred = function(){
-    // $scope.isfocus = false;
+    console.log("coverred: ", $scope.overred);
+    if(!$scope.overred){
+      $scope.isfocus = false;
+    }
   }
 
-  $scope.hovering_result = function(){
-    $scope.isfocus = true;
+  $scope.over_search= function(){
+    $scope.overred = true;
+  }
+
+  $scope.out_search= function(){
+    $scope.overred = false;
   }
 
   $scope.show_recommend_result = function(){

@@ -21,21 +21,28 @@
   <!-- CONTENT HERE -->
   <div class="container">
     <div class="row">
+
       <div ng-show="signedIn()">
+
         <div class="col-sm-2">
           <div>
             <div ng-include="'appJS/sidebar/_side_bar.html'"></div>
             <section ng-include="'appJS/modules/_vietBaiModule.html'"></section>
           </div>
         </div>
+
         <div class="col-sm-10">
           <ui-view></ui-view>
         </div>
+
       </div>
+
       <div ng-hide="signedIn()">
+
         <div class="col-sm-12">
           <ui-view></ui-view>
         </div>
+
       </div>
     </div>
 

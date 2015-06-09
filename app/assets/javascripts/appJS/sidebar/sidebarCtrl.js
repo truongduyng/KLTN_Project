@@ -1,7 +1,15 @@
 app.controller('sidebarCtrl',['$scope', '$modal', 'clubs', '$state', function($scope, $modal, clubs, $state){
 
+  $scope.$on("onLoginSuccess", function(){
+    clubs.index().success(function(data){
+      $scope.clubs = data;
+    }).error(function(data){
+    });
+  });
+
   clubs.index().success(function(data){
     $scope.clubs = data;
+  }).error(function(data){
   });
 
   $scope.opennewclub = function(){

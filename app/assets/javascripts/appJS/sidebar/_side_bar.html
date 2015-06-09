@@ -2,6 +2,7 @@
 </div>
 
 <div class="club" ng-controller="sidebarCtrl">
+
   <span class="club-header">Câu lạc bộ
     <div class="pull-right">
       <a ng-click="opennewclub()">
@@ -9,9 +10,11 @@
       </a>
     </div>
   </span>
+
   <ul class="list-club">
     <li ng-repeat = "club in clubs" ng-click="gotoclub(club.id.$oid)">
       <a><i class="fa fa-users"></i> {{club.name}}</a>
     </li>
   </ul>
+
 </div>

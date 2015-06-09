@@ -1,6 +1,8 @@
 app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash', 'Auth', '$state', '$modal', function($scope, $modal, club, clubs, $http, Flash, Auth, $state, $modal){
   console.log(club.data);
 
+  // var user_promise = Auth.current_user();
+  // user_promise.then(func)
   $scope.club = club.data;
   $scope.club_update = {
     id: $scope.club.id,

@@ -37,15 +37,6 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '
 			$state.go('notFound')
 		}
 
-		//Can phai login de truy cap trang
-		// if(error.status == '401'){
-		// 	console.log("on 401");
-		// 	event.preventDefault();
-		// 	console.log("toState", toState);
-		// 	console.log("toParams", toParams);
-		// 	console.log("href", $state.href(toState.name, {}, {absolute: true}));
-		// 	$rootScope.$emit("onRequireLoginWithReload");
-		// }
 	});
 
 		$rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {

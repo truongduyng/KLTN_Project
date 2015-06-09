@@ -1,14 +1,8 @@
-<div class="row" style="margin-top:-15px;">
-  <!-- BEGIN LEFT COLUMN -->
-  <div class="col-md-2">
-    <section ng-include="'appJS/sidebar/_side_bar.html'"></section>
-  </div>
-  <!-- END LEFT COLUMN -->
-
+<div class="row">
   <!-- BEGIN MAIN COLUMN -->
-  <div class="col-md-6 detail-main-column">
-    <span style="border: 1px solid #337AB7; display:block;margin:0px -15px; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>THÔNG BÁO</strong></span>
-    <div class="row">
+  <div class="detail-main-column">
+    <span style="border: 1px solid #337AB7; display:block; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>THÔNG BÁO</strong></span>
+    <div>
       <div ng-class="{alert: true, 'alert-danger': isDanger, 'alert-success':!isDanger}" role="alert" style="overflow: hidden;">
         <!-- BEGIN THONG BAO CHO BAI VIET -->
         <div ng-if="notificationCategory.denyPost">

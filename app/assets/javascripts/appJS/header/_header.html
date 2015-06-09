@@ -18,15 +18,14 @@
     <div class="collapse navbar-collapse" id="navbar-collapse" ng-controller="headerCtrl">
       <div class="col-sm-5">
 
-
         <div class="input-group" id="search_box" style="margin-top:10px;z-index: 2">
-          <input type="text" class="form-control" placeholder="Tìm kiếm sân, địa chỉ..." ng-model = "search_query" ng-change = "search()" ng-focus="focused()">
+          <input type="text" class="form-control" placeholder="Tìm kiếm sân, địa chỉ..." ng-model = "search_query" ng-change = "search()" ng-focus="focused()" ng-blur ="blurred()">
           <span class="input-group-btn">
             <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
           </span>
         </div>
 
-        <ul ng-show="show_recommend_result()" class="list_recommend" ng-mouseover = "hovering_result()">
+        <ul ng-show="show_recommend_result()" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()" >
           <li ng-repeat = "result in results" ng-click="showresult(result)">{{result.name}}</li>
         </ul>
 

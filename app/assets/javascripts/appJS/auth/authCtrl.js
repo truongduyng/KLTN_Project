@@ -16,6 +16,10 @@ app.controller('authCtrl', ['$scope', 'Auth', '$state', '$modal', '$rootScope', 
 			Auth.login($scope.user).then(function() {
 				$scope.$close();
 				$scope.error = "";
+
+				$scope.$root.$broadcast("onLoginSuccess");
+
+				console.log("on reload page");
 				$state.reload();
 			}, function() {
 				$scope.error = "Email hoac password khong hop le";
