@@ -40,7 +40,6 @@ app.controller('dangBaiCtrl', ['$scope', 'postService', 'flash', '$q', 'FileUplo
 			$scope.post.body = "";
 			$scope.uploader.clearQueue();
 			Flash.create("success", "Bài viết của bạn đã được đăng thành công, chúng tôi sẽ duyệt và thông báo tới bạn sớm nhất có thể", 'myalert');
-			Flash.pause();
 			$state.go("chiTietBaiViet", {
 				id: $scope.post.id,
 			})

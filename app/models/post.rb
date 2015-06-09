@@ -40,21 +40,16 @@ class Post
 	#validate
 	validates :title, presence: true
 	validates :body, presence: true
+
 	#callback
 	before_create :init_post_status
 
-	#Method
-	#check 1 post da publish chua, return true or false
 	def published?
-		# puts 'in method'
 		self.post_status.name == 'Đã duyệt'
 	end
 
 	private
-		#Gan gia tri chua duyet la mac dinh khi tao ra post
-		def init_post_status
-			# @status = PostStatus.where(name: 'Chưa duyệt').first
-			# self.post_status = @status
-			self.post_status = PostStatus.not_published_status
-		end
+	def init_post_status
+		self.post_status = PostStatus.not_published_status
+	end
 end
