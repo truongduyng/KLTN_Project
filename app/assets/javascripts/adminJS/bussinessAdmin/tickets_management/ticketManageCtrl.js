@@ -116,13 +116,13 @@ bussinessAdmin.controller('ticketManageCtrl', ['$scope', '$http', 'Auth', '$moda
       var endtime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),hour_end.split(":")[0],hour_end.split(":")[1]);
 
       if(isNaN($scope.customer_phone) || !$scope.customer_phone.match(/^\d{10,11}$/)){
-        var message = '<strong>Hey!</strong> So dt chua chinh xac.';
+        var message = '<strong>Hey!</strong> Số điện thoại chưa chính xác.';
         Flash.create('danger', message, 'myalert');
         return false;
       }
 
       if ($scope.customer_name == null) {
-        $scope.customer_name = "Khach";
+        $scope.customer_name = "Khách";
       }
 
       $scope.dt_end_everyweek_booking.setHours(23,59,59,999);

@@ -1,11 +1,8 @@
-<!-- <div ng-controller="commentCtrl">This is comment controller</div> -->
-
-<div class="row" style="margin-top:-15px;">
+<div class="row">
 
   <!-- BEGIN MAIN COLUMN -->
-  <div class="col-md-10 detail-main-column">
-    <span style="border: 1px solid #337AB7; display:block;margin:0px -15px; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>CHI TIẾT BÀI VIẾT</strong></span>
-    <div flash-message="5000"></div>
+  <div class="detail-main-column">
+    <span style="border: 1px solid #337AB7; display:block; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>{{post.title}}</strong></span>
     <ul class="media-list">
      <li class="media">
       <div class="media-left">
@@ -34,7 +31,6 @@
         <p style="clear: both; margin-top:-5px "><small style="font-weight: 600; display:block;">{{post.updated_at | date:'h:mm a, dd/mm/yyyy'}}</small></p>
       </div>
       <div class="clearfix"></div>
-      <h4 class="media-heading">{{post.title}}</h4>
       <div>{{post.body}}</div>
       <div class="detail-post-images" style="text-align: center; margin-top: 20px;">
         <a ng-click="showImage(photo)" ng-repeat="photo in post.photos"><img src="{{photo.image.url | logo}}" width="220px" height="220px"></a>
@@ -43,8 +39,8 @@
       <div section-id="for-not-published" ng-if="!post.published">
         <div class="likes">
           <div role="group" class="btn-group pull-left">
-            <a class="btn btn-default" ui-sref="editPost({id: post._id.$oid})"><span class="glyphicon glyphicon-edit"></span> Sửa bài viết</a>
-            <a ng-confirm-click="Bạn có muốn xóa bài viết hay không ?" confirmed-click="delete()" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> Xóa bài viết</a>
+            <a class="btn btn-default" ui-sref="editPost({id: post._id.$oid})"><span class="fa fa-edit"></span> Sửa bài viết</a>
+            <a ng-confirm-click="Bạn có muốn xóa bài viết hay không ?" confirmed-click="delete()" class="btn btn-default"><span class="fa fa-trash"></span> Xóa bài viết</a>
           </div>
           <span class="label label-danger pull-right" style="font-size: 1em; font-weight: 500; display:inline-block ;margin-top: 5px;">{{post.status.name}}</span>
         </div>
@@ -54,14 +50,13 @@
       <!-- BEGIN HIEN THI CHO BAI VIET DUOC PUBLISH, CHO PHEP LIKE, COMMENT, ... -->
       <div section-id="for-published" ng-if="post.published">
         <div class="likes">
-          <!-- like su dung glyphicon glyphicon-thumbs-up va .like-icon, unlike thi su dung glyphicon glyphicon-thumbs-down va unlike-icon -->
-          <span tooltip="Thích" ng-hide="post.isLiked" class="glyphicon glyphicon-thumbs-up like-icon" ng-click="likePost()"></span>
-          <span tooltip="Bỏ thích" ng-show="post.isLiked" class="glyphicon glyphicon-thumbs-down unlike-icon" ng-click="unlikePost()"></span>
+          <span tooltip="Thích" ng-hide="post.isLiked" class="fa fa-thumbs-up like-icon" ng-click="likePost()"></span>
+          <span tooltip="Bỏ thích" ng-show="post.isLiked" class="fa fa-thumbs-down unlike-icon" ng-click="unlikePost()"></span>
 
-          <a  ng-mouseenter="getKFirstLikes()"  tooltip-html-unsafe="{{likesHtml}}" ng-click="showAllLikes()" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>
+          <a  ng-mouseenter="getKFirstLikes()" tooltip-html-unsafe="{{likesHtml}}" ng-click="showAllLikes()" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>
 
-          <button  ng-hide="post.isFavorited" ng-click="favorite()" class="btn btn-success"><span>Lưu bài viết</span></button>
-          <button ng-show="post.isFavorited" ng-click="unfavorite()" class="btn btn-success"><span >Bỏ lưu</span></button>
+          <i tooltip="Thêm vào danh mục yêu thích" ng-hide="post.isFavorited" ng-click="favorite()" class="fa fa-heart pull-right" style="color: red;"></i>
+          <i tooltip="Xóa khỏi danh mục yêu thích" ng-show="post.isFavorited" ng-click="unfavorite()" class="fa fa-heart-o pull-right"></i>
         </div>
         <section id="listComments" ng-include="'appJS/chiTietBaiViet/_listComments.html'"></section>
       </div>

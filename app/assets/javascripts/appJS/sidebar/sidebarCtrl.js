@@ -1,15 +1,12 @@
-app.controller('sidebarCtrl',['$scope', '$modal', 'clubs', '$state', function($scope, $modal, clubs, $state){
+app.controller('sidebarCtrl',['$scope', '$modal', 'clubs', '$state', 'Auth', function($scope, $modal, clubs, $state, Auth){
 
-  $scope.$on("onLoginSuccess", function(){
+  Auth.currentUser().then(function(user) {
+    $scope.user = user;
     clubs.index().success(function(data){
       $scope.clubs = data;
     }).error(function(data){
     });
-  });
-
-  clubs.index().success(function(data){
-    $scope.clubs = data;
-  }).error(function(data){
+  }, function(error) {
   });
 
   $scope.opennewclub = function(){
@@ -31,6 +28,26 @@ app.controller('sidebarCtrl',['$scope', '$modal', 'clubs', '$state', function($s
   $scope.gotoclub = function(club_id){
     $state.go('club',{club_id: club_id});
   }
+
+  $scope.isbussinessadmin = function() {
+      if($scope.user){
+        return _.some($scope.user.roles, function(role){
+          return role == 'bussiness admin';
+        });
+      }else{
+        return false;
+      }
+    };
+
+    $scope.isSystemAdmin = function() {
+      if($scope.user){
+        return _.some($scope.user.roles, function(role){
+          return role == 'system admin';
+        });
+      }else{
+        return false;
+      }
+    };
 
 }]);
 
