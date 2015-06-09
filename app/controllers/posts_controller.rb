@@ -186,6 +186,7 @@ class PostsController < ApplicationController
 
 	#tra ve tat ca post cho nguoi dung hien tai
 	#GET /posts/get_posts_by_current_user.json
+
 	def get_posts_by_current_user
 		@all_posts = current_user.posts.all
 		render 'get_posts_by_current_user.json.jbuilder', status: :ok
@@ -227,7 +228,6 @@ class PostsController < ApplicationController
 		end
 	end
 
-
 	private
 		def post_params
 			params.require(:post).permit(:title, :body)
@@ -255,7 +255,6 @@ class PostsController < ApplicationController
 			end
 		end
 
-
 		#Post hoac publish hoac la chinh cua la nguoi do
 		def find_post_for_show
 			begin
@@ -276,7 +275,6 @@ class PostsController < ApplicationController
 			end
 		end
 
-
 		def find_post_for_edit
 			begin
 				@post = Post.find(params[:id])
@@ -293,7 +291,4 @@ class PostsController < ApplicationController
 			end
 		end
 
-
 end
-
-
