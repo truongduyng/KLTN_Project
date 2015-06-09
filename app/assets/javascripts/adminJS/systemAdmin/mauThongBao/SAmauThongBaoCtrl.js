@@ -49,7 +49,7 @@ app.controller('SAmauThongBaoCtrl', ['$scope', 'SAmauThongBaoService', '$cookies
 
 				switch (meta.name) {
 					case "csrf-token":
-						csrf_token = $cookies['XSRF-TOKEN'];
+						csrf_token = $cookies.get('XSRF-TOKEN');
 						break;
 					case "csrf-param":
 						csrf_param = meta.content;
