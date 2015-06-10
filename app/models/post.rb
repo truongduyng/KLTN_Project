@@ -8,7 +8,7 @@ class Post
 	#Chi test nen de default la true, mac dinh la false
 	belongs_to :post_status
 
-	embeds_many :photos
+	embeds_many :photos, as: :photoable
 	belongs_to :user, class_name: 'User', inverse_of: :posts
 	has_many :comments, dependent: :destroy
 	embeds_many :likes, as: :likeable

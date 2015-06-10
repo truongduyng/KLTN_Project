@@ -3,5 +3,5 @@ class Photo
 	field :image, type: String
 	mount_uploader :image, ImageUploader
 
-	embedded_in :post
+	embedded_in :photoable, polymorphic: true
 end

@@ -281,6 +281,23 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		}
 	});
 
+	$stateProvider.state("shareVenue", {
+		url: '/chia-se-dia-diem/',
+		templateUrl: 'appJS/venue/shareVenue/_shareVenue.html',
+		controller: 'shareVenueCtrl',
+	});
+
+	$stateProvider.state("venueDetail", {
+		url: '/dia-diem-chia-se/{id}/',
+		templateUrl: 'appJS/venue/venueDetail/_venueDetail.html',
+		controller: 'venueDetailCtrl',
+		resolve: {
+			venue: function(venueDetailService, $stateParams){
+				return venueDetailService.show($stateParams.id);
+			}
+		}
+	});
+
 	//Khoi phuc
 	$urlRouterProvider.otherwise('/');
 }]);

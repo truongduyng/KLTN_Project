@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
 
+
+  resources 'venues' do
+    member do
+      post 'add_photo'
+      put 'delete_photo'
+    end
+  end
+
+  
   #BN
   resources 'branches' do
     collection do

@@ -40,6 +40,9 @@ class User
 
   has_and_belongs_to_many :clubs, class_name: 'Club'
 
+  #1 nguoi co the chia se nhieu venues
+  has_many :venues
+
   #My field
   field :fullname, type: String
   field :username, type: String
