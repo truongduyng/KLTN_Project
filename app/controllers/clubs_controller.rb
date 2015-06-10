@@ -1,6 +1,6 @@
 class ClubsController < ApplicationController
   before_action :authenticate_user!
-  before_action :is_admin?, only: [:addmember, :makeadmin, :removeadmin, :update]
+  before_action :is_admin?, only: [:addmember, :makeadmin, :removeadmin, :update, :add_cover]
   before_action :can_remove_member?, only: [:removemember]
   before_action :is_member?, only: [:show]
 
@@ -28,6 +28,17 @@ class ClubsController < ApplicationController
     if @club.update_attributes(club_params.except(*[:id, :members]))
       render template: "clubs/show.json.jbuilder"
     else
+      render nothing: true, status: :bad_request
+    end
+  end
+
+  def add_cover
+    begin
+      byebug
+      @club.cover_image = Image.create({image: params[:cover_image]})
+      @club.save
+      render json: @club.cover_image, status: :ok
+    rescue Exception => e
       render nothing: true, status: :bad_request
     end
   end

@@ -1,12 +1,38 @@
-app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash', 'Auth', '$state', '$modal', function($scope, $modal, club, clubs, $http, Flash, Auth, $state, $modal){
+app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash', 'Auth', '$state', '$modal', 'FileUploader','$cookies', function($scope, $modal, club, clubs, $http, Flash, Auth, $state, $modal, FileUploader, $cookies){
+
   console.log(club.data);
 
   $scope.club = club.data;
+
   $scope.club_update = {
     id: $scope.club.id,
     name: $scope.club.name,
     description: $scope.club.description
   };
+
+  $scope.uploader = new FileUploader({
+    queueLimit: 1,
+    headers: {
+      'X-CSRF-TOKEN': $cookies.get('XSRF-TOKEN'),
+    },
+    url: "/clubs/" + $scope.club.id.$oid + '/add_cover.json',
+    alias: 'cover_image'
+  });
+
+  $scope.uploader.filters.push({
+    name: 'imageFilter',
+    fn: function(item, options) {
+      var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+      return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+    }
+  });
+
+  $scope.uploader.onAfterAddingFile =  function(item){
+    $scope.uploader.uploadAll();
+  }
+  $scope.uploader.onCompleteItem = function(item, response, status, headers) {
+    $scope.club.cover_image = response.image.url;
+  }
 
   $('ul.list_recommend').width('293');
 
@@ -186,7 +212,6 @@ app.controller('lastadminCtrl',['$scope', '$modalInstance', '$http', 'club_id', 
 
   $scope.admins = [];
   $scope.members_list = [];
-  console.log(club_id);
 
   $scope.show_recommend_members= function(){
     return $scope.members_list.length > 0;
@@ -202,7 +227,7 @@ app.controller('lastadminCtrl',['$scope', '$modalInstance', '$http', 'club_id', 
   }
 
   $scope.add_to_admins = function(member){
-    console.log(member);
+
     if($scope.admins.indexOf(member) == -1){
       $scope.admins.push(member.fullname);
     }
