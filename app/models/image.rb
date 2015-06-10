@@ -5,4 +5,5 @@ class Image
 
 	validates :image, presence: true
 	belongs_to :user
+  belongs_to :club, class_name: 'Club'
 end
