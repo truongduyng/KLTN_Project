@@ -1,6 +1,5 @@
-app.controller('dangBaiCtrl', ['$scope', 'postService', 'flash', '$q', 'FileUploader',
- 'Flash','$http','$cookies', '$state',
-	function($scope, postService, flash, $q, FileUploader, Flash, $http, $cookies, $state) {
+app.controller('dangBaiCtrl', ['$scope', 'postService', 'FileUploader',
+ 'Flash','$http','$cookies', '$state', function($scope, postService, FileUploader, Flash, $http, $cookies, $state) {
 
 		$scope.post = {};
 		$scope.uploader = new FileUploader();

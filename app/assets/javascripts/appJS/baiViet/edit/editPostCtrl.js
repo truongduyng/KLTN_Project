@@ -1,6 +1,5 @@
 //5513a53e68757512e9000000
-app.controller('editPostCtrl', ['$scope', 'editPostService', 'FileUploader', 'Flash', '$http', '$cookies', '$state',
-	'$rootScope',
+app.controller('editPostCtrl', ['$scope', 'editPostService', 'FileUploader', 'Flash', '$http', '$cookies', '$state', '$rootScope',
 	function($scope, editPostService, FileUploader, Flash, $http, $cookies, $state, $rootScope) {
 		$scope.post = editPostService.post;
 
@@ -57,7 +56,7 @@ app.controller('editPostCtrl', ['$scope', 'editPostService', 'FileUploader', 'Fl
 			file.url = "/posts/" + $scope.post._id.$oid + '/add_photo.json';
 		};
 
-		
+
 		$scope.removeImage = function(photo){
 			if($scope.deletedPhotos == null){
 				$scope.deletedPhotos = [];

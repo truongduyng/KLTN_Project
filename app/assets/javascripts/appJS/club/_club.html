@@ -1,8 +1,10 @@
 <div class="row">
   <div class="col-lg-12 pull-right">
-    <img class="coverimg" src="" alt="">
+    <img class="coverimg" ng-src="{{club.cover_image}}" alt="anh dai dien">
     <h3 class="club_name">{{club.name}}</h3>
     <button class="btn btn-default leave_club_btn" ng-click="leave_club()" >Rời CLB</button>
+    <i ng-show="current_user_is_admin()" class="fa fa-picture-o fa-2x cover-icon" nv-file-select uploader="uploader"></i>
+    <input type="file" nv-file-select uploader="uploader"/ style="display:none;">
   </div>
 </div>
 
@@ -14,8 +16,8 @@
         <tabset>
           <tab>
             <tab-heading>
-              <i class="fa fa-pencil"></i> Thảo luận
-            </tab-heading>
+            <i class="fa fa-pencil"></i> Thảo luận
+          </tab-heading>
           <div class="post margintop10">
             <div style="height: 58px">
               <div class="pull-left">
@@ -102,6 +104,7 @@
               </li>
             </ul>
           </span>
+          <img style="width: 40px;" fallback-src="sportaLogo" ng-src="{{member.avatar|logo}}" class="profile-picture">
           {{member.fullname}}
         </li>
       </ul>
