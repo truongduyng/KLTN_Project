@@ -1,5 +1,6 @@
 app.controller('dangBaiCtrl', ['$scope', 'postService', 'FileUploader',
- 'Flash','$http','$cookies', '$state', function($scope, postService, FileUploader, Flash, $http, $cookies, $state) {
+	'Flash', '$http', '$cookies', '$state',
+	function($scope, postService, FileUploader, Flash, $http, $cookies, $state) {
 
 		$scope.post = {};
 		$scope.uploader = new FileUploader();
@@ -51,5 +52,10 @@ app.controller('dangBaiCtrl', ['$scope', 'postService', 'FileUploader',
 			file.url = "/posts/" + $scope.post.id + '/add_photo.json';
 		};
 
+
+		$scope.onShowFileDialog = function() {
+			console.log("on onShowFileDialog");
+			$("#addImageInput").click();
+		};
 	}
 ]);
