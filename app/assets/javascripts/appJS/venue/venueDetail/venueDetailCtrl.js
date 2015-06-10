@@ -1,5 +1,35 @@
-app.controller('venueDetailCtrl', ['$scope', 'venueDetailService','$modal', 'Flash', 'logoFilter',
-	function ($scope, venueDetailService, $modal, Flash, logoFilter) {
+app.controller('venueDetailCtrl', ['$scope', 'venueDetailService','$modal', 'Flash', 'logoFilter','Auth', '$state',
+	function ($scope, venueDetailService, $modal, Flash, logoFilter, Auth, $state) {
+		
+		$scope.signedIn = Auth.isAuthenticated;
+
+		Auth.currentUser().then(function(user){
+			console.log("currentUser:", user);
+			console.log("auth User: ", $scope.venue.user);
+			$scope.currentUser = user;
+		});
+
+		//Update tinh trang user de xet cac quyen them xoa sua
+		$scope.$on('devise:new-session', function(e, user) {
+			angular.copy(user, $scope.currentUser);
+			$state.reload();
+		});
+
+		$scope.$on('devise:new-registration', function(e, user) {
+			angular.copy(user, $scope.currentUser);
+			$state.reload();
+		});
+
+		$scope.$on('devise:login', function(e, user) {
+			angular.copy(user, $scope.currentUser);
+			$state.reload();
+		});
+
+		$scope.$on('devise:logout', function(e, user) {
+			angular.copy(user, $scope.currentUser);
+		});
+
+
 		$scope.venue = venueDetailService.venue;
 
 		$scope.showImage = function(photo) {
@@ -47,4 +77,12 @@ app.controller('venueDetailCtrl', ['$scope', 'venueDetailService','$modal', 'Fla
 			return marker;
 		};
 
+
+		//Xoa venue
+		$scope.onDeleteVenue = function(){
+			venueDetailService.destroy($scope.venue).success(function(){
+				Notifier.success("Xóa thành công chia sẽ địa điểm chơi thể thao");
+				$state.go("home");
+			});
+		};
 }]);

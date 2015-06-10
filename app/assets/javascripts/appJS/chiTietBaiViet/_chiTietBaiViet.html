@@ -2,7 +2,6 @@
 
   <!-- BEGIN MAIN COLUMN -->
   <div class="detail-main-column">
-    <span style="border: 1px solid #337AB7; display:block; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>{{post.title}}</strong></span>
     <ul class="media-list">
      <li class="media">
       <div class="media-left">
@@ -31,6 +30,7 @@
         <p style="clear: both; margin-top:-5px "><small style="font-weight: 600; display:block;">{{post.updated_at | date:'h:mm a, dd/mm/yyyy'}}</small></p>
       </div>
       <div class="clearfix"></div>
+      <h3 style="margin:0px; padding:0px;margin-bottom: 10px;">{{post.title}}</h3>
       <div>{{post.body}}</div>
       <div class="detail-post-images" style="text-align: center; margin-top: 20px;">
         <a ng-click="showImage(photo)" ng-repeat="photo in post.photos"><img src="{{photo.image.url | logo}}" width="220px" height="220px"></a>
