@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ahoward/mongoid-grid_fs.git
-  revision: 2507e65a60206cb726c0a38bdab8dd343150c0e0
+  revision: 98fbd15cdd3e545ad2b6f22d74721d57183e5a7c
   specs:
     mongoid-grid_fs (2.1.0)
       mime-types (>= 1.0, < 3.0)
@@ -48,7 +48,7 @@ GEM
       railties (>= 3.1)
       sprockets (~> 2)
       tilt
-    angular_rails_csrf (1.0.3)
+    angular_rails_csrf (1.0.4)
       rails (>= 3, < 5)
     angularjs-file-upload-rails (1.1.6)
     arel (6.0.0)
@@ -61,7 +61,7 @@ GEM
     bootstrap-sass (3.3.4.1)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
-    bson (2.3.0)
+    bson (3.0.4)
     builder (3.2.2)
     byebug (5.0.0)
       columnize (= 0.9.0)
@@ -144,8 +144,8 @@ GEM
       tzinfo (>= 0.3.37)
     mongoid_paranoia (0.1.2)
       mongoid (> 3)
-    moped (2.0.4)
-      bson (~> 2.2)
+    moped (2.0.5)
+      bson (~> 3.0.4)
       connection_pool (~> 2.0)
       optionable (~> 0.2.0)
     multi_json (1.11.0)
