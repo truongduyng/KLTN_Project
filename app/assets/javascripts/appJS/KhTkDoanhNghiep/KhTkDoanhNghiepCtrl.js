@@ -20,7 +20,7 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingServic
 			}, function() {
 				$scope.isFinding = false;
 				$scope.error = "Không thể tìm kiếm vị trí bạn muốn tìm. Bạn vui lòng thử lại";
-				Flash.create("danger", "Không thể tìm kiếm vị trí bạn muốn tìm. Bạn vui lòng thử lại");
+				Flash.create("danger", "Không thể tìm kiếm vị trí bạn muốn tìm. Bạn vui lòng thử lại", 'myalert');
 			});
 		};
 
@@ -36,7 +36,7 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingServic
 			}, function(error) {
 				// $scope.isFinding = false;
 				$scope.error = "Không thể lấy vị trí hiện tại của bạn";
-				Flash.create("danger", "Không thể lấy vị trí hiện tại của bạn");
+				Flash.create("danger", "Không thể lấy vị trí hiện tại của bạn",'myalert');
 			});
 		};
 
@@ -70,7 +70,7 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingServic
 			marker.setMap($scope.map);
 			$scope.map.setCenter(marker.getPosition());
 			$scope.map.setZoom(15);
-			//Dang ki su kien dragend cho marker de lay vi tri moi	
+			//Dang ki su kien dragend cho marker de lay vi tri moi
 			google.maps.event.addListener(marker, 'dragend', function() {
 				$scope.bussinessRequest.latitude = marker.getPosition().lat();
 				$scope.bussinessRequest.longitude = marker.getPosition().lng();
@@ -90,7 +90,7 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingServic
 		$scope.sendBussinessRequest = function() {
 			console.log("bussinessRequest: ", $scope.bussinessRequest);
 			KhTkDoanhNghiepService.create($scope.bussinessRequest).success(function(bussinessRequest) {
-				Flash.create("success", 'Yêu cầu kích hoạt tài khoản doanh nghiệp của bạn đã được gửi. Chúng tôi sẽ duyệt và thông báo bạn sớm nhất có thể');
+				Flash.create("success", 'Yêu cầu kích hoạt tài khoản doanh nghiệp của bạn đã được gửi. Chúng tôi sẽ duyệt và thông báo bạn sớm nhất có thể', 'myalert');
 				angular.copy({}, $scope.bussinessRequest);
 				var username = $scope.currentUser.username;
 				$state.go("chiTietKhTkDoanhNghiep", {
@@ -101,7 +101,7 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingServic
 				// });
 
 			}).error(function(error) {
-				Flash.create("danger", "Lỗi xảy ra khi gửi yêu cầu. Bạn vui lòng thử lại");
+				Flash.create("danger", "Lỗi xảy ra khi gửi yêu cầu. Bạn vui lòng thử lại",'myalert');
 			});
 		};
 

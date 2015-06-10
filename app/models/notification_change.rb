@@ -4,13 +4,13 @@ class NotificationChange
 	include Mongoid::Timestamps
 	#Co nhieu trigger tac dong vao notification change loai nay
 	#trigger_ids: [] cho thay nhung nguoi tac dong vao notification change nay
-	has_and_belongs_to_many :triggers, class_name: 'NotificationChangeTrigger', inverse_of: :notification_changes 
-	#has_and_belongs_to_many :triggers, class_name: 'NotificationChangeTrigger', inverse_of: nil 
-	#Luu 1 array id trigger_ids: []	
+	has_and_belongs_to_many :triggers, class_name: 'NotificationChangeTrigger', inverse_of: :notification_changes
+	#has_and_belongs_to_many :triggers, class_name: 'NotificationChangeTrigger', inverse_of: nil
+	#Luu 1 array id trigger_ids: []
 	#Loai tac dong gi
 	belongs_to :notification_category
 	#Thuoc 1 ve notification nao do
-	belongs_to :notification	
+	belongs_to :notification
 	#Da click vao de xem chi tiet. Giup hien thi mau va cho biet notification nao da duoc click vao va xem chi tiet
 	field :watched, type: Boolean, default: ->{false}
 	#Cho thay da load hay chua. Neu no chua dc load thi co the loai bo 1 notification khi no bi bo boi nguoi tac dong.
@@ -25,13 +25,13 @@ class NotificationChange
 		self.triggers.desc(:updated_at).uniq{|trigger| trigger.trigger_user_id}
 	end
 	#Chua xet tao notification den nhieu nguoi, viec tai su dung trigger va xoa trigger co hop ly hay ko
-	#Vi 1 xet truong: 1 nguoi like bai viet dc theo boi 2 nguoi va sau do unlike: tuy nhien 1 nguoi da xem truoc unlike mong muon thay like cua nguoi do 
+	#Vi 1 xet truong: 1 nguoi like bai viet dc theo boi 2 nguoi va sau do unlike: tuy nhien 1 nguoi da xem truoc unlike mong muon thay like cua nguoi do
 	#va 1 nguoi xem sau unlike mong muon ko thay thong bao like cua nguoi do
 	def self.create_notification target_user, target_object, trigger_user, trigger_source, notification_category
-		#B1: Tim hoac tao notification		
+		#B1: Tim hoac tao notification
 		notification = Notification.find_or_create(target_user, target_object)
 		#Tim notification_change cho target_object, target_user va category va no chua dc xem. Neu dc xem rui thi tao ra 1 notification change moi
-		notification_change = NotificationChange.all_of(notification_id: notification.id, notification_category_id: notification_category.id, is_new: true).first	
+		notification_change = NotificationChange.all_of(notification_id: notification.id, notification_category_id: notification_category.id, is_new: true).first
 		#TH1: Neu co 1 notification change thoa man (chua dc xem) thi them no vao
 		if notification_change
 			#B1: Tao ra trigger (chu y trigger nay neu da ton tai thi tai su dung lai)
@@ -76,7 +76,7 @@ class NotificationChange
 			#B2: Tim notification cua target_user vs target_object
 			notification = Notification.find_or_create(target_user_id, target_object)
 			#Tim notification_change cho target_object, target_user va category va no chua dc xem. Neu dc xem rui thi tao ra 1 notification change moi
-			notification_change = NotificationChange.all_of(notification_id: notification.id, notification_category_id: notification_category.id, is_new: true).first	
+			notification_change = NotificationChange.all_of(notification_id: notification.id, notification_category_id: notification_category.id, is_new: true).first
 			#TH1: Neu co 1 notification change thoa man (chua dc xem) thi them no vao
 			if notification_change
 				#Them trigger vao notification_change
@@ -107,14 +107,13 @@ class NotificationChange
 				notification_change_json = ac.render_to_string( template: 'notifications/show.json.jbuilder', locals: { :@notification_change => notification_change})
 				WebsocketRails[target_user_id.to_s].trigger(:on_new_notification, notification_change_json)
 			end
-
 		end
-		
+
 	end
 
 	#tim notification_change
 	# def self.find_notification_change target_user, target_object, trigger_user, trigger_source, notification_category
-	# 	notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first	
+	# 	notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first
 	# 	if !notification
 	# 		return nil
 	# 	else
@@ -139,7 +138,7 @@ class NotificationChange
 			end
 		end
 		#B2: Tim notification cho target_user tuong ung vs target_object
-		notification  = Notification.all_of(target_user_id: target_user_id, notificable_id: target_object.id).first	
+		notification  = Notification.all_of(target_user_id: target_user_id, notificable_id: target_object.id).first
 		if !notification
 			return nil
 		else
@@ -157,7 +156,7 @@ class NotificationChange
 	#Xoa 1 notification change
 	def self.delete_notification_change target_user, target_object, trigger_user, trigger_source, notification_category
 		notification_change = NotificationChange.find_notification_change(target_user, target_object, trigger_user, trigger_source, notification_category)
-		#Neu co notification_change va no chua dc load (loaded = false) thi xoa no di. 
+		#Neu co notification_change va no chua dc load (loaded = false) thi xoa no di.
 		#Trong truong hop bi tac dong boi nhieu nguoi thi xoa nguoi do di thoi, va khi mang tac dong = [] thi xoa notification change di
 		if notification_change && !notification_change.loaded
 			#B1: Tim triggger. Luon tim dc vi tim dc notification_change
@@ -166,7 +165,7 @@ class NotificationChange
 			notification_change.trigger_ids.delete(trigger.id)
 			trigger.notification_change_ids.delete(notification_change.id)
 			trigger.save
-			#B5: Kiem tra trigger no co trigger 1 notification change nao khac ko, neu ko thi cung xoa no di 
+			#B5: Kiem tra trigger no co trigger 1 notification change nao khac ko, neu ko thi cung xoa no di
 			if trigger.notification_change_ids.count == 0
 				trigger.destroy
 			end
@@ -194,14 +193,14 @@ class NotificationChange
 		target_user_ids.each do |target_user_id|
 			#B2: Tim notification_change
 			notification_change = NotificationChange.find_notification_change(target_user_id, target_object, trigger_user, trigger_source, notification_category)
-			#Neu co notification_change va no chua dc load (loaded = false) thi xoa no di. 
+			#Neu co notification_change va no chua dc load (loaded = false) thi xoa no di.
 			#Trong truong hop bi tac dong boi nhieu nguoi thi xoa nguoi do di thoi, va khi mang tac dong = [] thi xoa notification change di
 			if notification_change && !notification_change.loaded
 				#B2: Bo trigger_user ra kho mang triggers
 				notification_change.trigger_ids.delete(trigger.id)
 				trigger.notification_change_ids.delete(notification_change.id)
 				trigger.save
-				#B5: Kiem tra trigger no co trigger 1 notification change nao khac ko, neu ko thi cung xoa no di 
+				#B5: Kiem tra trigger no co trigger 1 notification change nao khac ko, neu ko thi cung xoa no di
 				if trigger.notification_change_ids.count == 0
 					trigger.destroy
 				end
@@ -228,7 +227,7 @@ end
 #De gui thong bao den nhung nguoi theo doi bai viet:
 #B1: them thuoc tinh followers cho post
 #B2: Moi khi 1 nguoi tac dong den post thi them nguoi do thanh theo doi post
-#B3: moi khi 1 nguoi trigger 1 thong bao thi tao ra thong bao cho moi 
+#B3: moi khi 1 nguoi trigger 1 thong bao thi tao ra thong bao cho moi
 #nguoi followers (phai tao ra loai hang thong bao phu hop: Binh luan bai post ban theo doi, thich bai post ban theo doi)
 
 #Comment cung co follower, trong truong hop nguoi reply comment thi phai thong bao cho nguoi reply khi co ai do reply cung comment

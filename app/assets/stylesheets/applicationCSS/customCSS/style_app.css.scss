@@ -377,6 +377,31 @@ ul.list_recommend li:hover{
 	padding-right: 20px;
 }
 
+/*SIDEBAR*/
+ul.list_user_command{
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+ul.list_user_command li{
+	margin: 5px 0px 5px 10px;
+}
+
+ul.list_user_command li:hover{
+	background-color: #cee0f4;
+	cursor: pointer;
+}
+
+ul.list_user_command-club li a{
+	text-decoration: none;
+	color: #333333;
+}
+
+ul.list-list_user_command li a:hover{
+	text-decoration: none;
+	color: #333333;
+}
+
 footer{
 
 }

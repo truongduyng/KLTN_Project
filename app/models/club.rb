@@ -7,6 +7,7 @@ class Club
   field :admins, type: Array
 
   has_and_belongs_to_many :members, class_name: "User"
+  has_one :cover_image, class_name: 'Image'
 
   validates :name, presence: true
 

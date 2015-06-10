@@ -20,8 +20,6 @@
 //= require angular-devise
 //= require angular-bootstrap
 //= require initModule
-//= require jquery-timepicker-jt
-//= require jquery-timepicker-jt/lib/bootstrap-datepicker
 //= require angular-flash-alert
 //= require ng-timeago
 //= require angular-paging

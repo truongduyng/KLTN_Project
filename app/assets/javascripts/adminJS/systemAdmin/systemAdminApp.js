@@ -36,22 +36,12 @@ app.config(function(flashProvider) {
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
 	$stateProvider
-		// .state("home", {
-		// 	url: "/",
-		// 	templateUrl: 'appJS/home/_home.html',
-		// 	controller: 'homeCtrl',
-		// 	resolve: {
-		// 		posts: ['listPostService', function(listPostService) {
-		// 			return listPostService.get_all(1);
-		// 		}],
-		// 	}
-		// })
 		.state("home", {
 			url: "/",
 			templateUrl: 'adminJS/systemAdmin/home/_home.html',
 			controller: 'SAhomeCtrl',
 		})
-		
+
 		.state('duyetBaiViet', {
 			url: '/duyet-bai-viet',
 			templateUrl: 'adminJS/systemAdmin/baiViet/duyetBaiViet/_duyetBaiViet.html',
@@ -94,7 +84,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 				}],
 			}
 		})
-		
+
 	//$urlRouterProvider.otherwise('/');
 
 }]);

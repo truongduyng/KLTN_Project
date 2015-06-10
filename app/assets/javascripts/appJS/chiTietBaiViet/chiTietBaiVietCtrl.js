@@ -7,7 +7,7 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 			angular.copy(user, userService.currentUser);
 			$scope.currentUser = userService.currentUser;
 		});
-		
+
 		$scope.post = postDetailService.post;
 
 		//Update tinh trang user de xet cac quyen them xoa sua
@@ -64,7 +64,7 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 			});
 
 		};
-		
+
 		$scope.likesHtml = "<p>Đang tải...</p>";
 		$scope.getKFirstLikes = function(){
 			$scope.likesHtml = "<p>Đang tải...</p>";
@@ -107,7 +107,7 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 		$scope.delete = function(){
 			postDetailService.destroy().success(function(){
 				Notifier.success('Bạn đó xóa thành công bài viết')
-				Flash.create("success", "Bạn đó xóa thành công bài viết");
+				Flash.create("success", "Bạn đó xóa thành công bài viết",'myalert');
 				 $state.go("trangCaNhan", {
 				 	username: $scope.currentUser.username,
 				 });
@@ -129,7 +129,7 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 //Cho modal show anh
 app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interval',
 	function($scope, listPhotos, photo, $interval) {
-	
+
 		$scope.listPhotos = listPhotos;
 		$scope.photo = photo;
 		var currentIndex = $scope.listPhotos.indexOf(photo);
@@ -145,7 +145,7 @@ app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interva
 		};
 
 		$scope.next = function() {
-			
+
 			if (currentIndex < $scope.listPhotos.length - 1) {
 				currentIndex++;
 			} else {
@@ -161,7 +161,7 @@ app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interva
 
 
 app.controller('showAllLikesCtrl', ['$scope', 'postDetailService', function($scope, postDetailService) {
-	
+
 	$scope.isLoading = true;
 	postDetailService.getAllLikes().success(function(data){
 		$scope.allLikes = data;

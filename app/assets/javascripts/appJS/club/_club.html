@@ -73,6 +73,7 @@
 
 
   <div class="col-lg-4">
+
     <div>
       <label>Thành viên</label>
       <label class="pull-right">{{club.members.length}}</label>
@@ -91,21 +92,21 @@
             </a>
             <ul class="dropdown-menu" style="z-index: 5; color: black;">
               <li>
-                <i class="fa fa-times" ng-click= "remove_member(member)"> Xóa thành viên</i>
+                <i class="fa fa-user-times" ng-click= "remove_member(member)"> Xóa thành viên</i>
               </li>
               <li ng-hide = 'member_is_admin(member.id.$oid)'>
-                <i class="fa fa-hand-o-right" ng-click= "make_admin(member)"> Chỉ định là quản trị</i>
+                <i class="fa fa-user-secret" ng-click= "make_admin(member)"> Chỉ định là quản trị</i>
               </li>
               <li ng-show = 'member_is_admin(member.id.$oid)'>
-                <i class="fa fa-hand-o-right" ng-click= "remove_admin(member)"> Chỉ định là thành viên</i>
+                <i class="fa fa-user" ng-click= "remove_admin(member)"> Chỉ định là thành viên</i>
               </li>
             </ul>
           </span>
-
           {{member.fullname}}
         </li>
       </ul>
     </div>
+
     <div class="about" style="width: 100%; float: left;">
       <hr>
       <label>Mô tả</label>

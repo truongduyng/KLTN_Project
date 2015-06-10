@@ -44,6 +44,5 @@
 //= require ./app.js
 //= require_tree ../services
 //= require websocket_rails/main
-//= require ./customJS/select2.min
 //= require ../angular-locale_vi-vn
 //= require_tree .

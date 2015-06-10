@@ -1,31 +1,28 @@
-<div class="row" style="margin-top:-15px;">
+<div class="row">
 
 
   <!-- BEGIN MAIN COLUMN -->
-  <div class="col-md-6 detail-main-column">
-    <span style="border: 1px solid #337AB7; display:block;margin:0px -15px; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>VIẾT BÀI</strong></span>
+  <div class="detail-main-column">
+    <span style="border: 1px solid #337AB7; display:block; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>VIẾT BÀI</strong></span>
 
-
-    <div class="row">
+    <div>
       <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title" style="text-align: center;">Viết gì đó để chia sẽ cùng với mọi người</h3>
-        </div>
+
         <div class="panel-body form-bai-viet">
           <form novalidate name="postForm" class="post-form ng-pristine ng-valid">
             <div class="post-form-header">
               <input  name="title" type="text" placeholder="Tiêu để" class="form-control" style="border:none; border-bottom:solid thin #F0EBEB; border-radius:0px;" ng-model="post.title" required >
             </div>
+
             <div class="post-form-content">
               <textarea  name="body" style="border:none;padding: 6px 12px;display:block;" placeholder="Nội dung bài viết" ng-model="post.body" required></textarea>
 
               <div  class="post-form-images">
                 <span class="image" ng-repeat="photo in uploader.queue">
-                  <button ng-hide="photo.isUploading" ng-click="photo.remove()" aria-hidden="true" class="close" type="button">×</button>
+                  <button ng-hide="photo.isUploading" ng-click="photo.remove()" aria-hidden="true" class="close" >&times;</button>
                   <div ng-thumb="{file: photo._file, height: 100, width:100}" ng-show="uploader.isHTML5"></div>
                 </span>
               </div>
-
             </div>
 
             <div ng-show="uploader.isUploading" style="margin: 0px 10px;margin-bottom: -10px;">
@@ -38,20 +35,21 @@
 
             <div class="post-form-bottom">
               <div style="float:right; margin: 5px 5px;" aria-label="... " role="group" class="btn-group">
-                <button class="btn btn-primary" id="addImageBtn"><span aria-hidden="true" class="glyphicon glyphicon-picture" ></span> Thêm ảnh</button>
+                <button class="btn btn-primary" id="addImageBtn"><span aria-hidden="true" class="fa fa-picture" ></span> Thêm ảnh</button>
                 <input style="display:none;" id="addImageInput" type="file" nv-file-select uploader="uploader" multiple>
 
                 <button ng-disabled="postForm.$invalid" ng-click="onPost()" class="btn btn-success" type="button"> Đăng </button>
               </div>
             </div>
+
           </form>
         </div>
       </div>
 
     </div>
-    <div class="row">
+<!--     <div class="row">
      <div flash-message="5000" ></div>
-   </div>
+   </div> -->
  </div>
  <!-- END MAIN COLUMN -->
 </div>

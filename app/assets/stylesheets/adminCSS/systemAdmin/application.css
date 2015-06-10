@@ -10,15 +10,13 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *= require bootstrap/dist/css/bootstrap
- *= require jquery-timepicker-jt
- *= require jquery-timepicker-jt/lib/bootstrap-datepicker
  *= require_tree .
  *= require_self
  */
 
  /*BEGIN For angularjs-bootstrap*/
  a img{
- 	cursor:pointer; 
+ 	cursor:pointer;
  }
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
  .modal-backdrop {
@@ -32,4 +30,3 @@
 }
  /*END For angularjs-bootstrap*/
 
- 

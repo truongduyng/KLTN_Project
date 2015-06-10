@@ -1,20 +1,34 @@
-<div>
-</div>
+<div ng-controller="sidebarCtrl">
+  <div>
+    <span>
+      <img fallback-src="sportaLogo" ng-src="{{user.avatar.url|logo}}" class="profile-picture-sidebar">
+      <a ui-sref="trangCaNhan({username: user.username})" style="text-decoration: none;">{{user.fullname}}</a>
+    </span>
+    <ul class="list-club margintop10">
 
-<div class="club" ng-controller="sidebarCtrl">
+      <li ng-hide="isbussinessadmin()"><a ui-sref="khTkDoanhNghiep">Đăng ký doanh nghiệp</a></li>
+      <li ng-show="isbussinessadmin()"><a href="/bussiness-admin">Quản lý doanh nghiệp</a></li>
+      <li ng-show="isSystemAdmin()"><a href="/system-admin#/">Quản lý sporta</a></li>
+      <li ui-sref="dangBai"><a><span class="fa fa-plus"></span> Viết bài</a></li>
+    </ul>
+  </div>
 
-  <span class="club-header">Câu lạc bộ
-    <div class="pull-right">
-      <a ng-click="opennewclub()">
-        <i class="fa fa-plus"></i>
-      </a>
-    </div>
-  </span>
+  <div class="club margintop20" >
 
-  <ul class="list-club">
-    <li ng-repeat = "club in clubs" ng-click="gotoclub(club.id.$oid)">
-      <a><i class="fa fa-users"></i> {{club.name}}</a>
-    </li>
-  </ul>
+    <span class="club-header">Câu lạc bộ
+      <div class="pull-right">
+        <a ng-click="opennewclub()">
+          <i class="fa fa-plus"></i>
+        </a>
+      </div>
+    </span>
+
+    <ul class="list-club">
+      <li ng-repeat = "club in clubs" ng-click="gotoclub(club.id.$oid)">
+        <a><i class="fa fa-users"></i> {{club.name}}</a>
+      </li>
+    </ul>
+
+  </div>
 
 </div>

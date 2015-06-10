@@ -90,6 +90,12 @@ box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);*/
 	box-shadow: 2px 2px 2px #888888;
 }
 
+.profile-picture-sidebar{
+  margin-right: 7px;
+  width: 20px;
+  border-radius: 10%;
+}
+
 .comment-box{
 	padding-top: 20px;
 	padding-bottom: 20px;
@@ -192,7 +198,7 @@ p.text-tooltip{
 }
 .media-body-header .edit-delete{
 	float:right;
-	
+
 }
 .media-body-header .edit-delete{
 	visibility: hidden;
@@ -297,7 +303,7 @@ box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
 }
 .danhsachbaiviet .baiviet .baiviet-left{
 	padding-top:5px;
-	margin-left: -10px;	
+	margin-left: -10px;
 }
 .danhsachbaiviet .baiviet .baiviet-right{
 	padding-left: 30px;
@@ -341,7 +347,7 @@ box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
     background: url(/assets/application/myimg/a02.png) no-repeat;
     overflow:hidden;
      height: 55px;
-     width: 55px; 
+     width: 55px;
      vertical-align: middle;
 }
 .jssora02l { background-position: -3px -33px; }
