@@ -1,6 +1,6 @@
 class ClubsController < ApplicationController
   before_action :authenticate_user!
-  before_action :is_admin?, only: [:addmember, :makeadmin, :removeadmin, :update, :add_cover]
+  before_action :is_admin?, only: [:addmember, :makeadmin, :update, :add_cover]
   before_action :can_remove_member?, only: [:removemember]
   before_action :is_member?, only: [:show]
 
@@ -34,7 +34,9 @@ class ClubsController < ApplicationController
 
   def add_cover
     begin
-      byebug
+      if @club.cover_image
+        @club.cover_image.destroy
+      end
       @club.cover_image = Image.create({image: params[:cover_image]})
       @club.save
       render json: @club.cover_image, status: :ok

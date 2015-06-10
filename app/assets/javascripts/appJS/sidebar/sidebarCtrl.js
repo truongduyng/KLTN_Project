@@ -76,7 +76,7 @@ app.controller('newclubmodalCtrl', function($scope, $modalInstance, $http){
   }
 
   $scope.add_to_members = function(user){
-    console.log(user);
+
     if($scope.club.members.indexOf(user) == -1){
       $scope.club.members.push(user.fullname);
     }

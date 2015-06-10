@@ -14,10 +14,11 @@ app.controller('authCtrl', ['$scope', 'Auth', '$state', '$modal', '$rootScope', 
 
 		$scope.login = function() {
 			Auth.login($scope.user).then(function() {
+
 				$scope.$close();
 				$scope.error = "";
-
 				$state.reload();
+
 			}, function() {
 				$scope.error = "Email hoac password khong hop le";
 			});
@@ -25,15 +26,17 @@ app.controller('authCtrl', ['$scope', 'Auth', '$state', '$modal', '$rootScope', 
 
 		$scope.register = function() {
 			Auth.register($scope.user).then(function() {
+
 				$scope.$close();
 				$state.reload();
+
 			}, function(e) {
 				console.log(e)
 				$scope.error = "what error";
 			});
 		};
 	}
-]);
+	]);
 
 
 // <<<<<<< HEAD

@@ -32,6 +32,10 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
   }
   $scope.uploader.onCompleteItem = function(item, response, status, headers) {
     $scope.club.cover_image = response.image.url;
+    $scope.uploader.clearQueue();
+  }
+  $scope.choose_cover = function(){
+    $('#choosecover').click();
   }
 
   $('ul.list_recommend').width('293');

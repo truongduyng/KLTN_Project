@@ -2,7 +2,7 @@ app.controller('thongBaoCtrl', ['$scope', 'thongBaoService'
 	, function ($scope, thongBaoService) {
 		$scope.notificationChange = thongBaoService.notificationChange;
 		$scope.targetObject = thongBaoService.notificationChange.target_object;
-		
+
 		//1 so dang thong bao khac nhau
 		$scope.notificationCategory  = {
 			denyPost: false,

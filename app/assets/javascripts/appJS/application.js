@@ -38,11 +38,11 @@
 //= require ng-timeago
 //= require angular-paging
 //= require ngInfiniteScroll
-//= require ./customJS/richmarker.js
 //= require ngstorage
 //= require angular-facebook
 //= require ./app.js
 //= require_tree ../services
 //= require websocket_rails/main
+//= require ./customJS/richmarker.js
 //= require ../angular-locale_vi-vn
 //= require_tree .

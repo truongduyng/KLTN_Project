@@ -3,7 +3,6 @@ app.factory('venueDetailService', ['$http',function ($http) {
 		venue: {},
 	};
 
-
 	o.show = function(id){
 		var url = "/venues/" + id + ".json";
 		return $http.get(url).success(function(data){
@@ -11,6 +10,5 @@ app.factory('venueDetailService', ['$http',function ($http) {
 		});
 	};
 
-	
 	return o;
 }])
