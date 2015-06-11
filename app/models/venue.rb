@@ -2,7 +2,7 @@ class Venue
   include Mongoid::Document
   include Geocoder::Model::Mongoid
   include Mongoid::Timestamps
-  
+
   before_create :init_url_alias
 
   field :name, type: String

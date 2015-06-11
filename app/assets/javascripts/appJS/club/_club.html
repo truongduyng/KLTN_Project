@@ -73,10 +73,16 @@
             <a ng-click="showImage(photo, post.photos)" ng-repeat="photo in post.photos"><img ng-src="{{photo.url}}" height="50px"></a>
             </div>
 
-            <hr><a href="#">like</a><hr>
+            <div class="likes">
+              <span tooltip="Thích" ng-hide="post.isLiked" class="fa fa-thumbs-up like-icon" ng-click="likePost()"></span>
+              <span tooltip="Bỏ thích" ng-show="post.isLiked" class="fa fa-thumbs-down unlike-icon" ng-click="unlikePost()">
+              </span>
 
-            <img ng-src="{{user.avatar.url}}" alt="" width="6%">
-            <input class="comment margintop5 field" type="text" name="" value="" placeholder="comment here">
+              <a  ng-mouseenter="getKFirstLikes()" tooltip-html-unsafe="{{likesHtml}}" ng-click="showAllLikes()" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>
+
+            </div>
+            <section id="listComments" ng-include="'appJS/chiTietBaiViet/_listComments.html'"></section>
+
           </div>
 
         </tab>

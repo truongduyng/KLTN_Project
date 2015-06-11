@@ -1,4 +1,4 @@
-class Like 
+class Like
 	include Mongoid::Document
 	include Mongoid::Timestamps::Created
 

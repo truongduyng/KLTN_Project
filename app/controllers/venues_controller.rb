@@ -2,7 +2,7 @@ class VenuesController < ApplicationController
 	before_action :authenticate_user!, only: [:create, :add_photo, :destroy]
 	before_action :find_and_check_venue_with_user, only: [:add_photo, :destroy]
 	before_action :find_venue, only: [:show]
-	
+
 	def create
 		@venue = Venue.new(venue_params.except(*[:latitude, :longitude]).merge(coordinates: [venue_params[:longitude], venue_params[:latitude]]))
 		@venue.user = current_user

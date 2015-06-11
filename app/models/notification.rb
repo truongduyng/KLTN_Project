@@ -1,6 +1,6 @@
 class Notification
 	include Mongoid::Document
-	#Thuoc ve ai	
+	#Thuoc ve ai
 	belongs_to :target_user, class_name: 'User', inverse_of: :notifcations
 	#Notificable hoac la post hoac la bussiness_request
 	belongs_to :notificable, polymorphic: true
@@ -8,11 +8,11 @@ class Notification
 	has_many :notification_changes
 
 	#cho tim reply, notificable lien he vs reply la embedded document nen ko the tim kiem dc
-	def reply 
+	def reply
 		comment = Comment.where('replies._id' => notificable_id).first
 		if comment
 			reply = comment.replies.find(notificable_id)
-		end		
+		end
 	end
 
 	def self.find_or_create target_user, target_object
@@ -25,7 +25,7 @@ class Notification
 			end
 		end
 		#B1: Tim
-		notification  = Notification.all_of(target_user_id: target_user_id, notificable_id: target_object.id).first	
+		notification  = Notification.all_of(target_user_id: target_user_id, notificable_id: target_object.id).first
 		#B2: Neu chua co loai notification cho doi tuong nay thi tao no
 		if !notification
 			notification = Notification.new
@@ -39,7 +39,7 @@ class Notification
 
 	# def self.find_or_create target_user, target_object
 	# 	#B1: Tim
-	# 	notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first	
+	# 	notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first
 	# 	#B2: Neu chua co loai notification cho doi tuong nay thi tao no
 	# 	if !notification
 	# 		notification = Notification.new

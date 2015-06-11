@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
 
 	#POST /posts/post_id/comments
 	def create
-		@comment = Comment.new(comment_params) 
+		@comment = Comment.new(comment_params)
 		@comment.user = current_user
 		@comment.post_id = params[:post_id]
 		if @comment.save
@@ -49,7 +49,7 @@ class CommentsController < ApplicationController
 		#Neu co notification ma chua dc xem (trong truong lo binh luan xong xoa lien) thi xoa notification_change do
 		post = @comment.post
 		#Khi xoa binh luan thi xoa luon cac notification lien quan den binh luan cua nguoi do (vi target_object la comment ko the tim thay)
-		notification = Notification.all_of(target_user_id: current_user.id, notificable_id: @comment.id).first	
+		notification = Notification.all_of(target_user_id: current_user.id, notificable_id: @comment.id).first
 		if notification
 			notification.notification_changes.destroy_all
 			notification.destroy
@@ -70,7 +70,7 @@ class CommentsController < ApplicationController
 		end
 		#Xoa binh luan
 		@comment.destroy
-		render nothing: true, status: :ok, content_type: 'application/json'	
+		render nothing: true, status: :ok, content_type: 'application/json'
 	end
 
 
@@ -87,7 +87,7 @@ class CommentsController < ApplicationController
 			end
 			render nothing: true, status: :created, content_type: 'application/json'
 		end
-		
+
 	end
 
 	#PUT /posts/post_id/comments/:id/unlike
@@ -100,7 +100,7 @@ class CommentsController < ApplicationController
 			render nothing: true, status: :ok, content_type: 'application/json'
 		else
 			render nothing: true, status: :bad_request, content_type: 'application/json'
-		end		
+		end
 	end
 
 	# /comments/:id/get_k_first_like/:number.json
@@ -125,15 +125,15 @@ class CommentsController < ApplicationController
 	end
 
 
-	private 
-	
+	private
+
 		def comment_params
 			params.require(:comment).permit(:content)
 		end
 
 		#tim comment cho  xoa sua
 		def find_comment
-			begin 
+			begin
 				post = Post.find(params[:post_id])
 				if post.published?
 					@comment = post.comments.find(params[:id])
@@ -143,7 +143,7 @@ class CommentsController < ApplicationController
 				else
 					render nothing: true, status: :not_found, content_type: 'application/json'
 				end
-			    
+
 			rescue Mongoid::Errors::DocumentNotFound
 				render nothing: true, status: :not_found, content_type: 'application/json'
 			end
@@ -152,7 +152,7 @@ class CommentsController < ApplicationController
 
 		#tim comment cho like va unlike
 		def find_comment_for_like_and_unlike
-			begin 
+			begin
 				post = Post.find(params[:post_id])
 				if post.published?
 					 @comment = post.comments.find(params[:id])
@@ -165,7 +165,7 @@ class CommentsController < ApplicationController
 		end
 
 		def check_comment_with_user
-			
+
 		end
 
 		def check_post_published

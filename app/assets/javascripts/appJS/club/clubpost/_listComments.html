@@ -1,0 +1,108 @@
+
+<!-- BEGIN LIST COMMENTS -->
+<div class="list-comments" ng-controller="commentCtrl">
+  <!-- BEGIN COMMENT BOX -->
+  <div class="comment-box">
+    <a href="#" class="comment-image">
+      <img class="img-circle img-responsive" class="media-object" src="{{currentUser.avatar.url | logo}}"  fallback-src="sportaLogo"
+      alt="Generic placeholder image" width="64px" height="64px" style="min-width: 64px; min-height: 64px;">
+    </a>
+    <div class="comment-textarea" style="width: 73%;">
+      <textarea placeholder="Bình luận tại đây" class="form-control" style="width:100%; min-height: 64px;" ng-model="comment.content"></textarea>
+
+    </div>
+    <div style="float:right; width:10%;"><button data-ng-disabled="isCommenting || !comment.content" ng-click="addComment()" style=" height:64px; width:100%;" class="btn btn-primary pull-right"> Gửi </button></div>
+    <div class="clearfix"></div>
+
+  </div>
+  <!-- END COMMENT BOX -->
+
+
+  <!-- BEGIN COMMENT -->
+  <div id="{{comment._id.$oid}}" class="media" ng-repeat-start="comment in comments | orderBy: '-created_at'">
+    <div class="media-left">
+      <a href="#">
+       <img class="img-circle" class="media-object" src="{{comment.user.avatar.url | logo}}" fallback-src="sportaLogo"
+       alt="Generic placeholder image" width="64px" height="64px">
+     </a>
+   </div>
+   <div class="media-body comment-media-body">
+    <div class="media-body-container" >
+      <!-- Neu ma edit thi .for-display style="display:none;" -->
+      <div class="for-display" ng-init="comment.isEdit = false" ng-hide="comment.isEdit">
+        <div class="media-body-header">
+          <h5  class="media-heading">{{comment.user.fullname}}</h5>
+          <div  ng-show="currentUser._id.$oid == comment.user._id.$oid"  class="edit-delete">
+            <a ng-click="comment.isEdit = true" class="btn btn-xs">Sửa</a>
+            <a confirmed-click="deleteComment(comment)"  ng-confirm-click="Bạn có muốn xóa comment này không ?"  class="btn btn-xs">Xóa</a>
+          </div>
+
+        </div>
+        <div class="media-body-content">
+          {{comment.content}}
+        </div>
+
+        <div class="comment-likes">
+
+          <span data-toggle="tooltip" data-original-title="Thích" ng-hide="comment.isLiked" class="fa fa-thumbs-up like-icon" ng-click="likePost(comment)">
+          </span>
+          <span data-toggle="tooltip" data-original-title="Bỏ thích" ng-show="comment.isLiked" class="fa fa-thumbs-down unlike-icon" ng-click="unlikePost(comment)">
+          </span>
+          <a ng-click="showAllLikes(comment)" ng-init="comment.likesHtml = '<p>Đang tải...</p>';" ng-mouseenter="getKFirstLikes(comment)" id="list-people-like" data-target="#myModal2" tooltip-html-unsafe="{{comment.likesHtml}}" style="cursor: pointer; margin-left: 10px;">{{comment.like_count}} người thích</a>
+
+          <button ng-init="comment.isReply = false" ng-click="comment.isReply =!comment.isReply" class="btn btn-success">Trả lời</button>
+          <small class="pull-right" style="margin-top: 7px; margin-right:10px; ">{{comment.updated_at | timeago}}</small>
+
+        </div>
+
+        <button  ng-init="comment.isLoadingReply = false;comment.isRepliesLoaded = false; " ng-disabled="comment.isLoadingReply" ng-hide="comment.isRepliesLoaded || comment.reply_count == 0" ng-click="loadReply(comment)" class="btn btn-primary btn-block" >
+          <span ng-hide="comment.isLoadingReply">{{comment.reply_count}} phản hồi</span>
+          <span ng-show="comment.isLoadingReply">
+            <img src="/assets/application/placeholder/spinner_loading.gif" width="22px" height="22px">
+          </span>
+        </button>
+
+      </div>
+      <!-- BEGIN Khung hien ra khi chinh sua comment, binh thuong thi ko hien thi -->
+      <div class="for-edit edit-comment-box" ng-show="comment.isEdit">
+        <div class="comment-textarea" style="width: 88%; float:left">
+          <textarea placeholder="Bình luận tại đây" class="form-control" style="width:100%; min-height: 64px;" ng-model="comment.content"></textarea>
+
+        </div>
+        <div style="float:right; width:10%;">
+          <button data-ng-disabled="isEditing || !comment.content" ng-click="editComment(comment)" style=" height:64px; width:100%;" class="btn btn-primary pull-right"> Gửi </button>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+      <!--END  Khung hien ra khi chinh sua comment, binh thuong thi ko hien thi -->
+      <hr class="hr-no-margin-top">
+      <!-- BEGIN DANH SACH REPLIES -->
+      <section id="listReplies" ng-include="'appJS/chiTietBaiViet/_listReplies.html'" ng-controller="replyCtrl"></section>
+      <!-- END DANH SACH REPLIES -->
+
+    </div>
+  </div>
+</div>
+<hr ng-repeat-end class="hr-no-margin-top">
+<!-- END COMMENT 2 -->
+
+</div>
+<!-- END LIST COMMENTS -->
+
+<script type="text/javascript">
+ autosize(document.querySelectorAll('textarea'));
+
+     // $(document).ready(function() {
+     //   $('[data-toggle="tooltip"]').tooltip({
+     //     placement: 'top'
+     //   });
+     // });
+
+     //For modal
+     $(document).ready(function() {
+       $("#list-people-like").click(function() {
+         $('#myModal2').modal('toggle');
+       });
+     });
+   </script>

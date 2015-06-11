@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   end
 
   resources :bussiness_requests
+
   resources :system_admin_posts do
     member do
       put 'accept'
@@ -47,8 +48,7 @@ Rails.application.routes.draw do
       get 'get_accept_and_deny_posts'
     end
   end
-  #test upload avatar
-  resources :my_avatars
+
   resources :favorite_posts do
     member do
       put 'add'
@@ -73,17 +73,21 @@ Rails.application.routes.draw do
   end
 
   resources :comments do
+    member do
+      put 'like'
+      put 'unlike'
+      get 'get_all_likes'
+    end
     resources :replies do
       member do
         put 'like'
         put 'unlike'
-        get 'get_k_first_like'
         get 'get_all_likes'
       end
     end
   end
 
-  resources 'posts' do
+  resources :posts do
     member do
       post 'add_photo'
       put 'delete_photo'
@@ -97,25 +101,15 @@ Rails.application.routes.draw do
     collection do
       get 'get_posts_by_current_user'
     end
-
-    resources :comments do
-      member do
-        put 'like'
-        put 'unlike'
-        get 'get_k_first_like'
-        get 'get_all_likes'
-      end
-    end
   end
 
   get 'search(/:lat/:lng/:distance)' => 'branches#search', constraints:{ lat: /[0-9\.]+/, lng: /[0-9\.]+/, distance: /[0-9\.]+/ }
   get 'searchnameadd(/:search_query)' => 'branches#search'
 
-  resources 'assets' do
+  resources :assets do
   end
 
-  resources 'clubs' do
-
+  resources :clubs do
     member do
       post 'addmember'
       post 'removemember'
@@ -124,32 +118,22 @@ Rails.application.routes.draw do
       get 'find_members/:member_name' => 'clubs#find_members'
       post 'add_cover'
     end
-
-    resources 'club_posts'
+    resources :club_posts
   end
 
-  resources 'club_posts' do
-      member do
-        post 'add_photo'
-        put 'like'
-        put 'unlike'
-        get 'get_all_likes'
-        put 'follow'
-        put 'unfollow'
-      end
-
-      resources :comments do
-        member do
-          put 'like'
-          put 'unlike'
-          get 'get_k_first_like'
-          get 'get_all_likes'
-        end
-      end
+  resources :club_posts, only: [] do
+    member do
+      post 'add_photo'
+      put 'like'
+      put 'unlike'
+      get 'get_all_likes'
+      put 'follow'
+      put 'unfollow'
     end
+  end
 
-  resources 'asset_categories' do
-    resources 'fees'
+  resources :asset_categories do
+    resources :fees
   end
 
   get 'tickets/:date/:branch_id' => 'tickets#show'
