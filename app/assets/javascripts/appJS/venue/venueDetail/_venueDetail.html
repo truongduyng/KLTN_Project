@@ -1,7 +1,6 @@
 <div class="row">
   <!-- BEGIN MAIN COLUMN -->
   <div class="detail-main-column">
-    <span style="border: 1px solid #337AB7; display:block; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>{{venue.name}}</strong></span>
     <ul class="media-list">
      <li class="media">
       <div class="media-left">
@@ -13,15 +12,32 @@
 
      <div class="media-body">
       <div class="user-title">
+      	 <!-- Simple dropdown -->
+        <span ng-if="signedIn && currentUser != null && currentUser._id.$oid == venue.user._id.$oid" class="dropdown pull-right" dropdown on-toggle="toggled(open)" style="margin-top: -8px;">
+          <a href class="dropdown-toggle" dropdown-toggle>
+            <span class="fa fa-caret-down fa-2x"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href ng-click="followPost()">Cập nhật chia sẽ</a>
+            </li>
+            <li><a href ng-confirm-click="Bạn có muốn xóa chia sẽ này không?" confirmed-click="onDeleteVenue()">Xóa chia sẽ</a></li>
+          </ul>
+        </span>
         <a ui-sref="trangCaNhan({username: venue.user.username})"><h5  style="color:#337ab7;"  class="media-heading pull-left">{{venue.user.fullname}}</h5></a>
         <!--  <small class="pull-right" style="font-weight: 600;">{{post.updated_at | date:'h:mm a, dd/mm/yyyy'}}</small> -->
         <p style="clear: both; margin-top:-5px "><small style="font-weight: 600; display:block;">{{venue.updated_at | date:'h:mm a, dd/mm/yyyy'}}</small></p>
       </div>
       <div class="clearfix"></div>
+      <h3 style="margin:0px; padding:0px;margin-bottom: 10px;">{{venue.name}}</h3>
       <div>{{venue.description}}</div>
-      <div class="detail-post-images" style="text-align: center; margin-top: 20px;">
-        <a ng-click="showImage(photo)" ng-repeat="photo in venue.photos"><img src="{{photo.image.url | logo}}" width="220px" height="220px"></a>
-      </div>
+      <hr style="margin:5px;">
+      <div ng-show="venue.photos != null && venue.photos.length >= 1" data-comment='hinh-anh'>
+	      <p style="">Một số hình ảnh về: <b>{{venue.name}}</b></p>
+	      <div class="detail-post-images" style="text-align: center; margin-top: 20px;">
+	        <a ng-click="showImage(photo)" ng-repeat="photo in venue.photos"><img src="{{photo.image.url | logo}}" width="220px" height="220px"></a>
+	      </div>
+	  </div>
       <!-- BEGIN HIEN THI CHO BAI VIET KHONG DUOC PUBLISH -->
       <!-- <div section-id="for-not-published" ng-if="!post.published">
         <div class="likes">
@@ -36,6 +52,17 @@
 
       <!-- BEGIN HIEN THI CHO BAI VIET DUOC PUBLISH, CHO PHEP LIKE, COMMENT, ... -->
       <div section-id="for-published">
+      	<div style="border-radius: 0px;" class="well">
+                <p><i class="fa fa-location-arrow"></i> {{venue.address}}</p>
+                <p><i class="fa fa-phone"></i></span> {{venue.phone}}</p>
+                <p ng-init="isShowMap=false;"  ng-click="isShowMap = !isShowMap;" style="cursor:pointer; color:blue;"><i class="fa fa-map-marker"></i> Xem bản đồ</p>
+                <div ng-show="isShowMap" id-map="ban-do-o-day">
+                    <div id="map" style="width:100%; height:500px;">
+                    	 <map zoom="17" center="{{venue.coordinates[1]}},{{venue.coordinates[0]}}" item="{{venue}}">
+			             </map>
+	                </div>
+                </div>
+        </div>
         <div class="likes">
         <!--   <span tooltip="Thích" ng-hide="post.isLiked" class="fa fa-thumbs-up like-icon" ng-click="likePost()"></span>
           <span tooltip="Bỏ thích" ng-show="post.isLiked" class="fa fa-thumbs-down unlike-icon" ng-click="unlikePost()"></span>

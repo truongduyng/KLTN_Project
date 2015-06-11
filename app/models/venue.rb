@@ -29,6 +29,7 @@ class Venue
 
   validates :name, :url_alias, presence: true,  length: {maximum: 100}
   validates :address, presence: true, length: {maximum: 1000}
+  validates :description, presence: true, length: {maximum: 1000}
   validates :url_alias, uniqueness: true
 
   protected

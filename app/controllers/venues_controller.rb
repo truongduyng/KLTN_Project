@@ -1,6 +1,6 @@
 class VenuesController < ApplicationController
-	before_action :authenticate_user!, only: [:create, :add_photo]
-	before_action :find_and_check_venue_with_user, only: [:add_photo]
+	before_action :authenticate_user!, only: [:create, :add_photo, :destroy]
+	before_action :find_and_check_venue_with_user, only: [:add_photo, :destroy]
 	before_action :find_venue, only: [:show]
 	
 	def create
@@ -17,6 +17,12 @@ class VenuesController < ApplicationController
 	def show
 	end
 
+	#DELETE /venues/:id.json
+	def destroy
+		@venue.photos.destroy_all
+		@venue.destroy
+		render nothing: true, status: :ok, content_type: 'application/json'
+	end
 
 	#/venues/:id/add_photo
 	def add_photo

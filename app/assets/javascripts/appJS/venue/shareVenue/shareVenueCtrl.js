@@ -44,8 +44,8 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 		//Gui yeu cau
 		$scope.onSendVenue = function() {
 			// //Cho test do ko co mang de load map
-			// $scope.venue.latitude = '106.3405307';
-			// $scope.venue.longitude = '10.3581198';
+			$scope.venue.latitude = '106.3405307';
+			$scope.venue.longitude = '10.3581198';
 			console.log("venue: ", $scope.venue);
 
 			shareVenueService.create($scope.venue)
