@@ -4,7 +4,7 @@
   <!-- BEGIN TEXTAREA CHO TRA LOI COMMENT -->
   <div  class="comment-box" ng-show="comment.isReply">
     <a href="#" class="comment-image">
-      <img class="img-circle" class="media-object" src="{{currentUser.avatar.url | logo}}" fallback-src="sportaLogo"
+      <img class="img-circle" class="media-object" ng-src="{{currentUser.avatar.url | logo}}" fallback-src="sportaLogo"
       alt="Generic placeholder image" width="64px" height="64px">
     </a>
     <div class="comment-textarea" style="width: 70%;">
@@ -22,7 +22,7 @@
    <div id="{{reply._id.$oid}}" class="media" ng-repeat-start="reply in comment.replies | orderBy: '-created_at'">
     <div class="media-left">
       <a ui-sref="trangCaNhan({username: reply.user.username})">
-       <img class="img-circle" class="media-object" src="{{reply.user.avatar.url | logo}}" fallback-src="sportaLogo"
+       <img class="img-circle" class="media-object" ng-src="{{reply.user.avatar.url | logo}}" fallback-src="sportaLogo"
        alt="Generic placeholder image" width="64px" height="64px">
      </a>
    </div>

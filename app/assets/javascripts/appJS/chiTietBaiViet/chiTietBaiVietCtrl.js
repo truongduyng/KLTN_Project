@@ -1,132 +1,129 @@
-//5510dcd56875751cdb030000
-app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'userService', '$state', '$modal', '$rootScope','Auth',
-	function($scope, postDetailService, Flash, userService, $state, $modal, $rootScope, Auth) {
-		$scope.signedIn = Auth.isAuthenticated;
+app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'userService', '$state', '$modal', '$rootScope','Auth', function($scope, postDetailService, Flash, userService, $state, $modal, $rootScope, Auth) {
 
-		Auth.currentUser().then(function(user){
-			angular.copy(user, userService.currentUser);
-			$scope.currentUser = userService.currentUser;
-		});
+	$scope.signedIn = Auth.isAuthenticated;
 
-		$scope.post = postDetailService.post;
+	Auth.currentUser().then(function(user){
+		angular.copy(user, userService.currentUser);
+		$scope.currentUser = userService.currentUser;
+	});
 
-		//Update tinh trang user de xet cac quyen them xoa sua
-		$scope.$on('devise:new-session', function(e, user) {
-			angular.copy(user, userService.currentUser);
-			$state.reload();
-		});
+	$scope.post = postDetailService.post;
 
-		$scope.$on('devise:new-registration', function(e, user) {
-			angular.copy(user, userService.currentUser);
-			$state.reload();
-		});
+	//Update tinh trang user de xet cac quyen them xoa sua
+	$scope.$on('devise:new-session', function(e, user) {
+		angular.copy(user, userService.currentUser);
+		$state.reload();
+	});
 
-		$scope.$on('devise:login', function(e, user) {
-			angular.copy(user, userService.currentUser);
-			$state.reload();
-		});
+	$scope.$on('devise:new-registration', function(e, user) {
+		angular.copy(user, userService.currentUser);
+		$state.reload();
+	});
 
-		$scope.$on('devise:logout', function(e, user) {
-			angular.copy({}, userService.currentUser);
-		});
+	$scope.$on('devise:login', function(e, user) {
+		angular.copy(user, userService.currentUser);
+		$state.reload();
+	});
+
+	$scope.$on('devise:logout', function(e, user) {
+		angular.copy({}, userService.currentUser);
+	});
 
 
-		$scope.likePost = function() {
-			postDetailService.like().success(function() {
-				$scope.post.isLiked = true;
+	$scope.likePost = function() {
+		postDetailService.like().success(function() {
+			$scope.post.isLiked = true;
 				//Khi like post mac dinh theo doi post do neu no chua dc followed = false
 				if(!$scope.post.followed && $scope.post.user._id.$oid != $scope.currentUser._id.$oid){
 					postDetailService.follow();
 				}
 			});
-		};
+	};
 
-		$scope.unlikePost = function() {
-			postDetailService.unlike().success(function() {
-				$scope.post.isLiked = false;
-			});
-		};
+	$scope.unlikePost = function() {
+		postDetailService.unlike().success(function() {
+			$scope.post.isLiked = false;
+		});
+	};
 
 
-		$scope.showImage = function(photo) {
-			var modalInstance = $modal.open({
-				templateUrl: 'showImageModal.html',
-				controller: 'showImageModalCtrl',
-				size: 'lg',
-				resolve: {
-					photo: function() {
-						return photo;
-					},
-					listPhotos: function() {
-						return $scope.post.photos;
-					}
+	$scope.showImage = function(photo) {
+		var modalInstance = $modal.open({
+			templateUrl: 'showImageModal.html',
+			controller: 'showImageModalCtrl',
+			size: 'lg',
+			resolve: {
+				photo: function() {
+					return photo;
+				},
+				listPhotos: function() {
+					return $scope.post.photos;
 				}
-			});
+			}
+		});
 
-		};
+	};
 
+	$scope.likesHtml = "<p>Đang tải...</p>";
+	$scope.getKFirstLikes = function(){
 		$scope.likesHtml = "<p>Đang tải...</p>";
-		$scope.getKFirstLikes = function(){
-			$scope.likesHtml = "<p>Đang tải...</p>";
-			//Tai du lieu khi chua tai
-			postDetailService.getKFirstLike(5).success(function(){
-				//Tao ra html de hien thi nhieu nhat la 5 nguoi va so luong nguoi khac
-				var likesHtmlTmp ="";
-				$scope.post.likes.forEach(function(like){
-					var p = "<p class='text-tooltip'>" + like.user.username  + "</p>";
-					likesHtmlTmp = likesHtmlTmp + p;
-				});
-				if($scope.post.number_of_remains >= 1){
-					likesHtmlTmp = likesHtmlTmp + 'và ' +   $scope.post.number_of_remains + " người khác";
-				}
-				$scope.likesHtml = likesHtmlTmp;
+		//Tai du lieu khi chua tai
+		postDetailService.getKFirstLike(5).success(function(){
+			//Tao ra html de hien thi nhieu nhat la 5 nguoi va so luong nguoi khac
+			var likesHtmlTmp ="";
+			$scope.post.likes.forEach(function(like){
+				var p = "<p class='text-tooltip'>" + like.user.username  + "</p>";
+				likesHtmlTmp = likesHtmlTmp + p;
 			});
-		};
+			if($scope.post.number_of_remains >= 1){
+				likesHtmlTmp = likesHtmlTmp + 'và ' +   $scope.post.number_of_remains + " người khác";
+			}
+			$scope.likesHtml = likesHtmlTmp;
+		});
+	};
 
+	///Hien thi modal show like cua post
+	$scope.showAllLikes = function() {
+		var modalInstance = $modal.open({
+			templateUrl: 'showAllLikesModal.html',
+			controller: 'showAllLikesCtrl',
+			size: '',
+		});
+	};
 
-		///Hien thi modal show like cua post
-		$scope.showAllLikes = function() {
-			var modalInstance = $modal.open({
-				templateUrl: 'showAllLikesModal.html',
-				controller: 'showAllLikesCtrl',
-				size: '',
+	//thich bai viet
+	$scope.favorite = function(){
+		postDetailService.favorite();
+	};
+
+	//bo thich bai viet
+	$scope.unfavorite = function(){
+		postDetailService.unfavorite();
+	};
+
+	//Xoa bai viet
+	$scope.delete = function(){
+		postDetailService.destroy().success(function(){
+			Notifier.success('Bạn đó xóa thành công bài viết')
+			Flash.create("success", "Bạn đó xóa thành công bài viết",'myalert');
+			$state.go("trangCaNhan", {
+				username: $scope.currentUser.username,
 			});
-		};
+		});
+	};
 
-		//thich bai viet
-		$scope.favorite = function(){
-			postDetailService.favorite();
-		};
+	//theo doi bai post
+	$scope.followPost = function(){
+		postDetailService.follow();
+	};
 
-		//bo thich bai viet
-		$scope.unfavorite = function(){
-			postDetailService.unfavorite();
-		};
-
-		//Xoa bai viet
-		$scope.delete = function(){
-			postDetailService.destroy().success(function(){
-				Notifier.success('Bạn đó xóa thành công bài viết')
-				Flash.create("success", "Bạn đó xóa thành công bài viết",'myalert');
-				 $state.go("trangCaNhan", {
-				 	username: $scope.currentUser.username,
-				 });
-			});
-		};
-
-		//theo doi bai post
-		$scope.followPost = function(){
-			postDetailService.follow();
-		};
-		//Bo theo bai post
-		$scope.unfollowPost = function(){
-			postDetailService.unfollow();
-		};
-	}
-]);
+	//Bo theo bai post
+	$scope.unfollowPost = function(){
+		postDetailService.unfollow();
+	};
+}]);
 
 
-//Cho modal show anh
 app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interval',
 	function($scope, listPhotos, photo, $interval) {
 
@@ -155,7 +152,7 @@ app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interva
 		};
 
 	}
-]);
+	]);
 
 
 

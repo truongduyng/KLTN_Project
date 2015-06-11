@@ -10,39 +10,6 @@ app.factory('postDetailService', ['$http', function($http) {
 		return promise;
 	};
 
-	o.addComment = function(comment) {
-		var promise =
-			$http.post("/posts/" + o.post._id.$oid + "/comments.json", comment)
-			.success(function(data) {
-				if (o.post.comments == null) {
-					o.post.comments = [];
-				}
-				o.post.comments.splice(0, 0, data);
-
-			});
-		return promise;
-	};
-
-	o.deleteComment = function(comment) {
-		var id = comment._id.$oid;
-		var post_id = o.post._id.$oid;
-		return $http.delete("/posts/" + post_id + "/comments/" + id + ".json")
-			.success(function() {
-				var index = o.post.comments.indexOf(comment);
-				o.post.comments.splice(index, 1);
-			});
-	};
-
-	o.editComment = function(comment) {
-		var id = comment._id.$oid;
-		var post_id = o.post._id.$oid;
-		return $http.put("/posts/" + post_id + "/comments/" + id + ".json", comment)
-			.success(function(data) {
-				angular.copy(data, comment);
-			});
-	};
-
-
 	o.like = function(){
 		var id = o.post._id.$oid;
 		var url = "/posts/" + id + "/like.json";
@@ -107,7 +74,6 @@ app.factory('postDetailService', ['$http', function($http) {
 		return $http.delete(url);
 	};
 
-
 	//follow and unfollow post
 	o.follow = function(){
 		var id = o.post._id.$oid;
@@ -117,7 +83,7 @@ app.factory('postDetailService', ['$http', function($http) {
 		});
 		return promise;
 	};
-	
+
 	o.unfollow = function(){
 		var id = o.post._id.$oid;
 		var url  = "/posts/" + id + "/unfollow.json";

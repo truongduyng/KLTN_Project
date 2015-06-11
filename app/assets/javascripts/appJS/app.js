@@ -52,8 +52,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		}
 	});
 
-
-
 	$stateProvider.state("dangBai", {
 		url: "/dang-bai/",
 		templateUrl: 'appJS/dangBai/_dangBai.html',
@@ -66,7 +64,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		controller: 'editPostCtrl',
 		resolve: {
 			post: ['editPostService', '$stateParams', '$q', function(editPostService, $stateParams, $q) {
-				console.log("in resolve editPostService");
 				return editPostService.edit($stateParams.id);
 			}],
 		},

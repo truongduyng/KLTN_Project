@@ -48,23 +48,21 @@ app.controller('venueDetailCtrl', ['$scope', 'venueDetailService','$modal', 'Fla
 			});
 		}
 
-			$scope.venue = venueDetailService.venue;
-
-			$scope.showImage = function(photo) {
-				var modalInstance = $modal.open({
-					templateUrl: 'showImageModal.html',
-					controller: 'showImageModalCtrl',
-					size: 'lg',
-					resolve: {
-						photo: function() {
-							return photo;
-						},
-						listPhotos: function() {
-							return $scope.venue.photos;
-						}
+		$scope.showImage = function(photo) {
+			var modalInstance = $modal.open({
+				templateUrl: 'showImageModal.html',
+				controller: 'showImageModalCtrl',
+				size: 'lg',
+				resolve: {
+					photo: function() {
+						return photo;
+					},
+					listPhotos: function() {
+						return $scope.venue.photos;
 					}
-				});
-			};
+				}
+			});
+		};
 
 		//Su kien khi load map thanh cong
 		$scope.$on('mapInitialized', function(event, map) {

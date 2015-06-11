@@ -1,63 +1,4 @@
-/*
-Nhom de ben trai
-Bai viet moi nhat de ben duoi
-Bai viet cua doanh nghiep, tin khuyen mai doanh nghiep de ben phai
-Facebook de ben phai
-*/
 
-/*Y tuong 2*/
-/*
-gom 3 cot: 3, 6,3;
-cot ben trai la: group, bai viet moi nhat, bai viet doanh nghiep, facebook
-Cot giua la noi dung chinh
-Cot ben phai la: thanh search de tim kiem: bai viet moi nhat, bai viet doanh nghiep, group. Cai dat tim kiem async, go gi tim ma ko load trang;
-Vi du:http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/;
-Tim hieu tag de lam cai gi
-Su dung box-shadow vs inset de tao 3d
-Module bai viet moi nhat giong: http://www.xaluan.com/modules.php?name=News&file=article&sid=1112048;
-*/
-/*body{
-	background-color: #FFFFFF;
-	margin-bottom: 0px;
-}
-.detail-main-column{
-	padding-top: 10px;
-	background-color: #F5F5F5;
-	overflow: hidden;
-	border-radius: 5px;
-	border-top-right-radius: 0px;
-	border-top-left-radius: 0px;
-
-}
-*/
-
-/*.media{
-		border: 1px solid #E2E2E2;
-}*/
-/*.media-list{
-	border: 1px solid #E2E2E2;
-	padding: 10px 10px;
-	padding-right: 0px;
-}
-.list-comments{
-	border: 1px solid #E2E2E2;
-	border-right: none;
-	padding: 10px 10px;
-
-}*/
-
-
-/*BEGIN MAIN COLUM*/
-.detail-main-column{
-	/*border:thin solid #e5e5e5;
-	border-top: none;*/
-	/*-webkit-box-shadow: 10px 14px 82px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 10px 14px 82px 0px rgba(0,0,0,0.75);
-box-shadow: 10px 14px 82px 0px rgba(0,0,0,0.75);*/
-/*-webkit-box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
--moz-box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
-box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);*/
-}
 .media{
 	overflow: hidden;
 }
@@ -80,7 +21,6 @@ box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);*/
 .comment-media-body{
 	margin-bottom: -20px;
 }
-
 
 .detail-post-images img{
 	margin-bottom: 5px;
@@ -109,7 +49,6 @@ box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);*/
           box-shadow: 0 8px 6px -6px black;*/
 }
 .comment-box .comment-image{
-	width: 15%;
 	float:left;
 	padding-right: 10px;
 	box-sizing: border-box;

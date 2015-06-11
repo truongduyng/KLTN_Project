@@ -1,6 +1,29 @@
 app.factory('commentService', ['$http', function($http) {
 	var o = {};
 
+	o.create = function(comment_param) {
+		return $http.post("/comments.json", comment_param);
+	};
+
+	// o.destroy = function(comment) {
+	// 	var id = comment._id.$oid;
+	// 	var post_id = o.post._id.$oid;
+	// 	return $http.delete("/posts/" + post_id + "/comments/" + id + ".json")
+	// 	.success(function() {
+	// 		var index = o.post.comments.indexOf(comment);
+	// 		o.post.comments.splice(index, 1);
+	// 	});
+	// };
+
+	// o.update = function(comment) {
+	// 	var id = comment._id.$oid;
+	// 	var post_id = o.post._id.$oid;
+	// 	return $http.put("/posts/" + post_id + "/comments/" + id + ".json", comment)
+	// 	.success(function(data) {
+	// 		angular.copy(data, comment);
+	// 	});
+	// };
+
 	o.like = function(post, comment) {
 		var post_id = post._id.$oid;
 		var id = comment._id.$oid;
