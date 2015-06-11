@@ -8,14 +8,11 @@ Rails.application.routes.draw do
     end
   end
 
-
-  #BN
   resources 'branches' do
     collection do
       get 'list_branch_names'
     end
   end
-  #EN
 
   resources :images
 
@@ -77,12 +74,12 @@ Rails.application.routes.draw do
 
   resources :comments do
     resources :replies do
-        member do
-            put 'like'
-            put 'unlike'
-            get 'get_k_first_like'
-            get 'get_all_likes'
-        end
+      member do
+        put 'like'
+        put 'unlike'
+        get 'get_k_first_like'
+        get 'get_all_likes'
+      end
     end
   end
 
@@ -118,6 +115,7 @@ Rails.application.routes.draw do
   end
 
   resources 'clubs' do
+
     member do
       post 'addmember'
       post 'removemember'
@@ -125,6 +123,28 @@ Rails.application.routes.draw do
       post 'removeadmin'
       get 'find_members/:member_name' => 'clubs#find_members'
       post 'add_cover'
+    end
+
+    resources 'club_posts' do
+      member do
+        post 'add_photo'
+        put 'delete_photo'
+        put 'like'
+        put 'unlike'
+        get 'get_all_likes'
+        put 'follow'
+        put 'unfollow'
+      end
+
+      resources :comments do
+        member do
+          put 'like'
+          put 'unlike'
+          get 'get_k_first_like'
+          get 'get_all_likes'
+        end
+      end
+
     end
   end
 

@@ -36,8 +36,8 @@ class User
   has_many :images
 
   has_and_belongs_to_many :clubs, class_name: 'Club'
-  has_many :statuses, class_name: 'Status', inverse_of: :user
-  has_and_belongs_to_many :followed_statuses, class_name: 'Status', inverse_of: :followers_status
+  has_many :clubposts, class_name: 'ClubPost', inverse_of: :user
+  has_and_belongs_to_many :followed_clubposts, class_name: 'ClubPost', inverse_of: :followers_clubpost
   #1 nguoi co the chia se nhieu venues
   has_many :venues
 

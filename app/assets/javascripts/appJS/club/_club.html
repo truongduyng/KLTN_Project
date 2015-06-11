@@ -24,20 +24,20 @@
             <form novalidate name="postForm" class="post-form ng-pristine ng-valid">
 
               <div class="post-form-content">
-                <textarea style="border:none;padding: 6px 12px;display:block;" placeholder="Nội dung bài viết" ng-model="status.body" required></textarea>
+                <textarea style="border:none;padding: 6px 12px;display:block;" placeholder="Nội dung bài viết" ng-model="clubpost.content" required></textarea>
 
                 <div  class="post-form-images">
-                  <span class="image" ng-repeat="photo in uploader_status.queue">
+                  <span class="image" ng-repeat="photo in uploader_clubpost.queue">
                     <button ng-hide="photo.isUploading" ng-click="photo.remove()" aria-hidden="true" class="close" >&times;</button>
-                    <div ng-thumb="{file: photo._file, height: 100, width:100}" ng-show="uploader_status.isHTML5"></div>
+                    <div ng-thumb="{file: photo._file, height: 100, width:100}" ng-show="uploader_clubpost.isHTML5"></div>
                   </span>
                 </div>
               </div>
 
-              <div ng-show="uploader_status.isUploading" style="margin: 0px 10px;margin-bottom: -10px;">
+              <div ng-show="uploader_clubpost.isUploading" style="margin: 0px 10px;margin-bottom: -10px;">
                 <div class="progress">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" ng-style="{'width': uploader_status.progress + '%'}" style="width: 0%;">
-                    {{uploader_status.progress}}
+                  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" ng-style="{'width': uploader_clubpost.progress + '%'}" style="width: 0%;">
+                    {{uploader_clubpost.progress}}
                   </div>
                 </div>
               </div>
@@ -46,9 +46,9 @@
                 <div style="margin: 5px 5px;">
                   <i class="fa fa-picture-o fa-2x" ng-click="onShowFileDialog()"></i>
 
-                  <input style="display:none;" id="addImageInput" type="file" nv-file-select uploader="uploader_status" multiple>
+                  <input style="display:none;" id="addImageInput" type="file" nv-file-select uploader="uploader_clubpost" multiple>
 
-                  <button ng-disabled="postForm.$invalid" ng-click="onPostStatus()" class="btn btn-primary" type="button"> Đăng </button>
+                  <button ng-disabled="postForm.$invalid" ng-click="onPostclubpost()" class="btn btn-primary" type="button"> Đăng </button>
                 </div>
               </div>
 

@@ -46,24 +46,25 @@ app.controller('venueDetailCtrl', ['$scope', 'venueDetailService','$modal', 'Fla
 					}
 				}
 			});
+		}
 
-	$scope.venue = venueDetailService.venue;
+			$scope.venue = venueDetailService.venue;
 
-	$scope.showImage = function(photo) {
-		var modalInstance = $modal.open({
-			templateUrl: 'showImageModal.html',
-			controller: 'showImageModalCtrl',
-			size: 'lg',
-			resolve: {
-				photo: function() {
-					return photo;
-				},
-				listPhotos: function() {
-					return $scope.venue.photos;
-				}
-			}
-		});
-	};
+			$scope.showImage = function(photo) {
+				var modalInstance = $modal.open({
+					templateUrl: 'showImageModal.html',
+					controller: 'showImageModalCtrl',
+					size: 'lg',
+					resolve: {
+						photo: function() {
+							return photo;
+						},
+						listPhotos: function() {
+							return $scope.venue.photos;
+						}
+					}
+				});
+			};
 
 		//Su kien khi load map thanh cong
 		$scope.$on('mapInitialized', function(event, map) {
@@ -93,7 +94,6 @@ app.controller('venueDetailCtrl', ['$scope', 'venueDetailService','$modal', 'Fla
 			return marker;
 		};
 
-
 		//Xoa venue
 		$scope.onDeleteVenue = function(){
 			venueDetailService.destroy($scope.venue).success(function(){
@@ -101,4 +101,4 @@ app.controller('venueDetailCtrl', ['$scope', 'venueDetailService','$modal', 'Fla
 				$state.go("home");
 			});
 		};
-}]);
+	}]);

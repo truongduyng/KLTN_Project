@@ -1,4 +1,4 @@
-app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash', 'Auth', '$state', '$modal', 'FileUploader','$cookies', function($scope, $modal, club, clubs, $http, Flash, Auth, $state, $modal, FileUploader, $cookies){
+app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash', 'Auth', '$state', '$modal', 'FileUploader','$cookies','clubpostFtry', function($scope, $modal, club, clubs, $http, Flash, Auth, $state, $modal, FileUploader, $cookies, clubpostFtry){
 
   console.log(club.data);
 
@@ -39,42 +39,55 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
     $('#choosecover').click();
   }
 
-  //Post Status ----------------------------------
-  $scope.status = {};
+  //Club Posts ----------------------------------
+  $scope.clubpost = {};
 
-  $scope.uploader_status = new FileUploader({
+  clubpostFtry.index($scope.club.id.$oid).success(function(data){
+    $scope.clubposts = data;
+    console.log(data);
+  });
+
+  $scope.uploader_clubpost = new FileUploader({
     headers: {
       'X-CSRF-TOKEN': $cookies.get('XSRF-TOKEN'),
     },
   });
 
-  $scope.uploader_status.onBeforeUploadItem = function(file) {
-    file.url = "/statuses/" + $scope.status.id + '/add_photo.json';
+  $scope.uploader_clubpost.onBeforeUploadItem = function(file) {
+    file.url = "/clubs/" + $scope.club.id.$oid + "/club_posts/" + $scope.clubpost.id + '/add_photo.json';
   };
-  //filter for image
-  $scope.uploader_status.filters.push({
+
+  $scope.uploader_clubpost.filters.push({
     name: 'imageFilter',
     fn: function(item, options) {
       var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
       return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
     }
   });
-  $scope.uploader_status.onCompleteAll = function() {
-    $scope.status.content = "";
-    $scope.uploader_status.clearQueue();
+
+  $scope.uploader_clubpost.onCompleteItem = function(item, response, status, headers) {
+    $scope.clubposts[$scope.clubposts.length-1].photos.push(response);
+    console.log(response,$scope.clubposts);
+  };
+
+  $scope.uploader_clubpost.onCompleteAll = function(){
+    $scope.clubpost.content = "";
+    $scope.uploader_clubpost.clearQueue();
   };
 
   $scope.onShowFileDialog = function() {
     $("#addImageInput").click();
   };
 
-  $scope.onPostStatus = function() {
-    statusFtry.create($scope.status).success(function(data) {
-      $scope.status.id = data._id.$oid;
-      if (!$scope.uploader.queue || $scope.uploader.queue.length == 0) {
-        onPostComplete();
-      }
-      $scope.uploader.uploadAll();
+  $scope.onPostclubpost = function() {
+
+    clubpostFtry.create($scope.club.id.$oid, $scope.clubpost).success(function(data) {
+
+      $scope.clubpost.id = data._id.$oid;
+      console.log(data);
+      $scope.clubposts.push(data);
+
+      $scope.uploader_clubpost.uploadAll();
 
     }).error(function(data, status) {
       if (status == '401') {
