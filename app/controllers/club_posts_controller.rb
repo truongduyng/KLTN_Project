@@ -1,6 +1,6 @@
 class ClubPostsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :add_photo, :like, :unlike, :destroy, :follow, :unfollow]
-  before_action :is_member?
+  before_action :is_member?, only: [:create]
 
   def show
   end

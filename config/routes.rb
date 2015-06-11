@@ -125,7 +125,10 @@ Rails.application.routes.draw do
       post 'add_cover'
     end
 
-    resources 'club_posts' do
+    resources 'club_posts'
+  end
+
+  resources 'club_posts' do
       member do
         post 'add_photo'
         put 'like'
@@ -143,9 +146,7 @@ Rails.application.routes.draw do
           get 'get_all_likes'
         end
       end
-
     end
-  end
 
   resources 'asset_categories' do
     resources 'fees'

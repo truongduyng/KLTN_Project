@@ -50,7 +50,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
   });
 
   $scope.uploader_clubpost.onBeforeUploadItem = function(file) {
-    file.url = "/clubs/" + $scope.club.id.$oid + "/club_posts/" + $scope.clubpost.id + '/add_photo.json';
+    file.url = "/club_posts/" + $scope.clubpost.id + '/add_photo.json';
   };
 
   $scope.uploader_clubpost.filters.push({
