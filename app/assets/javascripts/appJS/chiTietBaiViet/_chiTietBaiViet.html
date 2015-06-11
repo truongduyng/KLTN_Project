@@ -33,7 +33,7 @@
       <h3 style="margin:0px; padding:0px;margin-bottom: 10px;">{{post.title}}</h3>
       <div>{{post.body}}</div>
       <div class="detail-post-images" style="text-align: center; margin-top: 20px;">
-        <a ng-click="showImage(photo)" ng-repeat="photo in post.photos"><img src="{{photo.image.url | logo}}" width="220px" height="220px"></a>
+      <a ng-click="showImage(photo)" ng-repeat="photo in post.photos"><img ng-src="{{photo.image.url | logo}}" width="220px" height="220px"></a>
       </div>
       <!-- BEGIN HIEN THI CHO BAI VIET KHONG DUOC PUBLISH -->
       <div section-id="for-not-published" ng-if="!post.published">

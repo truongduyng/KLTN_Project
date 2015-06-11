@@ -2,14 +2,11 @@ app.controller('commentCtrl', ['$scope', 'postDetailService',
 	'Flash', 'userService', 'replyService', 'commentService', '$modal',
 	function($scope, postDetailService, Flash, userService, replyService, commentService, $modal) {
 
-
-
 		$scope.currentUser = userService.currentUser;
 		$scope.comments = postDetailService.post.comments;
 		$scope.comment = {};
 		$scope.isCommenting = false;
 		$scope.isEditing = false;
-
 
 		$scope.addComment = function() {
 			$scope.isCommenting = true;
@@ -72,7 +69,7 @@ app.controller('commentCtrl', ['$scope', 'postDetailService',
 		};
 
 
-		
+
 		$scope.getKFirstLikes = function(comment){
 
 			comment.likesHtml = "<p>Đang tải...</p>";
@@ -88,7 +85,7 @@ app.controller('commentCtrl', ['$scope', 'postDetailService',
 					likesHtmlTmp = likesHtmlTmp  + 'và ' + comment.number_of_remains + " người khác";
 				}
 				comment.likesHtml = likesHtmlTmp;
-				
+
 				//comment.likesHtml = likesHtmlTmp;
 				console.log("comment.likesHtml", comment.likesHtml);
 			});
@@ -110,8 +107,8 @@ app.controller('commentCtrl', ['$scope', 'postDetailService',
 				}
 			});
 		};
-		
-		
+
+
 	}
 ]);
 

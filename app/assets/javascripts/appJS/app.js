@@ -48,15 +48,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		resolve: {
 			posts: ['listPostService', function(listPostService) {
 				return listPostService.get_all(1);
-			}],
-			// currentUser: ['Auth', function(Auth) {
-			// 	Auth.currentUser()
-			// 		.then(function(user) {
-			// 			return user;
-			// 		}, function(error) {
-
-			// 		});
-			// }],
+			}]
 		}
 	});
 
@@ -275,7 +267,14 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 				return $http.get("/clubs/" + $stateParams.club_id + ".json").success(function(data) {
 					return data;
 				});
-			}
+			},
+			currentUser: ['Auth', function(Auth) {
+				return Auth.currentUser().then(function(user) {
+					return user;
+				}, function(response) {
+					return null;
+				})
+			}]
 		}
 	});
 

@@ -2,15 +2,11 @@ class ClubPostsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :add_photo, :like, :unlike, :destroy, :follow, :unfollow]
   before_action :is_member?
 
-  def index
-    @clubposts = @club.club_posts
-  end
-
   def show
   end
 
   def create
-    byebug
+    # byebug
     @clubpost = ClubPost.new(content: clubpost_params[:content])
     @clubpost.user = current_user
     @clubpost.club = @club
@@ -24,12 +20,12 @@ class ClubPostsController < ApplicationController
 
   def add_photo
     begin
-      byebug
+      # byebug
       @clubpost = ClubPost.find(clubpost_params[:id])
       @photos = Photo.new(image: params[:file])
       @clubpost.photos ||=[]
       @clubpost.photos << @photos
-      render json: @photos.image.url, status: :created
+      render json: @photos, status: :created
     rescue Exception
       render nothing: true, status: :bad_request, content_type: 'application/json'
     end

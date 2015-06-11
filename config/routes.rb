@@ -128,7 +128,6 @@ Rails.application.routes.draw do
     resources 'club_posts' do
       member do
         post 'add_photo'
-        put 'delete_photo'
         put 'like'
         put 'unlike'
         get 'get_all_likes'

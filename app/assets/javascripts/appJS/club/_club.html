@@ -56,28 +56,26 @@
 
           </div>
 
-          <div class="post margintop10">
+          <div class="post margintop10" ng-repeat = "post in club.clubposts">
             <div style="height: 58px">
               <div class="pull-left">
-                <img ng-src="" alt="">
+                <img style="width: 40px;" ng-src="{{post.user.avatar}}" class="profile-picture" alt="">
               </div>
               <div class="pull-left marginleft5">
-                <a href="#">Nguyen Truong Duy</a><br>
-                <a href="#">12/12/2112</a>
+                <a ui-sref="trangCaNhan({username: post.user.username})">{{post.user.fullname}}</a><br>
+                <a href="#">{{post.updated_at | date:'h:mm a, dd/mm/yyyy'}}</a>
               </div>
             </div>
             <div class="postcontent margintop10">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
+              <p>{{post.content}}</p>
             </div>
-            <a href="#">like</a><span>  .  </span>
-            <a href="#">comment</a><span>  .  </span>
-            <img src="" alt="" width="6%">
+            <div class="detail-post-images" style="margin-top: 20px;">
+            <a ng-click="showImage(photo, post.photos)" ng-repeat="photo in post.photos"><img ng-src="{{photo.url}}" height="50px"></a>
+            </div>
+
+            <hr><a href="#">like</a><hr>
+
+            <img ng-src="{{user.avatar.url}}" alt="" width="6%">
             <input class="comment margintop5 field" type="text" name="" value="" placeholder="comment here">
           </div>
 
@@ -162,6 +160,17 @@
 </div>
 </section>
 
+<script type="text/ng-template" id="showImageModal.html">
+  <div class="modal-body my-modal-image">
+    <img ng-src="{{photo.url}}" width="100%" height="100%">
+
+    <span left-arrow-pressed="previous()" ng-click="previous()" u="arrowleft" class="jssora02l" style="top: 50%; left: 8px;">
+    </span>
+
+    <span right-arrow-pressed="next()"  ng-click="next()" u="arrowright" class="jssora02r" style="top: 50%; right: 8px">
+    </span>
+  </div>
+</script>
 
 <script type="text/javascript">
   autosize(document.querySelectorAll('textarea'));

@@ -1,8 +1,9 @@
-app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash', 'Auth', '$state', '$modal', 'FileUploader','$cookies','clubpostFtry', function($scope, $modal, club, clubs, $http, Flash, Auth, $state, $modal, FileUploader, $cookies, clubpostFtry){
-
-  console.log(club.data);
+app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash', 'Auth', '$state', '$modal', 'FileUploader','$cookies','clubpostFtry', 'currentUser', function($scope, $modal, club, clubs, $http, Flash, Auth, $state, $modal, FileUploader, $cookies, clubpostFtry, currentUser){
 
   $scope.club = club.data;
+  $scope.user = currentUser;
+
+  console.log($scope.club, $scope.user);
 
   $scope.club_update = {
     id: $scope.club.id,
@@ -42,11 +43,6 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
   //Club Posts ----------------------------------
   $scope.clubpost = {};
 
-  clubpostFtry.index($scope.club.id.$oid).success(function(data){
-    $scope.clubposts = data;
-    console.log(data);
-  });
-
   $scope.uploader_clubpost = new FileUploader({
     headers: {
       'X-CSRF-TOKEN': $cookies.get('XSRF-TOKEN'),
@@ -66,8 +62,8 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
   });
 
   $scope.uploader_clubpost.onCompleteItem = function(item, response, status, headers) {
-    $scope.clubposts[$scope.clubposts.length-1].photos.push(response);
-    console.log(response,$scope.clubposts);
+    $scope.club.clubposts[0].photos.push({url: response.image.url});
+    console.log(response,$scope.club.clubposts);
   };
 
   $scope.uploader_clubpost.onCompleteAll = function(){
@@ -85,7 +81,11 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
 
       $scope.clubpost.id = data._id.$oid;
       console.log(data);
-      $scope.clubposts.push(data);
+      $scope.club.clubposts.splice(0,0,data);
+
+      if (!$scope.uploader_clubpost.queue || $scope.uploader_clubpost.queue.length == 0) {
+        $scope.clubpost.content = "";
+      }
 
       $scope.uploader_clubpost.uploadAll();
 
@@ -94,6 +94,22 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
         $scope.$emit("onRequireLogin");
       } else {
         Flash.create("danger", "Lỗi xảy ra khi post, bạn vui lòng thử lại", 'myalert');
+      }
+    });
+  };
+
+  $scope.showImage = function(photo, listPhotos) {
+    var modalInstance = $modal.open({
+      templateUrl: 'showImageModal.html',
+      controller: 'showImageModalCtrl',
+      size: 'lg',
+      resolve: {
+        photo: function() {
+          return photo;
+        },
+        listPhotos: function() {
+          return listPhotos;
+        }
       }
     });
   };
@@ -129,7 +145,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
       });
 
       last_admin_modal.result.then(function (admins) {
-        clubs.removemember($scope.club.id.$oid, Auth._currentUser._id.$oid, admins).success(function(result){
+        clubs.removemember($scope.club.id.$oid, $scope.user._id.$oid, admins).success(function(result){
           $state.go('home');
         })
         .error(function(){
@@ -145,7 +161,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
       });
 
       last_member_modal.result.then(function () {
-        clubs.removemember($scope.club.id.$oid, Auth._currentUser._id.$oid, null).success(function(result){
+        clubs.removemember($scope.club.id.$oid, $scope.user._id.$oid, null).success(function(result){
           $state.go('home');
         })
         .error(function(){
@@ -155,7 +171,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
     };
 
     if ($scope.club.admins.length > 1 && $scope.club.members.length > 1) {
-      clubs.removemember($scope.club.id.$oid, Auth._currentUser._id.$oid, null).success(function(result){
+      clubs.removemember($scope.club.id.$oid, $scope.user._id.$oid, null).success(function(result){
 
         $state.go('home');
 
@@ -248,7 +264,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
   }
 
   $scope.current_user_is_admin = function(){
-    return ismemberof($scope.club.admins, Auth._currentUser._id.$oid);
+    return ismemberof($scope.club.admins, $scope.user._id.$oid);
   }
 
   function ismemberof(array, user_id){
@@ -314,3 +330,34 @@ app.controller('lastadminCtrl',['$scope', '$modalInstance', '$http', 'club_id', 
     $modalInstance.dismiss('cancel');
   };
 }]);
+
+
+app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interval',
+  function($scope, listPhotos, photo, $interval) {
+
+    $scope.listPhotos = listPhotos;
+    $scope.photo = photo;
+    var currentIndex = $scope.listPhotos.indexOf(photo);
+
+    $scope.previous = function() {
+      console.log("in previous");
+      if (currentIndex >= 1) {
+        currentIndex--;
+      } else {
+        currentIndex = $scope.listPhotos.length - 1;
+      }
+      $scope.photo = $scope.listPhotos[currentIndex];
+    };
+
+    $scope.next = function() {
+
+      if (currentIndex < $scope.listPhotos.length - 1) {
+        currentIndex++;
+      } else {
+        currentIndex = 0;
+      }
+      $scope.photo = $scope.listPhotos[currentIndex];
+    };
+
+  }
+  ]);
