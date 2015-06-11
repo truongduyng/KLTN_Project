@@ -198,6 +198,22 @@ footer{
 
 }
 
+.write_status{
+	background: #f8f8f8;
+	width: 100%;
+	padding: 10px 10px 10px 10px;
+}
+
+#status_input{
+	text-align: left;
+	width: 100%;
+	min-height: 50px;
+	display:block;
+	resize: none;
+	overflow: hidden;
+	display:block;
+}
+
 /*boxbooking*/
 .boxbooking {
 	display: none;

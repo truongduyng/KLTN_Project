@@ -10,6 +10,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
     description: $scope.club.description
   };
 
+  // Cover-----------------
   $scope.uploader = new FileUploader({
     queueLimit: 1,
     headers: {
@@ -37,6 +38,54 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
   $scope.choose_cover = function(){
     $('#choosecover').click();
   }
+
+  //Post Status ----------------------------------
+  $scope.status = {};
+
+  $scope.uploader_status = new FileUploader({
+    headers: {
+      'X-CSRF-TOKEN': $cookies.get('XSRF-TOKEN'),
+    },
+  });
+
+  $scope.uploader_status.onBeforeUploadItem = function(file) {
+    file.url = "/statuses/" + $scope.status.id + '/add_photo.json';
+  };
+  //filter for image
+  $scope.uploader_status.filters.push({
+    name: 'imageFilter',
+    fn: function(item, options) {
+      var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+      return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+    }
+  });
+  $scope.uploader_status.onCompleteAll = function() {
+    $scope.status.content = "";
+    $scope.uploader_status.clearQueue();
+  };
+
+  $scope.onShowFileDialog = function() {
+    $("#addImageInput").click();
+  };
+
+  $scope.onPostStatus = function() {
+    statusFtry.create($scope.status).success(function(data) {
+      $scope.status.id = data._id.$oid;
+      if (!$scope.uploader.queue || $scope.uploader.queue.length == 0) {
+        onPostComplete();
+      }
+      $scope.uploader.uploadAll();
+
+    }).error(function(data, status) {
+      if (status == '401') {
+        $scope.$emit("onRequireLogin");
+      } else {
+        Flash.create("danger", "Lỗi xảy ra khi post, bạn vui lòng thử lại", 'myalert');
+      }
+    });
+  };
+
+  // -------------------------------
 
   $('ul.list_recommend').width('293');
 
@@ -200,6 +249,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
   }
 
 }]);
+
 
 app.controller('lastmemberCtrl', function($scope, $modalInstance, $http){
 

@@ -1,1 +1,99 @@
-<h2>ThIS IS DETAIL VENUE PAGE</h2>
+<div class="row">
+  <!-- BEGIN MAIN COLUMN -->
+  <div class="detail-main-column">
+    <span style="border: 1px solid #337AB7; display:block; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>{{venue.name}}</strong></span>
+    <ul class="media-list">
+     <li class="media">
+      <div class="media-left">
+        <a ui-sref="trangCaNhan({username: venue.user.username})">
+         <img fallback-src="sportaLogo"  class="img-circle img-responsive profile-picture" class="media-object" ng-src="{{venue.user.avatar.url | logo}}"
+         alt="Generic placeholder image" width="64px" height="64px" style="min-width: 44px; min-height: 44px;">
+       </a>
+     </div>
+
+     <div class="media-body">
+      <div class="user-title">
+        <a ui-sref="trangCaNhan({username: venue.user.username})"><h5  style="color:#337ab7;"  class="media-heading pull-left">{{venue.user.fullname}}</h5></a>
+        <!--  <small class="pull-right" style="font-weight: 600;">{{post.updated_at | date:'h:mm a, dd/mm/yyyy'}}</small> -->
+        <p style="clear: both; margin-top:-5px "><small style="font-weight: 600; display:block;">{{venue.updated_at | date:'h:mm a, dd/mm/yyyy'}}</small></p>
+      </div>
+      <div class="clearfix"></div>
+      <div>{{venue.description}}</div>
+      <div class="detail-post-images" style="text-align: center; margin-top: 20px;">
+        <a ng-click="showImage(photo)" ng-repeat="photo in venue.photos"><img src="{{photo.image.url | logo}}" width="220px" height="220px"></a>
+      </div>
+      <!-- BEGIN HIEN THI CHO BAI VIET KHONG DUOC PUBLISH -->
+      <!-- <div section-id="for-not-published" ng-if="!post.published">
+        <div class="likes">
+          <div role="group" class="btn-group pull-left">
+            <a class="btn btn-default" ui-sref="editPost({id: post._id.$oid})"><span class="fa fa-edit"></span> Sửa bài viết</a>
+            <a ng-confirm-click="Bạn có muốn xóa bài viết hay không ?" confirmed-click="delete()" class="btn btn-default"><span class="fa fa-trash"></span> Xóa bài viết</a>
+          </div>
+          <span class="label label-danger pull-right" style="font-size: 1em; font-weight: 500; display:inline-block ;margin-top: 5px;">{{post.status.name}}</span>
+        </div>
+      </div> -->
+      <!-- END HIEN THI CHO BAI VIET KHONG DUOC PUBLISH -->
+
+      <!-- BEGIN HIEN THI CHO BAI VIET DUOC PUBLISH, CHO PHEP LIKE, COMMENT, ... -->
+      <div section-id="for-published">
+        <div class="likes">
+        <!--   <span tooltip="Thích" ng-hide="post.isLiked" class="fa fa-thumbs-up like-icon" ng-click="likePost()"></span>
+          <span tooltip="Bỏ thích" ng-show="post.isLiked" class="fa fa-thumbs-down unlike-icon" ng-click="unlikePost()"></span>
+
+          <a  ng-mouseenter="getKFirstLikes()" tooltip-html-unsafe="{{likesHtml}}" ng-click="showAllLikes()" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>
+
+          <i tooltip="Thêm vào danh mục yêu thích" ng-hide="post.isFavorited" ng-click="favorite()" class="fa fa-heart pull-right" style="color: red;"></i>
+          <i tooltip="Xóa khỏi danh mục yêu thích" ng-show="post.isFavorited" ng-click="unfavorite()" class="fa fa-heart-o pull-right"></i> -->
+        </div>
+        <!-- <section id="listComments" ng-include="'appJS/chiTietBaiViet/_listComments.html'"></section> -->
+      </div>
+      <!-- END HIEN THI CHO BAI VIET DUOC PUBLISH, CHO PHEP LIKE, COMMENT, ... -->
+
+    </div>
+
+  </li>
+</ul>
+      </div>
+      <!-- END MAIN COLUMN -->
+
+    </div>
+
+
+    <!-- De cho chua khoang trong duoi day -->
+    <div style="margin-bottom: 100px;"></div>
+
+    <!-- BEGIN MODAL HIEN THI HINH ANH -->
+    <script type="text/ng-template" id="showImageModal.html">
+      <div class="modal-body my-modal-image">
+        <img src="{{photo.image.url}}" width="100%" height="100%">
+        <!-- Arrow Left -->
+        <span left-arrow-pressed="previous()" ng-click="previous()" u="arrowleft" class="jssora02l" style="top: 50%; left: 8px;">
+        </span>
+        <!-- Arrow Right -->
+        <span right-arrow-pressed="next()"  ng-click="next()" u="arrowright" class="jssora02r" style="top: 50%; right: 8px">
+        </span>
+      </div>
+    </script>
+    <!-- BEGIN MODAL HIEN THI HINH ANH -->
+</div>
+
+<script type="text/javascript">
+ autosize(document.querySelectorAll('textarea'));
+
+     //For modal
+     $(document).ready(function() {
+       $("#list-people-like").click(function() {
+         $('#myModal2').modal('toggle');
+       });
+     });
+</script>
+
+
+<style type="text/css">
+    .media-body {
+      box-sizing: border-box;
+      float: left;
+      padding-left: 10px;
+      width: 85%;
+    }
+</style>

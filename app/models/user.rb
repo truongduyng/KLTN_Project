@@ -13,16 +13,13 @@ class User
   # belongs_to :role
   #do thay doi nen can thay check role o bussiness admin, co the dung 1 controller bussiness admin de lam dieu nay thay
 
-  ##BC
   has_and_belongs_to_many :roles
-  # belongs_to :role, primary_key: "name", foreign_key: "role_name"
-  ##EC
   has_one :bussiness
 
-  ##BN
+
   embeds_one :information
   has_many :tickets
-  ##EN
+
   has_many :posts, class_name: 'Post', inverse_of: :user
   has_many :favorite_posts
   #Moi nguoi co the co nhieu yeu cau, boi vi neu 1 yeu cau ko dc chap thuan thi co the gui yeu cau khac
@@ -39,7 +36,8 @@ class User
   has_many :images
 
   has_and_belongs_to_many :clubs, class_name: 'Club'
-
+  has_many :statuses, class_name: 'Status', inverse_of: :user
+  has_and_belongs_to_many :followed_statuses, class_name: 'Status', inverse_of: :followers_status
   #1 nguoi co the chia se nhieu venues
   has_many :venues
 

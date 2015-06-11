@@ -1,11 +1,12 @@
 class Comment
 	include Mongoid::Document
 	include Mongoid::Timestamps
-	
+
 	field :content, type: String
 
 	belongs_to :post
 	belongs_to :user
+	belongs_to :status
 	embeds_many :likes, as: :likeable
 	embeds_many :replies
 	#Thong bao: thuoc ve 1 thong bao nao do, va bi chi phooi boi nhieu loai tac dong tao ra nhieu thong bao
@@ -14,8 +15,7 @@ class Comment
 	has_one :notification_change_trigger, as: :trigger_source
 	#validate
 	validates :content, presence: true
-	#callback
-	
+
 end
 
 # {

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     end
   end
 
-  
+
   #BN
   resources 'branches' do
     collection do
@@ -95,7 +95,6 @@ Rails.application.routes.draw do
       get 'get_all_likes'
       put 'follow'
       put 'unfollow'
-      # get 'get_k_first_like'
     end
 
     collection do
@@ -115,10 +114,8 @@ Rails.application.routes.draw do
   get 'search(/:lat/:lng/:distance)' => 'branches#search', constraints:{ lat: /[0-9\.]+/, lng: /[0-9\.]+/, distance: /[0-9\.]+/ }
   get 'searchnameadd(/:search_query)' => 'branches#search'
 
-  #BC
   resources 'assets' do
   end
-  #EC
 
   resources 'clubs' do
     member do
