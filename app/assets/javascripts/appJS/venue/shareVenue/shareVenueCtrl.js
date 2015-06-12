@@ -44,9 +44,9 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 		//Gui yeu cau
 		$scope.onSendVenue = function() {
 			// //Cho test do ko co mang de load map
-			$scope.venue.latitude = '106.3405307';
-			$scope.venue.longitude = '10.3581198';
-			console.log("venue: ", $scope.venue);
+			// $scope.venue.latitude = '106.3405307';
+			// $scope.venue.longitude = '10.3581198';
+			// console.log("venue: ", $scope.venue);
 
 			shareVenueService.create($scope.venue)
 				.success(function(data) {
@@ -134,7 +134,7 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 			$scope.map.setZoom(15);
 			//Dang ki su kien dragend cho marker de lay vi tri moi
 			google.maps.event.addListener(marker, 'dragend', function() {
-				$scope.venu.latitude = marker.getPosition().lat();
+				$scope.venue.latitude = marker.getPosition().lat();
 				$scope.venue.longitude = marker.getPosition().lng();
 				console.log("new Venue: ", $scope.venue);
 			});

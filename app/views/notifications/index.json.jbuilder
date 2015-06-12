@@ -10,7 +10,7 @@ json.notifications do
 		#Doi tuong tac dong: gom ai tac dong va lam cai gi (comment nao, reply nao)
 		json.triggers nc.distinct_triggers_by_user do |trigger|
 			json._id trigger.id
-			json.trigger_user do 
+			json.trigger_user do
 				json._id trigger.trigger_user.id
 				json.username trigger.trigger_user.username
 				json.fullname trigger.trigger_user.fullname
@@ -31,7 +31,7 @@ json.notifications do
 				json.title nc.notification.notificable.title
 				json._id nc.notification.notificable.id
 			end
-			
+
 			if nc.notification.notificable_type == 'BussinessRequest'
 				json.name nc.notification.notificable.name
 				json._id nc.notification.notificable.id
@@ -39,12 +39,15 @@ json.notifications do
 
 			if nc.notification.notificable_type == 'Comment'
 				json.content nc.notification.notificable.content
-				json.post_title  nc.notification.notificable.post.title
-				#id cua bai post chua comment
-				json._id nc.notification.notificable.post.id
+
+				if nc.notification.notificable.post
+					json.post_title  nc.notification.notificable.post.title
+					json._id nc.notification.notificable.post.id
+				end
+
 				json.comment_id nc.notification.notificable.id
 			end
-			
+
 			#Do reply la embedded trong comment nen ko fetch reply trong notificable
 			if nc.notification.notificable_type == 'Reply'
 				json.content nc.notification.reply.content
@@ -57,10 +60,10 @@ json.notifications do
 
 		end
 		#Loai tac dong
-		json.notification_category do 
+		json.notification_category do
 			json._id nc.notification_category.id
 			json.name nc.notification_category.name
-		end 
+		end
 		#1 so thong tin khac
 		json.watched nc.watched
 		json.is_new nc.is_new
@@ -70,7 +73,7 @@ json.notifications do
 		json.end '---------------'
 	end
 end
-json.new_notifications_count @new_notifications_count 
+json.new_notifications_count @new_notifications_count
 
 
 #To chuc lai theo parent object cho de hieu

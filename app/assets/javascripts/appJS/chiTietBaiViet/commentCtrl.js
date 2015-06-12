@@ -44,8 +44,8 @@ app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userServ
 	$scope.deleteComment = function(comment) {
 		commentService.destroy(comment).success(function() {
 			if ('post_id' in commentService.target_object){
-				var index = postDetailService.post.comments.indexOf(comment);
-				postDetailService.post.comments.splice(index, 1);
+				var index = post.comments.indexOf(comment);
+				post.comments.splice(index, 1);
 			}
 		});
 	};

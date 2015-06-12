@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
 
 	def create
 		begin
-			byebug
+			# byebug
 			@comment = Comment.new(comment_params[:comment])
 			@comment.user = current_user
 
@@ -51,7 +51,7 @@ class CommentsController < ApplicationController
 
 
 	def update
-		byebug
+		# byebug
 		if @comment.update_attributes(comment_params[:comment])
 			render 'show.json.jbuilder', status: :ok
 		else
@@ -62,12 +62,12 @@ class CommentsController < ApplicationController
 
 	def destroy
 		#Neu co notification ma chua dc xem (trong truong lo binh luan xong xoa lien) thi xoa notification_change do
-		byebug
+
 		if @comment.post
 			target_object = @comment.post
 		end
-		if @comment.clubpost
-			target_object = @comment.clubpost
+		if @comment.club_post
+			target_object = @comment.club_post
 		end
 
 		#Khi xoa binh luan thi xoa luon cac notification lien quan den binh luan cua nguoi do (vi target_object la comment ko the tim thay)

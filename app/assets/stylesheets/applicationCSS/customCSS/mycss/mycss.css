@@ -92,7 +92,7 @@
 
 /*Begin list post in trang chủ*/
 .post-item{
-	height:620px;
+	height:400px;
 	overflow:hidden;
 }
 .post-item .content p{
@@ -176,8 +176,15 @@ text-decoration:none;
 
 /*CHO POST ON HONE PAGE*/
 .post-item .my-post-header{
-  height: 470px;
+  height: 280px;
  }
  .notifications{
  	padding-top: 0px;
+ }
+
+ .post-item .my-post-header .content{
+    color: black;
+    display: block;
+    height: 200px;
+    overflow: hidden;
  }
