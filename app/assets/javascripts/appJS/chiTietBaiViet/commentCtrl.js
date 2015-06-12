@@ -5,21 +5,32 @@ app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userServ
 	$scope.isCommenting = false;
 	$scope.isEditing = false;
 
-	$scope.addComment = function() {
+	$scope.addComment = function(post) {
+		console.log(post);
 		$scope.isCommenting = true;
+
+		if (post.title){
+			commentService.target_object = {post_id: post._id.$oid};
+		}else {
+			commentService.target_object = {club_post_id: post._id.$oid};
+		}
+
 		commentService.create($scope.comment).success(function(data){
 
 			$scope.comment.content = '';
 			$scope.isCommenting = false;
 
-			if (postDetailService.post.comments == null) {
-				postDetailService.post.comments = [];
-			}
-			postDetailService.post.comments.splice(0, 0, data);
 
-			if(!postDetailService.post.followed  && postDetailService.post.user._id.$oid != $scope.currentUser._id.$oid){
-				postDetailService.follow();
-			}
+				if (post.comments == null) {
+					post.comments = [];
+				}
+
+				post.comments.splice(0, 0, data);
+
+				// if(!post.followed  && post.user._id.$oid != $scope.currentUser._id.$oid){
+				// 	postDetailService.follow();
+				// }
+
 
 			console.log(data);
 		}).error(function(data, status) {
@@ -31,43 +42,49 @@ app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userServ
 	};
 
 	$scope.deleteComment = function(comment) {
-		// postDetailService.deleteComment(comment);
+		commentService.destroy(comment).success(function() {
+			if ('post_id' in commentService.target_object){
+				var index = postDetailService.post.comments.indexOf(comment);
+				postDetailService.post.comments.splice(index, 1);
+			}
+		});
 	};
 
 	$scope.editComment = function(comment) {
 		$scope.isEditing = true;
-		// postDetailService.editComment(comment).success(function() {
-		// 	comment.isEdit = false;
-		// 	$scope.isEditing = false;
-		// });
-};
+		commentService.update(comment).success(function(data) {
+			comment.isEdit = false;
+			$scope.isEditing = false;
+			angular.copy(data, comment);
+		});
+	};
 
-$scope.loadReply = function(comment) {
-	comment.isLoadingReply  = true;
-	replyService.index(comment).success(function(){
-		comment.isLoadingReply  = false;
-		comment.isRepliesLoaded = true;
-	}).error(function(){
-		comment.isLoadingReply  = false;
-		comment.isRepliesLoaded = false;
-	});
-};
+	$scope.loadReply = function(comment) {
+		comment.isLoadingReply  = true;
+		replyService.index(comment).success(function(){
+			comment.isLoadingReply  = false;
+			comment.isRepliesLoaded = true;
+		}).error(function(){
+			comment.isLoadingReply  = false;
+			comment.isRepliesLoaded = false;
+		});
+	};
 
-$scope.likePost = function(comment){
-	commentService.like($scope.post, comment).success(function(){
-		comment.isLiked = true;
-	});
-};
+	$scope.likeComment = function(comment){
+		commentService.like(comment).success(function(){
+			comment.isLiked = true;
+		});
+	};
 
-$scope.unlikePost = function(comment){
-	commentService.unlike($scope.post, comment).success(function(){
-		comment.isLiked = false;
-	});
-};
+	$scope.unlikeComment = function(comment){
+		commentService.unlike(comment).success(function(){
+			comment.isLiked = false;
+		});
+	};
 
-$scope.getKFirstLikes = function(comment){
+	$scope.getKFirstLikes = function(comment){
 
-	comment.likesHtml = "<p>Đang tải...</p>";
+		comment.likesHtml = "<p>Đang tải...</p>";
 		//Tai du lieu khi chua tai
 		commentService.getKFirstLike(comment, 5).success(function(){
 		//Tao ra html de hien thi nhieu nhat la 5 nguoi va so luong nguoi khac

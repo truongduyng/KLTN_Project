@@ -3,7 +3,7 @@ json._id @notification_change.id
 #Doi tuong tac dong: gom ai tac dong va lam cai gi (comment nao, reply nao)
 json.triggers @notification_change.distinct_triggers_by_user do |trigger|
 	json._id trigger.id
-	json.trigger_user do 
+	json.trigger_user do
 		json._id trigger.trigger_user.id
 		json.username trigger.trigger_user.username
 		json.fullname trigger.trigger_user.fullname
@@ -22,7 +22,11 @@ json.target_object do
 		json.title @notification_change.notification.notificable.title
 		json._id @notification_change.notification.notificable.id
 	end
-	
+
+	if @notification_change.notification.notificable_type == 'ClubPost'
+		json._id @notification_change.notification.notificable.id
+	end
+
 	if @notification_change.notification.notificable_type == 'BussinessRequest'
 		json.name @notification_change.notification.notificable.name
 		json._id @notification_change.notification.notificable.id
@@ -30,12 +34,15 @@ json.target_object do
 
 	if @notification_change.notification.notificable_type == 'Comment'
 		json.content @notification_change.notification.notificable.content
-		json.post_title  @notification_change.notification.notificable.post.title
+
 		#id cua bai post chua comment
-		json._id @notification_change.notification.notificable.post.id
+		if @notification_change.notification.notificable.post
+			json._id @notification_change.notification.notificable.post.id
+			json.post_title  @notification_change.notification.notificable.post.title
+		end
 		json.comment_id @notification_change.notification.notificable.id
 	end
-	
+
 	#Do reply la embedded trong comment nen ko fetch reply trong notificable
 	if @notification_change.notification.notificable_type == 'Reply'
 		json.content @notification_change.notification.reply.content
@@ -48,7 +55,7 @@ json.target_object do
 
 end
 #Loai tac dong
-json.notification_category do 
+json.notification_category do
 	json._id @notification_change.notification_category.id
 	json.name @notification_change.notification_category.name
 	if @notification_change.notification_category.have_template?
@@ -56,8 +63,8 @@ json.notification_category do
 			json.content @notification_change.notification_category.notification_template.content
 		end
 	end
-	
-end 
+
+end
 #1 so thong tin khac
 json.watched @notification_change.watched
 json.is_new @notification_change.is_new

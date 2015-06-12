@@ -1,6 +1,5 @@
 class PostsController < ApplicationController
 	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo, :like, :unlike, :edit, :update, :get_posts_by_current_user, :destroy, :follow, :unfollow]
-	# before_action :authenticate_user!, only: [:destroy]
 	before_action :find_published_post, only: [:like, :unlike, :get_k_first_like, :get_all_likes, :follow, :unfollow]
 	before_action :find_and_check_post_with_user, only: [:add_photo, :destroy]
 	before_action :find_post_for_show, only: [:show]

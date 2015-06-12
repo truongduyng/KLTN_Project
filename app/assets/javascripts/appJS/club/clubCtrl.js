@@ -3,7 +3,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
   $scope.club = club.data;
   $scope.user = currentUser;
 
-  console.log($scope.club, $scope.user);
+  $scope.signedIn = Auth.isAuthenticated;
 
   $scope.club_update = {
     id: $scope.club.id,
@@ -111,6 +111,22 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
           return listPhotos;
         }
       }
+    });
+  };
+
+  $scope.likeclubPost = function(post) {
+    clubpostFtry.like(post).success(function() {
+      post.isLiked = true;
+
+      // if(!post.followed && post.user._id.$oid != $scope.currentUser._id.$oid){
+      //   clubpostFtry.follow();
+      // }
+    });
+  };
+
+  $scope.unlikeclubPost = function(post) {
+    clubpostFtry.unlike(post).success(function() {
+      post.isLiked = false;
     });
   };
 

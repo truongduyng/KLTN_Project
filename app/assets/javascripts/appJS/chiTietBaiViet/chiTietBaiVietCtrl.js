@@ -8,29 +8,6 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 	});
 
 	$scope.post = postDetailService.post;
-	$scope.comments = postDetailService.post.comments;
-	commentService.target_object = {post_id: $scope.post._id.$oid};
-
-	//Update tinh trang user de xet cac quyen them xoa sua
-	$scope.$on('devise:new-session', function(e, user) {
-		angular.copy(user, userService.currentUser);
-		$state.reload();
-	});
-
-	$scope.$on('devise:new-registration', function(e, user) {
-		angular.copy(user, userService.currentUser);
-		$state.reload();
-	});
-
-	$scope.$on('devise:login', function(e, user) {
-		angular.copy(user, userService.currentUser);
-		$state.reload();
-	});
-
-	$scope.$on('devise:logout', function(e, user) {
-		angular.copy({}, userService.currentUser);
-	});
-
 
 	$scope.likePost = function() {
 		postDetailService.like().success(function() {
@@ -155,9 +132,6 @@ app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interva
 
 	}
 	]);
-
-
-
 
 app.controller('showAllLikesCtrl', ['$scope', 'postDetailService', function($scope, postDetailService) {
 

@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+
 	before_action :authenticate_user!, only: [:create, :update, :destroy, :like, :unlike]
 	before_action :find_comment, only: [:destroy, :update]
 	before_action :find_comment_for_like_and_unlike, only: [:like, :unlike,:get_k_first_like, :get_all_likes]
@@ -8,7 +9,7 @@ class CommentsController < ApplicationController
 
 	def create
 		begin
-			# byebug
+			byebug
 			@comment = Comment.new(comment_params[:comment])
 			@comment.user = current_user
 
@@ -17,9 +18,9 @@ class CommentsController < ApplicationController
 				@comment.post_id = target_object.id
 			end
 
-			if comment_params[:target_object].has_key?(:clubpost_id)
-				target_object = ClubPost.find(comment_params[:target_object][:clubpost_id])
-				@comment.clubpost_id = target_object.id
+			if comment_params[:target_object].has_key?(:club_post_id)
+				target_object = ClubPost.find(comment_params[:target_object][:club_post_id])
+				@comment.club_post_id = target_object.id
 			end
 
 			if @comment.save
@@ -50,7 +51,8 @@ class CommentsController < ApplicationController
 
 
 	def update
-		if @comment.update_attributes(comment_params)
+		byebug
+		if @comment.update_attributes(comment_params[:comment])
 			render 'show.json.jbuilder', status: :ok
 		else
 			render json: @comment.errors, status: :bad_request
@@ -60,27 +62,36 @@ class CommentsController < ApplicationController
 
 	def destroy
 		#Neu co notification ma chua dc xem (trong truong lo binh luan xong xoa lien) thi xoa notification_change do
-		post = @comment.post
+		byebug
+		if @comment.post
+			target_object = @comment.post
+		end
+		if @comment.clubpost
+			target_object = @comment.clubpost
+		end
+
 		#Khi xoa binh luan thi xoa luon cac notification lien quan den binh luan cua nguoi do (vi target_object la comment ko the tim thay)
 		notification = Notification.all_of(target_user_id: current_user.id, notificable_id: @comment.id).first
+
 		if notification
 			notification.notification_changes.destroy_all
 			notification.destroy
 		end
 
-		#Gui thong bao
-		if post.user == current_user
-			#TH1: Neu nguoi comment la chu bai post thi xoa nhung thong bao dc gui den cac followers neu no chua dc load realtime
-			target_user_ids = post.follower_ids.clone
-			NotificationChange.delete_notification_changes(target_user_ids, post, current_user, @comment, NotificationCategory.binh_luan_cua_chu_bai_viet)
+		target_user_ids = target_object.follower_ids.clone
+		if target_object.user == current_user
+			#TH1: Neu nguoi comment la chu bai target_object thi xoa nhung thong bao dc gui den cac followers neu no chua dc load realtime
+
+			NotificationChange.delete_notification_changes(target_user_ids, target_object, current_user, @comment, NotificationCategory.binh_luan_cua_chu_bai_viet)
 		else
 			#TH2: Xoa cac thong bao dc gui toi followers duoi dang "binh luan bai viet ban dang theo doi" va
 			#xoa thong bao gui toi chu bai viet duoi dang "binh luan len bai viet cua ban"
-			target_user_ids = post.follower_ids.clone
 			target_user_ids.delete(current_user.id)
-			NotificationChange.delete_notification_changes(target_user_ids, post, current_user, @comment, NotificationCategory.binh_luan_bai_viet_ban_dang_theo_doi)
-			NotificationChange.delete_notification_changes([post.user.id], post,  current_user, @comment, NotificationCategory.binh_luan_bai_viet)
+			NotificationChange.delete_notification_changes(target_user_ids, target_object, current_user, @comment, NotificationCategory.binh_luan_bai_viet_ban_dang_theo_doi)
+
+			NotificationChange.delete_notification_changes([target_object.user.id], target_object, current_user, @comment, NotificationCategory.binh_luan_bai_viet)
 		end
+
 		#Xoa binh luan
 		@comment.destroy
 		render nothing: true, status: :ok, content_type: 'application/json'
@@ -130,13 +141,13 @@ class CommentsController < ApplicationController
 
 	private
 	def comment_params
-		params.permit(:id, :comment => [:content], :target_object => [:post_id, :clubpost_id])
+		params.permit(:id, :comment => [:content], :target_object => [:post_id, :club_post_id])
 	end
 
 	#tim comment cho  xoa sua
 	def find_comment
 		begin
-			@comment = Comment.find(params[:id])
+			@comment = Comment.find(comment_params[:id])
 			if @comment.user != current_user
 				render nothing: true, status: :not_found, content_type: 'application/json'
 			end
@@ -150,7 +161,7 @@ class CommentsController < ApplicationController
 	#tim comment cho like va unlike
 	def find_comment_for_like_and_unlike
 		begin
-			@comment = Comment.find(params[:id])
+			@comment = Comment.find(comment_params[:id])
 		rescue Mongoid::Errors::DocumentNotFound
 			render nothing: true, status: :not_found, content_type: 'application/json'
 		end

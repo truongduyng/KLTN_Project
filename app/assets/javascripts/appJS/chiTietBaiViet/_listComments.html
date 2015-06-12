@@ -12,7 +12,7 @@
       </textarea>
     </div>
 
-    <button data-ng-disabled="isCommenting || !comment.content" ng-click="addComment()" style="height:32px; width:10%;" class="btn btn-primary pull-right"> Gửi </button>
+    <button data-ng-disabled="isCommenting || !comment.content" ng-click="addComment(post)" style="height:32px; width:10%;" class="btn btn-primary pull-right"> Gửi </button>
     <div class="clearfix"></div>
 
   </div>
@@ -20,7 +20,7 @@
 
 
   <!-- BEGIN COMMENT -->
-  <div id="{{comment._id.$oid}}" class="media" ng-repeat-start="comment in comments | orderBy: '-created_at'">
+  <div id="{{comment._id.$oid}}" class="media" ng-repeat-start="comment in post.comments | orderBy: '-created_at'">
     <div class="media-left">
       <a href="#">
         <img class="img-circle" class="media-object" ng-src="{{comment.user.avatar.url | logo}}" fallback-src="sportaLogo"
@@ -45,9 +45,9 @@
 
           <div class="comment-likes">
 
-            <span data-toggle="tooltip" data-original-title="Thích" ng-hide="comment.isLiked" class="fa fa-thumbs-up like-icon" ng-click="likePost(comment)">
+            <span data-toggle="tooltip" data-original-title="Thích" ng-hide="comment.isLiked" class="fa fa-thumbs-up like-icon" ng-click="likeComment(comment)">
             </span>
-            <span data-toggle="tooltip" data-original-title="Bỏ thích" ng-show="comment.isLiked" class="fa fa-thumbs-down unlike-icon" ng-click="unlikePost(comment)">
+            <span data-toggle="tooltip" data-original-title="Bỏ thích" ng-show="comment.isLiked" class="fa fa-thumbs-down unlike-icon" ng-click="unlikeComment(comment)">
             </span>
             <a ng-click="showAllLikes(comment)" ng-init="comment.likesHtml = '<p>Đang tải...</p>';" ng-mouseenter="getKFirstLikes(comment)" id="list-people-like" data-target="#myModal2" tooltip-html-unsafe="{{comment.likesHtml}}" style="cursor: pointer; margin-left: 10px;">{{comment.like_count}} người thích</a>
 

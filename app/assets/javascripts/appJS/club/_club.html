@@ -70,12 +70,12 @@
               <p>{{post.content}}</p>
             </div>
             <div class="detail-post-images" style="margin-top: 20px;">
-            <a ng-click="showImage(photo, post.photos)" ng-repeat="photo in post.photos"><img ng-src="{{photo.url}}" height="50px"></a>
+              <a ng-click="showImage(photo, post.photos)" ng-repeat="photo in post.photos"><img ng-src="{{photo.url}}" height="50px"></a>
             </div>
 
             <div class="likes">
-              <span tooltip="Thích" ng-hide="post.isLiked" class="fa fa-thumbs-up like-icon" ng-click="likePost()"></span>
-              <span tooltip="Bỏ thích" ng-show="post.isLiked" class="fa fa-thumbs-down unlike-icon" ng-click="unlikePost()">
+            <span tooltip="Thích" ng-hide="post.isLiked" class="fa fa-thumbs-up like-icon" ng-click="likeclubPost(post)"></span>
+              <span tooltip="Bỏ thích" ng-show="post.isLiked" class="fa fa-thumbs-down unlike-icon" ng-click="unlikeclubPost(post)">
               </span>
 
               <a  ng-mouseenter="getKFirstLikes()" tooltip-html-unsafe="{{likesHtml}}" ng-click="showAllLikes()" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>

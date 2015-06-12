@@ -9,5 +9,13 @@ app.factory('clubpostFtry', ['$http', function($http) {
       });
   };
 
+  o.like = function(post){
+    return $http.put("/club_posts/"+ post._id.$oid +"/like.json");
+  }
+
+  o.unlike = function(post){
+    return $http.put("/club_posts/"+ post._id.$oid +"/unlike.json");
+  }
+
   return o;
 }])

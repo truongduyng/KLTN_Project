@@ -6,7 +6,7 @@ class Comment
 
 	belongs_to :post
 	belongs_to :user
-	belongs_to :clubpost
+	belongs_to :club_post
 	embeds_many :likes, as: :likeable
 	embeds_many :replies
 	#Thong bao: thuoc ve 1 thong bao nao do, va bi chi phooi boi nhieu loai tac dong tao ra nhieu thong bao
