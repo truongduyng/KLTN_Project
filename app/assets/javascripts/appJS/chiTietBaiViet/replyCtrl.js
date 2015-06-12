@@ -69,7 +69,7 @@ app.controller('replyCtrl', ['$scope', 'replyService', '$modal',
 		///Hien thi modal show like cua post
 		$scope.showAllLikes = function(comment, reply) {
 			var modalInstance = $modal.open({
-				templateUrl: 'showAllLikesModal.html',
+				templateUrl: 'appJS/all_likes/all_likes_modal.html',
 				controller: 'showAllLikesReplyCtrl',
 				size: '',
 				resolve: {

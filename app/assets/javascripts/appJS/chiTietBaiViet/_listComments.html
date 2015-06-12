@@ -49,7 +49,7 @@
             </span>
             <span data-toggle="tooltip" data-original-title="Bỏ thích" ng-show="comment.isLiked" class="fa fa-thumbs-down unlike-icon" ng-click="unlikeComment(comment)">
             </span>
-            <a ng-click="showAllLikes(comment)" ng-init="comment.likesHtml = '<p>Đang tải...</p>';" ng-mouseenter="getKFirstLikes(comment)" id="list-people-like" data-target="#myModal2" tooltip-html-unsafe="{{comment.likesHtml}}" style="cursor: pointer; margin-left: 10px;">{{comment.like_count}} người thích</a>
+            <a ng-click="showAllLikes(comment)" ng-init="comment.likesHtml = '<p>Đang tải...</p>';" ng-mouseenter="getKFirstLikes(comment)" tooltip-html-unsafe="{{comment.likesHtml}}" style="cursor: pointer; margin-left: 10px;">{{comment.like_count}} người thích</a>
 
             <button ng-init="comment.isReply = false" ng-click="comment.isReply =!comment.isReply" class="btn btn-success">Trả lời</button>
             <small class="pull-right" style="margin-top: 7px; margin-right:10px; ">{{comment.updated_at | timeago}}</small>
@@ -93,9 +93,4 @@
 
 <script type="text/javascript">
   autosize(document.querySelectorAll('textarea'));
-  $(document).ready(function() {
-   $("#list-people-like").click(function() {
-     $('#myModal2').modal('toggle');
-   });
- });
 </script>

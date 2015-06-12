@@ -1,6 +1,6 @@
 class ClubPostsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :add_photo, :like, :unlike, :destroy, :follow, :unfollow]
-  before_action :find_clubpost, only: [:add_photo, :like, :unlike]
+  before_action :find_clubpost, only: [:add_photo, :like, :unlike, :get_all_likes, :get_k_first_like]
   before_action :is_member?, only: [:create]
 
   def show
@@ -72,6 +72,21 @@ class ClubPostsController < ApplicationController
     else
       render nothing: true, status: :bad_request, content_type: 'application/json'
     end
+  end
+
+  def get_k_first_like
+    if params.has_key?(:number)
+      @likes = @clubpost.likes.limit(params[:number].to_i).to_a
+      render 'k_first_like.json.jbuilder', status: :ok
+    else
+      render nothing: true, status: :bad_request, content_type: 'application/json'
+    end
+  end
+
+
+  def get_all_likes
+    @likes = @clubpost.likes.all
+    render 'posts/get_all_likes.json.jbuilder', status: :ok
   end
 
   private

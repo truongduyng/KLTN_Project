@@ -1,6 +1,7 @@
 app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash', 'Auth', '$state', '$modal', 'FileUploader','$cookies','clubpostFtry', 'currentUser', function($scope, $modal, club, clubs, $http, Flash, Auth, $state, $modal, FileUploader, $cookies, clubpostFtry, currentUser){
 
   $scope.club = club.data;
+  console.log(club.data);
   $scope.user = currentUser;
 
   $scope.signedIn = Auth.isAuthenticated;
@@ -100,7 +101,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
 
   $scope.showImage = function(photo, listPhotos) {
     var modalInstance = $modal.open({
-      templateUrl: 'showImageModal.html',
+      templateUrl: 'appJS/show_image_modal/show_image_modal.html',
       controller: 'showImageModalCtrl',
       size: 'lg',
       resolve: {
@@ -127,6 +128,41 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash',
   $scope.unlikeclubPost = function(post) {
     clubpostFtry.unlike(post).success(function() {
       post.isLiked = false;
+    });
+  };
+
+  $scope.likesHtml = "<p>Đang tải...</p>";
+  $scope.getKFirstLikes = function(post){
+    $scope.likesHtml = "<p>Đang tải...</p>";
+    //Tai du lieu khi chua tai
+    clubpostFtry.getKFirstLikes(post,5).success(function(data){
+      //Tao ra html de hien thi nhieu nhat la 5 nguoi va so luong nguoi khac
+      var likesHtmlTmp ="";
+      data.likes.forEach(function(like){
+        var p = "<p class='text-tooltip'>" + like.user.username  + "</p>";
+        likesHtmlTmp = likesHtmlTmp + p;
+      });
+
+      if(data.number_of_remains >= 1){
+        likesHtmlTmp = likesHtmlTmp + 'và ' +   data.number_of_remains + " người khác";
+      }
+      $scope.likesHtml = likesHtmlTmp;
+    });
+  };
+
+  $scope.showAllLikes = function(club_post) {
+    var modalInstance = $modal.open({
+      templateUrl: 'appJS/all_likes/all_likes_modal.html',
+      controller: 'alllikesCtrl',
+      size: '',
+      resolve: {
+        service_get_like: function(){
+          return clubpostFtry;
+        },
+        object_get_like: function(){
+          return club_post;
+        }
+      }
     });
   };
 
@@ -346,34 +382,3 @@ app.controller('lastadminCtrl',['$scope', '$modalInstance', '$http', 'club_id', 
     $modalInstance.dismiss('cancel');
   };
 }]);
-
-
-app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interval',
-  function($scope, listPhotos, photo, $interval) {
-
-    $scope.listPhotos = listPhotos;
-    $scope.photo = photo;
-    var currentIndex = $scope.listPhotos.indexOf(photo);
-
-    $scope.previous = function() {
-      console.log("in previous");
-      if (currentIndex >= 1) {
-        currentIndex--;
-      } else {
-        currentIndex = $scope.listPhotos.length - 1;
-      }
-      $scope.photo = $scope.listPhotos[currentIndex];
-    };
-
-    $scope.next = function() {
-
-      if (currentIndex < $scope.listPhotos.length - 1) {
-        currentIndex++;
-      } else {
-        currentIndex = 0;
-      }
-      $scope.photo = $scope.listPhotos[currentIndex];
-    };
-
-  }
-  ]);

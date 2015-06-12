@@ -28,7 +28,7 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 
 	$scope.showImage = function(photo) {
 		var modalInstance = $modal.open({
-			templateUrl: 'showImageModal.html',
+			templateUrl: 'appJS/show_image_modal/show_image_modal.html',
 			controller: 'showImageModalCtrl',
 			size: 'lg',
 			resolve: {
@@ -64,9 +64,17 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 	///Hien thi modal show like cua post
 	$scope.showAllLikes = function() {
 		var modalInstance = $modal.open({
-			templateUrl: 'showAllLikesModal.html',
-			controller: 'showAllLikesCtrl',
+			templateUrl: 'appJS/all_likes/all_likes_modal.html',
+			controller: 'alllikesCtrl',
 			size: '',
+			resolve: {
+				service_get_like: function(){
+					return postDetailService;
+				},
+				object_get_like: function(){
+					return $scope.post;
+				}
+			}
 		});
 	};
 
@@ -101,61 +109,3 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 		postDetailService.unfollow();
 	};
 }]);
-
-
-app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interval',
-	function($scope, listPhotos, photo, $interval) {
-
-		$scope.listPhotos = listPhotos;
-		$scope.photo = photo;
-		var currentIndex = $scope.listPhotos.indexOf(photo);
-
-		$scope.previous = function() {
-			console.log("in previous");
-			if (currentIndex >= 1) {
-				currentIndex--;
-			} else {
-				currentIndex = $scope.listPhotos.length - 1;
-			}
-			$scope.photo = $scope.listPhotos[currentIndex];
-		};
-
-		$scope.next = function() {
-
-			if (currentIndex < $scope.listPhotos.length - 1) {
-				currentIndex++;
-			} else {
-				currentIndex = 0;
-			}
-			$scope.photo = $scope.listPhotos[currentIndex];
-		};
-
-	}
-	]);
-
-app.controller('showAllLikesCtrl', ['$scope', 'postDetailService', function($scope, postDetailService) {
-
-	$scope.isLoading = true;
-	postDetailService.getAllLikes().success(function(data){
-		$scope.allLikes = data;
-		$scope.isLoading = false;
-
-	}).error(function(data){
-		$scope.isLoading = false;
-	});
-}]);
-
-
-//Xu ly truong hop vao chi tiet bai viet ma bai viet do chua dc duyet hay chua dc publish
-//Lay 5 ket qua dau tien va so luong
-//Dugn filter dua vao danh sach likes, so luong like con lai va chuyen no thanh html de tai su dung code
-//De hien thi tat ca like thi them thuoc tinh all like vao post va load no trong resolve cua modal
-//Lam directive cho onerror cua anh va chuyen no thanh anh placeholder tuong ung (avater thi thanh logo cua sporta, anh khac hien thi anh bi hong ma dep)
-//tooltip dismiss after display
-
-
-//HIen thi tat ca like
-//Hien thi times ago
-//Cho phep chi nguoi so huu truy cap
-//Cho phep chinh sua
-//Hien thi dung phan khi chua publish

@@ -70,7 +70,7 @@
               <p>{{post.content}}</p>
             </div>
             <div class="detail-post-images" style="margin-top: 20px;">
-              <a ng-click="showImage(photo, post.photos)" ng-repeat="photo in post.photos"><img ng-src="{{photo.url}}" height="50px"></a>
+              <a ng-click="showImage(photo, post.photos)" ng-repeat="photo in post.photos"><img ng-src="{{photo.image.url}}" height="50px"></a>
             </div>
 
             <div class="likes">
@@ -78,9 +78,10 @@
               <span tooltip="Bỏ thích" ng-show="post.isLiked" class="fa fa-thumbs-down unlike-icon" ng-click="unlikeclubPost(post)">
               </span>
 
-              <a  ng-mouseenter="getKFirstLikes()" tooltip-html-unsafe="{{likesHtml}}" ng-click="showAllLikes()" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>
+              <a ng-mouseenter="getKFirstLikes(post)" tooltip-html-unsafe="{{likesHtml}}" ng-click="showAllLikes(post)" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>
 
             </div>
+
             <section id="listComments" ng-include="'appJS/chiTietBaiViet/_listComments.html'"></section>
 
           </div>
@@ -165,18 +166,6 @@
 </div>
 </div>
 </section>
-
-<script type="text/ng-template" id="showImageModal.html">
-  <div class="modal-body my-modal-image">
-    <img ng-src="{{photo.url}}" width="100%" height="100%">
-
-    <span left-arrow-pressed="previous()" ng-click="previous()" u="arrowleft" class="jssora02l" style="top: 50%; left: 8px;">
-    </span>
-
-    <span right-arrow-pressed="next()"  ng-click="next()" u="arrowright" class="jssora02r" style="top: 50%; right: 8px">
-    </span>
-  </div>
-</script>
 
 <script type="text/javascript">
   autosize(document.querySelectorAll('textarea'));

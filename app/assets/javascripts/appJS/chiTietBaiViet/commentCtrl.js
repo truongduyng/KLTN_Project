@@ -106,14 +106,14 @@ app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userServ
 	///Hien thi modal show like cua post
 	$scope.showAllLikes = function(comment) {
 		var modalInstance = $modal.open({
-			templateUrl: 'showAllLikesModal.html',
-			controller: 'showAllLikesCommentCtrl',
+			templateUrl: 'appJS/all_likes/all_likes_modal.html',
+			controller: 'alllikesCtrl',
 			size: '',
 			resolve: {
-				post: function(){
-					return $scope.post;
+				service_get_like: function(){
+					return commentService;
 				},
-				comment: function(){
+				object_get_like: function(){
 					return comment;
 				}
 			}
@@ -122,15 +122,3 @@ app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userServ
 
 }]);
 
-
-app.controller('showAllLikesCommentCtrl', ['$scope', 'post', 'comment', 'commentService'
-	, function($scope, post, comment, commentService) {
-		$scope.isLoading = true;
-		commentService.getAllLikes(post, comment).success(function(data){
-			$scope.allLikes = data;
-			$scope.isLoading = false;
-
-		}).error(function(data){
-			$scope.isLoading = false;
-		});
-	}]);

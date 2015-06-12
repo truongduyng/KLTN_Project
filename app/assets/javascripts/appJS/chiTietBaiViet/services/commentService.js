@@ -56,7 +56,6 @@ app.factory('commentService', ['$http', function($http) {
 
 
 	o.getAllLikes = function(comment){
-
 		var id = comment._id.$oid;
 		var url = '/comments/' + id + "/get_all_likes.json";
 		return $http.get(url);

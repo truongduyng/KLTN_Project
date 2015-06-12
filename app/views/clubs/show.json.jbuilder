@@ -20,8 +20,12 @@ json.clubposts @club.club_posts.desc(:updated_at) do |post|
 
   json._id post.id
   json.content post.content
+  json.like_count post.likes.count
+
   json.photos post.photos do |photo|
-    json.url photo.image.url
+    json.image do
+      json.url photo.image.url
+    end
   end
 
   json.user do

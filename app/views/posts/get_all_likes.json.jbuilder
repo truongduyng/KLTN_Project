@@ -1,10 +1,10 @@
 json.array! @likes do |like|
 	json._id like.id
-	json.user do 
+	json.user do
 		json._id like.user.id
 		json.avatar do
 			json.url like.user.avatar.url
 		end
-		json.username like.user.username
+		json.fullname like.user.fullname
 	end
 end

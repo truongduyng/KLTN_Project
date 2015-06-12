@@ -75,70 +75,9 @@
 <!-- De cho chua khoang trong duoi day -->
 <div style="margin-bottom: 100px;"></div>
 
-<!-- BEGIN MODAL HIEN THI HINH ANH -->
-<script type="text/ng-template" id="showImageModal.html">
-  <div class="modal-body my-modal-image">
-    <img ng-src="{{photo.image.url}}" width="100%" height="100%">
-
-
-    <span left-arrow-pressed="previous()" ng-click="previous()" u="arrowleft" class="jssora02l" style="top: 50%; left: 8px;">
-    </span>
-
-    <span right-arrow-pressed="next()"  ng-click="next()" u="arrowright" class="jssora02r" style="top: 50%; right: 8px">
-    </span>
-  </div>
-</script>
-<!-- BEGIN MODAL HIEN THI HINH ANH -->
-
-
-<!-- TAI SU DUNG CHO COMMENT REPLIES -->
-<!-- BEGIN MODAL HIEN THI DANH SACH NGUOI THICH -->
-<script type="text/ng-template" id="showAllLikesModal.html">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="$close()">
-      &times;
-    </button>
-    <h4 class="modal-title" id="myModalLabel">
-      Danh sách thành viên thích bài viết
-    </h4>
-  </div>
-  <div class="modal-body">
-    <span ng-show="isLoading" style="display: block;margin: 10px auto; width:30px;">
-      <img width="22px" height="22px" src="/assets/application/placeholder/spinner_loading.gif">
-    </span>
-    <h5 style="text-align: center;" ng-if="allLikes.length == 0">Chưa có ai thích bài viết này</h5>
-    <div class="list-person-like" style="max-height:500px; overflow-y: auto;">
-      <div  class="person-like" ng-repeat="like in allLikes">
-        <a ui-sref="trangCaNhan({username:like.user.username})">
-          <img src="{{like.user.avatar.url | logo}}" class="pull-left img-circle" width="64px" height="64px">
-          <div class="pull-left person-info">
-            <strong>{{like.user | displayName}}</strong>
-          </div>
-        </a>
-
-      </div>
-
-    </div>
-
-  </div>
-</script>
-<!-- END MODAL HIEN THI DANH SACH NGUOI THICH -->
-
-
-
-</div>
-
 <script type="text/javascript">
   autosize(document.querySelectorAll('textarea'));
-
-
-  $(document).ready(function() {
-   $("#list-people-like").click(function() {
-     $('#myModal2').modal('toggle');
-   });
- });
 </script>
-
 
 <style type="text/css">
   .media-body {

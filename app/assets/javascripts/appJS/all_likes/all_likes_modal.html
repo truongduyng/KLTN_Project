@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="$close()">
+    &times;
+  </button>
+  <h4 class="modal-title" id="myModalLabel">
+    Danh sách thành viên thích bài viết
+  </h4>
+</div>
+<div class="modal-body">
+  <span ng-show="isLoading" style="display: block;margin: 10px auto; width:30px;">
+    <img width="22px" height="22px" src="/assets/application/placeholder/spinner_loading.gif">
+  </span>
+  <h5 style="text-align: center;" ng-if="allLikes.length == 0">Chưa có ai thích bài viết này</h5>
+  <div class="list-person-like" style="max-height:500px; overflow-y: auto;">
+    <div  class="person-like" ng-repeat="like in allLikes">
+      <a ui-sref="trangCaNhan({username:like.user.username})">
+        <img ng-src="{{like.user.avatar.url | logo}}" class="pull-left img-circle" width="64px" height="64px">
+        <div class="pull-left person-info" style="margin-left: 20px">
+          <strong>{{like.user.fullname}}</strong>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
