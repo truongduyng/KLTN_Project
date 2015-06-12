@@ -1,7 +1,11 @@
 app.factory('commentService', ['$http', function($http) {
-	var o = {};
+	var o = {
+		target_object:{}
+	};
 
-	o.create = function(comment_param) {
+	o.create = function(comment) {
+		comment_param = {comment: comment, target_object: o.target_object};
+		console.log(comment_param);
 		return $http.post("/comments.json", comment_param);
 	};
 

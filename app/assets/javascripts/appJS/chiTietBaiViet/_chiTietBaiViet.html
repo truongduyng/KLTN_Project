@@ -59,7 +59,8 @@
               <i tooltip="Thêm vào danh mục yêu thích" ng-hide="post.isFavorited" ng-click="favorite()" class="fa fa-heart pull-right" style="color: red;"></i>
               <i tooltip="Xóa khỏi danh mục yêu thích" ng-show="post.isFavorited" ng-click="unfavorite()" class="fa fa-heart-o pull-right"></i>
             </div>
-            <section id="listComments" ng-include="'appJS/chiTietBaiViet/_listComments.html'"></section>
+            <section id="listComments" ng-include="'appJS/chiTietBaiViet/_listComments.html'">
+            </section>
           </div>
           <!-- END HIEN THI CHO BAI VIET DUOC PUBLISH, CHO PHEP LIKE, COMMENT, ... -->
 

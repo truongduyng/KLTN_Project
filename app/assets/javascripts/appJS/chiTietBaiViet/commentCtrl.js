@@ -1,30 +1,36 @@
 app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userService', 'replyService', 'commentService', '$modal', function($scope, postDetailService, Flash, userService, replyService, commentService, $modal) {
 
 	$scope.currentUser = userService.currentUser;
-	$scope.comments = postDetailService.post.comments;
 	$scope.comment = {};
 	$scope.isCommenting = false;
 	$scope.isEditing = false;
 
 	$scope.addComment = function() {
 		$scope.isCommenting = true;
-		// postDetailService.addComment($scope.comment)
-		// .success(function() {
-		// 	$scope.comment.content = '';
-		// 	$scope.isCommenting = false;
-		// 	//Khi comment len post mac dinh theo doi post do neu no chua dc followed = false
-		// 	if(!$scope.post.followed  && $scope.post.user._id.$oid != $scope.currentUser._id.$oid){
-		// 		postDetailService.follow();
-		// 	}
-		// }).error(function(data, status) {
-		// 	$scope.isCommenting = false;
-		// 	if (status == 401) {
-		// 		$scope.$emit("onRequireLogin");
-		// 	}
-		// });
-};
+		commentService.create($scope.comment).success(function(data){
 
-$scope.deleteComment = function(comment) {
+			$scope.comment.content = '';
+			$scope.isCommenting = false;
+
+			if (postDetailService.post.comments == null) {
+				postDetailService.post.comments = [];
+			}
+			postDetailService.post.comments.splice(0, 0, data);
+
+			if(!postDetailService.post.followed  && postDetailService.post.user._id.$oid != $scope.currentUser._id.$oid){
+				postDetailService.follow();
+			}
+
+			console.log(data);
+		}).error(function(data, status) {
+			$scope.isCommenting = false;
+			if (status == 401) {
+				$scope.$emit("onRequireLogin");
+			}
+		});
+	};
+
+	$scope.deleteComment = function(comment) {
 		// postDetailService.deleteComment(comment);
 	};
 

@@ -37,8 +37,8 @@ class User
 
   has_and_belongs_to_many :clubs, class_name: 'Club'
   has_many :clubposts, class_name: 'ClubPost', inverse_of: :user
-  has_and_belongs_to_many :followed_clubposts, class_name: 'ClubPost', inverse_of: :followers_clubpost
-  #1 nguoi co the chia se nhieu venues
+  has_and_belongs_to_many :followed_clubposts, class_name: 'ClubPost', inverse_of: :followers
+
   has_many :venues
 
   #My field

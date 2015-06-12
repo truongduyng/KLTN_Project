@@ -1,4 +1,4 @@
-app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'userService', '$state', '$modal', '$rootScope','Auth', function($scope, postDetailService, Flash, userService, $state, $modal, $rootScope, Auth) {
+app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'userService', '$state', '$modal', '$rootScope','Auth', 'commentService', function($scope, postDetailService, Flash, userService, $state, $modal, $rootScope, Auth, commentService) {
 
 	$scope.signedIn = Auth.isAuthenticated;
 
@@ -8,6 +8,8 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 	});
 
 	$scope.post = postDetailService.post;
+	$scope.comments = postDetailService.post.comments;
+	commentService.target_object = {post_id: $scope.post._id.$oid};
 
 	//Update tinh trang user de xet cac quyen them xoa sua
 	$scope.$on('devise:new-session', function(e, user) {

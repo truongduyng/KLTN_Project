@@ -5,7 +5,7 @@ class ClubPost
 
   field :content, type: String
 
-  has_and_belongs_to_many :followers_clubpost, class_name: 'User', inverse_of: :followed_clubposts
+  has_and_belongs_to_many :followers, class_name: 'User', inverse_of: :followed_clubposts
   embeds_many :photos, as: :photoable
   has_many :comments, dependent: :destroy
   embeds_many :likes, as: :likeable

@@ -2,38 +2,50 @@ class CommentsController < ApplicationController
 	before_action :authenticate_user!, only: [:create, :update, :destroy, :like, :unlike]
 	before_action :find_comment, only: [:destroy, :update]
 	before_action :find_comment_for_like_and_unlike, only: [:like, :unlike,:get_k_first_like, :get_all_likes]
-	before_action :check_post_published, only: [:create]
 
 	def show
 	end
 
-
 	def create
-		@comment = Comment.new(comment_params)
-		@comment.user = current_user
-		@comment.post_id = params[:post_id]
-		if @comment.save
-			#Tao thong bao
-			post = @comment.post
-			if post.user == current_user
-				#TH1: Neu nguoi do tu comment len bai post cua nguoi do, thi chi gui den nhung nguoi theo doi vs loai "trung nguyen huu cung binh luan len bai viet .. cua anh ay"
-				target_user_ids = post.follower_ids.clone
-				NotificationChange.create_notifications(target_user_ids, post, current_user, @comment, NotificationCategory.binh_luan_cua_chu_bai_viet)
-			else
-				#TH2: Neu ai do comment len bai post cua nguoi do, thi
-				#gui thong bao den tat ca nguoi theo doi, nguoi chu bai viet , tuy
-				#nhien ko gui thong bao den nguoi comment
-				#B1: Gui thong bao den cac nguoi theo doi vs loai "ai do binh luan len bai viet ban dang theo doi"
-				target_user_ids = post.follower_ids.clone
-				target_user_ids.delete(current_user.id)
-				NotificationChange.create_notifications(target_user_ids, post, current_user, @comment, NotificationCategory.binh_luan_bai_viet_ban_dang_theo_doi)
-				#B2: Gui thong bao den chu bai viet vs loai "ai do binh luan len bai viet cua ban"
-				NotificationChange.create_notifications([post.user.id], post,  current_user, @comment, NotificationCategory.binh_luan_bai_viet)
+		begin
+			# byebug
+			@comment = Comment.new(comment_params[:comment])
+			@comment.user = current_user
+
+			if comment_params[:target_object].has_key?(:post_id)
+				target_object = Post.find(comment_params[:target_object][:post_id])
+				@comment.post_id = target_object.id
 			end
-			render 'show.json.jbuilder', status: :created
-		else
-			render json: @comment.errors, status: :bad_request
+
+			if comment_params[:target_object].has_key?(:clubpost_id)
+				target_object = ClubPost.find(comment_params[:target_object][:clubpost_id])
+				@comment.clubpost_id = target_object.id
+			end
+
+			if @comment.save
+				#Tao thong bao
+				target_user_ids = target_object.follower_ids.clone
+				if target_object.user == current_user
+					#TH1: Neu nguoi do tu comment len bai post cua nguoi do, thi chi gui den nhung nguoi theo doi vs loai "trung nguyen huu cung binh luan len bai viet .. cua anh ay"
+					NotificationChange.create_notifications(target_user_ids, target_object, current_user, @comment, NotificationCategory.binh_luan_cua_chu_bai_viet)
+				else
+					#TH2: Neu ai do comment len bai post cua nguoi do, thi
+					#gui thong bao den tat ca nguoi theo doi, nguoi chu bai viet , tuy
+					#nhien ko gui thong bao den nguoi comment
+					#B1: Gui thong bao den cac nguoi theo doi vs loai "ai do binh luan len bai viet ban dang theo doi"
+					target_user_ids.delete(current_user.id)
+					NotificationChange.create_notifications(target_user_ids, target_object, current_user, @comment, NotificationCategory.binh_luan_bai_viet_ban_dang_theo_doi)
+					#B2: Gui thong bao den chu bai viet vs loai "ai do binh luan len bai viet cua ban"
+					NotificationChange.create_notifications([target_object.user.id], target_object,  current_user, @comment, NotificationCategory.binh_luan_bai_viet)
+				end
+				render 'show.json.jbuilder', status: :created
+			else
+				render json: @comment.errors, status: :bad_request
+			end
+		rescue Exception => e
+			render nothing: true, status: :not_found
 		end
+
 	end
 
 
@@ -118,7 +130,7 @@ class CommentsController < ApplicationController
 
 	private
 	def comment_params
-		params.require(:comment).permit(:content, :post_id, :clubpost_id)
+		params.permit(:id, :comment => [:content], :target_object => [:post_id, :clubpost_id])
 	end
 
 	#tim comment cho  xoa sua
