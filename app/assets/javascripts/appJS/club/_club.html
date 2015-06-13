@@ -3,8 +3,8 @@
     <img class="coverimg" ng-src="{{club.cover_image}}" alt="anh dai dien">
     <h3 class="club_name">{{club.name}}</h3>
     <button class="btn btn-default leave_club_btn" ng-click="leave_club()" >Rời CLB</button>
-    <i ng-show="current_user_is_admin()" class="fa fa-picture-o fa-2x cover-icon" nv-file-select uploader="uploader" ng-click="choose_cover()"></i>
-    <input id="choosecover" type="file" nv-file-select uploader="uploader"/ style="display:none;">
+    <i ng-show="current_user_is_admin()" class="fa fa-picture-o fa-2x cover-icon" ng-click="choose_cover()"></i>
+    <input id="choosecover" type="file" nv-file-select uploader="uploader" style="display:none;">
   </div>
 </div>
 
@@ -19,71 +19,7 @@
             <i class="fa fa-pencil"></i> Thảo luận
           </tab-heading>
 
-          <div class="write_status margintop10">
-
-            <form novalidate name="postForm" class="post-form ng-pristine ng-valid">
-
-              <div class="post-form-content">
-                <textarea style="border:none;padding: 6px 12px;display:block;" placeholder="Nội dung bài viết" ng-model="clubpost.content" required></textarea>
-
-                <div  class="post-form-images">
-                  <span class="image" ng-repeat="photo in uploader_clubpost.queue">
-                    <button ng-hide="photo.isUploading" ng-click="photo.remove()" aria-hidden="true" class="close" >&times;</button>
-                    <div ng-thumb="{file: photo._file, height: 100, width:100}" ng-show="uploader_clubpost.isHTML5"></div>
-                  </span>
-                </div>
-              </div>
-
-              <div ng-show="uploader_clubpost.isUploading" style="margin: 0px 10px;margin-bottom: -10px;">
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" ng-style="{'width': uploader_clubpost.progress + '%'}" style="width: 0%;">
-                    {{uploader_clubpost.progress}}
-                  </div>
-                </div>
-              </div>
-
-              <div class="post-form-bottom">
-                <div style="margin: 5px 5px;">
-                  <i class="fa fa-picture-o fa-2x" ng-click="onShowFileDialog()"></i>
-
-                  <input style="display:none;" id="addImageInput" type="file" nv-file-select uploader="uploader_clubpost" multiple>
-
-                  <button ng-disabled="postForm.$invalid" ng-click="onPostclubpost()" class="btn btn-primary" type="button"> Đăng </button>
-                </div>
-              </div>
-
-            </form>
-
-          </div>
-
-          <div class="post margintop10" ng-repeat = "post in club.clubposts">
-            <div style="height: 58px">
-              <div class="pull-left">
-                <img style="width: 40px;" ng-src="{{post.user.avatar}}" class="profile-picture" alt="">
-              </div>
-              <div class="pull-left marginleft5">
-                <a ui-sref="trangCaNhan({username: post.user.username})">{{post.user.fullname}}</a><br>
-                <a href="#">{{post.updated_at | date:'h:mm a, dd/mm/yyyy'}}</a>
-              </div>
-            </div>
-            <div class="postcontent margintop10">
-              <p>{{post.content}}</p>
-            </div>
-            <div class="detail-post-images" style="margin-top: 20px;">
-              <a ng-click="showImage(photo, post.photos)" ng-repeat="photo in post.photos"><img ng-src="{{photo.image.url}}" height="50px"></a>
-            </div>
-
-            <div class="likes">
-            <span tooltip="Thích" ng-hide="post.isLiked" class="fa fa-thumbs-up like-icon" ng-click="likeclubPost(post)"></span>
-              <span tooltip="Bỏ thích" ng-show="post.isLiked" class="fa fa-thumbs-down unlike-icon" ng-click="unlikeclubPost(post)">
-              </span>
-
-              <a ng-mouseenter="getKFirstLikes(post)" tooltip-html-unsafe="{{likesHtml}}" ng-click="showAllLikes(post)" style="cursor: pointer; margin-left: 10px;" >{{post.like_count}} người thích</a>
-
-            </div>
-
-            <section id="listComments" ng-include="'appJS/chiTietBaiViet/_listComments.html'"></section>
-
+          <div ng-include="'appJS/club/clubpost/club_post.html'" ng-controller = "clubpostCtrl">
           </div>
 
         </tab>

@@ -1,7 +1,7 @@
 class ClubPostsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :add_photo, :like, :unlike, :destroy, :follow, :unfollow]
   before_action :find_clubpost, only: [:add_photo, :like, :unlike, :get_all_likes, :get_k_first_like]
-  before_action :is_member?, only: [:create]
+  before_action :is_member?, only: [:create, :update, :destroy]
 
   def show
   end
@@ -16,6 +16,29 @@ class ClubPostsController < ApplicationController
       render template: 'club_posts/show.json.jbuilder', status: :created
     else
       render json: @clubpost.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    byebug
+    @clubpost = ClubPost.find(clubpost_params[:id])
+    if @clubpost.update_attribute(:content, clubpost_params[:content])
+
+      if clubpost_params[:deleted_photos]
+        clubpost_params[:deleted_photos].each do |photo_id|
+          begin
+            byebug
+            photo = @clubpost.photos.find(photo_id)
+            photo.destroy
+          rescue Mongoid::Errors::DocumentNotFound
+          end
+        end
+      end
+
+      render json: @clubpost, status: :ok
+
+    else
+      render json: @post.errors, status: :unprocessable_entity
     end
   end
 
@@ -91,7 +114,7 @@ class ClubPostsController < ApplicationController
 
   private
   def clubpost_params
-    params.permit(:id, :club_id, :content)
+    params.permit(:id, :club_id, :content, :deleted_photos => [])
   end
 
   def find_clubpost

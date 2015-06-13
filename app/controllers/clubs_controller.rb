@@ -1,6 +1,6 @@
 class ClubsController < ApplicationController
   before_action :authenticate_user!
-  before_action :is_admin?, only: [:addmember, :makeadmin, :update, :add_cover]
+  before_action :is_admin?, only: [:addmember, :makeadmin, :update, :add_cover, :removeadmin]
   before_action :can_remove_member?, only: [:removemember]
   before_action :is_member?, only: [:show]
 
@@ -122,6 +122,7 @@ class ClubsController < ApplicationController
   end
 
   def removeadmin
+    byebug
     begin
       admin =  User.find(club_params[:admin_id])
       if @club.members.include?(admin) && @club.admins.include?(admin.id)

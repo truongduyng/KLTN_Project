@@ -23,12 +23,14 @@ json.clubposts @club.club_posts.desc(:updated_at) do |post|
   json.like_count post.likes.count
 
   json.photos post.photos do |photo|
+    json._id photo.id
     json.image do
       json.url photo.image.url
     end
   end
 
   json.user do
+    json._id post.user.id
     json.avatar post.user.avatar.url
     json.fullname post.user.fullname
     json.username post.user.username
@@ -41,26 +43,26 @@ json.clubposts @club.club_posts.desc(:updated_at) do |post|
   end
 
   json.comments post.comments do |comment|
-  json._id comment.id
-  json.content comment.content
-  json.user do
-    json._id comment.user.id
-    json.avatar do
-      json.url comment.user.avatar.url
+    json._id comment.id
+    json.content comment.content
+    json.user do
+      json._id comment.user.id
+      json.avatar do
+        json.url comment.user.avatar.url
+      end
+      json.username comment.user.username
+      json.fullname comment.user.fullname
     end
-    json.username comment.user.username
-    json.fullname comment.user.fullname
+    json.created_at comment.created_at
+    json.updated_at comment.updated_at
+    json.like_count comment.likes.count
+    json.reply_count comment.replies.count
+    if user_signed_in? && comment.likes.where('user_id' => current_user.id).first
+      json.isLiked true
+    else
+      json.isLiked false
+    end
   end
-  json.created_at comment.created_at
-  json.updated_at comment.updated_at
-  json.like_count comment.likes.count
-  json.reply_count comment.replies.count
-  if user_signed_in? && comment.likes.where('user_id' => current_user.id).first
-    json.isLiked true
-  else
-    json.isLiked false
-  end
-end
 
   json.updated_at post.updated_at
   json.created_at post.created_at

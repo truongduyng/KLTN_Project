@@ -9,6 +9,13 @@ app.factory('clubpostFtry', ['$http', function($http) {
       });
   };
 
+  o.update = function(club_id, postclub, deletedPhotos) {
+    return $http.put("/clubs/"+ club_id +"/club_posts/"+ postclub._id.$oid+".json", {content: postclub.content, deleted_photos: deletedPhotos}).success(function(data) {
+      }).error(function(data) {
+        console.log(data);
+      });
+  };
+
   o.like = function(club_post){
     return $http.put("/club_posts/"+ club_post._id.$oid +"/like.json");
   }

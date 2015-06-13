@@ -1,4 +1,3 @@
-//5513a53e68757512e9000000
 app.controller('editPostCtrl', ['$scope', 'editPostService', 'FileUploader', 'Flash', '$http', '$cookies', '$state', '$rootScope',
 	function($scope, editPostService, FileUploader, Flash, $http, $cookies, $state, $rootScope) {
 		$scope.post = editPostService.post;
@@ -38,12 +37,13 @@ app.controller('editPostCtrl', ['$scope', 'editPostService', 'FileUploader', 'Fl
 			$scope.post.body = "";
 			$scope.post.photos.splice(0, $scope.post.photos.length);
 			$scope.uploader.clearQueue();
+
 			if($scope.post.status.name == 'Từ chối'){
 				//Khi bai viet da dc duyet va bi tu choi thi ko thong bao nhu ben duoi
 			}else{
 				Flash.create("success", "Bài viết của bạn đã được cập nhật thành công, chúng tôi sẽ duyệt và thông báo tới bạn sớm nhất có thể");
 			}
-			Flash.pause();
+
 			$state.go("chiTietBaiViet", {
 				id: $scope.post.id,
 			})
