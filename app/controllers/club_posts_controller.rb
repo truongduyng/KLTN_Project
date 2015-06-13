@@ -20,14 +20,14 @@ class ClubPostsController < ApplicationController
   end
 
   def update
-    byebug
+    # byebug
     @clubpost = ClubPost.find(clubpost_params[:id])
     if @clubpost.update_attribute(:content, clubpost_params[:content])
 
       if clubpost_params[:deleted_photos]
         clubpost_params[:deleted_photos].each do |photo_id|
           begin
-            byebug
+            # byebug
             photo = @clubpost.photos.find(photo_id)
             photo.destroy
           rescue Mongoid::Errors::DocumentNotFound
@@ -39,6 +39,17 @@ class ClubPostsController < ApplicationController
 
     else
       render json: @post.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    # byebug
+    begin
+      @clubpost = ClubPost.find(clubpost_params[:id])
+      @clubpost.destroy
+      render nothing: true, status: :ok
+    rescue Mongoid::Errors::DocumentNotFound
+      render nothing: true, status: :not_found
     end
   end
 

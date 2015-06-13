@@ -21,7 +21,7 @@ app.controller('clubpostCtrl',['$scope', '$modal', 'clubs', '$http', 'Flash', 'A
   });
 
   $scope.uploader_clubpost.onCompleteItem = function(item, response, status, headers) {
-    $scope.club.clubposts[0].photos.push({image: {url: response.image.url}});
+    $scope.club.clubposts[0].photos.push({image: {url: response.image.url}, _id: {$oid: response._id.$oid}});
   };
 
   $scope.uploader_clubpost.onCompleteAll = function(){
@@ -130,6 +130,17 @@ app.controller('clubpostCtrl',['$scope', '$modal', 'clubs', '$http', 'Flash', 'A
   $scope.update_club_post = function(post){
     $scope.editing = true;
     $scope.post_update = post;
+  }
+
+  $scope.delete_club_post = function(post){
+
+    clubpostFtry.delete($scope.club.id.$oid, post).success(function(data){
+
+      $scope.club.clubposts.splice($scope.club.clubposts.indexOf(post),1);
+
+    }).error(function(){
+      Flash.create('danger', "Xoa bai viet thất bại!", 'myalert');
+    })
   }
 
   $scope.update_clubpost = function(post){
