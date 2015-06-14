@@ -9,12 +9,6 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   $scope.dt_end_everyweek_booking = $scope.dt;
   $scope.showtimeline = true;
   $scope.td_height = 20; //height of td
-  // $('#sidebar').css({display: 'none'});
-  // $('#sidebar').removeClass('col-sm-2');
-  // $('#main-content').removeClass('col-sm-10');
-  // $('#main-content').addClass('col-sm-12');
-  // console.log($('#sidebar'), $('#main-content'));
-
 
   if (branch.data != null){
     $scope.branch = branch.data;
