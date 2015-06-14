@@ -144,7 +144,6 @@ app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interva
 		var currentIndex = $scope.listPhotos.indexOf(photo);
 
 		$scope.previous = function() {
-			console.log("in previous");
 			if (currentIndex >= 1) {
 				currentIndex--;
 			} else {

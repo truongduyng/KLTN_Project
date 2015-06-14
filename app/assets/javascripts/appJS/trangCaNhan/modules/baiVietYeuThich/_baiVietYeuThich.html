@@ -29,7 +29,7 @@
                   <img fallback-src="sportaLogo" ng-src="{{post.user.avatar.url |logo}}" class="img-circle profile-picture" width="64px" height="64px">
                 </div>
                 <div class="col-xs-10">
-                  <span class="owner-bai-viet">{{post.user.firstname| fullname: post.user.lastname}}</span>
+                  <span class="owner-bai-viet">{{post.user.fullname}}</span>
                   <span>{{post.updated_at | timeago}}</span>
                 </div>
                 </a>

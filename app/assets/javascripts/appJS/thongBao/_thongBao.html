@@ -1,0 +1,36 @@
+<div class="row">
+  <!-- BEGIN MAIN COLUMN -->
+  <div class="detail-main-column">
+    <span style="border: 1px solid #337AB7; display:block; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>THÔNG BÁO</strong></span>
+    <div>
+      <div ng-class="{alert: true, 'alert-danger': isDanger, 'alert-success':!isDanger}" role="alert" style="overflow: hidden;">
+        <!-- BEGIN THONG BAO CHO BAI VIET -->
+        <div ng-if="notificationCategory.denyPost">
+         <p>Bài viết <a ui-sref="chiTietBaiViet({id: targetObject._id.$oid})" target="_blank"><b>{{targetObject.title}}</b></a> của bạn bị từ chối đăng bởi người quản trị hệ thống vì những lý do sau:</p>
+       </div>
+       <!-- END THONG BAO CHO BAI VIEI -->
+
+       <!-- BEGIN HIEN THI THONG BAO CHO KICH HOAT TAI KHOAN DOANH NGHIEP -->
+       <div ng-if="notificationCategory.acceptRequestBussiness">
+        <p>Yêu cầu kích hoạt tài khoản doanh nghiệp <a ui-sref="chiTietKhTkDoanhNghiep({id: targetObject._id.$oid})" target="_blank"><b>{{targetObject.name}}</b></a> của bạn đã được duyệt. Tài khoản của bạn đã được nâng cấp thành tài khoản doanh nghiệp. Hướng dẫn sau sẽ giúp bạn sử dụng tài khoản doanh nghiệp để quản lý doanh nghiệp của mình.</p>
+      </div>
+      <!-- END HIEN THI THONG BAO CHO KICH HOAT TAI KHOAN DOANH NGHIEP -->
+
+      <!-- BEGIN CHO HIEN THI THONG BAO TU CHOI KICH HOAT TAI KHOAN -->
+      <div ng-if="notificationCategory.denyRequestBussiness">
+        <p>Yêu cầu kích hoạt tài khoản doanh nghiệp <a ui-sref="chiTietKhTkDoanhNghiep({id: targetObject._id.$oid})" target="_blank"><b>{{targetObject.name}}</b></a> của bạn bị từ chối bởi admin hệ thống. Bạn có thể xem xét các lý do sau đây và gửi lại 1 yêu cầu hợp lý hơn, admin hệ thống sẽ xem xét và kiểm duyệt cho bạn.</p>
+      </div>
+      <!-- END CHO HIEN THI THONG BAO TU CHOI KICH HOAT TAI KHOAN -->
+
+      <!-- BEGIN HIEN THI TEMPLATE CUA LOAI HANG THONG BAO -->
+      <div ng-bind-html="notificationChange.notification_category.notification_template.content">
+      </div>
+      <!-- END HIEN THI TEMPLATE CUA LOAI HANG THONG BAO -->
+    </div>
+
+  </div>
+</div>
+<!-- END MAIN COLUMN -->
+
+</div>
+

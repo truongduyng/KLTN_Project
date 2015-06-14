@@ -37,13 +37,23 @@ class SystemAdminBussinessRequestsController < SystemAdminController
 				branch = Branch.new
 				branch.name = 'Chi nhánh 1'
 				branch.address = @bussiness_request.address
-				branch.latitude = @bussiness_request.latitude
-				branch.longitude = @bussiness_request.longitude
+				# branch.latitude = @bussiness_request.latitude
+				# branch.longitude = @bussiness_request.longitude
+				branch.coordinates = [@bussiness_request.longitude, @bussiness_request.latitude]
 				branch.bussiness_id = bussiness.id
+				#tao url_alias tam
+				branch.url_alias = "chi_nhanh_" + branch.id
+				branch.begin_work_time = "8:00"
+				branch.end_work_time = "21:00"
+				
+				if branch.save(validate: false)
 
-				if branch.save
 					@bussiness_request.status_id =  BussinessRequestStatus.da_duyet_status.id
 					@bussiness_request.timeless.save
+					#Tao ra thong bao 
+					#Neu da lo deny va nguoi do chua xem thong bao deny thi xoa no
+				    NotificationChange.delete_notification_change user, @bussiness_request, current_user, @bussiness_request, NotificationCategory.tu_choi_cap_tai_khoan_doanh_nghiep
+					NotificationChange.create_notification user, @bussiness_request, current_user, @bussiness_request, NotificationCategory.chap_nhan_yeu_cau_doanh_nghiep
 					#Kich hoat thanh cong
 					render json: {message: 'Kích hoạt thành công tài khoản doanh nghiệp'}, status: :created, content_type: 'application/json'
 				else
@@ -68,6 +78,10 @@ class SystemAdminBussinessRequestsController < SystemAdminController
 		#Gan yeu cau thanh trang thai tu choi va ko lam gi ca
 		@bussiness_request.status_id = BussinessRequestStatus.tu_choi_status.id
 		@bussiness_request.timeless.save
+		#Tao thong bao
+		#Neu lo xac nhan, ma nguoi do chua xem, thi xoa xac nhan do di
+		NotificationChange.delete_notification_change  @bussiness_request.user, @bussiness_request, current_user, @bussiness_request, NotificationCategory.chap_nhan_yeu_cau_doanh_nghiep
+		NotificationChange.create_notification @bussiness_request.user, @bussiness_request, current_user, @bussiness_request, NotificationCategory.tu_choi_cap_tai_khoan_doanh_nghiep
 		render json: @bussiness_request, status: :ok, content_type: 'application/json' 
 	end
 

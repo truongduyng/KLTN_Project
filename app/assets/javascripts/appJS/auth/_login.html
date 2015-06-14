@@ -1,56 +1,45 @@
-
-
-<div class="row" style="margin-top:-15px;">
-    <!-- BEGIN LEFT COLUMN -->
-    <div class="col-md-2">
-      <section ng-include="'appJS/modules/_groupModule.html'"></section>
-    </div>
-    <!-- END LEFT COLUMN -->
-
-    <!-- BEGIN MAIN COLUMN -->
-    <div class="col-md-6 detail-main-column">
-		      <span style="border: 1px solid #337AB7; display:block;margin:0px -15px; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>ĐĂNG NHẬP</strong></span>
-		      <div flash-message="15000"></div>
-				<form  class="form-horizontal" role="form" name="login_form">
-				    <div class="form-group" >
-				      <label class="control-label col-sm-2" for="email">Email:</label>
-				      <div class="col-sm-10">
-				        <input type="email" class="form-control" id="email" name="email" placeholder="Nhap email" ng-model="user.email" required  ensure-unique-data="{{user.email}}" >
-				        <div class="has-error" data-ng-show="login_form.email.$dirty && login_form.email.$invalid">
-				            <span class="help-block" ng-show="login_form.email.$error.required">Vui long nhap email</span>
-				            <span class="help-block" ng-show="login_form.email.$error.email">Dia chi email khong hop le</span>
-				            
-				        </div>
-				      </div>
-				    </div>
-				   
-				    <div class="form-group" >
-				      <label class="control-label col-sm-2" for="password">Password:</label>
-				      <div class="col-sm-10">
-				        <input type="password" class="form-control" id="password" name="password" placeholder="Nhap password" ng-model="user.password" required ng-minlength=8 ng-maxlength=20>
-				        <div class="has-error" data-ng-show="login_form.password.$dirty && login_form.password.$invalid">
-				            <span class="help-block" ng-show="login_form.password.$error.required">Vui long nhap password</span>
-				            <span class="help-block" ng-show="login_form.password.$error.minlength">Password it nhat 8 ki tu</span>
-				            <span class="help-block" ng-show="login_form.password.$error.maxlength">Password nhieu nhat 20 ki tu</span>
-				        </div>
-				      </div>
-				    </div>
-				    <div class="form-group">
-				      <div class="col-sm-offset-2 col-sm-2">
-				        <button id="buttonLogin" type="submit" ng-click="login()" class="btn btn-success" ng-disabled="login_form.$invalid">Đăng nhập</button>
-				      </div>
-				      <div class="col-sm-2" style="margin-left:5px;">
-				        <button ui-sref="register" type="submit" class="btn btn-success"> Đăng kí </button>
-				      </div>
-				    </div>
-				</form>
-    </div>
-     <!-- END MAIN COLUMN -->
-
-      <!-- BEGIN RIGHT COLUMN -->
-      <div class="col-md-4">  
-        <section ng-include="'appJS/modules/postSearchModules/_postSearchModule.html'"></section>
-      </div>
-      <!-- END RIGHT COLUMN -->
+<div class="modal-header">
+  <button type="button" class="close" aria-hidden="true" ng-click="close_modal()">&times;</button>
+  <h1>Đăng nhập</h1>
 </div>
+<div class="modal-body">
+  <div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div>
+  <form  class="form-horizontal" role="form" name="login_form">
+    <!-- Email -->
+    <div class="form-group" >
+      <label class="control-label col-sm-2" for="email">Email:</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" id="email" name="email" placeholder="Nhap email" ng-model="user.email" required  ensure-unique-data="{{user.email}}" autofocus/>
+        <div class="has-error" data-ng-show="login_form.email.$dirty && login_form.email.$invalid">
+          <span class="help-block" ng-show="login_form.email.$error.required">Vui long nhap email</span>
+          <span class="help-block" ng-show="login_form.email.$error.email">Dia chi email khong hop le</span>
 
+        </div>
+      </div>
+    </div>
+    <!-- Password -->
+    <div class="form-group" >
+      <label class="control-label col-sm-2" for="password">Password:</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Nhap password" ng-model="user.password" required ng-minlength=8 ng-maxlength=20 />
+        <div class="has-error" data-ng-show="login_form.password.$dirty && login_form.password.$invalid">
+          <span class="help-block" ng-show="login_form.password.$error.required">Vui long nhap password</span>
+          <span class="help-block" ng-show="login_form.password.$error.minlength">Password it nhat 8 ki tu</span>
+          <span class="help-block" ng-show="login_form.password.$error.maxlength">Password nhieu nhat 20 ki tu</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-2">
+        <button type="submit" ng-click="login()" class="btn btn-success" ng-disabled="login_form.$invalid">Đăng nhập</button>
+      </div>
+
+    </div>
+    <div style="margin-left:100px;">
+      <span>Chưa có tài khoản?</span>
+      <a id="login-on-register" ng-click="open_signup_onsignin()" style="cursor: pointer;"> Đăng kí </a>
+      <span>hoặc</span>
+      <a href="/users/auth/facebook">Đăng nhập với facebook</a>
+    </div>
+  </form>
+</div>

@@ -1,6 +1,6 @@
 app.factory('editPostService', ['$http', function ($http) {
 	var o = {};
-	
+
 	o.edit = function(id){
 		var promise = $http.get("/posts/" + id + "/edit.json").success(function(data){
 			o.post = data;

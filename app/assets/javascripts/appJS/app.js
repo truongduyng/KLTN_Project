@@ -1,13 +1,8 @@
-//Loai bo angularMoment, ngFileUpload
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angularFileUpload',
-	'angular-flash.service', 'angular-flash.flash-alert-directive', 'unsavedChanges', 'sporta.directives',
-	'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging',
-	'ngImgCrop', 'infinite-scroll', 'ngMap', 'ngStorage'
-]);
+	'angular-flash.service', 'angular-flash.flash-alert-directive', 'unsavedChanges', 'sporta.directives', 'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging','ngImgCrop', 'infinite-scroll', 'ngMap', 'ngStorage', 'ngSanitize']);
 
 //For intercept $http
 app.factory('myHttpInterceptor', ['$q', '$rootScope', function($q, $rootScope) {
-
 	var responseIntercepter = {
 		responseError: function(rejection) {
 			if (rejection.config.url.startsWith("/users/sign_in.json")) {} else {
@@ -22,6 +17,7 @@ app.factory('myHttpInterceptor', ['$q', '$rootScope', function($q, $rootScope) {
 
 	return responseIntercepter;
 }]);
+
 
 app.config(['$httpProvider', function($httpProvider) {
 	$httpProvider.interceptors.push('myHttpInterceptor');
@@ -45,11 +41,6 @@ app.config(function(flashProvider) {
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-	// $stateProvider.state("home", {
-	// 	url: "/",
-	// 	templateUrl: 'appJS/home/_home.html',
-	// 	controller: 'homeCtrl',
-	// });
 	$stateProvider.state("home", {
 		url: "/",
 		templateUrl: 'appJS/home/_home.html',
@@ -57,10 +48,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		resolve: {
 			posts: ['listPostService', function(listPostService) {
 				return listPostService.get_all(1);
-			}],
+			}]
 		}
 	});
-
 
 	$stateProvider.state("dangBai", {
 		url: "/dang-bai/",
@@ -74,7 +64,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		controller: 'editPostCtrl',
 		resolve: {
 			post: ['editPostService', '$stateParams', '$q', function(editPostService, $stateParams, $q) {
-				console.log("in resolve editPostService");
 				return editPostService.edit($stateParams.id);
 			}],
 		},
@@ -94,6 +83,27 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			}],
 		}
 	});
+
+	// //State de hien thi lydo
+	// $stateProvider.state("chiTietBaiViet.tuChoi", {
+	// 	url: '/chi-tiet-bai-viet/{id}/tu-choi',
+	// 	views: {
+	// 		'lyDo@chiTietBaiViet':{
+	// 			templateUrl: 'appJS/partials/_lyDo.html',
+	// 			controller: 'tuChoiBaiVietCtrl',
+
+	// 		}
+	// 	}
+	// 	templateUrl: 'appJS/chiTietBaiViet/_chiTietBaiViet.html',
+	// 	controller: 'chiTietBaiVietCtrl',
+	// 	resolve: {
+	// 		post: ['postDetailService', '$stateParams', function(postDetailService, $stateParams) {
+	// 			return postDetailService.show($stateParams.id);
+	// 		}],
+	// 	}
+	// });
+
+
 
 	$stateProvider.state('notFound', {
 		url: '/khong-tim-thay-ket-qua',
@@ -130,7 +140,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	// 		 	if(searchObj.page && (searchObj.module == null || searchObj.module == 'bai-viet-ca-nhan')){
 	// 		 		page = searchObj.page;
 	// 		 	}
-	// 			return baiVietCaNhanService.index($stateParams.username, page, $rootScope.rootPageConfig.pageSize);		
+	// 			return baiVietCaNhanService.index($stateParams.username, page, $rootScope.rootPageConfig.pageSize);
 	// 		}],
 
 	// 		favoritePosts: ['baiVietYeuThichService', '$stateParams', '$rootScope', '$location',
@@ -140,7 +150,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	// 		 	if(searchObj.page && searchObj.module == 'bai-viet-yeu-thich'){
 	// 		 		page = searchObj.page;
 	// 		 	}
-	// 			return baiVietYeuThichService.get($stateParams.username, page, $rootScope.rootPageConfig.pageSize);		
+	// 			return baiVietYeuThichService.get($stateParams.username, page, $rootScope.rootPageConfig.pageSize);
 	// 		}],
 
 	// 		authenUser: ['Auth', function(Auth){
@@ -152,7 +162,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	// 		}]
 	// 	}
 	// })
-
 
 
 	$stateProvider.state('trangCaNhan', {
@@ -186,6 +195,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		}
 	});
 
+	//Trang nay can phai yeu cau login
 	$stateProvider.state('khTkDoanhNghiep', {
 		url: '/kich-hoat-tai-khoan-doanh-nghiep',
 		templateUrl: 'appJS/KhTkDoanhNghiep/_KhTkDoanhNghiep.html',
@@ -201,6 +211,87 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		// 	free: false,
 		// }
 	});
+
+	//trang nay cung can phai yeu cau login
+	$stateProvider.state('chiTietKhTkDoanhNghiep', {
+		url: '/kich-hoat-tai-khoan-doanh-nghiep/chi-tiet/{id}',
+		templateUrl: 'appJS/KhTkDoanhNghiep/chiTietKhTkDoanhNghiep/_chiTietKhTkDoanhNghiep.html',
+		controller: 'chiTietKhTkDoanhNghiepCtrl',
+		resolve: {
+			bussinessRequest: ['KhTkDoanhNghiepService', '$stateParams',
+				function(KhTkDoanhNghiepService, $stateParams) {
+					return KhTkDoanhNghiepService.show($stateParams.id);
+				}
+			]
+		},
+		// access: {
+		// 	free: false,
+		// }
+	});
+
+	//Trang nay can dang nhap
+	$stateProvider.state("thongBao", {
+		url: '/thong-bao/{notificationChangeId}',
+		templateUrl: 'appJS/thongBao/_thongBao.html',
+		controller: 'thongBaoCtrl',
+		resolve: {
+			notificationChange: ['thongBaoService', '$stateParams', function(thongBaoService, $stateParams) {
+				console.log("in resolve thong bao");
+				return thongBaoService.getNotificationChange($stateParams.notificationChangeId);
+			}]
+		}
+	});
+
+	$stateProvider.state('booking', {
+		url: '/:branch_url_alias',
+		templateUrl: 'appJS/booking/_booking.html',
+		controller: 'bookingCtrl',
+		resolve: {
+			branch: function($http, $stateParams) {
+				return $http.get("/" + $stateParams.branch_url_alias).success(function(data) {
+					return data;
+				});
+			}
+		}
+	});
+
+	$stateProvider.state('club', {
+		url: '/club/:club_id',
+		templateUrl: 'appJS/club/_club.html',
+		controller: 'clubCtrl',
+		resolve: {
+			club: function($http, $stateParams) {
+				return $http.get("/clubs/" + $stateParams.club_id + ".json").success(function(data) {
+					return data;
+				});
+			},
+			currentUser: ['Auth', function(Auth) {
+				return Auth.currentUser().then(function(user) {
+					return user;
+				}, function(response) {
+					return null;
+				})
+			}]
+		}
+	});
+
+	$stateProvider.state("shareVenue", {
+		url: '/chia-se-dia-diem/',
+		templateUrl: 'appJS/venue/shareVenue/_shareVenue.html',
+		controller: 'shareVenueCtrl',
+	});
+
+	$stateProvider.state("venueDetail", {
+		url: '/dia-diem-chia-se/{id}/',
+		templateUrl: 'appJS/venue/venueDetail/_venueDetail.html',
+		controller: 'venueDetailCtrl',
+		resolve: {
+			venue: function(venueDetailService, $stateParams){
+				return venueDetailService.show($stateParams.id);
+			}
+		}
+	});
+
 	//Khoi phuc
 	$urlRouterProvider.otherwise('/');
 }]);

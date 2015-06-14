@@ -1,10 +1,26 @@
 app.factory('commentService', ['$http', function($http) {
-	var o = {};
+	var o = {
+		target_object:{}
+	};
 
-	o.like = function(post, comment) {
-		var post_id = post._id.$oid;
+	o.create = function(comment) {
+		comment_param = {comment: comment, target_object: o.target_object};
+		return $http.post("/comments.json", comment_param);
+	};
+
+	o.destroy = function(comment) {
 		var id = comment._id.$oid;
-		var url = "/posts/" + post_id  + '/comments/' + id + "/like.json";
+		return $http.delete("/comments/" + id + ".json");
+	};
+
+	o.update = function(comment) {
+		var id = comment._id.$oid;
+		return $http.put("/comments/" + id + ".json", comment);
+	};
+
+	o.like = function(comment) {
+		var id = comment._id.$oid;
+		var url = '/comments/' + id + "/like.json";
 		return $http.put(url).success(function(data) {
 			if (comment.likes == null) {
 				comment.likes = [];
@@ -14,10 +30,9 @@ app.factory('commentService', ['$http', function($http) {
 		});
 	};
 
-	o.unlike = function(post, comment) {
-		var post_id = post._id.$oid;
+	o.unlike = function(comment) {
 		var id = comment._id.$oid;
-		var url = "/posts/" + post_id  + '/comments/' + id + "/unlike.json";
+		var url = '/comments/' + id + "/unlike.json";
 		return $http.put(url).success(function(data) {
 			if (comment.likes == null) {
 				comment.likes = [];
@@ -40,10 +55,9 @@ app.factory('commentService', ['$http', function($http) {
 	};
 
 
-	o.getAllLikes = function(post, comment){
-		var post_id = post._id.$oid;
+	o.getAllLikes = function(comment){
 		var id = comment._id.$oid;
-		var url = "/posts/" + post_id  + '/comments/' + id + "/get_all_likes.json";
+		var url = '/comments/' + id + "/get_all_likes.json";
 		return $http.get(url);
 	};
 

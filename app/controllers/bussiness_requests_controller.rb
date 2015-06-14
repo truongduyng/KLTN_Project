@@ -2,7 +2,11 @@ class BussinessRequestsController < ApplicationController
 	before_action :authenticate_user!
 	#Phai chua la doanh nghiep, da la doanh nghiep roi ko cho gui yeu cau nua
 	before_action :check_bussiness_role, only: [:create]
-
+	before_action :find_bussiness_request, only: [:show]
+	
+	#GET /bussiness_requests/:id.json
+	def show
+	end
 	
 	#POST bussiness_requests.json
 	def create
@@ -26,4 +30,16 @@ class BussinessRequestsController < ApplicationController
 				render nothing: true, status: :not_found, content_type: 'application/json'
 			end
 		end
+
+		def find_bussiness_request
+			begin
+				@bussiness_request = BussinessRequest.find(params[:id])
+				#Phai la yeu cau cua nguoi do thi nguoi do moi dc xem
+				if @bussiness_request.user != current_user
+					render nothing: true, status: :not_found, content_type: 'application/json'
+				end
+			rescue Mongoid::Errors::DocumentNotFound
+				render nothing: true, status: :not_found, content_type: 'application/json'
+			end
+		end		
 end

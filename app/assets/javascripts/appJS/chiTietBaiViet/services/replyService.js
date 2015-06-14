@@ -26,7 +26,7 @@ app.factory('replyService', ['$http', function($http) {
 				comment.replies = [];
 			}
 			comment.replies.splice(0, 0, data);
-			//Cap nhat reply_count 
+			//Cap nhat reply_count
 			comment.reply_count++;
 		});
 		return promise;

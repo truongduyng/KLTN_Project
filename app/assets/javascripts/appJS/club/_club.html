@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col-lg-12 pull-right">
+    <img class="coverimg" ng-src="{{club.cover_image}}" alt="anh dai dien">
+    <h3 class="club_name">{{club.name}}</h3>
+    <button class="btn btn-default leave_club_btn" ng-click="leave_club()" >Rời CLB</button>
+    <i ng-show="current_user_is_admin()" class="fa fa-picture-o fa-2x cover-icon" ng-click="choose_cover()"></i>
+    <input id="choosecover" type="file" nv-file-select uploader="uploader" style="display:none;">
+  </div>
+</div>
+
+<section id="content">
+  <div class="margintop10">
+    <div class="row">
+
+      <div class="col-lg-8">
+        <tabset>
+          <tab>
+            <tab-heading>
+            <i class="fa fa-pencil"></i> Thảo luận
+          </tab-heading>
+
+          <div ng-include="'appJS/club/clubpost/club_post.html'" ng-controller = "clubpostCtrl">
+          </div>
+
+        </tab>
+
+        <tab ng-show="current_user_is_admin()">
+          <tab-heading>
+          Chỉnh sửa
+        </tab-heading>
+
+        <div class="row padding10">
+          <div class="col-sm-3">
+            <label>Tên CLB*</label>
+          </div>
+          <div class="col-sm-9">
+            <input name="name" type="text" class="form-control" data-ng-model="club_update.name" required>
+          </div>
+        </div>
+        <div class="row padding10">
+          <div class="col-sm-3">
+            <label>Mô tả</label>
+          </div>
+
+          <div class="col-sm-9">
+            <textarea  rows="4" cols="50" class="form-control" data-ng-model="club_update.description">
+            </textarea>
+          </div>
+        </div>
+        <div class="pull-right margintop20">
+          <button class="btn btn-primary" ng-click="update_club()">Lưu</button>
+        </div>
+      </tab>
+
+    </tabset>
+  </div>
+
+
+  <div class="col-lg-4">
+
+    <div>
+      <label>Thành viên</label>
+      <label class="pull-right">{{club.members.length}}</label>
+
+      <input id="user_find" ng-show="current_user_is_admin()" type="text" placeholder=" + them thanh vien..." class="form-control" ng-model="user_find" ng-change="find_user()">
+
+      <ul ng-show="show_recommend_user()" class="list_recommend">
+        <li ng-repeat="user in users_list" ng-click= "add_to_members(user)">{{user.fullname}}</li>
+      </ul>
+
+      <ul class="list_user_choosen margintop10">
+        <li class="member_list" ng-repeat="member in club.members">
+          <span ng-show="current_user_is_admin()" class="dropdown" dropdown on-toggle="toggled(open)" >
+            <a href class="dropdown-toggle" dropdown-toggle>
+              <i class="fa fa fa-cog" style="color: white;"></i>
+            </a>
+            <ul class="dropdown-menu" style="z-index: 5; color: black;">
+              <li>
+                <i class="fa fa-user-times" ng-click= "remove_member(member)"> Xóa thành viên</i>
+              </li>
+              <li ng-hide = 'member_is_admin(member.id.$oid)'>
+                <i class="fa fa-user-secret" ng-click= "make_admin(member)"> Chỉ định là quản trị</i>
+              </li>
+              <li ng-show = 'member_is_admin(member.id.$oid)'>
+                <i class="fa fa-user" ng-click= "remove_admin(member)"> Chỉ định là thành viên</i>
+              </li>
+            </ul>
+          </span>
+          <!-- <img style="width: 40px;" fallback-src="sportaLogo" ng-src="{{member.avatar|logo}}" class="profile-picture"> -->
+          {{member.fullname}}
+        </li>
+      </ul>
+    </div>
+
+    <div class="about" style="width: 100%; float: left;">
+      <hr>
+      <label>Mô tả</label>
+      <p>{{club.description}}</p>
+    </div>
+  </div>
+
+</div>
+</div>
+</section>
+
+<script type="text/javascript">
+  autosize(document.querySelectorAll('textarea'));
+</script>

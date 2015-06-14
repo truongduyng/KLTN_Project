@@ -4,3 +4,5 @@ hien thi so luong bussiness
 hien thi so luong yeu cau bussiness
 hien thi so luong truy cap
 hien thi so luong bai post, so luong bai post moi trong ngay
+
+Can phai resolve currentUser tat ca cac state

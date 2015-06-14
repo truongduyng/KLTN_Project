@@ -1,103 +1,63 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="sportApp">
+<html ng-app="sportApp">
 <head>
   <meta charset="utf-8">
   <title>Sporta</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="" />
-  <script src="http://maps.google.com/maps/api/js"></script>
- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <!-- css -->
+  <meta name="description" content=""/>
+
+  <%= favicon_link_tag %>
   <%= stylesheet_link_tag    'applicationCSS/application', media: 'all'%>
-  <%= javascript_include_tag 'appJS/application' %>
   <%= csrf_meta_tags %>
-  
-  </head>
 
-    <body ng-controller="mainCtrl">
-      {{2+3}} 
-
-      <!-- SOME LINKS TO REMEMBER -->
-      <!-- <img src="<%= image_path('application/01.jpg') %>" />
-      <%= image_tag "application/01.jpg" %> -->
-      <!-- <img src="/assets/application/01.jpg">  -->
-      <!-- END SOME LINKS TO REMEMBER -->
+</head>
+<body ng-controller="mainCtrl">
 
 
-        <nav class="navbar navbar-default navbar-fixed-top">
-              <div class="container" >
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="#"><img alt="Brand" src="<%= image_path('application/myimg/football_icon.png')%>" width="45px" height="45px" style="margin-top:-10px;">
-        </a>
-                </div>
-            
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <p class="navbar-text" style="margin-left:-2px;"><b style="font-size:1.4em;">SPORTA</b></p>
-                  <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Tìm kiếm sân">
-                    </div>
-                    <button type="submit" class="btn btn-success">Tìm kiếm</button>
-                  </form>
-                
-                 <!-- NAVIGATION HERE -->
-                 <div ng-include="'appJS/nav/_nav.html'"></div>
-                 <!-- END NAVIGATION HERE -->
-                
-                </div><!-- /.navbar-collapse -->
-              </div><!-- /.container-fluid -->
-        </nav>
+  <header data-ng-include="'appJS/header/_header.html'"></header>
 
-        <!-- CONTENT HERE -->
-        <div class="container">
+  <!-- CONTENT HERE -->
+  <div class="container">
+    <div class="row">
+
+      <div ng-show="signedIn()">
+
+        <div class="col-sm-2" id="sidebar">
+          <div ng-include="'appJS/sidebar/_side_bar.html'"></div>
+        </div>
+
+        <div class="col-sm-10" id="main-content">
           <ui-view></ui-view>
         </div>
-        <!-- END CONTENT -->
 
-        <!-- FOOTER HERE  -->
-        <footer data-ng-include="'appJS/footer/_footer.html'"></footer>
-        <!-- END FOOTER -->
+      </div>
 
-        <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a> 
+      <div ng-hide="signedIn()">
 
-        <!-- MODALS HERE -->
-        <div class="modals">
-              <div data-ng-include="'appJS/auth/_loginRegisterModal.html'"></div>
-              <div data-ng-include="'appJS/auth/_forget_password.html'">
+        <div class="col-sm-12">
+          <ui-view></ui-view>
         </div>
-        <!-- END MODALS -->
 
-        <script>
-          /*For textarea*/
-          autosize(document.querySelectorAll('textarea'));
-          // $(document).ready(function(e) {
-          //   $('#login-on-register').click(function(e) {
-          //     $('#register-modal').modal('toggle');
-          //     $('#login-modal').modal('toggle');
-          //   });
+      </div>
+    </div>
 
-          //   $('#signup-on-login').click(function(e) {
-          //     $('#register-modal').modal('toggle');
-          //     $('#login-modal').modal('toggle');
-          //   });
+  </div>
+  <!-- END CONTENT -->
+  <!-- BN -->
+  <div class="pull-right" flash-message="3000" ></div>
+  <!-- EN -->
+  <!-- FOOTER HERE  -->
+  <footer data-ng-include="'appJS/footer/_footer.html'"></footer>
+  <!-- END FOOTER -->
 
-          //   $('#forget-password-on-login').click(function(e) {
-          //     $('#login-modal').modal('toggle');
-          //   });
+  <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
 
-          // });
-        </script>
-        <script>
-          NotifierjsConfig.position = ["bottom", "right"];
-        </script>
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=geometry"></script>
+  <%= javascript_include_tag 'appJS/application' %>
+
+  <script>
+    NotifierjsConfig.position = ["bottom", "right"];
+  </script>
 
 </body>
 </html>

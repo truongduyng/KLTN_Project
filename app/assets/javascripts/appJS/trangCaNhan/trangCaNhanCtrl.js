@@ -1,4 +1,4 @@
-// app.controller('trangCaNhanCtrl', ['$scope', 'Auth', '$modal', 'trangCaNhanService', 
+// app.controller('trangCaNhanCtrl', ['$scope', 'Auth', '$modal', 'trangCaNhanService',
 //  '$location','authenUser', function($scope, Auth, $modal, trangCaNhanService, $location, authenUser) {
 
 
@@ -14,7 +14,6 @@
 // 			size: '',
 // 			resolve: {
 // 				currentUser: function() {
-// 					console.log("currentUser in resolve", $scope.currentUser);
 // 					return $scope.currentUser;
 // 				}
 // 			}
@@ -106,7 +105,6 @@ app.controller('trangCaNhanCtrl', ['$scope', 'Auth', '$modal', 'trangCaNhanServi
 				size: '',
 				resolve: {
 					currentUser: function() {
-						console.log("currentUser in resolve", $scope.currentUser);
 						return $scope.currentUser;
 					}
 				}
@@ -174,7 +172,7 @@ app.controller('trangCaNhanCtrl', ['$scope', 'Auth', '$modal', 'trangCaNhanServi
 				controller: 'changeAvatarCtrl',
 				size: '',
 			});
-			
+
 			modalInstance.result.then(function(updatedUser) {
 				angular.copy(updatedUser, $scope.currentUser);
 				$scope.currentUser.avatar = null;

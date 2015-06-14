@@ -8,7 +8,6 @@ app.factory('listPostService', ['$http', function($http) {
 		var url = "/posts.json";
 		var query = "?page=" + page;
 		var promise = $http.get(url + query).success(function(data) {
-			console.log("on load sucess", data);
 			//vi load more nen giu lai du lieu cu, do do them du lieu moi vao cuoi mang
 			data.forEach(function(item){
 				o.posts.splice(o.posts.length, 0, item);

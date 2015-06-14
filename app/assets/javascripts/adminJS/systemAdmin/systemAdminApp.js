@@ -1,7 +1,7 @@
 var app = angular.module('sportaSystemAdmin', ["ui.router", 'templates', 'Devise', 'angular-flash.flash-alert-directive',
 	'sporta.services', 'sporta.directives', 'sporta.filters',
 	'angular-flash.service', 'flash', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging', 'infinite-scroll','ngAnimate',
-	'ngMap',
+	'ngMap', 'ckeditor', 'ngCookies', 'ngSanitize'
 ]);
 
 // //For intercept $http
@@ -38,14 +38,10 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	$stateProvider
 		.state("home", {
 			url: "/",
-			templateUrl: 'appJS/home/_home.html',
-			controller: 'homeCtrl',
-			resolve: {
-				posts: ['listPostService', function(listPostService) {
-					return listPostService.get_all(1);
-				}],
-			}
+			templateUrl: 'adminJS/systemAdmin/home/_home.html',
+			controller: 'SAhomeCtrl',
 		})
+
 		.state('duyetBaiViet', {
 			url: '/duyet-bai-viet',
 			templateUrl: 'adminJS/systemAdmin/baiViet/duyetBaiViet/_duyetBaiViet.html',
@@ -77,7 +73,18 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 				}],
 			}
 		})
-		
+
+		.state("mauThongBao", {
+			url: '/mau-thong-bao',
+			templateUrl: 'adminJS/systemAdmin/mauThongBao/_mauThongBao.html',
+			controller: 'SAmauThongBaoCtrl',
+			resolve:{
+				notificationTemplates: ['SAmauThongBaoService', function(mauThongBaoService){
+					return mauThongBaoService.getAllNotificationTemplates();
+				}],
+			}
+		})
+
 	//$urlRouterProvider.otherwise('/');
 
 }]);

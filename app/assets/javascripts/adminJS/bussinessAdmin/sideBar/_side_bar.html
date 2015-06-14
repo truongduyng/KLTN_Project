@@ -1,33 +1,23 @@
-<!--sidebar start-->
-<aside>
-    <div id="sidebar"  class="nav-collapse "> 
-      <!-- sidebar menu start-->
-      <ul class="sidebar-menu">
-        <li class="active" class="sub-menu">
-        <a href="index.html" class=""> <i class="icon_documents_alt"></i> <span>Thông tin</span> </a>
-        </li>
-        <li class="sub-menu">
-            <a href="/bussiness-admin#/quan-ly-chi-nhanh" class=""> <i class="icon_documents_alt"></i> <span>Quản lý chi nhánh</span> </a>
-        </li>
-        <li class="sub-menu">
-         <a href="javascript:;" class=""> <i class="icon_genius"></i> <span>Quản lý sân</span> <span class="menu-arrow arrow_carrot-right"></span> </a>
-          <ul class="sub">
-            <li><a class="" href="bussiness-admin#/quan-ly-loai-san">Quản lý loại sân và giá</a></li>
-            <li><a class="" href="bussiness-admin#/quan-ly-san">Quản lý sân</a></li>
-          </ul>
-        </li>
-        <li class="sub-menu">
-            <a href="quan-ly-don-dat-hang.html" class=""> <i class="icon_documents_alt"></i> <span>Quản lý đơn hàng</span> </a>
-        </li>
-        <li class="sub-menu">
-         <a href="javascript:;" class=""> <i class="icon_genius"></i> <span>Thống kê</span> <span class="menu-arrow arrow_carrot-right"></span> </a>
-          <ul class="sub">
-            <li><a class="" href="duyetbaiviet.html">Duyệt bài viết</a></li>
-            <li><a class="" href="danhsachbaiviet.html">Danh sách bài viết</a></li>
-          </ul>
-        </li>
-      </ul>
-      <!-- sidebar menu end--> 
-    </div>
+<aside class="main-sidebar" data-ng-controller="BAsideBarCtrl">
+  <section class="sidebar">
+    <ul class="sidebar-menu">
+      <li class="active treeview">
+        <a href="#/quan-ly-ve/chinhanh1"><i class='fa fa-link'></i> <span>Quản lý lich dat</span> <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+          <!-- <li><a href="#/quan-ly-ve/chinhanh1">Chi nhanh 1</a></li> -->
+          <li ng-if="isLoadingBranches"><p><i class="fa fa-spinner fa-spin"></i></p></li>
+          <li ng-repeat="(index, branch) in branches"><a ui-sref="ticket_management({branch_url_alias: branch.url_alias})">{{branch.name}}</a></li>
+        </ul>
+      </li>
+      <li class="treeview">
+        <a href="#/"><i class='fa fa-link'></i> <span>Quản lý chi nhánh</span> <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+          <li ng-if="isLoadingBranches"><p><i class="fa fa-spinner fa-spin"></i></p></li>
+          <li ng-repeat="(index, branch) in branches"><a ui-sref="branch_management({branch_url_alias: branch.url_alias})">{{branch.name}}</a></li>
+           <li><a ui-sref="new_branch"><i class="fa fa-plus"></i> Thêm mới</a></li>
+        </ul>
+      </li>
+      <li><a href="#"><i class='fa fa-link'></i> <span>Thông tin doanh nghiep</span></a></li>
+    </ul>
+  </section>
 </aside>
-<!--sidebar end--> 

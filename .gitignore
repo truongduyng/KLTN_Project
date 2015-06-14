@@ -17,3 +17,6 @@
 
 # Ignore all libraby
 /vendor/assets
+/vendor/assets/bower_components
+/public/uploads
+

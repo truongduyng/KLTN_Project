@@ -1,7 +1,6 @@
 class PostsController < ApplicationController
-	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo, :like, :unlike, :edit, :update, :get_posts_by_current_user, :destroy]
-	# before_action :authenticate_user!, only: [:destroy]
-	before_action :find_published_post, only: [:like, :unlike, :get_k_first_like, :get_all_likes]
+	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo, :like, :unlike, :edit, :update, :get_posts_by_current_user, :destroy, :follow, :unfollow]
+	before_action :find_published_post, only: [:like, :unlike, :get_k_first_like, :get_all_likes, :follow, :unfollow]
 	before_action :find_and_check_post_with_user, only: [:add_photo, :destroy]
 	before_action :find_post_for_show, only: [:show]
 	before_action :find_post_for_edit, only: [:edit, :delete_photo, :update]
@@ -9,15 +8,13 @@ class PostsController < ApplicationController
 	#/posts.json
 	#Get all published post for display on home
 	def index
-		sleep(1)
 		@posts = Post.published.desc(:updated_at).paginate(page: params[:page], per_page: 9)
-		# render json: @posts, status: :ok
 	end
 
-	def show	
+	def show
 	end
 
-	def create 
+	def create
 		@post = Post.new(post_params)
 		@post.user = current_user
 		if @post.save
@@ -43,7 +40,7 @@ class PostsController < ApplicationController
 				deleted_photos[:deleted_photos].each do |photo_id|
 					begin
 						photo = @post.photos.find(photo_id)
-						photo.destroy	
+						photo.destroy
 					rescue Mongoid::Errors::DocumentNotFound
 					end
 				end
@@ -58,8 +55,9 @@ class PostsController < ApplicationController
 	def destroy
 		#xoa tat ca bai viet yeu thich gan voi post nay
 		FavoritePost.where(post_id: @post.id).destroy_all
+		#Neu photo ko embeded in post thi xoa lun photo
 		@post.destroy
-		render nothing: true, status: :ok, content_type: 'application/json' 
+		render nothing: true, status: :ok, content_type: 'application/json'
 	end
 
 	#/posts/:id/add_photo
@@ -75,7 +73,7 @@ class PostsController < ApplicationController
 	end
 
 	#DELETE /posts/:id/delete_photo
-	def delete_photo	
+	def delete_photo
 		begin
 			@photo = @post.photos.find(params[:photo_id])
 			@photo.destroy
@@ -87,25 +85,47 @@ class PostsController < ApplicationController
 
 	# /posts/:id/like
 	def like
-
 		if @post.likes.where('user_id' => current_user.id).first
 			render nothing: true, status: :bad_request, content_type: 'application/json'
 		else
-			@post.likes.create(user: current_user)
+			like = @post.likes.create(user: current_user)
+			#Tao thong bao
+			#Chi thong bao khi ai do thich bai viet ma ai do theo doi va ko thong bao khi chu bai viet tu thich bai viet cua minh
+			if @post.user != current_user
+				#TH2: Neu ai do thich bai post cua nguoi do, thi
+				#gui thong bao den tat ca nguoi theo doi, nguoi chu bai viet , tuy
+				#nhien ko gui thong bao den nguoi thich
+				#B1: Gui thong bao den cac nguoi theo doi vs loai "ai do thich bai viet ban dang theo doi"
+				target_user_ids = @post.follower_ids.clone
+				target_user_ids.delete(current_user.id)
+				NotificationChange.create_notifications(target_user_ids, @post, current_user, like, NotificationCategory.thich_bai_viet_ban_dang_theo_doi)
+				#B2: Gui thong bao den chu bai viet vs loai "ai do thich bai viet cua ban"
+				NotificationChange.create_notifications([@post.user.id], @post,  current_user, like, NotificationCategory.thich_bai_viet)
+			end
 			render nothing: true, status: :created, content_type: 'application/json'
 		end
-		
 	end
 
 	#/posts/:id/unlike
 	def unlike
 		like = @post.likes.where('user_id' => current_user.id).first
 		if like
+			#Xoa thong bao neu co the
+			#Neu thong bao do chua dc load va xem (is_new = true) thi xoa no di, con neu da dc xem rui thi coi nhu la lich su
+			if @post.user != current_user
+				#TH2: Xoa cac thong bao dc gui toi followers duoi dang "ai do thich bai viet ban dang theo doi" va
+				#xoa thong bao gui toi chu bai viet duoi dang "binh luan len bai viet cua ban"
+				target_user_ids = @post.follower_ids.clone
+				target_user_ids.delete(current_user.id)
+				NotificationChange.delete_notification_changes(target_user_ids, @post, current_user, like, NotificationCategory.thich_bai_viet_ban_dang_theo_doi)
+				NotificationChange.delete_notification_changes([@post.user.id], @post,  current_user, like, NotificationCategory.thich_bai_viet)
+			end
+
 			like.destroy
 			render nothing: true, status: :ok, content_type: 'application/json'
 		else
 			render nothing: true, status: :bad_request, content_type: 'application/json'
-		end		
+		end
 	end
 
 	# /posts/:id/get_k_first_like.json
@@ -125,16 +145,47 @@ class PostsController < ApplicationController
 	end
 
 
+	#PUT /posts/:id/follow.json
+	def follow
+		#TH1: Nguoi do ko tu theo doi bai viet nguoi do.
+		#TH2: Chi follow khi nguoi do chua follow
+		if current_user != @post.user &&  !@post.follower_ids.include?(current_user.id) && !current_user.followed_post_ids.include?(@post.id)
+			@post.follower_ids << current_user.id
+			current_user.followed_post_ids << @post.id
+			@post.save
+			current_user.save
+			render nothing: true, status: :ok, content_type: 'application/json'
+		else
+			render nothing: true, status: :bad_request, content_type: 'application/json'
+		end
+	end
+
+	#PUT /posts/:id/unfollow.json
+	def unfollow
+		#TH1: Nguoi do ko tu bo theo doi bai viet nguoi do.
+		#Chi unfollow khi nguoi do da follow
+		if  current_user != @post.user &&  @post.follower_ids.include?(current_user.id)  && current_user.followed_post_ids.include?(@post.id)
+			@post.follower_ids.delete current_user.id
+			current_user.followed_post_ids.delete @post.id
+			@post.save
+			current_user.save
+			render nothing: true, status: :ok, content_type: 'application/json'
+		else
+			render nothing: true, status: :bad_request, content_type: 'application/json'
+		end
+	end
+
 
 	#cho trang profile
 	#Lay tat ca nhung post boi username
 	# #GET /posts/get_posts_by_username/:username
-	# def get_posts_by_username 
+	# def get_posts_by_username
 	# 	@posts = User.where(username: )
 	# end
 
 	#tra ve tat ca post cho nguoi dung hien tai
 	#GET /posts/get_posts_by_current_user.json
+
 	def get_posts_by_current_user
 		@all_posts = current_user.posts.all
 		render 'get_posts_by_current_user.json.jbuilder', status: :ok
@@ -158,7 +209,7 @@ class PostsController < ApplicationController
 			end
 			render 'get_posts_by_username.json.jbuilder', status: :ok
 		else
-			render nothing: true, status: :not_found, content_type: 'application/json'	
+			render nothing: true, status: :not_found, content_type: 'application/json'
 		end
 	end
 
@@ -172,11 +223,10 @@ class PostsController < ApplicationController
 			@total = user.favorite_posts.count
 			render 'get_favorite_posts_by_username.json.jbuilder', status: :ok
 		else
-			render nothing: true, status: :not_found, content_type: 'application/json'	
+			render nothing: true, status: :not_found, content_type: 'application/json'
 		end
 	end
 
-	
 	private
 		def post_params
 			params.require(:post).permit(:title, :body)
@@ -204,7 +254,6 @@ class PostsController < ApplicationController
 			end
 		end
 
-
 		#Post hoac publish hoac la chinh cua la nguoi do
 		def find_post_for_show
 			begin
@@ -225,7 +274,6 @@ class PostsController < ApplicationController
 			end
 		end
 
-
 		def find_post_for_edit
 			begin
 				@post = Post.find(params[:id])
@@ -242,7 +290,4 @@ class PostsController < ApplicationController
 			end
 		end
 
-		
 end
-
-

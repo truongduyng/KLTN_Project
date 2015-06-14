@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -40,3 +41,49 @@
 
   </body>
 </html>
+=======
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="keyword" content="">
+
+  <title>Sporta - Quan ly</title>
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=geometry"></script>
+  <%= favicon_link_tag %>
+  <%= stylesheet_link_tag    'adminCSS/bussinessAdmin/application', media: 'all'%>
+  <%= csrf_meta_tags %>
+
+</head>
+
+<body ng-app="sportaBussinessAdmin" ng-controller="BAmainCtrl" class="skin-yellow sidebar-collapse">
+  <div class="wrapper">
+    <header class="main-header">
+      <div data-ng-include="'adminJS/bussinessAdmin/header/_header.html'"></div>
+    </header>
+
+    <aside class="main-sidebar">
+      <section class="sidebar">
+        <div data-ng-include="'adminJS/bussinessAdmin/sideBar/_side_bar.html'"></div>
+      </section>
+    </aside>
+
+    <div class="content-wrapper">
+      <section  class="content">
+        <div ui-view></div>
+      </section>
+    </div>
+
+    <div class="pull-right" flash-message="3000" ></div>
+
+    <footer class="main-footer">
+      Copyright &copy; 2015 <a href="#">Sporta
+    </a>
+  </footer>
+</div>
+
+<%= javascript_include_tag 'adminJS/bussinessAdmin/application' %>
+</body>
+</html>
+>>>>>>> merge_loginFacebook_merge_bussiness_admin

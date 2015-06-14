@@ -1,97 +1,83 @@
-<div class="row" style="margin-top:-15px;">
-    <!-- BEGIN LEFT COLUMN -->
-    <div class="col-md-2">
-      <section ng-if="currentUser._id.$oid == authenUser._id.$oid && !currentUser.is_bussiness_admin" ng-include="'appJS/modules/_KhTkDoanhNghiepModule.html'"></section>
-      <section ng-include="'appJS/modules/_groupModule.html'"></section>
-      <section ng-include="'appJS/modules/_vietBaiModule.html'"></section>
-    </div>
-    <!-- END LEFT COLUMN -->
+<div class="row">
 
-    <!-- BEGIN MAIN COLUMN -->
-    <div class="col-md-6 detail-main-column">
-          <span style="border: 1px solid #337AB7; display:block;margin:0px -15px; margin-bottom: 10px; background-color: #337AB7; text-align: center; font-size: 1.4em; padding: 10px 0px; color:#FFFFFF;"><strong>TRANG CÁ NHÂN</strong></span>
-          <!-- BEGIN THONG TIN CA NHAN -->
-          <div class="well" style="overflow: hidden; margin: 0px -15px;">
-                <div class="row">
-                    <!-- BEGIN COL FOR INFO PICTURE -->
-                    <div class="col-xs-3">
-                      <img width="128px" fallback-src="sportaLogo" ng-src="{{currentUser.avatar.avatar.url|logo}}" class="img-responsive center-block img-circle profile-picture">
-                      
-                      <!-- FOR CHANGE PROFILE PICTURE -->
-                      <div ng-if="permission.all" style="text-align: center; margin-top: 48px;">
-                        <a ng-click="showChangeAvatarModal()" class="btn btn-primary" tooltip="Thay ảnh đại diện"><span class="glyphicon glyphicon-edit"></span></a>
-                      </div>
-                      
-                    </div>
-                    <!-- END COL FOR INFO PICTURE -->
-                    <!-- BEGIN COL FOR INFORMATION -->
-                    <div class="col-xs-9" style="margin-left: -5px;">
-                        <div class="row profile-info">
-                          <div class="col-sm-12">
-                            <p>Tên: <span class="fullname"><strong><span>{{currentUser.firstname}} </span><span>{{currentUser.lastname}}</span></strong></span></p>
-                            <p>Giới tính: <span class="fullname">{{currentUser.gender | notKnow}}</span></p>
-                            <p>Email: <span class="email">{{currentUser.email}}</span></p>
-                            <p>Địa chỉ: <span class="address">{{currentUser.address | notKnow}}</span></p>
-                            <p>Điện thoại : <span class="phone">{{currentUser.phone | notKnow}}</span></p>
-                            <a ng-if="permission.all" ng-click="showEditProfileModal()" class="btn btn-success" >Chỉnh sửa tài khoản</a>
-                            <a ng-if="permission.all" ng-click="showChangePasswordModal()" class="btn btn-success">Đổi mật khẩu</a>
-                          </div>
-                        </div>
-                    </div>
-                <!-- END COL FOR INFORMATION -->
-                </div>
-                <hr>
-                <!-- BEGIN ROW FOR INTRODUCE -->
-                <div class="row">
-                  <div class="col-sm-12">
-                     <p>Giới thiệu: <span class="introduce">{{currentUser.description | notKnow}}</span></p>
-                  </div>
-                </div>
-                <!-- END ROW FOR INTRODUCE -->
+  <!-- BEGIN MAIN COLUMN -->
+  <div class="detail-main-column">
+    <!-- BEGIN THONG TIN CA NHAN -->
+    <div class="well" style="overflow: hidden;">
+      <div class="row">
+        <!-- BEGIN COL FOR INFO PICTURE -->
+        <div class="col-xs-3">
+          <img width="128px" fallback-src="sportaLogo" ng-src="{{currentUser.avatar.avatar.url|logo}}" class="img-responsive center-block img-circle profile-picture">
+
+          <!-- FOR CHANGE PROFILE PICTURE -->
+          <div ng-if="permission.all" style="text-align: center; margin-top: 48px;">
+            <a ng-click="showChangeAvatarModal()" class="btn btn-primary" tooltip="Thay ảnh đại diện"><span class="glyphicon glyphicon-edit"></span></a>
           </div>
-          <hr>
-          <div class="well" style="overflow: hidden; margin: 0px -15px;">
-             <div class="row">
-              <div class="col-sm-12">
-                    <div flash-message=""></div>
-                     <tabset>
-                        <tab select="onTabSelect('bai-viet-ca-nhan')" active="isBaiVietCaNhanModule" heading="Bài viết cá nhân">
-                          <section ng-include="'appJS/trangCaNhan/modules/baiVietCaNhan/_baiVietCaNhan.html'"></section>
-                        </tab>
-                        <tab select="onTabSelect('bai-viet-yeu-thich')" active="isBaiVietYeuThichModule" heading="Bài viết yêu thích">
-                          <section ng-include="'appJS/trangCaNhan/modules/baiVietYeuThich/_baiVietYeuThich.html'"></section>
-                        </tab>
-                        <tab ng-if="permission.all" select="onTabSelect('thong-bao')" active="isThongBaoModule" heading="Thông báo">
-                          <section ng-include="'appJS/trangCaNhan/modules/_thongBao.html'"></section>
-                        </tab>
-                        <tab ng-if="permission.all" select="onTabSelect('quan-ly-ve')" active="isQuanLyVeModule" heading="Quản lý vé">
-                          <section ng-include="'appJS/trangCaNhan/modules/_quanLyVe.html'"></section>
-                        </tab>
-                    </tabset>
-              </div>
+
+        </div>
+        <!-- END COL FOR INFO PICTURE -->
+        <!-- BEGIN COL FOR INFORMATION -->
+        <div class="col-xs-9" style="margin-left: -5px;">
+          <div class="row profile-info">
+            <div class="col-sm-12">
+              <p>Họ tên: <span class="fullname"><strong><span>{{currentUser.fullname}} </span></strong></p>
+              <p>Giới tính: <span class="fullname">{{currentUser.gender | notKnow}}</span></p>
+              <p>Email: <span class="email">{{currentUser.email}}</span></p>
+              <p>Địa chỉ: <span class="address">{{currentUser.address | notKnow}}</span></p>
+              <p>Điện thoại : <span class="phone">{{currentUser.phone | notKnow}}</span></p>
+              <a ng-if="permission.all" ng-click="showEditProfileModal()" class="btn btn-success" >Chỉnh sửa tài khoản</a>
+              <a ng-if="permission.all && !currentUser.is_login_facebook" ng-click="showChangePasswordModal()" class="btn btn-success">Đổi mật khẩu</a>
+            </div>
           </div>
-        
-          </div>
-          <!-- END THONG TIN CA NHAN -->
-
-
-
-
-    </div>
-     <!-- END MAIN COLUMN -->
-
-      <!-- BEGIN RIGHT COLUMN -->
-      <div class="col-md-4">  
-        <section ng-include="'appJS/modules/postSearchModules/_postSearchModule.html'"></section>
+        </div>
+        <!-- END COL FOR INFORMATION -->
       </div>
-      <!-- END RIGHT COLUMN -->
+      <hr>
+      <!-- BEGIN ROW FOR INTRODUCE -->
+      <div class="row">
+        <div class="col-sm-12">
+         <p>Giới thiệu: <span class="introduce">{{currentUser.description | notKnow}}</span></p>
+       </div>
+     </div>
+     <!-- END ROW FOR INTRODUCE -->
+   </div>
+   <hr>
+   <div class="well" style="overflow: hidden; margin: 0px -15px;">
+     <div class="row">
+      <div class="col-sm-12">
+        <div flash-message=""></div>
+        <tabset>
+          <tab select="onTabSelect('bai-viet-ca-nhan')" active="isBaiVietCaNhanModule" heading="Bài viết cá nhân">
+            <section ng-include="'appJS/trangCaNhan/modules/baiVietCaNhan/_baiVietCaNhan.html'"></section>
+          </tab>
+          <tab select="onTabSelect('bai-viet-yeu-thich')" active="isBaiVietYeuThichModule" heading="Bài viết yêu thích">
+            <section ng-include="'appJS/trangCaNhan/modules/baiVietYeuThich/_baiVietYeuThich.html'"></section>
+          </tab>
+          <tab ng-if="permission.all" select="onTabSelect('thong-bao')" active="isThongBaoModule" heading="Thông báo">
+            <section ng-include="'appJS/trangCaNhan/modules/_thongBao.html'"></section>
+          </tab>
+          <tab ng-if="permission.all" select="onTabSelect('quan-ly-ve')" active="isQuanLyVeModule" heading="Quản lý vé">
+            <section ng-include="'appJS/trangCaNhan/modules/_quanLyVe.html'"></section>
+          </tab>
+        </tabset>
+      </div>
+    </div>
+
+  </div>
+  <!-- END THONG TIN CA NHAN -->
+
+
+
+
+</div>
+<!-- END MAIN COLUMN -->
 </div>
 
- <style>
-    .cropArea {
-      background: #E4E4E4;
-      overflow: hidden;
-      width:500px;
-      height:350px;
-    }
-  </style>
+<style>
+  .cropArea {
+    background: #E4E4E4;
+    overflow: hidden;
+    width:500px;
+    height:350px;
+  }
+</style>

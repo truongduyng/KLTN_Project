@@ -1,17 +1,24 @@
-class Post 
+class Post
 	include Mongoid::Document
 	include Mongoid::Timestamps
 	include Mongoid::Paranoia
-	
+
 	field :title, type: String
 	field :body, type: String
 	#Chi test nen de default la true, mac dinh la false
 	belongs_to :post_status
-	
-	embeds_many :photos
-	belongs_to :user
+
+	embeds_many :photos, as: :photoable
+	belongs_to :user, class_name: 'User', inverse_of: :posts
 	has_many :comments, dependent: :destroy
 	embeds_many :likes, as: :likeable
+	#Notification system
+	#Doi tuong nay co the duoc notification lien quan
+	has_many :notifications, as: :notificable
+	#trigger 1 thong bao nao (chap nhan hay tu choi bai viet)
+	has_one :notification_change_trigger, as: :trigger_source
+	#followers
+	has_and_belongs_to_many :followers, class_name: 'User', inverse_of: :followed_posts
 
 	#scope
 	#Get published post
@@ -29,25 +36,20 @@ class Post
 		deny_status = PostStatus.deny_status
 		self.any_of({post_status_id: publishedStatus.id}, {post_status_id: deny_status.id})
 	}
-	
+
 	#validate
 	validates :title, presence: true
 	validates :body, presence: true
+
 	#callback
 	before_create :init_post_status
 
-	#Method
-	#check 1 post da publish chua, return true or false
 	def published?
-		# puts 'in method'
 		self.post_status.name == 'Đã duyệt'
 	end
 
 	private
-		#Gan gia tri chua duyet la mac dinh khi tao ra post
-		def init_post_status
-			# @status = PostStatus.where(name: 'Chưa duyệt').first
-			# self.post_status = @status
-			self.post_status = PostStatus.not_published_status
-		end
+	def init_post_status
+		self.post_status = PostStatus.not_published_status
+	end
 end

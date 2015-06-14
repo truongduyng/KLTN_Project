@@ -1,44 +1,42 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
+
   protect_from_forgery with: :exception
-
-  respond_to :json
   
-  #before_action :authenticate_user!
-  
-  def angular
-    puts '------------------------------------------------------------------------------------------------------------------------------------------'
-    puts current_user
-    puts '------------------------------------------------------------------------------------------------------------------------------------------'
+  after_filter :set_csrf_cookie_for_ng
+  def set_csrf_cookie_for_ng
+    cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
+  end
 
+  respond_to :html, :json
+  layout false
+
+  def home
     render 'layouts/application'
   end
 
-  def angular_admin
-    render 'layouts/admin'
+  def bussiness_admin
+    render 'layouts/bussiness_admin'
+  end
+
+  def system_admin
+    render 'layouts/system_admin'
+  end
+
+  def not_found
+    render(:file => "#{Rails.root}/public/404.html")
   end
 
   #for devise
   before_action :configure_permitted_parameters, if: :devise_controller?
+
   protected
-    	def configure_permitted_parameters
-    	    # render json: params, status: :ok
-          devise_parameter_sanitizer.for(:sign_up) << [:username, :firstname, :lastname]
-    	    
-          devise_parameter_sanitizer.for(:account_update) << [:username, :firstname, :lastname]
-          
-          # #for change password
-          # devise_parameter_sanitizer.for(:account_update) { |u| 
-          #   u.permit(:password, :password_confirmation, :current_password) 
-          # }
-          
-          #  devise_parameter_sanitizer.for(:account_update) << [:password, :password_confirmation, :current_password, :username, :firstname, :lastname]
-          
-          # # #for change password
-          # # devise_parameter_sanitizer.for(:account_update) { |u| 
-          # #   u.permit(:password, :password_confirmation, :current_password) 
-          # # }
-    	end
-    
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.for(:sign_up) << [:username, :fullname, :phone]
+      devise_parameter_sanitizer.for(:account_update) << [:username, :fullname, :phone, :role_name]
+    end
+    # In Rails 4.2 and above
+    def verified_request?
+      super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
+    end
+
 end

@@ -3,7 +3,6 @@ app.controller('SAduyetDoanhNghiepCtrl', ['$scope', 'SAduyetDoanhNghiepService',
 		$scope.message = "this is message";
 
 		$scope.bussinessRequests = duyetDoanhNghiepService.bussinessRequests;
-		console.log("bussinessRequests", $scope.bussinessRequests);
 		//Cau hinh pagination
 		$scope.pageConfig = {};
 		angular.copy($scope.$root.rootPageConfig, $scope.pageConfig);
@@ -143,11 +142,10 @@ app.controller('SAduyetDoanhNghiepCtrl', ['$scope', 'SAduyetDoanhNghiepService',
 		// 	marker.setMap($scope.map);
 		// 	$scope.map.setCenter(marker.getPosition());
 		// 	$scope.map.setZoom(15);
-		// 	//Dang ki su kien dragend cho marker de lay vi tri moi	
+		// 	//Dang ki su kien dragend cho marker de lay vi tri moi
 		// 	google.maps.event.addListener(marker, 'dragend', function() {
 		// 		$scope.bussinessRequest.latitude = marker.getPosition().lat();
 		// 		$scope.bussinessRequest.longitude = marker.getPosition().lng();
-		// 		console.log("bussinessRequest: ", $scope.bussinessRequest);
 		// 	});
 		// };
 	}

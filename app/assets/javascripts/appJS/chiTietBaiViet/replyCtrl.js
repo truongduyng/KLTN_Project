@@ -5,9 +5,9 @@ app.controller('replyCtrl', ['$scope', 'replyService', '$modal',
 
 		$scope.isReplying = false;
 		$scope.isEditing = false;
+
 		$scope.addReply = function(comment) {
 			$scope.isReplying = true;
-			// console.log("comment for reply", comment);
 			replyService.create(comment, $scope.reply).success(function() {
 				$scope.reply.content = "";
 				comment.isReply = false;
@@ -69,7 +69,7 @@ app.controller('replyCtrl', ['$scope', 'replyService', '$modal',
 		///Hien thi modal show like cua post
 		$scope.showAllLikes = function(comment, reply) {
 			var modalInstance = $modal.open({
-				templateUrl: 'showAllLikesModal.html',
+				templateUrl: 'appJS/all_likes/all_likes_modal.html',
 				controller: 'showAllLikesReplyCtrl',
 				size: '',
 				resolve: {

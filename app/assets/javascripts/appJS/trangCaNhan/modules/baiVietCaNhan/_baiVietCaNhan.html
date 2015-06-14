@@ -1,79 +1,79 @@
 <div data-ng-controller="baiVietCaNhanCtrl">
-<h2 id="baiVietCaNhan"></h2>
-<div class="row">
-  <form novalidate name="searchPostForm" class="form-tim-kiem">
-    <div class="col-xs-6 col-form-tim-kiem">
+  <h2 id="baiVietCaNhan"></h2>
+  <div class="row">
+    <form novalidate name="searchPostForm" class="form-tim-kiem">
+      <div class="col-xs-6 col-form-tim-kiem">
        <input ng-model="textSearch" type="text" class="form-control" id="name" placeholder="Tìm kiếm...">
-    </div>
-    <div class="col-xs-3 col-form-tim-kiem">
+     </div>
+     <div class="col-xs-3 col-form-tim-kiem">
        <select ng-model="searchType" class="form-control" name="searchType">
-                <option>Tên bài viết</option>
-                <option>Nội dung bài viết</option>
-                 <option>Hiển thị tất cả</option>
-        </select>
+        <option>Tên bài viết</option>
+        <option>Nội dung bài viết</option>
+        <option>Hiển thị tất cả</option>
+      </select>
     </div>
     <div class="col-xs-3 col-form-tim-kiem">
-       <button ng-click="search()" ng-disabled="searchPostForm.$invalid" type="submit" class="btn btn-primary btn-tim-kiem">Tìm kiếm</button>
-    </div>
-  </form>
+     <button ng-click="search()" ng-disabled="searchPostForm.$invalid" type="submit" class="btn btn-primary btn-tim-kiem">Tìm kiếm</button>
+   </div>
+ </form>
 </div>
 
 
 <h1></h1>
 <div class="row">
   <div class="col-sm-12 danh-sach-bai-viet">
-       
-        <div class="bai-viet" ng-repeat="post in posts | orderBy: '-updated_at'" >
-              <div class="row">
-                <div class="col-xs-2">
-                  <img fallback-src="sportaLogo" ng-src="{{currentUser.avatar.avatar.url |logo}}" class="img-circle profile-picture" width="64px" height="64px">
-                </div>
-                <div class="col-xs-10">
-                  <span class="owner-bai-viet">{{currentUser.firstname| fullname: currentUser.lastname}}</span>
-                  <span>{{post.updated_at | timeago}}</span>
-                  <span class="label pull-right" ng-class="{'label-success': post.published, 'label-danger': !post.published}">{{post.status.name}}</span>
-                </div>
-              </div>
-              <div class="row noi-dung-bai-viet" >
-                <div class="col-xs-12">
-                      <span class="tua-de-bai-viet">
-                        <a ui-sref="chiTietBaiViet({id: post._id.$oid})">{{post.title}}</a>
-                      </span>
-                      <div class="mo-ta-bai-viet">
-                        {{post.body}}
-                      </div>
-                      <p></p>
-                      <div class="btn-group pull-right" role="group" aria-label="...">  
-                          <a ui-sref="chiTietBaiViet({id: post._id.$oid})" class="btn btn-default" tooltip="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
-                          <a  ng-if="!post.published && permission.all" ui-sref="editPost({id: post._id.$oid})" class="btn btn-default" tooltip="Chỉnh sửa bài viết"><span class="glyphicon glyphicon-edit"></span></a>
-                          <a   ng-if="permission.all" ng-confirm-click="Bạn có muốn xóa bài viết hay không ?" confirmed-click="deletePost(post)" class="btn btn-default" tooltip="Xóa bài viết"><span class="glyphicon glyphicon-trash"></span></a>
-                      </div>
-                     
-                </div>
-          </div>
+
+    <div class="bai-viet" ng-repeat="post in posts | orderBy: '-updated_at'" >
+      <div class="row">
+        <div class="col-xs-2">
+          <img fallback-src="sportaLogo" ng-src="{{currentUser.avatar.avatar.url |logo}}" class="img-circle profile-picture" width="64px" height="64px">
         </div>
-         <span ng-show="isLoading" ><img style="display:block;margin:0px auto;" src="/assets/application/placeholder/spinner_loading.gif" width="22px" height="22px"></span>
+        <div class="col-xs-10">
+          <span class="owner-bai-viet">{{currentUser.fullname}}</span>
+          <span>{{post.updated_at | timeago}}</span>
+          <span class="label pull-right" ng-class="{'label-success': post.published, 'label-danger': !post.published}">{{post.status.name}}</span>
+        </div>
+      </div>
+      <div class="row noi-dung-bai-viet" >
+        <div class="col-xs-12">
+          <span class="tua-de-bai-viet">
+            <a ui-sref="chiTietBaiViet({id: post._id.$oid})">{{post.title}}</a>
+          </span>
+          <div class="mo-ta-bai-viet">
+            {{post.body}}
+          </div>
+          <p></p>
+          <div class="btn-group pull-right" role="group" aria-label="...">
+            <a ui-sref="chiTietBaiViet({id: post._id.$oid})" class="btn btn-default" tooltip="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
+            <a  ng-if="!post.published && permission.all" ui-sref="editPost({id: post._id.$oid})" class="btn btn-default" tooltip="Chỉnh sửa bài viết"><span class="glyphicon glyphicon-edit"></span></a>
+            <a   ng-if="permission.all" ng-confirm-click="Bạn có muốn xóa bài viết hay không ?" confirmed-click="deletePost(post)" class="btn btn-default" tooltip="Xóa bài viết"><span class="glyphicon glyphicon-trash"></span></a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <span ng-show="isLoading" ><img style="display:block;margin:0px auto;" src="/assets/application/placeholder/spinner_loading.gif" width="22px" height="22px"></span>
   </div>
 </div>
 
 <div class="row">
   <div class="col-xs-12" style="text-align: center;">
-       <paging
-              class="small"
-              page="pageConfig.currentPage" 
-              page-size="pageConfig.pageSize" 
-              total="pageConfig.total"
-              adjacent="{{pageConfig.adjacent}}"
-              dots="{{pageConfig.dots}}"
-              scroll-top="{{pageConfig.scrollTop}}" 
-              hide-if-empty="{{pageConfig.hideIfEmpty}}"
-              ul-class="{{pageConfig.ulClass}}"
-              active-class="{{pageConfig.activeClass}}"
-              disabled-class="{{pageConfig.disabledClass}}"
-              show-prev-next="{{pageConfig.showPrevNext}}"
-              paging-action="onPageSelected('Paging Clicked', page)">
-      </paging> 
-  </div>
+   <paging
+   class="small"
+   page="pageConfig.currentPage"
+   page-size="pageConfig.pageSize"
+   total="pageConfig.total"
+   adjacent="{{pageConfig.adjacent}}"
+   dots="{{pageConfig.dots}}"
+   scroll-top="{{pageConfig.scrollTop}}"
+   hide-if-empty="{{pageConfig.hideIfEmpty}}"
+   ul-class="{{pageConfig.ulClass}}"
+   active-class="{{pageConfig.activeClass}}"
+   disabled-class="{{pageConfig.disabledClass}}"
+   show-prev-next="{{pageConfig.showPrevNext}}"
+   paging-action="onPageSelected('Paging Clicked', page)">
+ </paging>
+</div>
 </div>
 
 
