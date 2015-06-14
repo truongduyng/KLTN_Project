@@ -1,5 +1,5 @@
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angularFileUpload',
-	'angular-flash.service', 'angular-flash.flash-alert-directive', 'unsavedChanges', 'sporta.directives', 'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging','ngImgCrop', 'infinite-scroll', 'ngMap', 'ngStorage', 'ngSanitize']);
+	'unsavedChanges', 'sporta.directives', 'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging','ngImgCrop', 'infinite-scroll', 'ngMap', 'ngStorage', 'ngSanitize']);
 
 //For intercept $http
 app.factory('myHttpInterceptor', ['$q', '$rootScope', function($q, $rootScope) {
@@ -23,21 +23,6 @@ app.config(['$httpProvider', function($httpProvider) {
 	$httpProvider.interceptors.push('myHttpInterceptor');
 }]);
 
-
-
-//For flash service
-app.config(function(flashProvider) {
-
-	// Support bootstrap 3.0 "alert-danger" class with error flash types
-	flashProvider.errorClassnames.push('alert-danger');
-	/**
-	 * Also have...
-	 *
-	 * flashProvider.warnClassnames
-	 * flashProvider.infoClassnames
-	 * flashProvider.successClassnames
-	 */
-});
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 

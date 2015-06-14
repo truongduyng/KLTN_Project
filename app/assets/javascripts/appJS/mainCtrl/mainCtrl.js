@@ -3,45 +3,60 @@
 //do do de lang nghe su kien $stateChangeError thi ta phai tao mainCtrl la controller cha
 //cho tat ca controller va lang nghe su kien do
 
-app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '$stateParams', '$location', '$anchorScroll',
-	function($scope, $rootScope, $state, Auth, Flash, $stateParams, $location, $anchorScroll) {
+app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '$stateParams', '$location', '$anchorScroll', function($scope, $rootScope, $state, Auth, Flash, $stateParams, $location, $anchorScroll) {
 
-		$scope.signedIn = Auth.isAuthenticated;
+	$scope.signedIn = Auth.isAuthenticated;
 
-		$rootScope.$on('$stateChangeStart',
-			function(event, toState, toParams, fromState, fromParams) {
-			//Kiem tra trang thai cua route hay page co yeu cau login hay ko
-			//Sau do goi form login, va dua vao thuoc tinh co load lai trang hay de biet cach load trang
-			if (toState.access != null && !toState.access.free && !Auth.isAuthenticated()) {
-				var isLogin = toState.name === "login";
-				if (isLogin) {
-					return; // no need to redirect anymore
-				}
-				event.preventDefault(); // stop current execution
-				Flash.create("danger", "Bạn cần đăng nhập để truy cập trang này");
-				$state.go("login");
+	$rootScope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams) {
+		//Kiem tra trang thai cua route hay page co yeu cau login hay ko
+		//Sau do goi form login, va dua vao thuoc tinh co load lai trang hay de biet cach load trang
+		if (toState.access != null && !toState.access.free && !Auth.isAuthenticated()) {
+			var isLogin = toState.name === "login";
+			if (isLogin) {
+				return; // no need to redirect anymore
 			}
-			//Kiem tra neu da chung thuc thi ko the toi 2 trang login va register
-			if (Auth.isAuthenticated()) {
-				if (toState.name == 'login' || toState.name == 'register') {
-					event.preventDefault();
-					$state.go("home");
-				}
+			event.preventDefault(); // stop current execution
+			Flash.create("danger", "Bạn cần đăng nhập để truy cập trang này");
+			$state.go("login");
+		}
+		//Kiem tra neu da chung thuc thi ko the toi 2 trang login va register
+		if (Auth.isAuthenticated()) {
+			if (toState.name == 'login' || toState.name == 'register') {
+				event.preventDefault();
+				$state.go("home");
 			}
-		});
+		}
+
+	});
 
 
-		$rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
-		//Loi nay xay ra khi resolve khi load controller bi hong
+	$rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
 		if (error.status == '404') {
 			$state.go('notFound')
 		}
 
 	});
 
-		$rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
-			console.log("scrollTo: ", $stateParams.scrollTo);
-		//Cho scroll khi xem thong bao
+	$rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams, error) {
+
+		if (toState.name === "booking"){
+			$('#sidebar').css({display: 'none'});
+			$('#sidebar').removeClass('col-sm-2');
+			$('#main-content').removeClass('col-sm-10');
+			$('#main-content').addClass('col-sm-12');
+		}
+
+		if (fromState.name === "booking" && toState.name !== "booking"){
+			$('#sidebar').css({display: 'inline'});
+			$('#sidebar').addClass('col-sm-2');
+			$('#main-content').removeClass('col-sm-12');
+			$('#main-content').addClass('col-sm-10');
+		}
+
+	});
+
+	$rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
+
 		if ($stateParams.scrollTo) {
 			$location.hash($stateParams.scrollTo);
 			$anchorScroll();
@@ -64,6 +79,7 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '
 		'disabled-class': 'disabled',
 		'show-prev-next': true,
 	};
+
 }]);
 
 //cho xu ly login xem cai nay http://plnkr.co/edit/3kImqU?p=preview

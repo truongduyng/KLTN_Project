@@ -25,14 +25,19 @@ app.controller('mapCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Au
   $scope.geocoder = new google.maps.Geocoder();
 
   $scope.$on('mapInitialized', function(e, map) {
+    $scope.map = map;
     google.maps.event.addListener(map, 'idle', (function(map) {
       return function(){
         var latlng = $scope.map.getCenter();
-        var distance = getsearchingdistance();
         $scope.markers = [];
-        $http.get("/search/"+latlng.A+"/"+latlng.F+"/"+distance).success(function(data){
+        $http.get("/search/"+latlng.A+"/"+latlng.F+"/"+$scope.distance).success(function(data){
           setMarkers($scope.map,data);
         });
+      }})(map));
+
+    google.maps.event.addListener(map, 'bounds_changed', (function(map) {
+      return function(){
+        $scope.distance = getsearchingdistance();
       }})(map));
 
   });
@@ -40,9 +45,13 @@ app.controller('mapCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Au
   $scope.callbackFunc = function(){
     $scope.map.setZoom(17);
     var latlng = $scope.map.getCenter();
-    var distance = getsearchingdistance();
+
+    if (!$scope.distance){
+      $scope.distance = 2;
+    }
+
     setUserMarker($scope.map,latlng);
-    $http.get("/search/"+latlng.A+"/"+latlng.F+"/"+distance).success(function(data){
+    $http.get("/search/"+latlng.A+"/"+latlng.F+"/"+$scope.distance).success(function(data){
       if (data != null) {
         setMarkers($scope.map,data);
       };
