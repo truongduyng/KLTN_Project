@@ -38,7 +38,7 @@ json.notifications do
 			end
 
 			if nc.notification.notificable_type == 'Comment'
-				json.content nc.notification.notificable.content
+				json.content nc.notification.comment.content
 
 				if nc.notification.notificable.post
 					json.post_title  nc.notification.notificable.post.title

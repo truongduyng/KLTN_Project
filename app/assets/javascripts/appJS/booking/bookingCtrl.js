@@ -9,6 +9,11 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   $scope.dt_end_everyweek_booking = $scope.dt;
   $scope.showtimeline = true;
   $scope.td_height = 20; //height of td
+  // $('#sidebar').css({display: 'none'});
+  // $('#sidebar').removeClass('col-sm-2');
+  // $('#main-content').removeClass('col-sm-10');
+  // $('#main-content').addClass('col-sm-12');
+  // console.log($('#sidebar'), $('#main-content'));
 
 
   if (branch.data != null){
@@ -55,7 +60,8 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     $scope.hour_end_list = [];
 
     var timenow = $scope.dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10)? tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes()) : $scope.dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)? 24 : 0 ;
-    if ((Auth._currentUser == null || Auth._currentUser.roles.name == 'user') && (hour-timenow) < -10.0/60) return false;
+
+    if (((Auth._currentUser == null || Auth._currentUser.roles.indexOf('user') > -1) && (hour-timenow) < -10.0/60) || Auth._currentUser.roles.indexOf('bussiness admin') > -1 ) return false;
 
     var max_time_length = hour + 4;
     for (var i = 0; i < tickets.tickets.length; i++) {
@@ -165,7 +171,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
       var hour_begin = tickets.change_time_to_float(ticket_del.begin_use_time.slice(11,16));
 
-      if (user.roles.name == 'user'){
+      if (user.roles.indexOf('user') > -1){
         if (hour_begin-timenow < -10.0/60) {
           var message = '<strong>Gruh!</strong> Khong the xoa ve da qua.';
           Flash.create('danger', message, 'myalert');

@@ -240,7 +240,7 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
     break;
 
     case "waiting":
-      if(Auth._currentUser != null && Auth._currentUser.roles.name == "bussiness admin"){
+      if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 ){
 
           $('.calendar_content').append(
             $("<i class='fa fa-check-circle-o ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
