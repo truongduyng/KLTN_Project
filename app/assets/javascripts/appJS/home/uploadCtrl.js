@@ -59,11 +59,11 @@ app.controller('uploadCtrl', ['$scope', '$http', 'FileUploader', '$interval', fu
     $scope.uploader.onAfterAddingFile = function(file) {
         console.log("on after adding file", file);
     };
-    
+
 }]);
 
 
-////Cach xu ly post voi upload file nao thi up ngay file do, khi post xong van co quyen bam nut post va tiep tuc uploap cho 
+////Cach xu ly post voi upload file nao thi up ngay file do, khi post xong van co quyen bam nut post va tiep tuc uploap cho
 ////hoan tat
 //B1: set autoUpload: true de file nao len thi upload file do
 //B2: Khi ma nguoi dung soan xong thi van co  quyen bam post
@@ -83,7 +83,7 @@ app.controller('uploadCtrl', ['$scope', '$http', 'FileUploader', '$interval', fu
 //Voi
 // formData: [{
 //                 name: 'Huu Trung',
-//                 age: 21, 
+//                 age: 21,
 //             },{
 //                 first: 'huu',
 //                 last: 'trung'

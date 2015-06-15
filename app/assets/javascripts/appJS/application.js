@@ -29,7 +29,6 @@
 //= require ngmap
 //= require angular-flash-alert/src/angular-flash
 //= require initModule
-//= require angular-flash
 //= require angular-file-upload
 //= require angular-unsavedChanges/dist/unsavedChanges
 //= require angular-cookies

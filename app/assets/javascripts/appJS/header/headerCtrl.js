@@ -7,7 +7,6 @@ app.controller('headerCtrl', ['$scope', '$http','$state', function($scope, $http
 
   $scope.search = function(){
     $http.get("/searchnameadd/"+ $scope.search_query).success(function(data){
-      console.log(data);
       $scope.results = data;
     });
   };
@@ -17,7 +16,6 @@ app.controller('headerCtrl', ['$scope', '$http','$state', function($scope, $http
   }
 
   $scope.blurred = function(){
-    console.log("coverred: ", $scope.overred);
     if(!$scope.overred){
       $scope.isfocus = false;
     }
