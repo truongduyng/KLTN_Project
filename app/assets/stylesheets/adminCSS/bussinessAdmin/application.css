@@ -1,5 +1,6 @@
 /*
  *= require angular-flash-alert/src/angular-flash
+ *= require_tree ../adminLTE
  *= require_tree .
  *= require_self
 */

@@ -1,6 +1,5 @@
-var app = angular.module('sportaSystemAdmin', ["ui.router", 'templates', 'Devise', 'angular-flash.flash-alert-directive',
-	'sporta.services', 'sporta.directives', 'sporta.filters',
-	'angular-flash.service', 'flash', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging', 'infinite-scroll','ngAnimate',
+var app = angular.module('sportaSystemAdmin', ["ui.router", 'templates', 'Devise', 'sporta.services', 'sporta.directives', 'sporta.filters',
+	'flash', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging', 'infinite-scroll','ngAnimate',
 	'ngMap', 'ckeditor', 'ngCookies', 'ngSanitize'
 ]);
 
@@ -28,10 +27,6 @@ var app = angular.module('sportaSystemAdmin', ["ui.router", 'templates', 'Devise
 
 
 
-//For flash service
-app.config(function(flashProvider) {
-	flashProvider.errorClassnames.push('alert-danger');
-});
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 

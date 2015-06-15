@@ -1,222 +1,140 @@
-{{message}}
-<section class="wrapper"> 
-  <!--overview start-->
-  <div class="row">
-    <div class="col-lg-12">
-      <h3 class="page-header"><i class="fa fa-laptop"></i> Dashboard</h3>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-        <li><i class="fa fa-laptop"></i>Dashboard</li>
-      </ol>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-lg-12">
-      <section class="panel panel-primary">
-        <header class="panel-heading"> Lọc bài viết </header>
-            <div class="panel-body">
-                  <form role="form" class="form-inline">
-                                  <div class="form-group">
-                                      <label for="exampleInputEmail2" class="sr-only">Từ ngày</label>
-                                      <input type="email" placeholder="Từ ngày" id="exampleInputEmail2" class="form-control">
-                                  </div>
-                                  <div class="form-group">
-                                      <label for="exampleInputEmail2" class="sr-only">Tới ngày</label>
-                                      <input type="email" placeholder="Tới ngày" id="exampleInputEmail2" class="form-control">
-                                  </div>
-                                  <div class="form-group">
-                                      <label for="exampleInputEmail2" class="sr-only">Tìm kiếm theo text</label>
-                                      <input type="email" placeholder="Tìm kiếm theo text..." id="exampleInputEmail2" class="form-control">
-                                  </div>
-                                  <div class="form-group">
-                                      <label for="exampleInputEmail2" class="sr-only">Tìm kiếm theo text</label>
-                                      <input type="email" placeholder="Tìm kiếm theo text..." id="exampleInputEmail2" class="form-control">
-                                  </div>
-                                  <div class="form-group">
-                                      <label for="exampleInputPassword2" class="sr-only">Tìm kiếm theo</label>
-                                      <select class="form-control">
-                                        <option>Tên bài viết</option>
-                                        <option>Nội dung bài viết</option>
-                                        <option>Người sở hữu</option>
-                                      </select>
-                                  </div>
-                                  <button class="btn btn-primary" type="submit">Tìm kiếm</button>
-                  </form>
-            </div>
-      </section>
-    </div>
-  </div>
+<section class="wrapper">
+
   <div class="row">
     <div class="col-lg-12">
       <section class="panel panel-warning">
-            <header class="panel-heading"> Bài viết</header>
-            <!--Bài viết -->
-            <div class="table-responsive">
-                            <table class="table table-bordered table-hover my-table posts-table" >
-                              <thead>
-                                <tr>
-                                 <th> #</th>
-                                 <th>Tên doanh nghiệp</th>
-                                 <th>Lĩnh vực </th>
-                                 <th>Mô tả ngắn</th>
-                                 <th>Thành viên</th>
-                                 <th>Ngày yêu cầu</th>
-                                 <th>Chi tiết</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                                    <tr ng-repeat="(index,item) in bussinessRequests | orderBy: 'created_at'">
-                                        <td>{{index + 1}}</td>
-                                        <td style="max-width:250px;">{{item.name}}</td>
-                                        <td style="max-width:250px;">{{item.category}}</td>
-                                        <td>{{item.description | shortDesc}}</td>
-                                        <td>{{item.user.fullname}}</td>
-                                        <td>{{item.created_at| date:'dd/mm/yyyy, h:mm a'}}</td>
-                                        <td> 
-                                            <input ng-click="ontoggleBussinessRequest(item)" ng-model="item.isChecked" class="tgl tgl-skewed" id="{{item._id.$oid}}" type="checkbox">
-                                            <label class="tgl-btn" data-tg-off="Thêm" data-tg-on="Bỏ" for="{{item._id.$oid}}"></label>
-                                        </td>
-                                    </tr>
-                                    <tr ng-if="bussinessRequests.length == 0"><td style="text-align: center;" colspan="7"> Trống  </td></tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <div ng-if="isLoading" style="text-align: center;">
-                              <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
-                          </div>
-            <!-- End bài viết -->
-      </section>
-        <div class="col-lg-12" style="margin-top: -30px;">
-            <div class="text-center">
-                    <paging
-                        class="small"
-                        page="pageConfig.currentPage" 
-                        page-size="pageConfig.pageSize" 
-                        total="pageConfig.total"
-                        adjacent="{{pageConfig.adjacent}}"
-                        dots="{{pageConfig.dots}}"
-                        scroll-top="{{pageConfig.scrollTop}}" 
-                        hide-if-empty="{{pageConfig.hideIfEmpty}}"
-                        ul-class="{{pageConfig.ulClass}}"
-                        active-class="{{pageConfig.activeClass}}"
-                        disabled-class="{{pageConfig.disabledClass}}"
-                        show-prev-next="{{pageConfig.showPrevNext}}"
-                        paging-action="onPageSelected('Paging Clicked', page)">
-                    </paging> 
-            </div>
-        </div>
-    </div>
-  </div>
-  <div class="row">
-       <div class="col-lg-12">
-              <section class="panel panel-success">
-                    <header class="panel-heading"> Danh sách doanh nghiệp chờ duyệt</header>
-                    <div class="panel-body">
-                              <div class="row">
-                                    <div class="col-lg-12" ng-repeat="item in addedBussinessRequests">
-                                        <section class="panel" >
-                                              <header class="panel-heading">{{item.name}}</header>
-                                              <div class="panel-body"> 
-                                                    <table class="table table-hover table-detail-bussiness-request">
-                                                          <tbody><tr>
-                                                              <th>Tên doanh nghiệp</th>
-                                                              <td>{{item.name}}</td>
-                                                          </tr>
-                                                          <tr>
-                                                              <th>Lĩnh vực </th>
-                                                              <td>{{item.category}}</td>
-                                                          </tr>
-                                                          <tr>
-                                                              <th>Mô tả</th>
-                                                              <td>{{item.description}}</td>
-                                                          </tr>
-                                                          <tr>
-                                                              <th>Địa chỉ</th>
-                                                              <td>{{item.address}}</td>
-                                                          </tr>
-                                                          <tr>
-                                                              <th>Thành viên</th>
-                                                              <td>{{item.user.fullname}}</td>
-                                                          </tr>
-                                                           <tr>
-                                                              <th>Ngày gửi yêu cầu</th>
-                                                              <td>{{item.created_at}}</td>
-                                                          </tr>
-                                                          
-                                                          <tr>
-                                                              <th>Vị trí</th>
-                                                              <td>
-                                                                <div class="myMap" map-lazy-load="http://maps.google.com/maps/api/js">
-                                                                    <map zoom="17" center="{{item.latitude}},{{item.longitude}}" item="{{item}}">
-                                                                    </map>
-                                                                </div>
-                                                                <!-- <div id="map" style="width: 100%; height: 300px;"></div> -->
-
-                                                              </td>
-                                                          </tr>
-                                                      </tbody>
-                                                    </table>
-                                                    <div class="list-control-buttons btn-group pull-right">
-                                                        <button ng-click="acceptBussinessRequest(item)" class="btn btn-success">Duyệt</button>
-                                                        <button ng-click="denyBussinessRequest(item)" class="btn btn-danger">Không duyệt</button>
-                                                        <button ng-click="onIgnore(item)" class="btn btn-info">Bỏ qua</button>
-                                                    </div>
-                                              </div>
-                                        </section>
-                                       
-                                    </div>
-                                    <div  style="text-align: center"  ng-if="addedBussinessRequests.length == 0">Trống</div>
-                              </div>
-                             
-
-<!-- 
-                              <section class="panel">
-                                    <header class="panel-heading"> Doanh nghiệp thể thao sporta </header>
-                                    <div class="panel-body"> 
-                                          <table class="table table-hover">
-                                                <tbody><tr>
-                                                    <th>Tên doanh nghiệp</th>
-                                                    <td>Doanh nghiệp thể thao sporta</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Lĩnh vực </th>
-                                                    <td>Bóng đá</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Mô tả</th>
-                                                    <td>Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng. Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng.Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng. Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng. Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng. Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng.Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng. Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng. Doanh nghiệp chúng tôi chuyên phục vụ các loại sân bóng  </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Địa chỉ</th>
-                                                    <td>127 Nguyễn Thị Thập, quận 7 thành phố hồ chí minh</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Vị trí</th>
-                                                    <td>
-                                                      <div id="map" style="width: 100%; height: 300px;"></div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                          </table>
-                                          <div class="list-control-buttons btn-group pull-right">
-                                              <button class="btn btn-success">Duyệt</button>
-                                              <button class="btn btn-danger">Không duyệt</button>
-                                              <button class="btn btn-info">Bỏ qua</button>
-                                          </div>
-                                    </div>
-                              </section> -->
-                    </div>
-              </section>
-        </div>
-  </div>
-  <!-- project team & activity end --> 
-    <div  id="customMarker" style="display:none;">
-      <div style='position: relative; width:100px; height:100px; cursor: pointer;'>
-          <img  style="display:block; left:15px; top:7px; position:absolute; z-index:10s" class="img-circle img-avatar" width="70px" height="70px" src="" >
-          <img style="display:block;z-index: 100;" width="100px" height="100px" src="/assets/application/placeholder/marker_layout.png">
+        <header class="panel-heading">Doanh nghiệp</header>
+        <!--Bài viết -->
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover my-table posts-table" >
+            <thead>
+              <tr>
+               <th>STT</th>
+               <th>Tên doanh nghiệp</th>
+               <th>Lĩnh vực </th>
+               <th>Mô tả ngắn</th>
+               <th>Thành viên</th>
+               <th>Ngày yêu cầu</th>
+               <th>Chi tiết</th>
+             </tr>
+           </thead>
+           <tbody>
+            <tr ng-repeat="(index,item) in bussinessRequests | orderBy: 'created_at'">
+              <td>{{index + 1}}</td>
+              <td style="max-width:250px;">{{item.name}}</td>
+              <td style="max-width:250px;">{{item.category}}</td>
+              <td>{{item.description | shortDesc}}</td>
+              <td>{{item.user.fullname}}</td>
+              <td>{{item.created_at| date:'dd/mm/yyyy, h:mm a'}}</td>
+              <td>
+                <input ng-click="ontoggleBussinessRequest(item)" ng-model="item.isChecked" class="tgl tgl-skewed" id="{{item._id.$oid}}" type="checkbox">
+                <label class="tgl-btn" data-tg-off="Thêm" data-tg-on="Bỏ" for="{{item._id.$oid}}"></label>
+              </td>
+            </tr>
+            <tr ng-if="bussinessRequests.length == 0"><td style="text-align: center;" colspan="7"> Trống  </td></tr>
+          </tbody>
+        </table>
       </div>
+      <div ng-if="isLoading" style="text-align: center;">
+        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+      </div>
+      <!-- End bài viết -->
+    </section>
+    <div class="col-lg-12" style="margin-top: -30px;">
+      <div class="text-center">
+        <paging
+        class="small"
+        page="pageConfig.currentPage"
+        page-size="pageConfig.pageSize"
+        total="pageConfig.total"
+        adjacent="{{pageConfig.adjacent}}"
+        dots="{{pageConfig.dots}}"
+        scroll-top="{{pageConfig.scrollTop}}"
+        hide-if-empty="{{pageConfig.hideIfEmpty}}"
+        ul-class="{{pageConfig.ulClass}}"
+        active-class="{{pageConfig.activeClass}}"
+        disabled-class="{{pageConfig.disabledClass}}"
+        show-prev-next="{{pageConfig.showPrevNext}}"
+        paging-action="onPageSelected('Paging Clicked', page)">
+      </paging>
     </div>
+  </div>
+</div>
+</div>
+<div class="row">
+ <div class="col-lg-12">
+  <section class="panel panel-success">
+    <header class="panel-heading"> Danh sách doanh nghiệp chờ duyệt</header>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-lg-12" ng-repeat="item in addedBussinessRequests">
+          <section class="panel" >
+            <header class="panel-heading">{{item.name}}</header>
+            <div class="panel-body">
+              <table class="table table-hover table-detail-bussiness-request">
+                <tbody><tr>
+                  <th>Tên doanh nghiệp</th>
+                  <td>{{item.name}}</td>
+                </tr>
+                <tr>
+                  <th>Lĩnh vực </th>
+                  <td>{{item.category}}</td>
+                </tr>
+                <tr>
+                  <th>Mô tả</th>
+                  <td>{{item.description}}</td>
+                </tr>
+                <tr>
+                  <th>Địa chỉ</th>
+                  <td>{{item.address}}</td>
+                </tr>
+                <tr>
+                  <th>Thành viên</th>
+                  <td>{{item.user.fullname}}</td>
+                </tr>
+                <tr>
+                  <th>Ngày gửi yêu cầu</th>
+                  <td>{{item.created_at}}</td>
+                </tr>
+
+                <tr>
+                  <th>Vị trí</th>
+                  <td>
+                    <div class="myMap" map-lazy-load="http://maps.google.com/maps/api/js">
+                      <map zoom="17" center="{{item.latitude}},{{item.longitude}}" item="{{item}}">
+                      </map>
+                    </div>
+                    <!-- <div id="map" style="width: 100%; height: 300px;"></div> -->
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="list-control-buttons btn-group pull-right">
+              <button ng-click="acceptBussinessRequest(item)" class="btn btn-success">Duyệt</button>
+              <button ng-click="denyBussinessRequest(item)" class="btn btn-danger">Không duyệt</button>
+              <button ng-click="onIgnore(item)" class="btn btn-info">Bỏ qua</button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+      <div  style="text-align: center"  ng-if="addedBussinessRequests.length == 0">Trống</div>
+    </div>
+
+
+
+  </div>
+</section>
+</div>
+</div>
+<!-- project team & activity end -->
+<div  id="customMarker" style="display:none;">
+  <div style='position: relative; width:100px; height:100px; cursor: pointer;'>
+    <img  style="display:block; left:15px; top:7px; position:absolute; z-index:10s" class="img-circle img-avatar" width="70px" height="70px" src="" >
+    <img style="display:block;z-index: 100;" width="100px" height="100px" src="/assets/application/placeholder/marker_layout.png">
+  </div>
+</div>
 </section>
 <style type="text/css">
   .myMap map{

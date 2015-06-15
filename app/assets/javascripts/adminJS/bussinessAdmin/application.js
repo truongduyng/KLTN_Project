@@ -7,9 +7,6 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // compiled file.
 //
-// Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
-// about supported directives.
-//
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
@@ -22,7 +19,7 @@
 //= require initModule
 //= require ngmap
 //= require angular-flash-alert/src/angular-flash
-//= require_tree ./customJS
+//= require_tree ../customJS
 //= require ngstorage
 //= require ./bussinessAdminApp.js
 //= require websocket_rails/main
