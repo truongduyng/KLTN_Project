@@ -47,7 +47,7 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 			// $scope.venue.latitude = '106.3405307';
 			// $scope.venue.longitude = '10.3581198';
 			// console.log("venue: ", $scope.venue);
-
+			console.log("venue before create: ", $scope.venue);
 			shareVenueService.create($scope.venue)
 				.success(function(data) {
 					//Sau khi tao ra venue,kiem tra xem co image hay ko
@@ -136,7 +136,7 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 			google.maps.event.addListener(marker, 'dragend', function() {
 				$scope.venue.latitude = marker.getPosition().lat();
 				$scope.venue.longitude = marker.getPosition().lng();
-				console.log("new Venue: ", $scope.venue);
+				console.log("new Venue when dragend: ", $scope.venue);
 			});
 		};
 
