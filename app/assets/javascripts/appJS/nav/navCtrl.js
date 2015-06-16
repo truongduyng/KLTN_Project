@@ -3,9 +3,9 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', 'ti
   $scope.signedIn = Auth.isAuthenticated;
   $scope.logout = Auth.logout;
 
-  Auth.currentUser()
-  .then(function(user) {
+  Auth.currentUser().then(function(user) {
     $scope.user = user;
+    angular.copy(user, userService.currentUser);
   }, function(error) {});
 
 
@@ -31,14 +31,6 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', 'ti
     $scope.user = {};
     angular.copy({}, userService.currentUser);
   });
-
-  $scope.onLogin = function() {
-    $scope.$emit("onLogin");
-  };
-
-  $scope.onRegister = function() {
-    $scope.$emit("onRegister");
-  };
 
   $scope.open_signin = function() {
     $modal.open({
@@ -75,7 +67,6 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', 'ti
   };
 
   $scope.$on('onChangeUserProfile', function(event, user){
-    console.log("onChangeUserProfile: ", user);
     angular.copy(user, $scope.user);
   });
 

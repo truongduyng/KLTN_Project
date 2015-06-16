@@ -2,19 +2,43 @@ app.controller('sidebarCtrl',['$scope', '$modal', 'clubs', '$state', 'Auth', fun
 
   Auth.currentUser().then(function(user) {
     $scope.user = user;
+    $scope.loadClubs();
+  }, function(error) {});
+
+  $scope.$on('devise:new-session', function(e, user) {
+    $scope.user = user;
+    $scope.loadClubs();
+  });
+
+  $scope.$on('devise:new-registration', function(e, user) {
+    $scope.user = user;
+    $scope.loadClubs();
+  });
+
+  $scope.$on('devise:login', function(e, user) {
+    $scope.user = user;
+    $scope.loadClubs();
+  });
+
+  $scope.$on('devise:logout', function(e, user) {
+    $scope.user = {};
+    $scope.clubs ={};
+  });
+
+  $scope.$on('onChangeUserProfile', function(event, user){
+    angular.copy(user, $scope.user);
+  });
+
+  $scope.loadClubs = function(){
     clubs.index().success(function(data){
       $scope.clubs = data;
-    }).error(function(data){
-    });
-  }, function(error) {
-  });
+    })
+  }
 
   $scope.opennewclub = function(){
     var newclubmodal = $modal.open({
       templateUrl: 'appJS/sidebar/_new_club.html',
       controller: 'newclubmodalCtrl'
-      // animation: false
-      // windowClass: 'newclubmodal'
     });
 
     newclubmodal.result.then(function (club) {
