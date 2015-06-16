@@ -32,6 +32,10 @@ json.notifications do
 				json._id nc.notification.notificable.id
 			end
 
+			if nc.notification.notificable_type == 'ClubPost'
+				json._id nc.notification.notificable.id
+			end
+
 			if nc.notification.notificable_type == 'BussinessRequest'
 				json.name nc.notification.notificable.name
 				json._id nc.notification.notificable.id
@@ -70,9 +74,10 @@ json.notifications do
 		json.loaded nc.loaded
 		json.created_at nc.created_at
 		json.updated_at nc.updated_at
-		json.end '---------------'
+
 	end
 end
+
 json.new_notifications_count @new_notifications_count
 
 

@@ -2,27 +2,6 @@ class NotificationsController < ApplicationController
 	before_action :authenticate_user!
 	before_action :find_notification, only: [:watched, :show, :loaded]
 
-	#GET /notifications.json
-	# def index
-	# 	#B1: Get new notification changes
-	# 	target_user = current_user
-	# 	notification_ids = Notification.where(target_user_id: target_user.id).only(:_id).map(&:_id)
-	# 	all_notification_changes = NotificationChange.where(:notification_id.in => notification_ids)
-	# 	notification_changes = all_notification_changes.includes(:notification_category, :notification).where(is_new: true).desc(:updated_at).limit(15)
-		
-	# 	new_notification_changes = notification_changes.to_a
-	# 	old_notification_changes = []
-	# 	@new_notifications_count  = new_notification_changes.count
-		
-	# 	#B2: Neu so luong new notification changes nho hon 15, thi get old notification changes cho du 15
-	# 	if new_notification_changes.count < 15
-	# 		so_luong_con_lai = 15 - @new_notifications_count
-	# 		old_notification_changes = all_notification_changes.includes(:notification_category, :notification).where(is_new: false).desc(:updated_at).limit(so_luong_con_lai).to_a
-	# 	end
-
-	# 	@results = new_notification_changes + old_notification_changes
-	# end
-
 	def index
 		# sleep(5)
 		#B1: Get new notification changes
@@ -33,7 +12,7 @@ class NotificationsController < ApplicationController
 
 		@results = notification_changes
 		@new_notifications_count  = all_notification_changes.where(is_new: true).count
-		
+
 		#Cap nhat loaded = true cho thay no da dc load
 		new_notification_changes = all_notification_changes.where(is_new: true).update_all(loaded: true)
 	end
@@ -89,7 +68,7 @@ class NotificationsController < ApplicationController
 
 	private
 		def find_notification
-			begin 
+			begin
 				@notification_change = NotificationChange.find(params[:id])
 				if @notification_change.notification.target_user != current_user
 					render nothing: true, status: :not_found, content_type: 'application/json'

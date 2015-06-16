@@ -52,10 +52,14 @@ app.factory('postDetailService', ['$http', function($http) {
 
 
 	o.favorite = function(){
+		console.log(o.post);
 		var id = o.post._id.$oid;
 		var url = "/favorite_posts/" + id + "/add.json";
 		return $http.put(url).success(function(){
+			console.log("true");
 			o.post.isFavorited = true;
+		}).error(function(error){
+			console.log(error);
 		});
 	};
 

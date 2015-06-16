@@ -45,20 +45,18 @@
    <div class="well" style="overflow: hidden; margin: 0px -15px;">
      <div class="row">
       <div class="col-sm-12">
-        <div flash-message=""></div>
         <tabset>
+
           <tab select="onTabSelect('bai-viet-ca-nhan')" active="isBaiVietCaNhanModule" heading="Bài viết cá nhân">
-            <section ng-include="'appJS/trangCaNhan/modules/baiVietCaNhan/_baiVietCaNhan.html'"></section>
+            <section ng-include="'appJS/trangCaNhan/modules/baiVietCaNhan/_baiVietCaNhan.html'">
+            </section>
           </tab>
+
           <tab select="onTabSelect('bai-viet-yeu-thich')" active="isBaiVietYeuThichModule" heading="Bài viết yêu thích">
-            <section ng-include="'appJS/trangCaNhan/modules/baiVietYeuThich/_baiVietYeuThich.html'"></section>
+            <section ng-include="'appJS/trangCaNhan/modules/baiVietYeuThich/_baiVietYeuThich.html'">
+            </section>
           </tab>
-          <tab ng-if="permission.all" select="onTabSelect('thong-bao')" active="isThongBaoModule" heading="Thông báo">
-            <section ng-include="'appJS/trangCaNhan/modules/_thongBao.html'"></section>
-          </tab>
-          <tab ng-if="permission.all" select="onTabSelect('quan-ly-ve')" active="isQuanLyVeModule" heading="Quản lý vé">
-            <section ng-include="'appJS/trangCaNhan/modules/_quanLyVe.html'"></section>
-          </tab>
+
         </tabset>
       </div>
     </div>

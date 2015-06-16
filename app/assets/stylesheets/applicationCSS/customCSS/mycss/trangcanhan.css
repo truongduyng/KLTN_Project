@@ -18,7 +18,7 @@
     padding: 10px 10px;
     margin-bottom: 10px;
     position: relative;
-    
+
 }
 .bai-viet > .row > .col-xs-2{
 	width: 64px;
@@ -74,29 +74,6 @@
 }
 /*END FOR TIM KIEM BAI VIET*/
 
-/*BEGIN FOR DANH SACH THONG BAO*/
-ul.danh-sach-thong-bao{
-	list-style-type: none;
-	overflow: hidden;
-	margin: 0px;
-	padding: 0px;
-}
-ul.danh-sach-thong-bao li{
-	overflow: hidden;
-	padding: 10px 0px;
-	border-bottom: 1px solid #e5e5e5;
-	position: relative;
-	padding-right: 25px;
-
-}
-ul.danh-sach-thong-bao li img.new-icon{
-	position: absolute;
-	top: 5px;
-	right: 0px;
-}
-/*END FOR DANH SACH THONG BAO*/
-
-
 /*BEGIN FOR MOBILE*/
 /*BEGIN FOR NAV*/
 @media screen and (max-width: 767px){
@@ -121,7 +98,7 @@ ul.danh-sach-thong-bao li img.new-icon{
 		width: 100%;
 	}
 	/*END For form search*/
-	
+
 }
 @media screen and (max-width: 420px){
 	.notifications ul.list-notifications li .notification-item img{
@@ -143,7 +120,7 @@ ul.danh-sach-thong-bao li img.new-icon{
 	.main-content-container{
 		margin-top: 20px;
 	}
-	
+
 }
 /*END FOR CONTAINER*/
 

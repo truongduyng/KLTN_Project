@@ -176,16 +176,6 @@ class PostsController < ApplicationController
 	end
 
 
-	#cho trang profile
-	#Lay tat ca nhung post boi username
-	# #GET /posts/get_posts_by_username/:username
-	# def get_posts_by_username
-	# 	@posts = User.where(username: )
-	# end
-
-	#tra ve tat ca post cho nguoi dung hien tai
-	#GET /posts/get_posts_by_current_user.json
-
 	def get_posts_by_current_user
 		@all_posts = current_user.posts.all
 		render 'get_posts_by_current_user.json.jbuilder', status: :ok

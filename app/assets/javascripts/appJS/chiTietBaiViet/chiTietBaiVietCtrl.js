@@ -3,7 +3,6 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 	$scope.signedIn = Auth.isAuthenticated;
 
 	Auth.currentUser().then(function(user){
-		angular.copy(user, userService.currentUser);
 		$scope.currentUser = userService.currentUser;
 	});
 
@@ -91,7 +90,6 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 	//Xoa bai viet
 	$scope.delete = function(){
 		postDetailService.destroy().success(function(){
-			Notifier.success('Bạn đó xóa thành công bài viết')
 			Flash.create("success", "Bạn đó xóa thành công bài viết",'myalert');
 			$state.go("trangCaNhan", {
 				username: $scope.currentUser.username,

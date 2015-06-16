@@ -6,7 +6,7 @@ app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userServ
 	$scope.isEditing = false;
 
 	$scope.addComment = function(post) {
-		console.log(post);
+
 		$scope.isCommenting = true;
 
 		if (post.title){
@@ -27,12 +27,10 @@ app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userServ
 
 			post.comments.splice(0, 0, data);
 
-				// if(!post.followed  && post.user._id.$oid != $scope.currentUser._id.$oid){
-				// 	postDetailService.follow();
-				// }
+				if(!post.followed  && post.user._id.$oid != $scope.currentUser._id.$oid){
+					postDetailService.follow();
+				}
 
-
-				console.log(data);
 			}).error(function(data, status) {
 				$scope.isCommenting = false;
 				if (status == 401) {
