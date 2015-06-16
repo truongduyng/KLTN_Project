@@ -13,42 +13,43 @@
 </head>
 <body ng-controller="mainCtrl">
 
-
   <header data-ng-include="'appJS/header/_header.html'"></header>
 
-  <!-- CONTENT HERE -->
-  <div class="container">
-    <div class="row">
+  <div id="wrapper">
+    <!-- CONTENT HERE -->
+    <div class="container">
+      <div class="row">
 
-      <div ng-show="signedIn()">
+        <div ng-show="signedIn()">
 
-        <div class="col-sm-2" id="sidebar">
-          <div ng-include="'appJS/sidebar/_side_bar.html'"></div>
+          <div class="col-sm-2" id="sidebar">
+            <div ng-include="'appJS/sidebar/_side_bar.html'"></div>
+          </div>
+
+          <div class="col-sm-10" id="main-content">
+            <ui-view></ui-view>
+          </div>
+
         </div>
 
-        <div class="col-sm-10" id="main-content">
-          <ui-view></ui-view>
-        </div>
+        <div ng-hide="signedIn()">
 
+          <div class="col-sm-12">
+            <ui-view></ui-view>
+          </div>
+
+        </div>
       </div>
 
-      <div ng-hide="signedIn()">
-
-        <div class="col-sm-12">
-          <ui-view></ui-view>
-        </div>
-
-      </div>
     </div>
-
+    <!-- END CONTENT -->
+    <!-- BN -->
+    <div class="pull-right" flash-message="3000" ></div>
+    <!-- EN -->
+    <!-- FOOTER HERE  -->
+    <footer data-ng-include="'appJS/footer/_footer.html'"></footer>
+    <!-- END FOOTER -->
   </div>
-  <!-- END CONTENT -->
-  <!-- BN -->
-  <div class="pull-right" flash-message="3000" ></div>
-  <!-- EN -->
-  <!-- FOOTER HERE  -->
-  <footer data-ng-include="'appJS/footer/_footer.html'"></footer>
-  <!-- END FOOTER -->
 
   <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
 
