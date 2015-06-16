@@ -35,7 +35,7 @@ class ClubPostsController < ApplicationController
         end
       end
 
-      render json: @clubpost, status: :ok
+      render template: 'club_posts/show.json.jbuilder', status: :ok
 
     else
       render json: @post.errors, status: :unprocessable_entity

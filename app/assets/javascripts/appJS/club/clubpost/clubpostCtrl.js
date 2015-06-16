@@ -128,7 +128,7 @@ app.controller('clubpostCtrl',['$scope', '$modal', 'clubs', '$http', 'Flash', 'A
   }
 
   $scope.update_club_post = function(post){
-    $scope.editing = true;
+    post.editing = true;
     $scope.post_update = post;
   }
 
@@ -143,7 +143,7 @@ app.controller('clubpostCtrl',['$scope', '$modal', 'clubs', '$http', 'Flash', 'A
     })
   }
 
-  $scope.update_clubpost = function(post){
+  $scope.update_clubpost_done = function(post){
 
     for (var i = 0; i < $scope.club.clubposts.length; i++) {
       if ($scope.club.clubposts[i]._id.$oid == post._id.$oid){
@@ -153,8 +153,9 @@ app.controller('clubpostCtrl',['$scope', '$modal', 'clubs', '$http', 'Flash', 'A
 
     clubpostFtry.update($scope.club.id.$oid, post, $scope.deletedPhotos).success(function(data){
 
-      post = data;
-      $scope.editing = false;
+      $scope.club.clubposts[$scope.indexofclubpost] = data;
+      $scope.club.clubposts[$scope.indexofclubpost].editing = false;
+
 
       $scope.uploader_clubpost_update.url = "/club_posts/" + data._id.$oid + '/add_photo.json';
       $scope.uploader_clubpost_update.uploadAll();

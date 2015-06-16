@@ -82,7 +82,7 @@
 
   </div>
 
-  <div ng-hide="editing">
+  <div ng-hide="post.editing">
     <div class="postcontent margintop10">
       <p>{{post.content}}</p>
     </div>
@@ -94,7 +94,7 @@
     </div>
   </div>
 
-  <div ng-show="editing">
+  <div ng-show="post.editing">
     <form novalidate name="postForm" class="post-form ng-pristine ng-valid">
 
       <div class="post-form-content">
@@ -127,7 +127,7 @@
 
           <input style="display:none;" id="addImageInput_update" type="file" nv-file-select uploader="uploader_clubpost_update" multiple>
 
-          <button ng-disabled="postForm.$invalid" ng-click="update_clubpost(post)" class="btn btn-primary" type="button"> Chỉnh sửa xong </button>
+          <button ng-disabled="postForm.$invalid" ng-click="update_clubpost_done(post)" class="btn btn-primary" type="button"> Chỉnh sửa xong </button>
         </div>
       </div>
 
