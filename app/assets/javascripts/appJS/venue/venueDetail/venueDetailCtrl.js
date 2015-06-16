@@ -4,8 +4,6 @@ app.controller('venueDetailCtrl', ['$scope', 'venueDetailService','$modal', 'Fla
 		$scope.signedIn = Auth.isAuthenticated;
 
 		Auth.currentUser().then(function(user){
-			console.log("currentUser:", user);
-			console.log("auth User: ", $scope.venue.user);
 			$scope.currentUser = user;
 		});
 
@@ -66,13 +64,14 @@ app.controller('venueDetailCtrl', ['$scope', 'venueDetailService','$modal', 'Fla
 
 		//Su kien khi load map thanh cong
 		$scope.$on('mapInitialized', function(event, map) {
+			console.log("mapInitialized");
 			//Lay anh dai dien cho marker, lua chon 1 trong nhung tam anh nguoi dung up
 			var avatar = "notKnow";
 			if(map.item.photos != null && map.item.photos.length >= 1){
-				avatar = map.item.photos[0];
+				avatar = map.item.photos[0].image.thumb.url;
 			}
 
-			var marker = createMarker(map.item.latitude, map.item.longitude, avatar);
+			var marker = createMarker(map.item.coordinates[1], map.item.coordinates[0], avatar);
 			marker.setMap(map);
 			console.log("marker: ", marker);
 			map.setCenter(marker.getPosition());
