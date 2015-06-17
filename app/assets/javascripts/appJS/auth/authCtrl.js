@@ -20,7 +20,7 @@ app.controller('authCtrl', ['$scope', 'Auth', '$state', '$modal', '$rootScope', 
 				$state.reload();
 
 			}, function() {
-				$scope.error = "Email hoac password khong hop le";
+				$scope.error = "Email hoặc mật khẩu không đúng. Vui lòng thử lại!";
 			});
 		};
 
@@ -31,7 +31,6 @@ app.controller('authCtrl', ['$scope', 'Auth', '$state', '$modal', '$rootScope', 
 				$state.reload();
 
 			}, function(e) {
-				console.log(e)
 				$scope.error = "what error";
 			});
 		};

@@ -1,7 +1,7 @@
 app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash', 'Auth', '$state', '$modal', 'FileUploader','$cookies', 'currentUser', function($scope, $modal, club, clubs, $http, Flash, Auth, $state, $modal, FileUploader, $cookies, currentUser){
 
   $scope.club = club.data;
-  console.log(club.data);
+
   $scope.user = currentUser;
 
   $scope.signedIn = Auth.isAuthenticated;

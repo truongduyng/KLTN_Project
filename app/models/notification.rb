@@ -51,10 +51,3 @@ class Notification
 	# 	return notification
 	# end
 end
-
-#55269d7268757511c3860000
-#55123c516875750ae52e0000
-#Notification.find_reply '55123c516875750ae52e0000'
-
-
-# n  = Notification.find_or_create(User.first.id, Post.first)

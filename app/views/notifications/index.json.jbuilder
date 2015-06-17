@@ -25,7 +25,7 @@ json.notifications do
 			# 	json.id ncc.id
 			# end
 		end
-		#Thong tin ve doi tuong bi tac dong
+
 		json.target_object do
 			if nc.notification.notificable_type == 'Post'
 				json.title nc.notification.notificable.title

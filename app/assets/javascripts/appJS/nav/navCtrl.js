@@ -35,7 +35,8 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', 'ti
   $scope.open_signin = function() {
     $modal.open({
       templateUrl: 'appJS/auth/_login.html',
-      controller: 'authCtrl'
+      controller: 'authCtrl',
+      size: 'sm'
     });
   };
 

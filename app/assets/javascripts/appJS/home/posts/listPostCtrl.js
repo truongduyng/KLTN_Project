@@ -6,12 +6,6 @@ app.controller('listPostCtrl', ['$scope', 'listPostService', 'Auth', function($s
 	$scope.isBusy = false;
 	$scope.isEnd = false;
 
-	$.each($('div.post-item'), function(index, item){
-    console.log(item);
-  });
-
-  console.log($('div.post-item').attr('class'));
-
 	$scope.loadMore = function(){
 		if($scope.isEnd){
 			return;
