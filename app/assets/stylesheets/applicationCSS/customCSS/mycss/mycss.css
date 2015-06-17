@@ -91,43 +91,37 @@
 
 
 /*Begin list post in trang chủ*/
-.post-item{
-	height:400px;
-	overflow:hidden;
-}
-.post-item .content p{
-	height: 285px;
-	overflow:hidden;
-}
-.post-item .title{
-display:block; font-weight:600; font-size:1.4em; padding-bottom:5px; color:#4cae4c;
-text-decoration:none;
 
+.my-post-header{
+	clear: both;
 }
-.post-item a.title:hover{
-	text-decoration:none;
+
+.post-owner{
+	clear: both;
+	display: table;
+}
+
+.post-owner-info{
+	margin-left: 5px;
+}
+.post-owner-info a p{
+	margin-bottom: 3px;
+}
+
+a.title{
+	display:block;
+	font-weight:600;
+	font-size:1.4em;
+	padding-bottom:5px;
+	color:#4cae4c;
+	text-decoration: none;
+}
+
+a.title:hover{
+	text-decoration: none;
 	opacity:0.8;
 }
 
-.post-item .images{
-	text-align:center;
-}
-
-.post-item .bottom{
-	overflow:hidden; margin-top:10px;
-}
-
-.post-item .post-owner{
-	border-top:solid thin #E1DBDB; overflow:hidden;margin-top:5px; margin-left:-10px; margin-right:-10px; padding-top:10px; margin-bottom:-10px;
-}
-.post-item .post-owner .post-owner-image{
-	float:left;
-}
-
-.post-item .post-owner .post-owner-info{
-	float:left;padding-left:15px;
-}
-/*End list post in trang chủ*/
 
 /*BEGIN NAVBAR */
 .navbar-form .form-group input{
@@ -170,21 +164,6 @@ text-decoration:none;
 /*END FOR NOTIFICATION*/
 
 .my-hide{
-  display: none;
+	display: none;
 }
 
-
-/*CHO POST ON HONE PAGE*/
-.post-item .my-post-header{
-  height: 280px;
- }
- .notifications{
- 	padding-top: 0px;
- }
-
- .post-item .my-post-header .content{
-    color: black;
-    display: block;
-    height: 200px;
-    overflow: hidden;
- }
