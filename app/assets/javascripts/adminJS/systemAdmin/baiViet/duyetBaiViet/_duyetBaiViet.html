@@ -58,8 +58,8 @@
             <tr ng-repeat="(index, post) in posts | orderBy: 'created_at'">
               <td>{{index + 1}}</td>
               <td style="max-width:250px;">{{post.title}}</td>
-              <td style="max-width:250px;">{{post.body | shortDesc}}</td>
-              <td><a href="#">{{post.user.username}}</a></td>
+              <td style="max-width:250px;">{{post.body | shortContent: 30}}</td>
+              <td><a ui-sref="trangCaNhan({username: post.user.username})">{{post.user.username}}</a></td>
               <td>{{post.updated_at | date:'dd/mm/yyyy, h:mm a'}}</td>
               <td>
                 <span class="label label-danger">{{post.status.name}}</span>
