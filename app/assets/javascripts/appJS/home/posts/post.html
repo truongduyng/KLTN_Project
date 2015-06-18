@@ -1,0 +1,27 @@
+<div class="marginbot40 post-item">
+
+  <div class="my-post-header">
+    <a ui-sref="chiTietBaiViet({id: post._id.$oid})" class="title">{{post.title}} {{$index}}</a>
+    <div class="images">
+      <img ng-show="post.photos[0]" ng-src="{{post.photos[0].image.large_thumb.url}}" width="100%">
+    </div>
+    <div class="content">
+      <p>{{post.body | shortContent: 30}}</p>
+    </div>
+  </div>
+
+  <div class="post-owner">
+    <a ui-sref="trangCaNhan({username: post.user.username})">
+      <div class="post-owner-image pull-left">
+        <img ng-src="{{post.user.avatar.url}}" width="50px">
+      </div>
+    </a>
+    <div class="post-owner-info pull-left" >
+      <a ui-sref="trangCaNhan({username: post.user.username})">
+        <p>{{post.user.fullname}}</p>
+      </a>
+      <span>{{post.updated_at |timeago}}</span>
+    </div>
+  </div>
+
+</div>

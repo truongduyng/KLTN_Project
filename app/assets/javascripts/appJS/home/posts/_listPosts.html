@@ -1,35 +1,17 @@
 <div ng-controller="listPostCtrl">
   <div  infinite-scroll="loadMore()"  infinite-scroll-disabled='isBusy || isEnd' infinite-scroll-distance="1" class="row">
 
-    <div class="col-md-3" ng-repeat="post in posts | orderBy:'-updated_at'">
-      <div class="marginbot30 post-item" >
-
-        <div class="my-post-header">
-          <a ui-sref="chiTietBaiViet({id: post._id.$oid})" class="title">{{post.title}}</a>
-          <div class="images">
-              <img ng-show="post.photos[0]" ng-src="{{post.photos[0].image.large_thumb.url}}" width="100%">
-            </div>
-          <div class="content">
-            <p>{{post.body | shortContent: 30}}</p>
+    <div ng-repeat="t in [0,1,2,3]">
+      <div class="col-md-3" >
+        <div class="" ng-repeat="post in posts track by $index| orderBy:'-updated_at'">
+          <div ng-if = "$index%4==t">
+            <div ng-include = "'appJS/home/posts/post.html'"></div>
           </div>
         </div>
-
-        <div class="post-owner">
-          <a ui-sref="trangCaNhan({username: post.user.username})">
-            <div class="post-owner-image pull-left">
-              <img ng-src="{{post.user.avatar.url}}" width="50px">
-            </div>
-          </a>
-          <div class="post-owner-info pull-left" >
-            <a ui-sref="trangCaNhan({username: post.user.username})">
-              <p>{{post.user.fullname}}</p>
-            </a>
-            <span>{{post.updated_at |timeago}}</span>
-          </div>
-        </div>
-
       </div>
     </div>
+
+
     <!-- CHO INFINITE SCOLLE CO THE PHAT HIEN CUOI TRANG NEU PHAN TU BEN TRONG LA FLOAT -->
     <div style='clear: both;'></div>
     <div style="text-align: center;">

@@ -92,6 +92,10 @@
 
 /*Begin list post in trang chủ*/
 
+.post-item{
+	/*clear: both;*/
+}
+
 .my-post-header{
 	clear: both;
 }
@@ -113,7 +117,7 @@ a.title{
 	font-weight:600;
 	font-size:1.4em;
 	padding-bottom:5px;
-	color:#4cae4c;
+	color:#62c0dc;
 	text-decoration: none;
 }
 
