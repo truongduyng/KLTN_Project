@@ -1,235 +1,235 @@
 
 <ul class="nav navbar-nav navbar-right" style="margin-top:2px;" ng-controller="navCtrl">
- <!--  <button class="btn btn-success" ng-click="loadNotifications()">Load notification</button> -->
+  <!--  <button class="btn btn-success" ng-click="loadNotifications()">Load notification</button> -->
 
 
- <li ng-hide="signedIn()"><a href="" ng-click= "open_signin()" >Đăng nhập</a></li>
- <li ng-hide="signedIn()"><a href="" ng-click= "open_signup()" >Đăng kí</a></li>
+  <li ng-hide="signedIn()" style="margin: 0 15px 0 15px;"><a href="" ng-click= "open_signin()" >Đăng nhập</a></li>
+  <li ng-hide="signedIn()" style="margin: 15px;"><a href="" ng-click= "open_signup()" >Đăng kí</a></li>
 
- <li ng-controller="notificationCtrl" ng-if="signedIn()" dropdown>
-  <a ng-click="onDisplayNotifications()" href class="dropdown-toggle" dropdown-toggle>
-    Thông báo <span class="badge" ng-class="{badge: true, 'blue-badge': newNotificationsCount >= 1}">{{newNotificationsCount}}</span> <span ng-if="isLoading" class="fa fa-spinner fa-pulse fa-fw"></span>
-  </a>
-  <div class="dropdown-menu notifications" role="menu" aria-labelledby="dropdownMenu1">
-    <ul class="list-notifications">
-      <li style="border:none;" role="presentation" ng-if="notifications == null || notifications.length == 0">
-        <div class="notification-item" style="">
-          <div style="text-align: center; border: none;" class="col-xs-12">
-            <span ng-if="!isLoading">Chưa có thông báo nào</span>
-            <span ng-if="isLoading" class="fa fa-spinner fa-pulse fa-2x fa-fw"></span>
-          </div>
-        </div>
-      </li>
-      <li ng-class="{watched: item.watched}" role="presentation" ng-repeat="item in notifications | orderBy: '-updated_at'">
-        <!-- BEGIN CHO DUYET BAI VIET THANH CONG -->
-        <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Duyệt bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+  <li ng-controller="notificationCtrl" ng-if="signedIn()" dropdown>
+    <a ng-click="onDisplayNotifications()" href class="dropdown-toggle" dropdown-toggle>
+      Thông báo <span class="badge" ng-class="{badge: true, 'blue-badge': newNotificationsCount >= 1}">{{newNotificationsCount}}</span> <span ng-if="isLoading" class="fa fa-spinner fa-pulse fa-fw"></span>
+    </a>
+    <div class="dropdown-menu notifications" role="menu" aria-labelledby="dropdownMenu1">
+      <ul class="list-notifications">
+        <li style="border:none;" role="presentation" ng-if="notifications == null || notifications.length == 0">
           <div class="notification-item" style="">
-            <div  class="col-xs-2">
-              <img width="50px" height="50px" ng-src="{{''|logo}}">
-            </div>
-            <div class="col-xs-10">
-              <div>Bài viết "<b>{{item.target_object.title}}</b>" của bạn đã được duyệt và đăng bởi admin hệ thống</div>
-              <small>{{item.updated_at | timeago}}</small>
+            <div style="text-align: center; border: none;" class="col-xs-12">
+              <span ng-if="!isLoading">Chưa có thông báo nào</span>
+              <span ng-if="isLoading" class="fa fa-spinner fa-pulse fa-2x fa-fw"></span>
             </div>
           </div>
-        </a>
-        <!-- END CHO DUYET BAI VIET THANH CONG -->
-
-        <!-- BEGIN CHO TU CHOI BAI VIET -->
-        <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối bài viết'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
-          <div class="notification-item" style="">
-            <div  class="col-xs-2">
-              <img width="50px" height="50px" ng-src="{{''|logo}}">
-            </div>
-            <div class="col-xs-10">
-              <div>Bài viết "<b>{{item.target_object.title}}</b>" của bạn không được duyệt bởi người quản trị hệ thống</div>
-              <small>{{item.updated_at | timeago}}</small>
-            </div>
-          </div>
-        </a>
-        <!-- END CHO TU CHOI BAI VIET -->
-
-        <!-- BEGIN CHO DUYET DOANH NGHIEP THANH CONG -->
-        <a style="color:#00BC19;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Chấp nhận yêu cầu kích hoạt tài khoản doanh nghiệp'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
-          <div class="notification-item" style="">
-            <div  class="col-xs-2">
-              <img width="50px" height="50px" ng-src="{{''|logo}}">
-            </div>
-            <div class="col-xs-10">
-              <div>Yêu cầu kích hoạt tài khoản doanh nghiệp "<b>{{item.target_object.name}}</b>" của bạn đã được duyệt và chấp nhận bởi admin hệ thống</div>
-              <small>{{item.updated_at | timeago}}</small>
-            </div>
-          </div>
-        </a>
-        <!-- END CHO DUYET DOANH NGHIEP THANH CONG -->
-
-        <!-- BEGIN CHO TU CHOI CAP TAI KHOAN DOANH NGHIEP -->
-        <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối yêu cầu kích hoạt tài khoản doanh nghiệp'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
-          <div class="notification-item" style="">
-            <div  class="col-xs-2">
-              <img width="50px" height="50px" ng-src="{{''|logo}}">
-            </div>
-            <div class="col-xs-10">
-              <div>Yêu cầu kích hoạt tài khoản doanh nghiệp "<b>{{item.target_object.name}}</b>" của bạn bị từ chối bởi admin hệ thống</div>
-              <small>{{item.updated_at | timeago}}</small>
-            </div>
-          </div>
-        </a>
-        <!-- END CHO TU CHOI CAP TAI KHOAN DOANH NGHIEP -->
-
-        <!-- BEGIN CHO THICH BAI VIET -->
-        <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
-          <div class="notification-item" style="">
-            <div  class="col-xs-2">
-              <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
-            </div>
-            <div class="col-xs-10">
-              <div ng-if="item.triggers.length >=2">
-                {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác thích bài viết "<b>{{item.target_object.title}}</b>" của bạn
+        </li>
+        <li ng-class="{watched: item.watched}" role="presentation" ng-repeat="item in notifications | orderBy: '-updated_at'">
+          <!-- BEGIN CHO DUYET BAI VIET THANH CONG -->
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Duyệt bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{''|logo}}">
               </div>
-
-              <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} thích bài viết "<b>{{item.target_object.title}}</b>" của bạn</div>
-              <small>{{item.updated_at | timeago}}</small>
-            </div>
-          </div>
-        </a>
-        <!-- END CHO THICH BAI VIET -->
-
-        <!-- BEGIN CHO THICH BAI VIET BAN DANG THEO DOI-->
-        <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bài viết bạn đang theo dõi'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
-          <div class="notification-item" style="">
-            <div  class="col-xs-2">
-              <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
-            </div>
-            <div class="col-xs-10">
-              <div ng-if="item.triggers.length >=2">
-                {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác thích bài viết "<b>{{item.target_object.title}}</b>" bạn đang theo dõi
-              </div>
-
-              <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} thích bài viết "<b>{{item.target_object.title}}</b>" bạn đang theo dõi</div>
-              <small>{{item.updated_at | timeago}}</small>
-            </div>
-          </div>
-        </a>
-        <!-- END CHO THICH BAI VIET BAN DANG THEO DOI-->
-
-        <!-- BEGIN CHO BINH LUAN BAI VIET CUA BAN-->
-        <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
-          <div class="notification-item" style="">
-            <div  class="col-xs-2">
-              <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
-            </div>
-            <div class="col-xs-10">
-              <div ng-if="item.triggers.length >=2">
-                {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác bình luận trong bài viết "<b>{{item.target_object.title}}</b>" của bạn
-              </div>
-
-              <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} bình luận trong bài viết "<b>{{item.target_object.title}}</b>" của bạn</div>
-              <small>{{item.updated_at | timeago}}</small>
-            </div>
-          </div>
-        </a>
-        <!-- END CHO BINH LUAN BAI VIET CUA BAN-->
-
-        <!-- BEGIN CHO BINH LUAN BAI VIET BAN DANG THEO DOI-->
-        <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận trên bài viết bạn đang theo dõi'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
-          <div class="notification-item" style="">
-            <div  class="col-xs-2">
-              <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
-            </div>
-            <div class="col-xs-10">
-              <div ng-if="item.triggers.length >=2">
-                {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác bình luận trong bài viết "<b>{{item.target_object.title}}</b>" mà bạn đang theo dõi
-              </div>
-
-              <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} bình luận trong bài viết "<b>{{item.target_object.title}}</b>" mà bạn đang theo dõi</div>
-              <small>{{item.updated_at | timeago}}</small>
-            </div>
-          </div>
-        </a>
-        <!-- END CHO BINH LUAN BAI VIET BAN DANG THEO DOI-->
-
-        <!-- BEGIN CHO BINH LUAN CUA CHU BAI VIET-->
-        <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận của chủ bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
-          <div class="notification-item" style="">
-            <div  class="col-xs-2">
-              <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
-            </div>
-            <div class="col-xs-10">
-              <div>
-                {{item.triggers[0].trigger_user.fullname}} cũng đã bình luận trong bài viết "<b>{{item.target_object.title}}</b>" của anh ấy
+              <div class="col-xs-10">
+                <div>Bài viết "<b>{{item.target_object.title}}</b>" của bạn đã được duyệt và đăng bởi admin hệ thống</div>
+                <small>{{item.updated_at | timeago}}</small>
               </div>
             </div>
-          </div>
-        </a>
-        <!-- END CHO BINH LUAN CUA CHU BAI VIET-->
+          </a>
+          <!-- END CHO DUYET BAI VIET THANH CONG -->
 
-        <!-- BEGIN CHO HIEN THI THONG BAO THICH BINH LUAN -->
-        <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bình luận'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
-          <div class="notification-item" style="">
-            <div  class="col-xs-2">
-              <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
-            </div>
-            <div class="col-xs-10">
-              <div ng-if="item.triggers.length >=2">
-                {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác thích bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bài viết "<b>{{item.target_object.post_title | shortContent: 7}}</b>"
+          <!-- BEGIN CHO TU CHOI BAI VIET -->
+          <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối bài viết'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{''|logo}}">
               </div>
-
-              <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} thích bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bài viết "<b>{{item.target_object.post_title | shortContent: 7}}</b>"</div>
-              <small>{{item.updated_at | timeago}}</small>
-            </div>
-          </div>
-        </a>
-        <!-- END CHO HIEN THI THONG BAO THICH BINH LUAN -->
-
-        <!-- BEGIN CHO HIEN THI THONG BAO PHAN HOI BINH LUAN (REPLY COMMENT) -->
-        <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Phản hồi bình luận'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
-          <div class="notification-item" style="">
-            <div  class="col-xs-2">
-              <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
-            </div>
-            <div class="col-xs-10">
-              <div ng-if="item.triggers.length >=2">
-                {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người đã phản hồi bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bài viết "<b>{{item.target_object.post_title | shortContent: 7}}</b>"
+              <div class="col-xs-10">
+                <div>Bài viết "<b>{{item.target_object.title}}</b>" của bạn không được duyệt bởi người quản trị hệ thống</div>
+                <small>{{item.updated_at | timeago}}</small>
               </div>
-
-              <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} đã phản hồi bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bài viết "<b>{{item.target_object.post_title | shortContent: 7}}</b>"</div>
-              <small>{{item.updated_at | timeago}}</small>
             </div>
-          </div>
-        </a>
-        <!-- END CHO HIEN THI THONG BAO PHAN HOI BINH LUAN (REPLY COMMENT) -->
+          </a>
+          <!-- END CHO TU CHOI BAI VIET -->
 
-        <!-- BEGIN CHO HIEN THI THONG BAO THICH PHAN HOI -->
-        <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích phản hồi'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
-          <div class="notification-item" style="">
-            <div  class="col-xs-2">
-              <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
-            </div>
-            <div class="col-xs-10">
-              <div ng-if="item.triggers.length >=2">
-                {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác thích phản hồi "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bình luận "<b>{{item.target_object.comment_content | shortContent: 7}}</b>"
+          <!-- BEGIN CHO DUYET DOANH NGHIEP THANH CONG -->
+          <a style="color:#00BC19;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Chấp nhận yêu cầu kích hoạt tài khoản doanh nghiệp'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{''|logo}}">
               </div>
-
-              <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} thích phản hồi "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bình luận "<b>{{item.target_object.comment_content | shortContent: 7}}</b>"</div>
-              <small>{{item.updated_at | timeago}}</small>
+              <div class="col-xs-10">
+                <div>Yêu cầu kích hoạt tài khoản doanh nghiệp "<b>{{item.target_object.name}}</b>" của bạn đã được duyệt và chấp nhận bởi admin hệ thống</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
             </div>
-          </div>
-        </a>
-        <!-- END CHO HIEN THI THONG BAO THICH PHAN HOI -->
+          </a>
+          <!-- END CHO DUYET DOANH NGHIEP THANH CONG -->
 
-      </li>
-    </ul>
-    <a ng-if="notifications.length >= 15" class="see-all" style="display:block;border-top: 1px solid #c5c5c5; text-align:center; cursor:pointer; text-decoration:none;"><strong>Xem tất cả</strong></a>
-  </div>
-</li>
+          <!-- BEGIN CHO TU CHOI CAP TAI KHOAN DOANH NGHIEP -->
+          <a style="color:#FF1E1E;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Từ chối yêu cầu kích hoạt tài khoản doanh nghiệp'" role="menuitem" tabindex="-1" ui-sref="thongBao({notificationChangeId: item._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{''|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div>Yêu cầu kích hoạt tài khoản doanh nghiệp "<b>{{item.target_object.name}}</b>" của bạn bị từ chối bởi admin hệ thống</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
+          <!-- END CHO TU CHOI CAP TAI KHOAN DOANH NGHIEP -->
 
-<li ng-show = "signedIn()">
- <a ui-sref="trangCaNhan({username: user.username})">{{user.fullname}}</a>
-</li>
+          <!-- BEGIN CHO THICH BAI VIET -->
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác thích bài viết "<b>{{item.target_object.title}}</b>" của bạn
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} thích bài viết "<b>{{item.target_object.title}}</b>" của bạn</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
+          <!-- END CHO THICH BAI VIET -->
+
+          <!-- BEGIN CHO THICH BAI VIET BAN DANG THEO DOI-->
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bài viết bạn đang theo dõi'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác thích bài viết "<b>{{item.target_object.title}}</b>" bạn đang theo dõi
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} thích bài viết "<b>{{item.target_object.title}}</b>" bạn đang theo dõi</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
+          <!-- END CHO THICH BAI VIET BAN DANG THEO DOI-->
+
+          <!-- BEGIN CHO BINH LUAN BAI VIET CUA BAN-->
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác bình luận trong bài viết "<b>{{item.target_object.title}}</b>" của bạn
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} bình luận trong bài viết "<b>{{item.target_object.title}}</b>" của bạn</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
+          <!-- END CHO BINH LUAN BAI VIET CUA BAN-->
+
+          <!-- BEGIN CHO BINH LUAN BAI VIET BAN DANG THEO DOI-->
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận trên bài viết bạn đang theo dõi'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác bình luận trong bài viết "<b>{{item.target_object.title}}</b>" mà bạn đang theo dõi
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} bình luận trong bài viết "<b>{{item.target_object.title}}</b>" mà bạn đang theo dõi</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
+          <!-- END CHO BINH LUAN BAI VIET BAN DANG THEO DOI-->
+
+          <!-- BEGIN CHO BINH LUAN CUA CHU BAI VIET-->
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận của chủ bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div>
+                  {{item.triggers[0].trigger_user.fullname}} cũng đã bình luận trong bài viết "<b>{{item.target_object.title}}</b>" của anh ấy
+                </div>
+              </div>
+            </div>
+          </a>
+          <!-- END CHO BINH LUAN CUA CHU BAI VIET-->
+
+          <!-- BEGIN CHO HIEN THI THONG BAO THICH BINH LUAN -->
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bình luận'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác thích bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bài viết "<b>{{item.target_object.post_title | shortContent: 7}}</b>"
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} thích bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bài viết "<b>{{item.target_object.post_title | shortContent: 7}}</b>"</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
+          <!-- END CHO HIEN THI THONG BAO THICH BINH LUAN -->
+
+          <!-- BEGIN CHO HIEN THI THONG BAO PHAN HOI BINH LUAN (REPLY COMMENT) -->
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Phản hồi bình luận'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người đã phản hồi bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bài viết "<b>{{item.target_object.post_title | shortContent: 7}}</b>"
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} đã phản hồi bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bài viết "<b>{{item.target_object.post_title | shortContent: 7}}</b>"</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
+          <!-- END CHO HIEN THI THONG BAO PHAN HOI BINH LUAN (REPLY COMMENT) -->
+
+          <!-- BEGIN CHO HIEN THI THONG BAO THICH PHAN HOI -->
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích phản hồi'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác thích phản hồi "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bình luận "<b>{{item.target_object.comment_content | shortContent: 7}}</b>"
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} thích phản hồi "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bình luận "<b>{{item.target_object.comment_content | shortContent: 7}}</b>"</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
+          <!-- END CHO HIEN THI THONG BAO THICH PHAN HOI -->
+
+        </li>
+      </ul>
+      <a ng-if="notifications.length >= 15" class="see-all" style="display:block;border-top: 1px solid #c5c5c5; text-align:center; cursor:pointer; text-decoration:none;"><strong>Xem tất cả</strong></a>
+    </div>
+  </li>
+
+  <li ng-show = "signedIn()">
+   <a ui-sref="trangCaNhan({username: user.username})">{{user.fullname}}</a>
+ </li>
 
 
-<li ng-show ="signedIn()" class="dropdown" dropdown>
+ <li ng-show ="signedIn()" class="dropdown" dropdown>
   <a href class="dropdown-toggle" dropdown-toggle>
     <span class="caret"></span>
   </a>

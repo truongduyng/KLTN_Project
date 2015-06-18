@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
   "use strict";
   $(".big-cta").hover(
@@ -42,6 +41,7 @@ $(document).ready(function() {
       $('.scrollup').fadeOut();
     }
   });
+
   $('.scrollup').click(function(){
     $("html, body").animate({ scrollTop: 0 }, 100);
     return false;

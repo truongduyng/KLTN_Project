@@ -39,6 +39,7 @@
 //= require ngInfiniteScroll
 //= require ngstorage
 //= require angular-facebook
+//= require bootstrap
 //= require ./app.js
 //= require_tree ../services
 //= require websocket_rails/main
