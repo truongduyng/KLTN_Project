@@ -3,8 +3,8 @@
   <!--  <button class="btn btn-success" ng-click="loadNotifications()">Load notification</button> -->
 
 
-  <li ng-hide="signedIn()" style="margin: 0 15px 0 15px;"><a href="" ng-click= "open_signin()" >Đăng nhập</a></li>
-  <li ng-hide="signedIn()" style="margin: 0 15px 0 15px;"><a href="" ng-click= "open_signup()" >Đăng kí</a></li>
+  <li ng-hide="signedIn()" style="margin: 0 5px 0 5px;"><a href="" ng-click= "open_signin()" >Đăng nhập</a></li>
+  <li ng-hide="signedIn()" style="margin: 0 5px 0 0px;"><a href="" ng-click= "open_signup()" >Đăng kí</a></li>
 
   <li ng-controller="notificationCtrl" ng-if="signedIn()" dropdown>
     <a ng-click="onDisplayNotifications()" href class="dropdown-toggle" dropdown-toggle>

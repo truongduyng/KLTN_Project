@@ -56,8 +56,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/posts/:username/get_favorite_posts_by_username' => 'posts#get_favorite_posts_by_username'
-  get '/posts/:username/get_posts_by_username' => 'posts#get_posts_by_username'
 
   get 'custom_users/:username' => 'custom_users#get_user_by_username'
 
@@ -99,7 +97,8 @@ Rails.application.routes.draw do
     end
 
     collection do
-      get 'get_posts_by_current_user'
+      get '/:username(/:text_search)/get_favorite_posts_by_username' => 'posts#get_favorite_posts_by_username'
+      get '/:username(/:text_search)/get_posts_by_username' => 'posts#get_posts_by_username'
     end
   end
 

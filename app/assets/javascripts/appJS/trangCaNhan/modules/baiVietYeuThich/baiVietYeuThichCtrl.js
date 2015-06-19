@@ -15,7 +15,7 @@ app.controller('baiVietYeuThichCtrl', ['$scope', 'baiVietYeuThichService', '$sta
 			request.cancel("chuyển trang");
 		}
 
-		request = baiVietYeuThichService.get($stateParams.username, page, $scope.pageConfig.pageSize);
+		request = baiVietYeuThichService.get($stateParams.username, null, page, $scope.pageConfig.pageSize);
 		request.promise.success(function() {
 			$scope.isLoading = false;
 		});
@@ -28,4 +28,18 @@ app.controller('baiVietYeuThichCtrl', ['$scope', 'baiVietYeuThichService', '$sta
 		});
 	};
 
-}]);
+	$scope.search_fav = function() {
+
+		$scope.isLoading = true;
+			//Huy request neu no chua load xong va tao request moi
+			if (request != null) {
+				request.cancel("chuyển trang");
+			}
+
+			request = baiVietYeuThichService.get($stateParams.username, $scope.textSearch_fav, null, null);
+			request.promise.success(function() {
+				$scope.isLoading = false;
+			});
+		};
+
+	}]);

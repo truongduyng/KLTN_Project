@@ -1,82 +1,79 @@
 <div ng-controller="baiVietYeuThichCtrl">
-    <h2></h2>
-    <div class="row">
-      <form class="form-tim-kiem">
-        <div class="col-xs-6 col-form-tim-kiem">
-           <input type="text" class="form-control" id="email" placeholder="Tìm kiếm...">
-        </div>
-        <div class="col-xs-3 col-form-tim-kiem">
-           <select class="form-control">
-                    <option>Tên bài viết</option>
-                    <option>Nội dung bài viết</option>
-                    <option>Người sở hữu</option>
-                  </select>
-        </div>
-        <div class="col-xs-3 col-form-tim-kiem">
-           <button type="submit" class="btn btn-primary btn-tim-kiem">Tìm kiếm</button>
+  <h2></h2>
+  <div class="row">
+    <div class="col-sm-12">
+      <form>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Tìm kiếm bài viết..." ng-model = "textSearch_fav" ng-change="search_fav()">
+          <span class="input-group-btn">
+            <button ng-click="search_fav()" class="btn btn-default" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+          </span>
         </div>
       </form>
     </div>
+  </div>
 
-    <h1></h1>
-    <div class="row">
-        <div class="col-sm-12 danh-sach-bai-viet">
-          <h4 ng-hide="isLoading || posts.length >= 1" style="text-align: center">CHƯA THÍCH BÀI VIẾT NÀO</h4>
-          <div class="bai-viet" ng-repeat="post in posts | orderBy: '-updated_at'" >
-              <div class="row">
-                <a ui-sref="trangCaNhan({username: post.user.username})">
-                      <div class="col-xs-2">
-                  <img fallback-src="sportaLogo" ng-src="{{post.user.avatar.url |logo}}" class="img-circle profile-picture" width="64px" height="64px">
-                </div>
-                <div class="col-xs-10">
-                  <span class="owner-bai-viet">{{post.user.fullname}}</span>
-                  <span>{{post.updated_at | timeago}}</span>
-                </div>
-                </a>
-              
-              </div>
-              <div class="row noi-dung-bai-viet" >
-                <div class="col-xs-12">
-                      <span class="tua-de-bai-viet">
-                        <a ui-sref="chiTietBaiViet({id: post._id.$oid})">{{post.title}}</a>
-                      </span>
-                      <div class="mo-ta-bai-viet">
-                        {{post.body}}
-                      </div>
-                      <p></p>
-                      <div class="btn-group pull-right" role="group" aria-label="...">  
-                      
-                                <a ui-sref="chiTietBaiViet({id: post._id.$oid})" class="btn btn-primary" tooltip="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
-                                <a ng-if="currentUser._id.$oid == authenUser._id.$oid" ng-click="unfavorite(post)" class="btn btn-danger" tooltip="Bỏ lưu"><span class="glyphicon glyphicon-trash"></span></a>
-                               <!--  <a  class="btn btn-primary" tooltip="Hoàn tác"><span class="glyphicon glyphicon-refresh"></span></a> -->
-                        </div>
-                     
-                </div>
-          </div>
-      
+  <h1></h1>
+  <div class="row">
+    <div class="col-sm-12">
+      <h4 ng-hide="isLoading || posts.length >= 1 || textSearch_fav" style="text-align: center">CHƯA THÍCH BÀI VIẾT NÀO</h4>
+      <div class="bai-viet" ng-repeat="post in posts | orderBy: '-updated_at'" >
+        <div class="row">
+          <a ui-sref="trangCaNhan({username: post.user.username})">
+            <div class="col-xs-2">
+              <img fallback-src="sportaLogo" ng-src="{{post.user.avatar.url |logo}}" class="img-circle profile-picture" width="64px" height="64px">
+            </div>
+            <div class="col-xs-10">
+              <span class="owner-bai-viet">{{post.user.fullname}}</span>
+              <span>{{post.updated_at | timeago}}</span>
+            </div>
+          </a>
+
         </div>
-           <span ng-show="isLoading" ><img style="display:block;margin:0px auto;" src="/assets/application/placeholder/spinner_loading.gif" width="22px" height="22px"></span>
-  
-    </div>
+        <div class="row noi-dung-bai-viet" >
+          <div class="col-xs-12">
+            <span class="tua-de-bai-viet">
+              <a ui-sref="chiTietBaiViet({id: post._id.$oid})">{{post.title}}</a>
+            </span>
+            <div class="mo-ta-bai-viet">
+              {{post.body}}
+            </div>
+            <p></p>
+            <div class="btn-group pull-right" role="group" aria-label="...">
 
-   <span ng-show="isLoading" ><img style="display:block;margin:0px auto;" src="/assets/application/placeholder/spinner_loading.gif" width="22px" height="22px"></span>
-    <div class="row">
-      <div class="col-xs-12" style="text-align: center;">
-           <paging
-                  class="small"
-                  page="pageConfig.currentPage" 
-                  page-size="pageConfig.pageSize" 
-                  total="pageConfig.total"
-                  adjacent="{{pageConfig.adjacent}}"
-                  dots="{{pageConfig.dots}}"
-                  scroll-top="{{pageConfig.scrollTop}}" 
-                  hide-if-empty="{{pageConfig.hideIfEmpty}}"
-                  ul-class="{{pageConfig.ulClass}}"
-                  active-class="{{pageConfig.activeClass}}"
-                  disabled-class="{{pageConfig.disabledClass}}"
-                  show-prev-next="{{pageConfig.showPrevNext}}"
-                  paging-action="onPageSelected('Paging Clicked', page)">
-          </paging> 
+              <a ui-sref="chiTietBaiViet({id: post._id.$oid})" class="btn btn-primary" tooltip="Chi tiết bài viết"><span class="glyphicon glyphicon-zoom-in"></span></a>
+              <a ng-if="currentUser._id.$oid == authenUser._id.$oid" ng-click="unfavorite(post)" class="btn btn-danger" tooltip="Bỏ lưu"><span class="glyphicon glyphicon-trash"></span></a>
+              <!--  <a  class="btn btn-primary" tooltip="Hoàn tác"><span class="glyphicon glyphicon-refresh"></span></a> -->
+            </div>
+
+          </div>
+        </div>
+
       </div>
+      <span ng-show="isLoading" ><img style="display:block;margin:0px auto;" src="/assets/application/placeholder/spinner_loading.gif" width="22px" height="22px"></span>
+
     </div>
+  </div>
+
+  <div class="row" ng-if="!textSearch_fav">
+    <div class="col-xs-12" style="text-align: center;">
+      <paging
+      class="small"
+      page="pageConfig.currentPage"
+      page-size="pageConfig.pageSize"
+      total="pageConfig.total"
+      adjacent="{{pageConfig.adjacent}}"
+      dots="{{pageConfig.dots}}"
+      scroll-top="{{pageConfig.scrollTop}}"
+      hide-if-empty="{{pageConfig.hideIfEmpty}}"
+      ul-class="{{pageConfig.ulClass}}"
+      active-class="{{pageConfig.activeClass}}"
+      disabled-class="{{pageConfig.disabledClass}}"
+      show-prev-next="{{pageConfig.showPrevNext}}"
+      paging-action="onPageSelected('Paging Clicked', page)">
+    </paging>
+  </div>
+</div>
 </div>

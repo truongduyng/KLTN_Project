@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo, :like, :unlike, :edit, :update, :get_posts_by_current_user, :destroy, :follow, :unfollow]
+	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo, :like, :unlike, :edit, :update, :destroy, :follow, :unfollow]
 	before_action :find_published_post, only: [:like, :unlike, :get_k_first_like, :get_all_likes, :follow, :unfollow]
 	before_action :find_and_check_post_with_user, only: [:add_photo, :destroy]
 	before_action :find_post_for_show, only: [:show]
@@ -175,27 +175,29 @@ class PostsController < ApplicationController
 		end
 	end
 
-
-	def get_posts_by_current_user
-		@all_posts = current_user.posts.all
-		render 'get_posts_by_current_user.json.jbuilder', status: :ok
-	end
-
-
 	def get_posts_by_username
 		user = User.where(username: params[:username]).first
 		page = params[:page]
 		per_page = params[:per_page]
 		if user
 			#Nguoi dung dang nhap chinh la nguoi dung dang xem lay tat cac post
+			# byebug
 			if user_signed_in? && user == current_user
-				@all_posts = user.posts.desc(:updated_at).paginate(page: page, per_page: per_page)
-				@total = user.posts.count
+				if params[:text_search].nil?
+					@all_posts = user.posts.desc(:updated_at).paginate(page: page, per_page: per_page);
+					@total = user.posts.count
+				else
+					@all_posts = user.posts.desc(:updated_at).text_search(params[:text_search])
+				end
 			else
 				#lay chi nhung post da publish
 				publishedStatus = PostStatus.publishedStatus
-				@all_posts = user.posts.where(post_status_id: publishedStatus.id).desc(:updated_at).paginate(page: page, per_page: per_page)
-				@total = user.posts.where(post_status_id: publishedStatus.id).count
+				if params[:text_search].nil?
+					@all_posts = user.posts.where(post_status_id: publishedStatus.id).desc(:updated_at).paginate(page: page, per_page: per_page)
+					@total = user.posts.where(post_status_id: publishedStatus.id).count
+				else
+					@all_posts = user.posts.where(post_status_id: publishedStatus.id).desc(:updated_at).text_search(params[:text_search])
+				end
 			end
 			render 'get_posts_by_username.json.jbuilder', status: :ok
 		else
@@ -209,40 +211,47 @@ class PostsController < ApplicationController
 		page = params[:page]
 		per_page = params[:per_page]
 		if user
-			@favorite_posts = user.favorite_posts.desc(:updated_at).paginate(page: page, per_page: per_page)
-			@total = user.favorite_posts.count
-			render 'get_favorite_posts_by_username.json.jbuilder', status: :ok
+
+			if params[:text_search].nil?
+				@favorite_posts = user.favorite_posts.desc(:updated_at).paginate(page: page, per_page: per_page)
+				@total = user.favorite_posts.count
+				render 'get_favorite_posts_by_username.json.jbuilder', status: :ok
+			else
+				@all_fav_posts = Post.where(:id.in => user.favorite_posts.collect{|fav_post| fav_post.post_id.to_s}).text_search(params[:text_search])
+				render 'search_fav_posts.json.jbuilder', status: :ok
+			end
+
 		else
 			render nothing: true, status: :not_found, content_type: 'application/json'
 		end
 	end
 
 	private
-		def post_params
-			params.require(:post).permit(:title, :body)
-		end
+	def post_params
+		params.require(:post).permit(:title, :body)
+	end
 
-		def find_and_check_post_with_user
-			begin
-				@post = Post.find(params[:id])
-				if @post.user != current_user
-					render nothing: true, status: :not_found, content_type: 'application/json'
-				end
-			rescue Mongoid::Errors::DocumentNotFound
+	def find_and_check_post_with_user
+		begin
+			@post = Post.find(params[:id])
+			if @post.user != current_user
 				render nothing: true, status: :not_found, content_type: 'application/json'
 			end
+		rescue Mongoid::Errors::DocumentNotFound
+			render nothing: true, status: :not_found, content_type: 'application/json'
 		end
+	end
 
-		def find_published_post
-			begin
-				@post = Post.find(params[:id])
-				if !@post.published?
-					render nothing: true, status: :not_found, content_type: 'application/json'
-				end
-			rescue Mongoid::Errors::DocumentNotFound
+	def find_published_post
+		begin
+			@post = Post.find(params[:id])
+			if !@post.published?
 				render nothing: true, status: :not_found, content_type: 'application/json'
 			end
+		rescue Mongoid::Errors::DocumentNotFound
+			render nothing: true, status: :not_found, content_type: 'application/json'
 		end
+	end
 
 		#Post hoac publish hoac la chinh cua la nguoi do
 		def find_post_for_show
@@ -280,4 +289,4 @@ class PostsController < ApplicationController
 			end
 		end
 
-end
+	end

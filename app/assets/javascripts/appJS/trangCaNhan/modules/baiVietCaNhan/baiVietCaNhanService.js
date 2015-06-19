@@ -4,17 +4,20 @@ app.factory('baiVietCaNhanService', ['$http', '$q', function($http, $q) {
 	};
 
 	//get all tat ca bai  viet
-	o.index = function(username, page, per_page) {
+	o.index = function(username, text_search, page, per_page) {
 
-		var url = "/posts/" + username + "/get_posts_by_username.json";
-		var query = "?page=" + page + "&per_page=" + per_page;
+		if (text_search) {
+			var url = "/posts/" + username + "/" + text_search +"/get_posts_by_username.json" + "?page=" + page + "&per_page=" + per_page;
+		}else{
+			var url = "/posts/" + username + "/get_posts_by_username.json";
+		};
 
 		//promise de huy request
 		var canceller = $q.defer();
 		var cancel = function(reason) {
 			canceller.resolve(reason);
 		};
-		var promise = $http.get(url + query, {
+		var promise = $http.get(url, {
 			timeout: canceller.promise
 		}).success(function(data) {
 			angular.copy(data.posts, o.posts);

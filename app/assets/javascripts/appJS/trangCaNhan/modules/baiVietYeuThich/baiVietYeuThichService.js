@@ -4,16 +4,20 @@ app.factory('baiVietYeuThichService', ['$http', '$q', function($http, $q) {
 		total: 0,
 	};
 
-	o.get = function(username, page, per_page) {
-		var url = "/posts/" + username + "/get_favorite_posts_by_username.json";
-		var query = "?page=" + page + "&per_page=" + per_page;
+	o.get = function(username, text_search, page, per_page) {
+
+		if (text_search) {
+			var url = "/posts/" + username + "/" + text_search +"/get_favorite_posts_by_username.json" + "?page=" + page + "&per_page=" + per_page;
+		}else{
+			var url = "/posts/" + username + "/get_favorite_posts_by_username.json";
+		};
 
 		var canceller = $q.defer();
 		var cancel = function(reason) {
 			canceller.resolve(reason);
 		};
-		console.log("baiVietYeuThichService");
-		var promise = $http.get(url + query, {
+
+		var promise = $http.get(url, {
 			timeout: canceller.promise
 		}).success(function(data) {
 			angular.copy(data.posts, o.posts);

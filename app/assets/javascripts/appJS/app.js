@@ -98,12 +98,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
 			posts: ['baiVietCaNhanService', '$stateParams', '$rootScope',
 			function(baiVietCaNhanService, $stateParams, $rootScope) {
-				return baiVietCaNhanService.index($stateParams.username, 1, $rootScope.rootPageConfig.pageSize).promise;
+				return baiVietCaNhanService.index($stateParams.username, null, 1, $rootScope.rootPageConfig.pageSize).promise;
 			}],
 
 			favoritePosts: ['baiVietYeuThichService', '$stateParams', '$rootScope',
 			function(baiVietYeuThichService, $stateParams, $rootScope) {
-				return baiVietYeuThichService.get($stateParams.username, 1, $rootScope.rootPageConfig.pageSize).promise;
+				return baiVietYeuThichService.get($stateParams.username, null, 1, $rootScope.rootPageConfig.pageSize).promise;
 			}],
 
 			authenUser: ['Auth', function(Auth) {

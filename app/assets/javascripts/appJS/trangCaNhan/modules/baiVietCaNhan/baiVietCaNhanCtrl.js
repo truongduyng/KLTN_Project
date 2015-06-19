@@ -18,7 +18,7 @@ app.controller('baiVietCaNhanCtrl', ['$scope', 'baiVietCaNhanService', '$state',
 				request.cancel("chuyển trang");
 			}
 
-			request = baiVietCaNhanService.index($stateParams.username, page, $scope.pageConfig.pageSize);
+			request = baiVietCaNhanService.index($stateParams.username, null, page, $scope.pageConfig.pageSize);
 			request.promise.success(function() {
 				$scope.isLoading = false;
 			});
@@ -35,22 +35,18 @@ app.controller('baiVietCaNhanCtrl', ['$scope', 'baiVietCaNhanService', '$state',
 			});
 		};
 
-		//Tim kiem (cai dat sau)
-		$scope.searchType = 'Tên bài viết';
 		$scope.search = function() {
-			console.log("in search.", $scope.textSearch, $scope.searchType);
+
+			$scope.isLoading = true;
+			//Huy request neu no chua load xong va tao request moi
 			if (request != null) {
 				request.cancel("chuyển trang");
 			}
-			if ($scope.searchType == 'Hiển thị tất cả') {
-				$scope.posts.splice(0, $scope.posts.length);
-				$scope.isLoading = true;
-				$scope.pageConfig.currentPage = 1;
-				request = baiVietCaNhanService.index($stateParams.username, 1, $scope.pageConfig.pageSize);
-				request.promise.success(function() {
-					$scope.isLoading = false;
-				});
-			}
+
+			request = baiVietCaNhanService.index($stateParams.username, $scope.textSearch, null, null);
+			request.promise.success(function() {
+				$scope.isLoading = false;
+			});
 		};
 
 	}
