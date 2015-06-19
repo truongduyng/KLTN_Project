@@ -20,7 +20,7 @@ class Post
 	#followers
 	has_and_belongs_to_many :followers, class_name: 'User', inverse_of: :followed_posts
 
-	index({title: "text", body: "text"}, {weights: {title: 10, body: 2}, name: "TextIndex"})
+	index({title: "text", body: "text"}, {weights: {title: 10, body: 2}, name: "PostIndex"})
 
 	#scope
 	#Get published post

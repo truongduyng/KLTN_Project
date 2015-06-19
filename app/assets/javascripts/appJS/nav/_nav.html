@@ -4,7 +4,7 @@
 
 
   <li ng-hide="signedIn()" style="margin: 0 15px 0 15px;"><a href="" ng-click= "open_signin()" >Đăng nhập</a></li>
-  <li ng-hide="signedIn()" style="margin: 15px;"><a href="" ng-click= "open_signup()" >Đăng kí</a></li>
+  <li ng-hide="signedIn()" style="margin: 0 15px 0 15px;"><a href="" ng-click= "open_signup()" >Đăng kí</a></li>
 
   <li ng-controller="notificationCtrl" ng-if="signedIn()" dropdown>
     <a ng-click="onDisplayNotifications()" href class="dropdown-toggle" dropdown-toggle>

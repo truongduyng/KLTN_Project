@@ -93,7 +93,7 @@ app.controller('venueDetailCtrl', ['$scope', 'venueDetailService','$modal', 'Fla
 		//Xoa venue
 		$scope.onDeleteVenue = function(){
 			venueDetailService.destroy($scope.venue).success(function(){
-				Flash.create('success',"Xóa thành công chia sẽ địa điểm chơi thể thao", 'myalert');
+				Flash.create('success',"Xóa thành công chia sẻ địa điểm chơi thể thao", 'myalert');
 				$state.go("home");
 			});
 		};

@@ -28,7 +28,7 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 			$scope.venue.phone = "";
 			$scope.venue.address = "";
 			$scope.uploader.clearQueue();
-			Flash.create("success", "Cảm ơn bạn đã chia sẽ nơi chơi thể thao với mọi người ", 'myalert');
+			Flash.create("success", "Cảm ơn bạn đã chia sẻ nơi chơi thể thao với mọi người ", 'myalert');
 			$state.go("venueDetail", {
 				id: $scope.venue._id.$oid,
 			});
@@ -72,7 +72,7 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 			$scope.map = map;
 		});
 		$scope.address = ""; //Dia chi cho tim vi tri
-		
+
 		$scope.onSearchPosition = function() {
 			$scope.isFinding = true;
 			geocodingService.latLngForAddress($scope.address).then(function(position) {

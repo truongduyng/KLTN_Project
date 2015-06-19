@@ -42,7 +42,6 @@ class BranchesController < ApplicationController
 
   def search
     branches = Branch.search(branch_params)
-    venues = Venue.search(branch_params)
     result = []
     # byebug
     if branches.present?
@@ -54,18 +53,6 @@ class BranchesController < ApplicationController
           name: branch.name,
           address: branch.address,
           url: branch.url_alias
-        }
-      end
-    end
-    if venues.present?
-      venues.each do |venue|
-        result << {
-          lat: venue.coordinates[1],
-          lng: venue.coordinates[0],
-          picture:  "http://i.imgur.com/BBk3iBl.png",
-          name: venue.name,
-          address: venue.address,
-          url: venue.url_alias
         }
       end
     end

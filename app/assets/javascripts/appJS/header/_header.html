@@ -9,7 +9,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" ui-sref="home"><img alt="Brand" src="/assets/application/myimg/football_icon.png" width="45px" height="45px">
+        <a class="navbar-brand" ui-sref="home"><img style="margin-top: -10px;" alt="Brand" src="/assets/application/myimg/football_icon.png" width="45px" height="45px">
         </a>
         <p class="navbar-text" style="margin-left:-2px;"><b style="font-size:1.4em;">SPORTA</b></p>
       </div>
@@ -18,12 +18,16 @@
       <div class="collapse navbar-collapse" id="navbar-collapse" ng-controller="headerCtrl">
         <div class="col-sm-5">
 
-          <div class="input-group" id="search_box" style="margin-top:10px;z-index: 2">
-            <input type="text" class="form-control" placeholder="Tìm kiếm sân, địa chỉ..." ng-model = "search_query" ng-change = "search()" ng-focus="focused()" ng-blur ="blurred()">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-            </span>
-          </div>
+          <form role="form">
+            <div class="input-group" id="search_box" style="margin-top:10px;z-index: 2">
+            <input type="text" class="form-control" placeholder="Tìm kiếm sân, địa chỉ..." ng-model = "search_query" ng-change = "search_fast()" ng-focus="focused()" ng-blur ="blurred()">
+              <span class="input-group-btn">
+                <button ng-click="search()" class="btn btn-default" type="submit">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+          </form>
 
           <ul ng-show="show_recommend_result()" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()" >
             <li ng-repeat = "result in results" ng-click="showresult(result)">{{result.name}}</li>

@@ -5,10 +5,14 @@ app.controller('headerCtrl', ['$scope', '$http','$state', function($scope, $http
 
   $('ul.list_recommend').width($('div#search_box').width());
 
-  $scope.search = function(){
+  $scope.search_fast = function(){
     $http.get("/searchnameadd/"+ $scope.search_query).success(function(data){
       $scope.results = data;
     });
+  };
+
+  $scope.search = function(){
+    console.log("search");
   };
 
   $scope.focused = function(){

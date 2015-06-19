@@ -20,7 +20,9 @@ class Branch
   end
 
   after_validation :geocode
+
   index({ coordinates: "2d" }, { min: -180, max: 180 })
+  index({name: "text", address: "text", url_alias: "text"}, {weights: {name: 10, address: 5, url_alias: 7}, name: "BranchIndex"})
 
   belongs_to :bussiness
 
@@ -63,9 +65,11 @@ class Branch
     end
 
     if param_search[:search_query]
-      result = Branch.near(param_search[:search_query], 2, order:"distance").to_a + Branch.any_of(
-        {name: /#{param_search[:search_query]}/i},
-        {address: /#{param_search[:search_query]}/i}).limit(7).to_a
+      # result = Branch.near(param_search[:search_query], 2, order:"distance").to_a + Branch.any_of(
+      #   {name: /#{param_search[:search_query]}/i},
+      #   {address: /#{param_search[:search_query]}/i}).limit(7).to_a
+
+      result = Branch.near(param_search[:search_query], 2, order:"distance").to_a + Branch.text_search(param_search[:search_query]).to_a;
       return result
     end
 

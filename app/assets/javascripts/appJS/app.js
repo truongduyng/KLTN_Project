@@ -51,10 +51,10 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			post: ['editPostService', '$stateParams', '$q', function(editPostService, $stateParams, $q) {
 				return editPostService.edit($stateParams.id);
 			}],
-		},
-		access: {
-			free: false,
 		}
+		// access: {
+		// 	free: false,
+		// }
 	});
 
 
@@ -69,71 +69,52 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		}
 	});
 
-	// //State de hien thi lydo
-	// $stateProvider.state("chiTietBaiViet.tuChoi", {
-	// 	url: '/chi-tiet-bai-viet/{id}/tu-choi',
-	// 	views: {
-	// 		'lyDo@chiTietBaiViet':{
-	// 			templateUrl: 'appJS/partials/_lyDo.html',
-	// 			controller: 'tuChoiBaiVietCtrl',
+	$stateProvider.state('notFound', {
+		url: '/khong-tim-thay-ket-qua',
+		templateUrl: 'appJS/notFound/_notFound.html',
+	});
 
-	// 		}
-	// 	}
-	// 	templateUrl: 'appJS/chiTietBaiViet/_chiTietBaiViet.html',
-	// 	controller: 'chiTietBaiVietCtrl',
-	// 	resolve: {
-	// 		post: ['postDetailService', '$stateParams', function(postDetailService, $stateParams) {
-	// 			return postDetailService.show($stateParams.id);
-	// 		}],
-	// 	}
-	// });
+	$stateProvider.state('login', {
+		url: '/login',
+		templateUrl: 'appJS/auth/_login.html',
+		controller: 'authCtrl',
+	});
 
-$stateProvider.state('notFound', {
-	url: '/khong-tim-thay-ket-qua',
-	templateUrl: 'appJS/notFound/_notFound.html',
-});
+	$stateProvider.state('register', {
+		url: '/register',
+		templateUrl: 'appJS/auth/_register.html',
+		controller: 'authCtrl',
 
-$stateProvider.state('login', {
-	url: '/login',
-	templateUrl: 'appJS/auth/_login.html',
-	controller: 'authCtrl',
-});
+	});
 
-$stateProvider.state('register', {
-	url: '/register',
-	templateUrl: 'appJS/auth/_register.html',
-	controller: 'authCtrl',
+	$stateProvider.state('trangCaNhan', {
+		url: '/trang-ca-nhan/{username}',
+		templateUrl: 'appJS/trangCaNhan/_trangCaNhan.html',
+		controller: 'trangCaNhanCtrl',
+		resolve: {
+			user: ['trangCaNhanService', '$stateParams', function(trangCaNhanService, $stateParams) {
+				return trangCaNhanService.show($stateParams.username);
+			}],
 
-});
+			posts: ['baiVietCaNhanService', '$stateParams', '$rootScope',
+			function(baiVietCaNhanService, $stateParams, $rootScope) {
+				return baiVietCaNhanService.index($stateParams.username, 1, $rootScope.rootPageConfig.pageSize).promise;
+			}],
 
-$stateProvider.state('trangCaNhan', {
-	url: '/trang-ca-nhan/{username}',
-	templateUrl: 'appJS/trangCaNhan/_trangCaNhan.html',
-	controller: 'trangCaNhanCtrl',
-	resolve: {
-		user: ['trangCaNhanService', '$stateParams', function(trangCaNhanService, $stateParams) {
-			return trangCaNhanService.show($stateParams.username);
-		}],
+			favoritePosts: ['baiVietYeuThichService', '$stateParams', '$rootScope',
+			function(baiVietYeuThichService, $stateParams, $rootScope) {
+				return baiVietYeuThichService.get($stateParams.username, 1, $rootScope.rootPageConfig.pageSize).promise;
+			}],
 
-		posts: ['baiVietCaNhanService', '$stateParams', '$rootScope',
-		function(baiVietCaNhanService, $stateParams, $rootScope) {
-			return baiVietCaNhanService.index($stateParams.username, 1, $rootScope.rootPageConfig.pageSize).promise;
-		}],
-
-		favoritePosts: ['baiVietYeuThichService', '$stateParams', '$rootScope',
-		function(baiVietYeuThichService, $stateParams, $rootScope) {
-			return baiVietYeuThichService.get($stateParams.username, 1, $rootScope.rootPageConfig.pageSize).promise;
-		}],
-
-		authenUser: ['Auth', function(Auth) {
-			return Auth.currentUser().then(function(user) {
-				return user;
-			}, function(response) {
-				return null;
-			})
-		}]
-	}
-});
+			authenUser: ['Auth', function(Auth) {
+				return Auth.currentUser().then(function(user) {
+					return user;
+				}, function(response) {
+					return null;
+				})
+			}]
+		}
+	});
 
 	//Trang nay can phai yeu cau login
 	$stateProvider.state('khTkDoanhNghiep', {
@@ -176,7 +157,6 @@ $stateProvider.state('trangCaNhan', {
 		controller: 'thongBaoCtrl',
 		resolve: {
 			notificationChange: ['thongBaoService', '$stateParams', function(thongBaoService, $stateParams) {
-				console.log("in resolve thong bao");
 				return thongBaoService.getNotificationChange($stateParams.notificationChangeId);
 			}]
 		}
