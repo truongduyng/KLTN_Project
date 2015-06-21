@@ -195,6 +195,24 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		}
 	});
 
+	$stateProvider.state('search', {
+		url: '/search/:search_word',
+		templateUrl: 'appJS/search/search.html',
+		controller: 'searchCtrl',
+		resolve: {
+			branches: function($http, $stateParams) {
+				return $http.get("/searchnameadd/"+ $stateParams.search_word).success(function(data){
+					return data;
+				});
+			},
+			posts: function($http, $stateParams){
+				return $http.get("posts/search/"+ $stateParams.search_word).success(function(data){
+					return data;
+				});
+			}
+		}
+	});
+
 	$stateProvider.state("shareVenue", {
 		url: '/chia-se-dia-diem/',
 		templateUrl: 'appJS/venue/shareVenue/_shareVenue.html',

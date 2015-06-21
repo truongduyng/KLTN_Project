@@ -20,7 +20,7 @@
 
           <form role="form">
             <div class="input-group" id="search_box" style="margin-top:10px;z-index: 2">
-            <input type="text" class="form-control" placeholder="Tìm kiếm sân, địa chỉ..." ng-model = "search_query" ng-change = "search_fast()" ng-focus="focused()" ng-blur ="blurred()">
+              <input type="text" class="form-control" placeholder="Tìm kiếm sân, địa chỉ..." ng-model = "search_query" ng-change = "search_fast()" ng-focus="focused()" ng-blur ="blurred()">
               <span class="input-group-btn">
                 <button ng-click="search()" class="btn btn-default" type="submit">
                   <i class="fa fa-search"></i>
@@ -30,7 +30,10 @@
           </form>
 
           <ul ng-show="show_recommend_result()" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()" >
-            <li ng-repeat = "result in results" ng-click="showresult(result)">{{result.name}}</li>
+            <li ng-repeat = "result in results" ng-click="showresult(result)">
+              <strong>{{result.name}}</strong>
+              <p>{{result.address}}</p>
+            </li>
           </ul>
 
         </div>

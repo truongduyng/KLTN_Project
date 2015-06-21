@@ -1,4 +1,4 @@
-app.controller('mapCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Auth){
+app.controller('mapCtrl', ['$scope', '$http', 'Auth', 'mapFtry', function($scope, $http, Auth, mapFtry){
 
   Auth.currentUser().then(function(user) {
     $scope.username = user.username;
@@ -6,21 +6,14 @@ app.controller('mapCtrl', ['$scope', '$http', 'Auth', function($scope, $http, Au
     $scope.username = "User"
   });
 
-  $scope.image = {
-    url: null,
-    size: new google.maps.Size(56, 56),
-    origin: new google.maps.Point(0,0),
-    anchor: new google.maps.Point(28,56)
-  };
-  $scope.shape = {
-    coords: [1, 1, 1, 56, 56, 56, 56 , 1],
-    type: 'poly'
-  };
+  $scope.image = mapFtry.image;
+  $scope.shape = mapFtry.shape;
 
   $scope.markers =[];
   $scope.infowindow = new google.maps.InfoWindow({
     maxWidth: 160
   });
+
   $scope.bounds = new google.maps.LatLngBounds();
   $scope.geocoder = new google.maps.Geocoder();
 

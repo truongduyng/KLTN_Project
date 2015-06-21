@@ -11,6 +11,11 @@ class PostsController < ApplicationController
 		@posts = Post.published.desc(:updated_at).paginate(page: params[:page], per_page: 9)
 	end
 
+	def search
+		@posts = Post.published.desc(:updated_at).text_search(params[:search_word]).to_a
+		render 'index.json.jbuilder'
+	end
+
 	def show
 	end
 

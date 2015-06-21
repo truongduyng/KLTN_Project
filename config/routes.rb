@@ -94,6 +94,7 @@ Rails.application.routes.draw do
     collection do
       get '/:username(/:text_search)/get_favorite_posts_by_username' => 'posts#get_favorite_posts_by_username'
       get '/:username(/:text_search)/get_posts_by_username' => 'posts#get_posts_by_username'
+      get 'search/:search_word' => 'posts#search'
     end
   end
 
