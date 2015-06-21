@@ -27,11 +27,11 @@
 //= require underscore
 //= require angular-cookies
 //= require angular-sanitize
-//= require_tree ../../angularJSComponents
 //= require angular-animate
 //= require ngmap
 //= require angular-ckeditor
 //= require ./systemAdminApp.js
+//= require_tree ../../angularJSComponents
 //= require_tree ../customJS
 //= require ../../angular-locale_vi-vn
 //= require_tree .

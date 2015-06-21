@@ -33,7 +33,6 @@
 //= require angular-unsavedChanges/dist/unsavedChanges
 //= require angular-cookies
 //= require angular-sanitize
-//= require_tree ../angularJSComponents
 //= require ng-timeago
 //= require angular-paging
 //= require ngInfiniteScroll
@@ -42,6 +41,7 @@
 //= require bootstrap
 //= require ./app.js
 //= require_tree ../services
+//= require_tree ../angularJSComponents
 //= require websocket_rails/main
 //= require ./customJS/richmarker.js
 //= require ../angular-locale_vi-vn

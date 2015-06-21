@@ -10,6 +10,10 @@ app.controller('SAduyetBaiVietCtrl', ['$scope', 'SAduyetBaiVietService', '$modal
 		$scope.addedPosts = [];
 		initIsChecked();
 
+		$scope.search = function(){
+			return duyetBaiVietService.get_posts($scope.text_search, null, null);
+		}
+
 		$scope.ontogglePost = function(post) {
 			//Neu trang thai la 'Them' thi them no vao ds xem chi tiet
 			if (post.isChecked == true) {
@@ -71,7 +75,7 @@ app.controller('SAduyetBaiVietCtrl', ['$scope', 'SAduyetBaiVietService', '$modal
 				request.cancel();
 			}
 			$scope.isLoadingPost = true;
-			request = duyetBaiVietService.get_posts(page, $scope.pageConfig.pageSize);
+			request = duyetBaiVietService.get_posts(null, page, $scope.pageConfig.pageSize);
 			request.promise.success(function() {
 				$scope.isLoadingPost = false;
 				//Duyet kiem tra thu nhung post moi load, post nao da co trong addedPost
@@ -110,11 +114,9 @@ app.controller('SAduyetBaiVietCtrl', ['$scope', 'SAduyetBaiVietService', '$modal
 			$scope.addedPosts.splice(index, 1);
 		};
 
-
-		//SHow modal hien thi image
 		$scope.showImage = function(post, photo) {
 			var modalInstance = $modal.open({
-				templateUrl: 'showImageModal.html',
+				templateUrl: 'angularJSComponents/show_image_modal/show_image_modal.html',
 				controller: 'showImageModalCtrl',
 				size: 'lg',
 				resolve: {
@@ -126,37 +128,6 @@ app.controller('SAduyetBaiVietCtrl', ['$scope', 'SAduyetBaiVietService', '$modal
 					}
 				}
 			});
-
 		};
-	}
-]);
-
-//Cho modal show anh
-app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interval',
-	function($scope, listPhotos, photo, $interval) {
-
-		$scope.listPhotos = listPhotos;
-		$scope.photo = photo;
-		var currentIndex = $scope.listPhotos.indexOf(photo);
-
-		$scope.previous = function() {
-			if (currentIndex >= 1) {
-				currentIndex--;
-			} else {
-				currentIndex = $scope.listPhotos.length - 1;
-			}
-			$scope.photo = $scope.listPhotos[currentIndex];
-		};
-
-		$scope.next = function() {
-
-			if (currentIndex < $scope.listPhotos.length - 1) {
-				currentIndex++;
-			} else {
-				currentIndex = 0;
-			}
-			$scope.photo = $scope.listPhotos[currentIndex];
-		};
-
 	}
 ]);

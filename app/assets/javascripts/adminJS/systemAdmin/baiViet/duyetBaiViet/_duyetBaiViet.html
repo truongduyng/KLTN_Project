@@ -2,34 +2,15 @@
   <div class="row">
     <div class="col-lg-12">
       <section class="panel panel-primary">
-        <header class="panel-heading"> Lọc bài viết </header>
+        <header class="panel-heading">Bài viết chờ duyệt </header>
         <div class="panel-body">
           <form role="form" class="form-inline">
+
             <div class="form-group">
-              <label for="exampleInputEmail2" class="sr-only">Từ ngày</label>
-              <input type="email" placeholder="Từ ngày" id="exampleInputEmail2" class="form-control">
+              <input type="text" ng-model="text_search" placeholder="Tìm kiếm theo tên, nội dung..." class="form-control" ng-change = "search()">
             </div>
-            <div class="form-group">
-              <label for="exampleInputEmail2" class="sr-only">Tới ngày</label>
-              <input type="email" placeholder="Tới ngày" id="exampleInputEmail2" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail2" class="sr-only">Tìm kiếm theo text</label>
-              <input type="email" placeholder="Tìm kiếm theo text..." id="exampleInputEmail2" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail2" class="sr-only">Tìm kiếm theo text</label>
-              <input type="email" placeholder="Tìm kiếm theo text..." id="exampleInputEmail2" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword2" class="sr-only">Tìm kiếm theo</label>
-              <select class="form-control">
-                <option>Tên bài viết</option>
-                <option>Nội dung bài viết</option>
-                <option>Người sở hữu</option>
-              </select>
-            </div>
-            <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+
+            <button class="btn btn-primary" type="submit" ng-click="search()">Tìm kiếm</button>
           </form>
         </div>
       </section>
@@ -80,86 +61,61 @@
 
       <!-- End bài viết -->
     </section>
-    <div class="col-lg-12" style="margin-top: -30px;">
+    <div class="col-lg-12" style="margin-top: -30px;" ng-if="!text_search">
       <div class="text-center">
-                <!-- <ul class="pagination">
-                  <li><a href="#">«</a></li>
-                  <li><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">4</a></li>
-                  <li><a href="#">5</a></li>
-                  <li><a href="#">»</a></li>
-                </ul> -->
-                <paging
-                class="small"
-                page="pageConfig.currentPage"
-                page-size="pageConfig.pageSize"
-                total="pageConfig.total"
-                adjacent="{{pageConfig.adjacent}}"
-                dots="{{pageConfig.dots}}"
-                scroll-top="{{pageConfig.scrollTop}}"
-                hide-if-empty="{{pageConfig.hideIfEmpty}}"
-                ul-class="{{pageConfig.ulClass}}"
-                active-class="{{pageConfig.activeClass}}"
-                disabled-class="{{pageConfig.disabledClass}}"
-                show-prev-next="{{pageConfig.showPrevNext}}"
-                paging-action="onPageSelected('Paging Clicked', page)">
-              </paging>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-       <div class="col-lg-12">
-        <section class="panel panel-success">
-          <header class="panel-heading"> Danh sách bài viết chờ duyệt</header>
-          <div class="panel-body">
-            <div class="profile-activity">
-              <div ng-animate="'animate'" class="act-time" ng-repeat="post in addedPosts">
-                <div class="activity-body act-in"> <span class="arrow"></span>
-                  <div class="text">
-                    <a href="#" class="activity-img"><img class="avatar" ng-src="{{post.user.avatar.url}}" alt=""></a>
-                    <p class="attribution"><a href="#">{{post.user.username}}</a> lúc  {{post.updated_at | date:'h:mm a, dd/m/y'}}</p>
-                    <p><a href="../system-admin/chitiet-demo.html" target="_blank" class="my-title">{{post.title}}</a></p>
-                    <p>{{post.body}}
-                    </p>
-                    <div class="post-images">
-                     <img style="cursor: pointer;" ng-click="showImage(post, photo)" style="margin-left: 5px;" ng-repeat="photo in post.photos" ng-src="{{photo.image.large_thumb.url}}" width="100px" height="100px">
-                   </div>
-                   <div class="list-control-buttons btn-group pull-right">
-                    <button ng-click="acceptPost(post)" class="btn btn-success">Duyệt</button>
-                    <button ng-click="denyPost(post)" class="btn btn-danger">Không duyệt</button>
-                    <button ng-click="onIgnore(post)" class="btn btn-info">Bỏ qua</button>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <div  style="text-align: center"  ng-if="addedPosts.length == 0">Trống</div>
-          </div>
-        </div>
-      </section>
+        <paging
+        class="small"
+        page="pageConfig.currentPage"
+        page-size="pageConfig.pageSize"
+        total="pageConfig.total"
+        adjacent="{{pageConfig.adjacent}}"
+        dots="{{pageConfig.dots}}"
+        scroll-top="{{pageConfig.scrollTop}}"
+        hide-if-empty="{{pageConfig.hideIfEmpty}}"
+        ul-class="{{pageConfig.ulClass}}"
+        active-class="{{pageConfig.activeClass}}"
+        disabled-class="{{pageConfig.disabledClass}}"
+        show-prev-next="{{pageConfig.showPrevNext}}"
+        paging-action="onPageSelected('Paging Clicked', page)">
+      </paging>
     </div>
   </div>
-  <!-- project team & activity end -->
-</section>
-<div class="list-modals">
- <!-- BEGIN MODAL HIEN THI HINH ANH -->
- <script type="text/ng-template" id="showImageModal.html">
-  <div class="modal-body my-modal-image">
-    <img src="{{photo.image.url}}" width="100%" height="100%">
-    <!-- Arrow Left -->
-    <span left-arrow-pressed="previous()" ng-click="previous()" u="arrowleft" class="jssora02l" style="top: 50%; left: 8px;">
-    </span>
-    <!-- Arrow Right -->
-    <span right-arrow-pressed="next()"  ng-click="next()" u="arrowright" class="jssora02r" style="top: 50%; right: 8px">
-    </span>
-  </div>
-</script>
-<!-- BEGIN MODAL HIEN THI HINH ANH -->
 </div>
+</div>
+
+<div class="row">
+ <div class="col-lg-12">
+  <section class="panel panel-success">
+    <header class="panel-heading"> Danh sách bài viết chờ duyệt</header>
+    <div class="panel-body">
+      <div class="profile-activity">
+        <div ng-animate="'animate'" class="act-time" ng-repeat="post in addedPosts">
+          <div class="activity-body act-in"> <span class="arrow"></span>
+            <div class="text">
+              <a href="#" class="activity-img"><img class="avatar" ng-src="{{post.user.avatar.url}}" alt=""></a>
+              <p class="attribution"><a href="#">{{post.user.username}}</a> lúc  {{post.updated_at | date:'h:mm a, dd/m/y'}}</p>
+              <p><a href="../system-admin/chitiet-demo.html" target="_blank" class="my-title">{{post.title}}</a></p>
+              <p>{{post.body}}
+              </p>
+              <div class="post-images">
+               <img style="cursor: pointer;" ng-click="showImage(post, photo)" style="margin-left: 5px;" ng-repeat="photo in post.photos" ng-src="{{photo.image.large_thumb.url}}" width="100px" height="100px">
+             </div>
+             <div class="list-control-buttons btn-group pull-right">
+              <button ng-click="acceptPost(post)" class="btn btn-success">Duyệt</button>
+              <button ng-click="denyPost(post)" class="btn btn-danger">Không duyệt</button>
+              <button ng-click="onIgnore(post)" class="btn btn-info">Bỏ qua</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div  style="text-align: center"  ng-if="addedPosts.length == 0">Trống</div>
+    </div>
+  </div>
+</section>
+</div>
+</div>
+</section>
 
 <style type="text/css">
   .animate-enter,

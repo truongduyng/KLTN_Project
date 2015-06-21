@@ -4,20 +4,24 @@ app.factory('SAduyetBaiVietService', ['$http', '$q', function ($http, $q) {
 		total: 0,
 	};
 
-	o.get_posts = function(page, per_page){
-		var url = "/system_admin_posts.json";
-		var query = "?page=" + page + "&per_page=" + per_page;
+	o.get_posts = function(text_search, page, per_page){
+
+		if(text_search){
+			var url = "system_admin_posts/system_admin_posts/"+text_search+".json";
+		}else{
+			var url = "system_admin_posts/system_admin_posts.json" + "?page=" + page + "&per_page=" + per_page;
+		}
 
 		var canceller = $q.defer();
 		var cancel = function(reason) {
 			canceller.resolve(reason);
 		};
-		var promise = $http.get(url + query,{
+		var promise = $http.get(url,{
 			timeout: canceller.promise
 		}).success(function(data){
 			angular.copy(data.posts, o.posts);
 			o.total = data.total;
-			//Neu du lieu lay ve ma ko co, nhung total >= 1, suy ra load lai tu trang 1. Xu ly 
+			//Neu du lieu lay ve ma ko co, nhung total >= 1, suy ra load lai tu trang 1. Xu ly
 			//truong hop khi ma da xu ly het du lieu o trang 1, va du lieu chi con 1 trang, khi do ko the lay
 			//dc du lieu o trang 2, do du lieu trang 2 h thanh trang 1
 			if(data.posts.length == 0 && data.total >= 1){
@@ -28,7 +32,7 @@ app.factory('SAduyetBaiVietService', ['$http', '$q', function ($http, $q) {
 			promise: promise,
 			cancel: cancel,
 		};
-	};	
+	};
 
 	//chap nhap post gan thanh published
 	o.accept = function(post){

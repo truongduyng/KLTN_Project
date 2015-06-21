@@ -2,10 +2,26 @@
 class SystemAdminPostsController < SystemAdminController
 	before_action :find_post, only: [:accept, :deny]
 	#GET /system_admin_posts.json
-	#Lay tat ca cac post chua dc published 
+	#Lay tat ca cac post chua dc published
 	def index
-		@posts = Post.not_published.asc(:created_at).paginate(page: params[:page], per_page: params[:per_page])
-		@total = Post.not_published.count
+		if params[:text_search].nil?
+			@posts = Post.not_published.asc(:created_at).paginate(page: params[:page], per_page: params[:per_page])
+			@total = Post.not_published.count
+		else
+			@posts = Post.not_published.asc(:created_at).text_search(params[:text_search])
+		end
+	end
+
+	#Get nhung post ma da qua xu ly: tu choi hoac chap nhan
+	#GET /get_accept_and_deny_posts.json
+	def get_accept_and_deny_posts
+
+		if params[:text_search].nil?
+			@posts = Post.accept_or_deny.desc(:updated_at).paginate(page: params[:page], per_page: params[:per_page])
+			@total = Post.accept_or_deny.count
+		else
+			@posts = Post.accept_or_deny.desc(:updated_at).text_search(params[:text_search])
+		end
 	end
 
 	#PUT /system_admin_posts/:id/accept.json
@@ -29,20 +45,13 @@ class SystemAdminPostsController < SystemAdminController
 		end
 	end
 
-	#Get nhung post ma da qua xu ly: tu choi hoac chap nhan
-	#GET /get_accept_and_deny_posts.json
-	def get_accept_and_deny_posts
-		@posts = Post.accept_or_deny.desc(:created_at).paginate(page: params[:page], per_page: params[:per_page])
-		@total = Post.accept_or_deny.count
-	end
-
 	private
-		def find_post
-			begin
-				@post = Post.find(params[:id])
-			rescue Mongoid::Errors::DocumentNotFound
-				render nothing: true, status: :not_found, content_type: 'application/json'
-			end
+	def find_post
+		begin
+			@post = Post.find(params[:id])
+		rescue Mongoid::Errors::DocumentNotFound
+			render nothing: true, status: :not_found, content_type: 'application/json'
 		end
+	end
 
 end

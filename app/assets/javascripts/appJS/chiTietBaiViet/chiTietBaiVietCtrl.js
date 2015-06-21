@@ -27,7 +27,7 @@ app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'u
 
 	$scope.showImage = function(photo) {
 		var modalInstance = $modal.open({
-			templateUrl: 'appJS/show_image_modal/show_image_modal.html',
+			templateUrl: 'angularJSComponents/show_image_modal/show_image_modal.html',
 			controller: 'showImageModalCtrl',
 			size: 'lg',
 			resolve: {

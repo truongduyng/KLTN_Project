@@ -4,15 +4,19 @@ app.factory('SAquanLyBaiVietService', ['$http', '$q', function($http, $q) {
 		total: 0,
 	};
 
-	o.get_posts = function(page, per_page) {
-		var url = "/system_admin_posts/get_accept_and_deny_posts.json";
-		var query = "?page=" + page + "&per_page=" + per_page;
+	o.get_posts = function(text_search, page, per_page) {
+
+		if(text_search){
+			var url = "system_admin_posts/get_accept_and_deny_posts/"+text_search+".json";
+		}else{
+			var url = "system_admin_posts/get_accept_and_deny_posts.json" + "?page=" + page + "&per_page=" + per_page;
+		}
 
 		var canceller = $q.defer();
 		var cancel = function(reason) {
 			canceller.resolve(reason);
 		};
-		var promise = $http.get(url + query, {
+		var promise = $http.get(url, {
 			timeout: canceller.promise
 		}).success(function(data) {
 			angular.copy(data.posts, o.posts);

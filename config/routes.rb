@@ -1,16 +1,9 @@
 Rails.application.routes.draw do
 
-
   resources :venues do
     member do
       post 'add_photo'
       put 'delete_photo'
-    end
-  end
-
-  resources :branches do
-    collection do
-      get 'list_branch_names'
     end
   end
 
@@ -39,15 +32,17 @@ Rails.application.routes.draw do
 
   resources :bussiness_requests
 
-  resources :system_admin_posts do
+  resources :system_admin_posts, only: [] do
     member do
       put 'accept'
       put 'deny'
     end
     collection do
-      get 'get_accept_and_deny_posts'
+      get 'get_accept_and_deny_posts(/:text_search)' => 'system_admin_posts#get_accept_and_deny_posts'
+      get 'system_admin_posts(/:text_search)' => 'system_admin_posts#index'
     end
   end
+
 
   resources :favorite_posts do
     member do
@@ -159,6 +154,12 @@ Rails.application.routes.draw do
   get 'check/username' => 'users#check_username'
   get 'check/email' => 'users#check_email'
   get 'find_users/:username' => 'users#find_user_by_username'
+
+  resources :branches do
+    collection do
+      get 'list_branch_names'
+    end
+  end
 
   get '/:branch_url_alias' => 'branches#branch_details', constraints: {branch_url_alias: /(?!websocket$).*/}, as: 'booking_address'
 end

@@ -1,32 +1,4 @@
-var app = angular.module('sportaSystemAdmin', ["ui.router", 'templates', 'Devise', 'sporta.services', 'sporta.directives', 'sporta.filters',
-	'flash', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging', 'infinite-scroll','ngAnimate',
-	'ngMap', 'ckeditor', 'ngCookies', 'ngSanitize'
-]);
-
-// //For intercept $http
-// app.factory('myHttpInterceptor', ['$q', '$rootScope', function($q, $rootScope) {
-
-// 	var responseIntercepter = {
-// 		responseError: function(rejection) {
-// 			if (rejection.config.url.startsWith("/users/sign_in.json")) {} else {
-// 				//KIem tra tinh loi, neu ma loi chua chung thuc thi hien form login, ko can load lai trang
-// 				if (rejection.status == 401) {
-// 					$rootScope.$emit("onRequireLogin");
-// 				}
-// 			}
-// 			return $q.reject(rejection);
-// 		}
-// 	};
-
-// 	return responseIntercepter;
-// }]);
-
-// app.config(['$httpProvider', function($httpProvider) {
-// 	$httpProvider.interceptors.push('myHttpInterceptor');
-// }]);
-
-
-
+var app = angular.module('sportaSystemAdmin', ["ui.router", 'templates', 'Devise', 'sporta.services', 'sporta.directives', 'sporta.filters','flash', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging', 'infinite-scroll','ngAnimate', 'ngMap', 'ckeditor', 'ngCookies', 'ngSanitize']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
@@ -43,7 +15,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			controller: 'SAduyetBaiVietCtrl',
 			resolve: {
 				posts: ['SAduyetBaiVietService', '$rootScope', function(duyetBaiVietService, $rootScope) {
-					return duyetBaiVietService.get_posts(1, $rootScope.rootPageConfig.pageSize).promise;
+					return duyetBaiVietService.get_posts(null, 1, $rootScope.rootPageConfig.pageSize).promise;
 				}],
 			}
 		})
@@ -53,7 +25,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			controller: 'SAquanLyBaiVietCtrl',
 			resolve: {
 				posts: ['SAquanLyBaiVietService', '$rootScope', function(quanLyBaiVietService, $rootScope) {
-					return quanLyBaiVietService.get_posts(1, $rootScope.rootPageConfig.pageSize).promise;
+					return quanLyBaiVietService.get_posts(null, 1, $rootScope.rootPageConfig.pageSize).promise;
 				}],
 			}
 		})
@@ -80,6 +52,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			}
 		})
 
-	//$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/');
 
 }]);

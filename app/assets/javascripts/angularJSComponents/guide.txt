@@ -1,5 +1,0 @@
-Thu muc nay de chua cac thanh phan cua angularjs (nhu la directives, filter, services ...) tai su dung cho adminJS va appJS
-Cach su dung:
-B1: Inject cac module: sporta.services, sporta.directives, sporta.filters vao module can su dung
-B2: Dung directives de them directive, services de them service, filters de them filter.. Day la cac module 
-duoc khai bao trong initModule.js.

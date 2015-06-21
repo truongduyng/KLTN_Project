@@ -58,7 +58,7 @@ app.controller('clubpostCtrl',['$scope', '$modal', 'clubs', '$http', 'Flash', 'A
 
   $scope.showImage = function(photo, listPhotos) {
     var modalInstance = $modal.open({
-      templateUrl: 'appJS/show_image_modal/show_image_modal.html',
+      templateUrl: 'angularJSComponents/show_image_modal/show_image_modal.html',
       controller: 'showImageModalCtrl',
       size: 'lg',
       resolve: {
