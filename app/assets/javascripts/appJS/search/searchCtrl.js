@@ -30,4 +30,9 @@ app.controller('searchCtrl', ['$scope', '$http','$state', 'branches', 'posts', '
       }})(map));
   });
 
+  $scope.showresult = function(branch){
+    $state.go('booking', {branch_url_alias: branch.url});
+    $scope.search_query = "";
+  }
+
 }]);

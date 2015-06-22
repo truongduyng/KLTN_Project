@@ -428,7 +428,7 @@ ul.list_user_command li{
 	margin: 5px 0px 5px 10px;
 }
 
-ul.list_user_command li:hover{
+ul.list_user_command li:hover, ul.list-search-result li:hover{
 	background-color: #cee0f4;
 	cursor: pointer;
 }
@@ -442,6 +442,12 @@ ul.list-list_user_command li a:hover{
 	text-decoration: none;
 	color: #333333;
 }
+
+ul.list-search-result{
+	list-style-type: none;
+	padding-left: 5px;
+}
+
 
 /*media*/
 @media (min-width: 1200px) {
