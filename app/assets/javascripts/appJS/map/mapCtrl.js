@@ -9,28 +9,31 @@ app.controller('mapCtrl', ['$scope', '$http', 'Auth', 'mapFtry', function($scope
   $scope.image = mapFtry.image;
   $scope.shape = mapFtry.shape;
 
-  $scope.markers =[];
-  $scope.infowindow = new google.maps.InfoWindow({
-    maxWidth: 160
-  });
+  $scope.markers = mapFtry.markers;
+  $scope.infowindow = mapFtry.infowindow;
 
-  $scope.bounds = new google.maps.LatLngBounds();
-  $scope.geocoder = new google.maps.Geocoder();
+  $scope.bounds = mapFtry.bounds;
+  // $scope.geocoder = new google.maps.Geocoder();
 
   $scope.$on('mapInitialized', function(e, map) {
-    $scope.map = map;
+    mapFtry.map = map;
+    $scope.map = mapFtry.map;
+
     google.maps.event.addListener(map, 'idle', (function(map) {
       return function(){
-        var latlng = $scope.map.getCenter();
-        $scope.markers = [];
+        mapFtry.map = map;
+        var latlng = mapFtry.map.getCenter();
+        mapFtry.markers = [];
+        mapFtry.bounds = new google.maps.LatLngBounds();
         $http.get("/search/"+latlng.A+"/"+latlng.F+"/"+$scope.distance).success(function(data){
-          setMarkers($scope.map,data);
+          mapFtry.setMarkers(mapFtry.map,data);
         });
       }})(map));
 
     google.maps.event.addListener(map, 'bounds_changed', (function(map) {
       return function(){
-        $scope.distance = getsearchingdistance();
+        mapFtry.map = map;
+        $scope.distance = mapFtry.getsearchingdistance();
       }})(map));
 
   });
@@ -46,49 +49,13 @@ app.controller('mapCtrl', ['$scope', '$http', 'Auth', 'mapFtry', function($scope
     setUserMarker($scope.map,latlng);
     $http.get("/search/"+latlng.A+"/"+latlng.F+"/"+$scope.distance).success(function(data){
       if (data != null) {
-        setMarkers($scope.map,data);
+        mapFtry.setMarkers($scope.map,data);
       };
     });
   };
 
-  function getsearchingdistance(){
-    var Bound = $scope.map.getBounds();
-    var NE = Bound.getNorthEast();
-    var SW = Bound.getSouthWest();
-    var lat1 =  NE.lat();
-    var lat2 =  SW.lat();
-    var lng1 =  NE.lng();
-    var verticalLatLng1 = new google.maps.LatLng(lat1,lng1);
-    var verticalLatLng2 = new google.maps.LatLng(lat2,lng1);
-    return google.maps.geometry.spherical.computeDistanceBetween(verticalLatLng1,verticalLatLng2)/1609.34; // convert to miles
-  };
-
-  function setMarkers(map, data){
-    for (var i=0; i < data.length; i++) {
-      $scope.image.url = data[i].picture;
-      var myLatLng = new google.maps.LatLng(data[i].lat,data[i].lng);
-      var marker = new google.maps.Marker({
-        position: myLatLng,
-        map: map,
-        icon: $scope.image,
-        shape: $scope.shape,
-        title: data[i].name,
-        zIndex: i+1
-      });
-
-      google.maps.event.addListener(marker,"click",(function(marker,i){
-        return function(){
-         $scope.infowindow.setContent('<div id="info-window"><a href="#/'+data[i].url+'">'+data[i].name+'</a><br><span>'+data[i].address.substring(0,20)+'...</span></div>');
-         $scope.infowindow.open(map,marker);
-         map.setCenter(marker.getPosition());
-       }
-     })(marker,i));
-      $scope.markers.push(marker);
-      $scope.bounds.extend(marker.getPosition());
-    }
-  };
-
   function setUserMarker(map, latlng){
+
     $scope.image.url = "http://i.imgur.com/a06y4s3.png"; //#scope.user.avatar
     var marker = new google.maps.Marker({
       position: latlng,
@@ -98,6 +65,7 @@ app.controller('mapCtrl', ['$scope', '$http', 'Auth', 'mapFtry', function($scope
       title: $scope.username,
       zIndex: 1
     });
+
     google.maps.event.addListener(marker,"click",(function(marker){
       return function(){
         $scope.infowindow.setContent($scope.username);

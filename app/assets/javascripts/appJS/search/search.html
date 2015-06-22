@@ -1,16 +1,24 @@
 <tabset>
   <tab heading="Dia diem">
-    <div ng-include="'appJS/map/_map.html'"></div>
-  </tab>
+    <div>
+      <map
+      min-zoom ="5"
+      zoom="5"
+      max-zoom = "18"
+      disable-default-u-i="true"
+      style='height: 500px;'>
+    </map>
+  </div>
+</tab>
 
-  <tab heading="Bai viet">
-    <div class="margintop20">
+<tab heading="Bai viet">
+  <div class="margintop20">
 
-      <div id="listPost">
-        <section ng-include="'appJS/home/posts/_listPosts.html'" ></section>
-      </div>
-
+    <div id="listPost">
+      <section ng-include="'appJS/home/posts/_listPosts.html'" ></section>
     </div>
-  </tab>
+
+  </div>
+</tab>
 
 </tabset>
