@@ -1,4 +1,4 @@
-app.controller('sidebarCtrl',['$scope', '$modal', 'clubs', '$state', 'Auth', function($scope, $modal, clubs, $state, Auth){
+app.controller('sidebarCtrl',['$scope', '$modal', 'clubsFtry', '$state', 'Auth', function($scope, $modal, clubsFtry, $state, Auth){
 
   Auth.currentUser().then(function(user) {
     $scope.user = user;
@@ -30,7 +30,7 @@ app.controller('sidebarCtrl',['$scope', '$modal', 'clubs', '$state', 'Auth', fun
   });
 
   $scope.loadClubs = function(){
-    clubs.index().success(function(data){
+    clubsFtry.index().success(function(data){
       $scope.clubs = data;
     })
   }
@@ -42,7 +42,7 @@ app.controller('sidebarCtrl',['$scope', '$modal', 'clubs', '$state', 'Auth', fun
     });
 
     newclubmodal.result.then(function (club) {
-      clubs.create(club).success(function(result){
+      clubsFtry.create(club).success(function(result){
         $state.go('club',{club_id: result._id.$oid});
       });
     }, function () {

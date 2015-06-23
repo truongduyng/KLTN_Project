@@ -1,4 +1,4 @@
-app.controller('clubCtrl',['$scope', '$modal','club', 'clubs', '$http', 'Flash', 'Auth', '$state', '$modal', 'FileUploader','$cookies', 'currentUser', function($scope, $modal, club, clubs, $http, Flash, Auth, $state, $modal, FileUploader, $cookies, currentUser){
+app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Flash', 'Auth', '$state', '$modal', 'FileUploader','$cookies', 'currentUser', function($scope, $modal, club, clubsFtry, $http, Flash, Auth, $state, $modal, FileUploader, $cookies, currentUser){
 
   $scope.club = club.data;
 

@@ -1,4 +1,4 @@
-app.controller('clubpostCtrl',['$scope', '$modal', 'clubs', '$http', 'Flash', 'Auth', '$state', '$modal', 'FileUploader','$cookies','clubpostFtry', function($scope, $modal, clubs, $http, Flash, Auth, $state, $modal, FileUploader, $cookies, clubpostFtry){
+app.controller('clubpostCtrl',['$scope', '$modal', '$http', 'Flash', 'Auth', '$state', '$modal', 'FileUploader','$cookies','clubpostFtry', function($scope, $modal, $http, Flash, Auth, $state, $modal, FileUploader, $cookies, clubpostFtry){
   //Club Posts ----------------------------------
   $scope.clubpost = {};
 
@@ -75,16 +75,17 @@ app.controller('clubpostCtrl',['$scope', '$modal', 'clubs', '$http', 'Flash', 'A
   $scope.likeclubPost = function(post) {
     clubpostFtry.like(post).success(function() {
       post.isLiked = true;
-
-      // if(!post.followed && post.user._id.$oid != $scope.currentUser._id.$oid){
-      //   clubpostFtry.follow();
-      // }
+      post.like_count ++;
+      if(!post.followed && post.user._id.$oid != $scope.user._id.$oid){
+        clubpostFtry.follow(post);
+      }
     });
   };
 
   $scope.unlikeclubPost = function(post) {
     clubpostFtry.unlike(post).success(function() {
       post.isLiked = false;
+      post.like_count --;
     });
   };
 

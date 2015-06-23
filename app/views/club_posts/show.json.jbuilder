@@ -22,9 +22,16 @@ else
   json.isLiked false
 end
 
+if user_signed_in? && @clubpost.follower_ids.include?(current_user.id)
+  json.followed true
+else
+  json.followed false
+end
+
 json.comments @clubpost.comments do |comment|
   json._id comment.id
   json.content comment.content
+
   json.user do
     json._id comment.user.id
     json.avatar do
@@ -33,15 +40,18 @@ json.comments @clubpost.comments do |comment|
     json.username comment.user.username
     json.fullname comment.user.fullname
   end
+
   json.created_at comment.created_at
   json.updated_at comment.updated_at
   json.like_count comment.likes.count
   json.reply_count comment.replies.count
+
   if user_signed_in? && comment.likes.where('user_id' => current_user.id).first
     json.isLiked true
   else
     json.isLiked false
   end
+
 end
 
 json.updated_at @clubpost.updated_at

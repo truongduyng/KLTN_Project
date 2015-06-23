@@ -1,4 +1,4 @@
-services.factory('clubs',['$http', function($http){
+services.factory('clubsFtry',['$http', function($http){
   var o = {
     clubs: [],
   };

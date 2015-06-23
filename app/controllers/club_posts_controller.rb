@@ -1,6 +1,6 @@
 class ClubPostsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :add_photo, :like, :unlike, :destroy, :follow, :unfollow]
-  before_action :find_clubpost, only: [:add_photo, :like, :unlike, :get_all_likes, :get_k_first_like]
+  before_action :find_clubpost, only: [:add_photo, :like, :unlike, :get_all_likes, :get_k_first_like, :follow, :unfollow]
   before_action :is_member?, only: [:create, :update, :destroy]
 
   def show
@@ -98,10 +98,39 @@ class ClubPostsController < ApplicationController
         target_user_ids = @clubpost.follower_ids.clone
         target_user_ids.delete(current_user.id)
         NotificationChange.delete_notification_changes(target_user_ids, @clubpost, current_user, like, NotificationCategory.thich_bai_viet_ban_dang_theo_doi)
-        NotificationChange.delete_notification_changes([@clubpost.user.id], @post,  current_user, like, NotificationCategory.thich_bai_viet)
+        NotificationChange.delete_notification_changes([@clubpost.user.id], @clubpost,  current_user, like, NotificationCategory.thich_bai_viet)
       end
 
       like.destroy
+      render nothing: true, status: :ok, content_type: 'application/json'
+    else
+      render nothing: true, status: :bad_request, content_type: 'application/json'
+    end
+  end
+
+  def follow
+    #TH1: Nguoi do ko tu theo doi bai viet nguoi do.
+    #TH2: Chi follow khi nguoi do chua follow
+    byebug
+    if current_user != @clubpost.user &&  !@clubpost.follower_ids.include?(current_user.id) && !current_user.followed_clubpost_ids.include?(@clubpost.id)
+      @clubpost.follower_ids << current_user.id
+      current_user.followed_clubpost_ids << @clubpost.id
+      @clubpost.save
+      current_user.save
+      render nothing: true, status: :ok, content_type: 'application/json'
+    else
+      render nothing: true, status: :bad_request, content_type: 'application/json'
+    end
+  end
+
+  def unfollow
+    #TH1: Nguoi do ko tu bo theo doi bai viet nguoi do.
+    #Chi unfollow khi nguoi do da follow
+    if  current_user != @clubpost.user &&  @clubpost.follower_ids.include?(current_user.id)  && current_user.followed_clubpost_ids.include?(@clubpost.id)
+      @clubpost.follower_ids.delete current_user.id
+      current_user.followed_clubpost_ids.delete @clubpost.id
+      @clubpost.save
+      current_user.save
       render nothing: true, status: :ok, content_type: 'application/json'
     else
       render nothing: true, status: :bad_request, content_type: 'application/json'

@@ -22,6 +22,14 @@ app.factory('clubpostFtry', ['$http', function($http) {
     return $http.put("/club_posts/"+ club_post._id.$oid +"/unlike.json");
   }
 
+  o.follow = function(club_post){
+    return $http.put("/club_posts/"+ club_post._id.$oid +"/follow.json")
+  }
+
+  o.unfollow = function(club_post){
+    return $http.put("/club_posts/"+ club_post._id.$oid +"/unfollow.json")
+  }
+
   o.getKFirstLikes = function(club_post, number){
     return $http.get("/club_posts/"+ club_post._id.$oid +"/get_k_first_like/" + number+ ".json");
   }

@@ -1,4 +1,4 @@
-app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userService', 'replyService', 'commentService', '$modal', function($scope, postDetailService, Flash, userService, replyService, commentService, $modal) {
+app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userService', 'replyService', 'commentService', '$modal', 'clubpostFtry', function($scope, postDetailService, Flash, userService, replyService, commentService, $modal, clubpostFtry) {
 
 	$scope.currentUser = userService.currentUser;
 	$scope.comment = {};
@@ -27,8 +27,12 @@ app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userServ
 
 			post.comments.splice(0, 0, data);
 
-			if(!post.followed  && post.user._id.$oid != $scope.currentUser._id.$oid && post.title){
-				postDetailService.follow();
+			if(!post.followed  && post.user._id.$oid != $scope.currentUser._id.$oid){
+				if (post.title){
+					postDetailService.follow();
+				}else{
+					clubpostFtry.follow(post);
+				}
 			}
 
 		}).error(function(data, status) {
