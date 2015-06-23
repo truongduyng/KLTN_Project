@@ -1,8 +1,7 @@
 app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 	function($scope, notificationService, Auth) {
 
-		Auth.currentUser()
-			.then(function(user) {
+		Auth.currentUser().then(function(user) {
 				$scope.user = user;
 				$scope.loadNotifications();
 				$scope.registerNotification();

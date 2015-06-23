@@ -111,23 +111,6 @@ class NotificationChange
 
 	end
 
-	#tim notification_change
-	# def self.find_notification_change target_user, target_object, trigger_user, trigger_source, notification_category
-	# 	notification  = Notification.all_of(target_user_id: target_user.id, notificable_id: target_object.id).first
-	# 	if !notification
-	# 		return nil
-	# 	else
-	# 		#Tim trigger notification change
-	# 		trigger = NotificationChangeTrigger.all_of(trigger_user_id: trigger_user.id, trigger_source_id: trigger_source.id).first
-	# 		if !trigger
-	# 			return nil
-	# 		else
-	# 			notification_change = NotificationChange.all_of('trigger_ids' => trigger.id, notification_id: notification.id, notification_category_id: notification_category.id).first
-	# 			return notification_change
-	# 		end
-	# 	end
-	# end
-
 	def self.find_notification_change target_user, target_object, trigger_user, trigger_source, notification_category
 		#B1: Kiem tra target_user la user object hay la id cua user
 		if target_user.class.to_s == 'User'
