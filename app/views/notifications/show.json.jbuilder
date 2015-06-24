@@ -25,6 +25,8 @@ json.target_object do
 
 	if @notification_change.notification.notificable_type == 'ClubPost'
 		json._id @notification_change.notification.notificable.id
+		json.club_name @notification_change.notification.notificable.club.name
+		json.club_id @notification_change.notification.notificable.club.id
 	end
 
 	if @notification_change.notification.notificable_type == 'BussinessRequest'
@@ -33,6 +35,8 @@ json.target_object do
 	end
 
 	if @notification_change.notification.notificable_type == 'Comment'
+
+		json.comment_id @notification_change.notification.notificable.id
 		json.content @notification_change.notification.notificable.content
 
 		#id cua bai post chua comment
@@ -40,21 +44,34 @@ json.target_object do
 			json._id @notification_change.notification.notificable.post.id
 			json.post_title  @notification_change.notification.notificable.post.title
 		end
-		json.comment_id @notification_change.notification.notificable.id
+
+		if @notification_change.notification.notificable.club_post
+			json._id @notification_change.notification.notificable.club_post.id
+			json.club_id @notification_change.notification.notificable.club_post.club.id
+		end
+
 	end
 
 	#Do reply la embedded trong comment nen ko fetch reply trong notificable
 	if @notification_change.notification.notificable_type == 'Reply'
 		json.content @notification_change.notification.reply.content
 		json.comment_content @notification_change.notification.reply.comment.content
-		#id cua bai post chua reply
-		json._id @notification_change.notification.reply.comment.post.id
+
+		if @notification_change.notification.reply.comment.post
+			json._id @notification_change.notification.reply.comment.post.id
+		end
+
+		if @notification_change.notification.reply.comment.club_post
+			json._id @notification_change.notification.reply.comment.club_post.id
+			json.club_id @notification_change.notification.reply.comment.club_post.club.id
+		end
 		#id cua reply
 		json.reply_id @notification_change.notification.notificable_id
 	end
 
 end
 #Loai tac dong
+
 json.notification_category do
 	json._id @notification_change.notification_category.id
 	json.name @notification_change.notification_category.name

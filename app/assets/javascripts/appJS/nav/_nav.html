@@ -78,7 +78,7 @@
           <!-- END CHO TU CHOI CAP TAI KHOAN DOANH NGHIEP -->
 
           <!-- BEGIN CHO THICH BAI VIET -->
-          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bài viết' && item.target_object.title" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
             <div class="notification-item" style="">
               <div  class="col-xs-2">
                 <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
@@ -93,10 +93,26 @@
               </div>
             </div>
           </a>
+
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bài viết' && item.target_object.club_name" role="menuitem" tabindex="-1" ui-sref="club({club_id: item.target_object.club_id.$oid, club_post_id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác thích bài viết của bạn trong câu lạc bộ <b>{{item.target_object.club_name}}</b>
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} thích bài viết của bạn trong câu lạc bộ <b>{{item.target_object.club_name}}</b></div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
           <!-- END CHO THICH BAI VIET -->
 
           <!-- BEGIN CHO THICH BAI VIET BAN DANG THEO DOI-->
-          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bài viết bạn đang theo dõi'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bài viết bạn đang theo dõi' && item.target_object.title" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
             <div class="notification-item" style="">
               <div  class="col-xs-2">
                 <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
@@ -111,10 +127,26 @@
               </div>
             </div>
           </a>
+
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bài viết bạn đang theo dõi' && item.target_object.club_name" role="menuitem" tabindex="-1" ui-sref="club({club_id: item.target_object.club_id.$oid, club_post_id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác thích bài viết bạn đang theo dõi trong câu lạc bộ <b>{{item.target_object.club_name}}</b>
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} thích bài viết bạn đang theo dõi trong câu lạc bộ <b>{{item.target_object.club_name}}</b></div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
           <!-- END CHO THICH BAI VIET BAN DANG THEO DOI-->
 
           <!-- BEGIN CHO BINH LUAN BAI VIET CUA BAN-->
-          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận bài viết' && item.target_object.title" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
             <div class="notification-item" style="">
               <div  class="col-xs-2">
                 <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
@@ -129,10 +161,26 @@
               </div>
             </div>
           </a>
+
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận bài viết' && item.target_object.club_name" role="menuitem" tabindex="-1" ui-sref="club({club_id: item.target_object.club_id.$oid, club_post_id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác bình luận trong bài viết của bạn trong câu lạc bộ <b>{{item.target_object.club_name}}</b>.
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} bình luận trong bài viết của bạn trong câu lạc bộ <b>{{item.target_object.club_name}}</b>.</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
           <!-- END CHO BINH LUAN BAI VIET CUA BAN-->
 
           <!-- BEGIN CHO BINH LUAN BAI VIET BAN DANG THEO DOI-->
-          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận trên bài viết bạn đang theo dõi'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận trên bài viết bạn đang theo dõi' && item.target_object.title" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
             <div class="notification-item" style="">
               <div  class="col-xs-2">
                 <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
@@ -147,17 +195,46 @@
               </div>
             </div>
           </a>
+
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận trên bài viết bạn đang theo dõi' && item.target_object.club_name" role="menuitem" tabindex="-1" ui-sref="club({club_id: item.target_object.club_id.$oid, club_post_id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác bình luận trong bài viết mà bạn đang theo dõi trong câu lạc bộ <b>{{item.target_object.club_name}}</b>.
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} bình luận trong bài viết mà bạn đang theo dõi trong câu lạc bộ <b>{{item.target_object.club_name}}</b>.</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
           <!-- END CHO BINH LUAN BAI VIET BAN DANG THEO DOI-->
 
           <!-- BEGIN CHO BINH LUAN CUA CHU BAI VIET-->
-          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận của chủ bài viết'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận của chủ bài viết' && item.target_object.title" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
             <div class="notification-item" style="">
               <div  class="col-xs-2">
                 <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
               </div>
               <div class="col-xs-10">
                 <div>
-                  {{item.triggers[0].trigger_user.fullname}} cũng đã bình luận trong bài viết "<b>{{item.target_object.title}}</b>" của anh ấy
+                  {{item.triggers[0].trigger_user.fullname}} cũng đã bình luận trong bài viết "<b>{{item.target_object.title}}</b>" của anh ấy.
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Bình luận của chủ bài viết' && item.target_object.club_name" role="menuitem" tabindex="-1" ui-sref="club({club_id: item.target_object.club_id.$oid, club_post_id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div>
+                  {{item.triggers[0].trigger_user.fullname}} cũng đã bình luận trong bài viết của anh ấy trong câu lạc bộ <b>{{item.target_object.club_name}}</b>.
                 </div>
               </div>
             </div>
@@ -165,7 +242,7 @@
           <!-- END CHO BINH LUAN CUA CHU BAI VIET-->
 
           <!-- BEGIN CHO HIEN THI THONG BAO THICH BINH LUAN -->
-          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bình luận'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bình luận' && item.target_object.post_title" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
             <div class="notification-item" style="">
               <div  class="col-xs-2">
                 <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
@@ -180,10 +257,26 @@
               </div>
             </div>
           </a>
+
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích bình luận' && item.target_object.club_id" role="menuitem" tabindex="-1" ui-sref="club({club_id: item.target_object.club_id.$oid, club_post_id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác thích bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn."
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} thích bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn."</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
           <!-- END CHO HIEN THI THONG BAO THICH BINH LUAN -->
 
           <!-- BEGIN CHO HIEN THI THONG BAO PHAN HOI BINH LUAN (REPLY COMMENT) -->
-          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Phản hồi bình luận'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Phản hồi bình luận' && item.target_object.post_title" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
             <div class="notification-item" style="">
               <div  class="col-xs-2">
                 <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
@@ -198,10 +291,42 @@
               </div>
             </div>
           </a>
+
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Phản hồi bình luận' && item.target_object.club_id" role="menuitem" tabindex="-1" ui-sref="club({club_id: item.target_object.club_id.$oid, club_post_id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người đã phản hồi bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn."
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} đã phản hồi bình luận "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn.</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
           <!-- END CHO HIEN THI THONG BAO PHAN HOI BINH LUAN (REPLY COMMENT) -->
 
           <!-- BEGIN CHO HIEN THI THONG BAO THICH PHAN HOI -->
-          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích phản hồi'" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích phản hồi' && !item.target_object.club_id" role="menuitem" tabindex="-1" ui-sref="chiTietBaiViet({id: item.target_object._id.$oid})">
+            <div class="notification-item" style="">
+              <div  class="col-xs-2">
+                <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
+              </div>
+              <div class="col-xs-10">
+                <div ng-if="item.triggers.length >=2">
+                  {{item.triggers[0].trigger_user.fullname}} và {{item.triggers.length - 1}} người khác thích phản hồi "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bình luận "<b>{{item.target_object.comment_content | shortContent: 7}}</b>"
+                </div>
+
+                <div ng-if="item.triggers.length == 1">{{item.triggers[0].trigger_user.fullname}} thích phản hồi "<b>{{item.target_object.content | shortContent: 7}}</b>" của bạn trong bình luận "<b>{{item.target_object.comment_content | shortContent: 7}}</b>"</div>
+                <small>{{item.updated_at | timeago}}</small>
+              </div>
+            </div>
+          </a>
+
+          <a style="color:#000000;" ng-click="onWatched(item)" ng-if="item.notification_category.name == 'Thích phản hồi' && item.target_object.club_id" role="menuitem" tabindex="-1" ui-sref="club({club_id: item.target_object.club_id.$oid, club_post_id: item.target_object._id.$oid})">
             <div class="notification-item" style="">
               <div  class="col-xs-2">
                 <img width="50px" height="50px" ng-src="{{item.triggers[0].trigger_user.avatar|logo}}">
@@ -225,24 +350,23 @@
   </li>
 
   <li ng-show = "signedIn()">
-   <a ui-sref="trangCaNhan({username: user.username})">{{user.fullname}}</a>
- </li>
+    <a ui-sref="trangCaNhan({username: user.username})">{{user.fullname}}</a>
+  </li>
 
 
- <li ng-show ="signedIn()" class="dropdown" dropdown>
-  <a href class="dropdown-toggle" dropdown-toggle>
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
+  <li ng-show ="signedIn()" class="dropdown" dropdown>
+    <a href class="dropdown-toggle" dropdown-toggle>
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
 
-    <li ng-hide="isbussinessadmin()"><a style="cursor:pointer;" ui-sref="khTkDoanhNghiep">Đăng ký doanh nghiệp</a></li>
-    <li ng-show="isbussinessadmin()"><a style="cursor:pointer;" href="/bussiness-admin">Quản lý doanh nghiệp</a></li>
-    <li ng-show="isSystemAdmin()"><a style="cursor:pointer;" href="/system-admin#/">Quản lý sporta</a></li>
-    <li ng-show="signedIn()"><a style="cursor:pointer;" ng-click="logout()">Thoát</a></li>
+      <li ng-hide="isbussinessadmin()"><a style="cursor:pointer;" ui-sref="khTkDoanhNghiep">Đăng ký doanh nghiệp</a></li>
+      <li ng-show="isbussinessadmin()"><a style="cursor:pointer;" href="/bussiness-admin">Quản lý doanh nghiệp</a></li>
+      <li ng-show="isSystemAdmin()"><a style="cursor:pointer;" href="/system-admin#/">Quản lý sporta</a></li>
+      <li ng-show="signedIn()"><a style="cursor:pointer;" ng-click="logout()">Thoát</a></li>
 
-  </ul>
-</li>
-
+    </ul>
+  </li>
 
 </ul>
 

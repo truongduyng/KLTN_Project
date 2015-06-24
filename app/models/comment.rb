@@ -17,16 +17,3 @@ class Comment
 	validates :content, presence: true
 
 end
-
-# {
-# 	content:'',
-# 	user_id: '',
-# 	post_id: '',
-# 	likes: [{
-# 		id: '',
-# 		user_id: '',
-# 		likeable_id: '',
-# 		likeable_type: '',
-# 	}
-# 	],
-# }
