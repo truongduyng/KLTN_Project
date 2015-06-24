@@ -1,8 +1,8 @@
-json._id @clubpost.id
-json.content @clubpost.content
-json.like_count @clubpost.likes.count
+json._id clubpost.id
+json.content clubpost.content
+json.like_count clubpost.likes.count
 
-json.photos @clubpost.photos do |photo|
+json.photos clubpost.photos do |photo|
   json._id photo.id
   json.image do
     json.url photo.image.url
@@ -10,25 +10,25 @@ json.photos @clubpost.photos do |photo|
 end
 
 json.user do
-  json._id @clubpost.user.id
-  json.avatar @clubpost.user.avatar.url
-  json.fullname @clubpost.user.fullname
-  json.username @clubpost.user.username
+  json._id clubpost.user.id
+  json.avatar clubpost.user.avatar.url
+  json.fullname clubpost.user.fullname
+  json.username clubpost.user.username
 end
 
-if user_signed_in? && @clubpost.likes.where('user_id' => current_user.id).first
+if user_signed_in? && clubpost.likes.where('user_id' => current_user.id).first
   json.isLiked true
 else
   json.isLiked false
 end
 
-if user_signed_in? && @clubpost.follower_ids.include?(current_user.id)
+if user_signed_in? && clubpost.follower_ids.include?(current_user.id)
   json.followed true
 else
   json.followed false
 end
 
-json.comments @clubpost.comments do |comment|
+json.comments clubpost.comments do |comment|
   json._id comment.id
   json.content comment.content
 
@@ -54,5 +54,5 @@ json.comments @clubpost.comments do |comment|
 
 end
 
-json.updated_at @clubpost.updated_at
-json.created_at @clubpost.created_at
+json.updated_at clubpost.updated_at
+json.created_at clubpost.created_at

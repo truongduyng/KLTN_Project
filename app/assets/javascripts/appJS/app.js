@@ -176,22 +176,21 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	});
 
 	$stateProvider.state('club', {
-		url: '/club/:club_id',
+		url: '/club/:club_id/:club_post_id',
 		templateUrl: 'appJS/club/_club.html',
 		controller: 'clubCtrl',
 		resolve: {
 			club: function($http, $stateParams) {
-				return $http.get("/clubs/" + $stateParams.club_id + ".json").success(function(data) {
-					return data;
-				});
-			},
-			currentUser: ['Auth', function(Auth) {
-				return Auth.currentUser().then(function(user) {
-					return user;
-				}, function(response) {
-					return null;
-				})
-			}]
+				if(!$stateParams.club_post_id){
+					return $http.get("/clubs/" + $stateParams.club_id + ".json").success(function(data) {
+						return data;
+					});
+				}else{
+					return $http.get("/clubs/" + $stateParams.club_id + "/" + $stateParams.club_post_id + ".json").success(function(data) {
+						return data;
+					});
+				}
+			}
 		}
 	});
 

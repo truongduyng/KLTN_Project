@@ -1,8 +1,9 @@
-app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Flash', 'Auth', '$state', '$modal', 'FileUploader','$cookies', 'currentUser', function($scope, $modal, club, clubsFtry, $http, Flash, Auth, $state, $modal, FileUploader, $cookies, currentUser){
+app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Flash', 'Auth', '$state', '$modal', 'FileUploader','$cookies','userService', function($scope, $modal, club, clubsFtry, $http, Flash, Auth, $state, $modal, FileUploader, $cookies, userService){
 
   $scope.club = club.data;
 
-  $scope.user = currentUser;
+  $scope.user = userService.currentUser;
+  console.log(club.data);
 
   $scope.signedIn = Auth.isAuthenticated;
 
@@ -49,7 +50,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
   $scope.users_list= [];
 
   $scope.update_club = function(){
-    clubs.update($scope.club_update).success(function(result){
+    clubsFtry.update($scope.club_update).success(function(result){
       $scope.club = result;
       Flash.create('success', "Cập nhật thông tin CLB thành công!", 'myalert');
     })
@@ -73,7 +74,15 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
       });
 
       last_admin_modal.result.then(function (admins) {
-        clubs.removemember($scope.club.id.$oid, $scope.user._id.$oid, admins).success(function(result){
+        clubsFtry.removemember($scope.club.id.$oid, $scope.user._id.$oid, admins).success(function(result){
+
+          for (var i = 0; i < clubsFtry.clubs.length; i++) {
+            if (clubsFtry.clubs[i].id.$oid == $scope.club.id.$oid) {
+              clubsFtry.clubs.splice(i,1);
+              break;
+            }
+          };
+
           $state.go('home');
         })
         .error(function(){
@@ -89,7 +98,15 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
       });
 
       last_member_modal.result.then(function () {
-        clubs.removemember($scope.club.id.$oid, $scope.user._id.$oid, null).success(function(result){
+        clubsFtry.removemember($scope.club.id.$oid, $scope.user._id.$oid, null).success(function(result){
+
+          for (var i = 0; i < clubsFtry.clubs.length; i++) {
+            if (clubsFtry.clubs[i].id.$oid == $scope.club.id.$oid) {
+              clubsFtry.clubs.splice(i,1);
+              break;
+            }
+          };
+
           $state.go('home');
         })
         .error(function(){
@@ -99,10 +116,16 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
     };
 
     if ($scope.club.admins.length >= 1 && $scope.club.members.length > 1) {
-      clubs.removemember($scope.club.id.$oid, $scope.user._id.$oid, null).success(function(result){
+      clubsFtry.removemember($scope.club.id.$oid, $scope.user._id.$oid, null).success(function(result){
+
+        for (var i = 0; i < clubsFtry.clubs.length; i++) {
+          if (clubsFtry.clubs[i].id.$oid == $scope.club.id.$oid) {
+            clubsFtry.clubs.splice(i,1);
+            break;
+          }
+        };
 
         $state.go('home');
-
       })
       .error(function(){
       })
@@ -126,7 +149,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
   $scope.add_to_members = function(user){
 
     if(!ismemberof($scope.club.members, user.id.$oid)){
-      clubs.addmember($scope.club.id.$oid, user.id.$oid).success(function(result){
+      clubsFtry.addmember($scope.club.id.$oid, user.id.$oid).success(function(result){
 
         $scope.club.members.push(user);
         Flash.create('success', 'Bingo! Thêm thành viên ' + user.fullname + " thành công!", 'myalert');
@@ -141,8 +164,9 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
 
   $scope.remove_member = function(member){
 
-    clubs.removemember($scope.club.id.$oid, member.id.$oid, null).success(function(result){
+    clubsFtry.removemember($scope.club.id.$oid, member.id.$oid, null).success(function(result){
       if (result.status = "ok"){
+
         $scope.club.members.splice($scope.club.members.indexOf(member),1);
 
         if ($scope.club.members.length == 0){
@@ -159,7 +183,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
 
   $scope.make_admin = function(member){
 
-    clubs.makeadmin($scope.club.id.$oid, member.id.$oid).success(function(result){
+    clubsFtry.makeadmin($scope.club.id.$oid, member.id.$oid).success(function(result){
 
       $scope.club.admins.push({id:member.id});
       Flash.create('success', "Chỉ định " + member.fullname + " thành quản trị thành công!", 'myalert');
@@ -176,7 +200,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
       return false;
     }
 
-    clubs.removeadmin($scope.club.id.$oid, member.id.$oid).success(function(result){
+    clubsFtry.removeadmin($scope.club.id.$oid, member.id.$oid).success(function(result){
 
       $scope.club.admins.splice($scope.club.admins.indexOf(member.id),1);
       Flash.create('success', "Chỉ định " + member.fullname + " là thành viên thành công!", 'myalert');

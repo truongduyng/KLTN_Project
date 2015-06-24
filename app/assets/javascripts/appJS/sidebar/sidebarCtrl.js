@@ -50,7 +50,7 @@ app.controller('sidebarCtrl',['$scope', '$modal', 'clubsFtry', '$state', 'Auth',
   }
 
   $scope.gotoclub = function(club_id){
-    $state.go('club',{club_id: club_id});
+    $state.go('club',{club_id: club_id, club_post_id: null});
   }
 
   $scope.isbussinessadmin = function() {

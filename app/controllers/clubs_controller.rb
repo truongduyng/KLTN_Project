@@ -9,6 +9,13 @@ class ClubsController < ApplicationController
   end
 
   def show
+    if(club_params[:club_post_id])
+      begin
+        @club_post = [@club.club_posts.find(club_params[:club_post_id])]
+      rescue Exception => e
+        render nothing: true, status: :bad_request
+      end
+    end
   end
 
   def create
@@ -140,7 +147,7 @@ class ClubsController < ApplicationController
   private
   def club_params
     params[:members] ||= []
-    params.permit(:id, :name, :description, :admin_id, :member_id, :admins => [], :members => [])
+    params.permit(:id, :name, :description, :admin_id, :member_id, :club_post_id, :admins => [], :members => [])
   end
 
   def is_member?

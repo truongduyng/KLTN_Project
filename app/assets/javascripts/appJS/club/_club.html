@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-lg-12 pull-right">
     <img class="coverimg" ng-src="{{club.cover_image}}" alt="anh dai dien">
-    <h3 class="club_name">{{club.name}}</h3>
+    <a ui-sref="club({club_id: club.id.$oid, club_post_id: null})"><h3 class="club_name">{{club.name}}</h3></a>
     <button class="btn btn-default leave_club_btn" ng-click="leave_club()" >Rời CLB</button>
     <i ng-show="current_user_is_admin()" class="fa fa-picture-o fa-2x cover-icon" ng-click="choose_cover()"></i>
     <input id="choosecover" type="file" nv-file-select uploader="uploader" style="display:none;">

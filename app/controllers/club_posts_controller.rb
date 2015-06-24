@@ -13,7 +13,7 @@ class ClubPostsController < ApplicationController
     @clubpost.club = @club
 
     if @clubpost.save
-      render template: 'club_posts/show.json.jbuilder', status: :created
+      render template: 'club_posts/_show.json.jbuilder', status: :created
     else
       render json: @clubpost.errors, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class ClubPostsController < ApplicationController
         end
       end
 
-      render template: 'club_posts/show.json.jbuilder', status: :ok
+      render template: 'club_posts/_show.json.jbuilder', status: :ok
 
     else
       render json: @post.errors, status: :unprocessable_entity
@@ -111,7 +111,7 @@ class ClubPostsController < ApplicationController
   def follow
     #TH1: Nguoi do ko tu theo doi bai viet nguoi do.
     #TH2: Chi follow khi nguoi do chua follow
-    byebug
+    # byebug
     if current_user != @clubpost.user &&  !@clubpost.follower_ids.include?(current_user.id) && !current_user.followed_clubpost_ids.include?(@clubpost.id)
       @clubpost.follower_ids << current_user.id
       current_user.followed_clubpost_ids << @clubpost.id

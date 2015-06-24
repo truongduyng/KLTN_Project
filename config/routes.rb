@@ -104,8 +104,9 @@ Rails.application.routes.draw do
   resources :assets do
   end
 
-  resources :clubs do
+  resources :clubs, except: [:show] do
     member do
+      get '(/:club_post_id)' => 'clubs#show'
       post 'addmember'
       post 'removemember'
       post 'makeadmin'
