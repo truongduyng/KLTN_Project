@@ -15,6 +15,13 @@ gem 'devise'
 gem 'geocoder'
 gem 'websocket-rails'
 
+# deploy
+gem 'capistrano'
+gem 'capistrano-bundler'
+gem 'capistrano-rails'
+gem 'capistrano-rvm', github: "capistrano/rvm"
+gem 'capistrano-passenger'
+
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do

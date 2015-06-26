@@ -7,13 +7,12 @@
 # Ignore bundler config.
 /.bundle
 
+/bin
+
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep
 /tmp
-
-# Ignore all image uploaded
-/public/uploads
 
 # Ignore all libraby
 /vendor/assets
