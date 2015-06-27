@@ -43,7 +43,6 @@ Rails.application.configure do
   #For websocket
   #Remove the Rack::Lock middleware
 
-  ##BN
   config.middleware.delete Rack::Lock
-  ##EN
+
 end

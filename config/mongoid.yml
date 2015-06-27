@@ -75,5 +75,4 @@ production:
       hosts:
         - 128.199.176.52:27017
       options:
-        read: primary
 
