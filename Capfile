@@ -14,7 +14,7 @@ require 'capistrano/deploy'
 #   https://github.com/capistrano/passenger
 #
 require 'capistrano/rvm'
- set :rvm_type, :user
+set :rvm_type, :user
 set :rvm_ruby_version, '2.1.5p273'
 
 require 'capistrano/bundler'
