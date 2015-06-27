@@ -257,7 +257,7 @@ box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
 
 /*BEGIN CHO LOADING MORE REPLIES*/
 .loading-more-replies{
-/*	background-image: url("/assets/application/placeholder/spinner_loading.gif");
+/*	background-image: url("application/placeholder/spinner_loading.gif");
 	background-repeat: no-repeat;
 	display: inline-block;
 	width: 64px;
@@ -280,7 +280,7 @@ box-shadow: -7px 3px 19px 8px rgba(120,120,120,0.59);
     position: absolute;
     cursor: pointer;
     display: block;
-    background: url(/assets/application/myimg/a02.png) no-repeat;
+    background: url(application/myimg/a02.png) no-repeat;
     overflow:hidden;
      height: 55px;
      width: 55px;

@@ -45,7 +45,7 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingServic
 			var position = new google.maps.LatLng(lat, lng);
 			var image = $scope.currentUser.avatar.url;
 			// var HtmlLayout =
-			// 	"<div  style='position: relative; width:100px; height:100px;'>" + "<img style='display:block; left:15px; top:7px; position:absolute; z-index:10s' class='img-circle width='70px' height='70px'" + "src='" + image + "' >" + "<img style='display:block;z-index: 100;'' width='100px' height='100px'" + "src='/assets/application/placeholder/marker_layout.png'></div>";
+			// 	"<div  style='position: relative; width:100px; height:100px;'>" + "<img style='display:block; left:15px; top:7px; position:absolute; z-index:10s' class='img-circle width='70px' height='70px'" + "src='" + image + "' >" + "<img style='display:block;z-index: 100;'' width='100px' height='100px'" + "src='application/placeholder/marker_layout.png'></div>";
 			var HtmlLayout = document.getElementById("customMarker").innerHTML;
 			var marker = new RichMarker({
 				position: position,

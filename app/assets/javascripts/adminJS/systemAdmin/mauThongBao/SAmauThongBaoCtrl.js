@@ -31,7 +31,7 @@ app.controller('SAmauThongBaoCtrl', ['$scope', 'SAmauThongBaoService', '$cookies
 			uiColor: '#CCEAEE',
 			imageBrowser_listUrl: '/images.json',
 			filebrowserImageUploadUrl: '/images.json',
-			// contentsCss: ['http://localhost:3000/assets/bootstrap/dist/css/bootstrap.css','http://localhost:3000/assets/applicationCSS/customCSS/style.css']
+			// contentsCss: ['http://localhost:3000/assets/bootstrap/dist/css/bootstrap.css','http://localhost:3000applicationCSS/customCSS/style.css']
 		};
 		// $scope.isLoadCKeditorCompleted = false;
 		// $scope.onReady = function(){

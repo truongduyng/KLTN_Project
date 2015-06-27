@@ -60,7 +60,7 @@
           <button  ng-init="comment.isLoadingReply = false;comment.isRepliesLoaded = false; " ng-disabled="comment.isLoadingReply" ng-hide="comment.isRepliesLoaded || comment.reply_count == 0" ng-click="loadReply(comment)" class="btn btn-primary btn-block" >
             <span ng-hide="comment.isLoadingReply">{{comment.reply_count}} phản hồi</span>
             <span ng-show="comment.isLoadingReply">
-              <img src="/assets/application/placeholder/spinner_loading.gif" width="22px" height="22px">
+              <img src="application/placeholder/spinner_loading.gif" width="22px" height="22px">
             </span>
           </button>
 
