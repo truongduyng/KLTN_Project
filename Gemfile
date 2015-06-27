@@ -33,7 +33,7 @@ end
 
 group :production do
   gem 'rails_12factor'
-  gem 'passenger'
+  # gem 'passenger'
 end
 
 # #for strong parameters with complex object

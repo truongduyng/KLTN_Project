@@ -73,6 +73,6 @@ production:
     default:
       database: sporta_production
       hosts:
-        - 128.199.176.52:27017
+        - localhost:27017
       options:
 
