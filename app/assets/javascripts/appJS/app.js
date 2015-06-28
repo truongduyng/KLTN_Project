@@ -26,7 +26,7 @@ app.config(['$httpProvider', function($httpProvider) {
 
 app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
 
-	$locationProvider.html5Mode(true);
+	// $locationProvider.html5Mode(true);
 
 	$stateProvider.state("home", {
 		url: "/",
