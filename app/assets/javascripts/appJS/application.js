@@ -40,7 +40,6 @@
 //= require angular-facebook
 //= require bootstrap
 //= require ./app.js
-//= require_tree ../services
 //= require_tree ../angularJSComponents
 //= require websocket_rails/main
 //= require ./customJS/richmarker.js

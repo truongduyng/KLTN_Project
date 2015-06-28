@@ -78,17 +78,8 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingServic
 			});
 		};
 
-
-		////Reserve geocoding
-		// geocodingService.addressFromLocation(10.739211296648074, 106.71831607818604).then(function(address){
-		// 	console.log("success:", address);
-		// }, function(error){
-		// 	console.log("error:", error);
-		// });
-
-
 		$scope.sendBussinessRequest = function() {
-			console.log("bussinessRequest: ", $scope.bussinessRequest);
+
 			KhTkDoanhNghiepService.create($scope.bussinessRequest).success(function(bussinessRequest) {
 				Flash.create("success", 'Yêu cầu kích hoạt tài khoản doanh nghiệp của bạn đã được gửi. Chúng tôi sẽ duyệt và thông báo bạn sớm nhất có thể', 'myalert');
 				angular.copy({}, $scope.bussinessRequest);
