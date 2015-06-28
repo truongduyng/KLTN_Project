@@ -1,6 +1,6 @@
-app.controller('BAeditBranchCtrl', ['$scope', 'geocodingService', 'logoFilter',
+app.controller('BAeditBranchCtrl', ['$scope', 'geocodingFtry', 'logoFilter',
 	'BAbranchService', '$state',
- function($scope, geocodingService, logoFilter, branchService, $state) {
+ function($scope, geocodingFtry, logoFilter, branchService, $state) {
 	//Dia chi cho tim kiem vi tri
 	$scope.address = "";
 
@@ -40,7 +40,7 @@ app.controller('BAeditBranchCtrl', ['$scope', 'geocodingService', 'logoFilter',
 
 	$scope.onSearchPosition = function() {
 		$scope.isFinding = true;
-		geocodingService.latLngForAddress($scope.address).then(function(position) {
+		geocodingFtry.latLngForAddress($scope.address).then(function(position) {
 			$scope.isFinding = false;
 			$scope.error = "";
 			setMarker(position);
@@ -52,7 +52,7 @@ app.controller('BAeditBranchCtrl', ['$scope', 'geocodingService', 'logoFilter',
 	};
 
 	$scope.onSearchCurrentPosition = function() {
-		geocodingService.currentPosition().then(function(position) {
+		geocodingFtry.currentPosition().then(function(position) {
 			$scope.error = "";
 			setMarker({
 				lat: position.coords.latitude,

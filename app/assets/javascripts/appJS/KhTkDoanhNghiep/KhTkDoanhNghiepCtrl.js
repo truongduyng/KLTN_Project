@@ -1,6 +1,6 @@
-app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingService',
+app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingFtry',
 	'KhTkDoanhNghiepService', 'Flash', '$state',
-	function($scope, currentUser, geocodingService, KhTkDoanhNghiepService, Flash, $state) {
+	function($scope, currentUser, geocodingFtry, KhTkDoanhNghiepService, Flash, $state) {
 
 		$scope.currentUser = currentUser;
 		//Bat su kien load map thanh cong
@@ -13,7 +13,7 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingServic
 
 		$scope.onSearchPosition = function() {
 			$scope.isFinding = true;
-			geocodingService.latLngForAddress($scope.address).then(function(position) {
+			geocodingFtry.latLngForAddress($scope.address).then(function(position) {
 				$scope.isFinding = false;
 				$scope.error = "";
 				setMarker(position);
@@ -26,7 +26,7 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingServic
 
 		$scope.onSearchCurrentPosition = function() {
 			// $scope.isFinding = true;
-			geocodingService.currentPosition().then(function(position) {
+			geocodingFtry.currentPosition().then(function(position) {
 				//$scope.isFinding = false;
 				$scope.error = "";
 				setMarker({

@@ -1,4 +1,4 @@
-app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state', 'shareVenueService', 'Flash', 'geocodingService', function($scope, FileUploader, $cookies, $state, shareVenueService, Flash, geocodingService) {
+app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state', 'shareVenueService', 'Flash', 'geocodingFtry', function($scope, FileUploader, $cookies, $state, shareVenueService, Flash, geocodingFtry) {
 
 		$scope.venue = {
 			name: '',
@@ -72,7 +72,7 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 
 		$scope.onSearchPosition = function() {
 			$scope.isFinding = true;
-			geocodingService.latLngForAddress($scope.address).then(function(position) {
+			geocodingFtry.latLngForAddress($scope.address).then(function(position) {
 				$scope.isFinding = false;
 				$scope.error = "";
 				setMarker(position);
@@ -85,7 +85,7 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 
 		$scope.onSearchCurrentPosition = function() {
 			// $scope.isFinding = true;
-			geocodingService.currentPosition().then(function(position) {
+			geocodingFtry.currentPosition().then(function(position) {
 				//$scope.isFinding = false;
 				$scope.error = "";
 				setMarker({

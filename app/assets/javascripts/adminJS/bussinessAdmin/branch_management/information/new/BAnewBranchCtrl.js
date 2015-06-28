@@ -1,4 +1,4 @@
-app.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'logoFilter','BAbranchService', '$state', function($scope, geocodingService, logoFilter, branchService, $state){
+app.controller('BAnewBranchCtrl', ['$scope', 'geocodingFtry', 'logoFilter','BAbranchService', '$state', function($scope, geocodingFtry, logoFilter, branchService, $state){
 
   $scope.branch = {};
 
@@ -35,7 +35,7 @@ app.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'logoFilter','B
 
 	$scope.onSearchPosition = function() {
 		$scope.isFinding = true;
-		geocodingService.latLngForAddress($scope.address).then(function(position) {
+		geocodingFtry.latLngForAddress($scope.address).then(function(position) {
 			$scope.isFinding = false;
 			$scope.error = "";
 			setMarker(position);
@@ -47,7 +47,7 @@ app.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'logoFilter','B
 	};
 
 	$scope.onSearchCurrentPosition = function() {
-		geocodingService.currentPosition().then(function(position) {
+		geocodingFtry.currentPosition().then(function(position) {
 			$scope.error = "";
 			setMarker({
 				lat: position.coords.latitude,
