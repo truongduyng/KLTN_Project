@@ -41,7 +41,6 @@
 //= require bootstrap
 //= require ./app.js
 //= require_tree ../angularJSComponents
-//= require_tree ../angularJSComponents/services
 //= require websocket_rails/main
 //= require ./customJS/richmarker.js
 //= require ../angular-locale_vi-vn

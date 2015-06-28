@@ -61,7 +61,6 @@ app.factory('geocodingFtry', function($localStorage, $q, $timeout) {
 		});
 	};
 
-
 	//Lay vi tri hien tai
 	var currentPosition = function(successCallback) {
 		var deffered = $q.defer();
@@ -117,6 +116,7 @@ app.factory('geocodingFtry', function($localStorage, $q, $timeout) {
 			return d.promise;
 		},
 		currentPosition: currentPosition,
-		addressFromLocation: addressFromLocation,
+		addressFromLocation: addressFromLocation
 	};
+
 });
