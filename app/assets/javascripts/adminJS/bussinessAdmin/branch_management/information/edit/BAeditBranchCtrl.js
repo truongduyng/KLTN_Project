@@ -1,4 +1,4 @@
-bussinessAdmin.controller('BAeditBranchCtrl', ['$scope', 'geocodingService', 'logoFilter',
+app.controller('BAeditBranchCtrl', ['$scope', 'geocodingService', 'logoFilter',
 	'BAbranchService', '$state',
  function($scope, geocodingService, logoFilter, branchService, $state) {
 	//Dia chi cho tim kiem vi tri

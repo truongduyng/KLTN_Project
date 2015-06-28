@@ -1,4 +1,4 @@
-bussinessAdmin.controller('neworeditassetcategoryCtrl', ['$scope', 'assetCategoryService', 'feeService', 'Flash', 'branch', 'assetCategory', function($scope, assetCategoryService, feeService, Flash, branch, assetCategory) {
+app.controller('neworeditassetcategoryCtrl', ['$scope', 'assetCategoryService', 'feeService', 'Flash', 'branch', 'assetCategory', function($scope, assetCategoryService, feeService, Flash, branch, assetCategory) {
 
   if (assetCategory) {
     $scope.newCategory = assetCategory;

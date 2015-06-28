@@ -1,4 +1,4 @@
-bussinessAdmin.factory('feeService', ['$http', function($http) {
+app.factory('feeService', ['$http', function($http) {
 	var o = {
 
 	};

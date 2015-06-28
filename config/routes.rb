@@ -148,9 +148,9 @@ Rails.application.routes.draw do
 
   # resources :informations
   devise_for :users,:controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-  ###
-  get 'bussiness-admin' => 'application#bussiness_admin'
-  get 'system-admin' => 'application#system_admin'
+
+  get '/bussiness-admin' => 'application#bussiness_admin'
+  get '/system-admin' => 'application#system_admin'
   root 'application#home'
 
   get 'check/username' => 'users#check_username'

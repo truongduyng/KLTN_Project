@@ -1,4 +1,4 @@
-bussinessAdmin.controller('ticket_updateCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch', 'Auth', '$modal', 'dt', 'Flash', function($scope, $http, tickets, ticket_id, branch, Auth, $modal, dt, Flash){
+app.controller('ticket_updateCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch', 'Auth', '$modal', 'dt', 'Flash', function($scope, $http, tickets, ticket_id, branch, Auth, $modal, dt, Flash){
 
   $scope.branch = branch;
   $scope.hour_begin_list = [];

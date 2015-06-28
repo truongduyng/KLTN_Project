@@ -1,5 +1,5 @@
-bussinessAdmin.controller('BAmainCtrl', ['$scope', function($scope) {
-	//Cau hinh pageConfig chung 
+app.controller('BAmainCtrl', ['$scope', function($scope) {
+	//Cau hinh pageConfig chung
 	$scope.$root.rootPageConfig = {
 		currentPage: 1,
 		pageSize: 5,

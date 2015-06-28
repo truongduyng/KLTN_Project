@@ -1,4 +1,4 @@
-bussinessAdmin.controller('homeCtrl', ['$scope', '$http', 'bussinessService', 'user'
+app.controller('homeCtrl', ['$scope', '$http', 'bussinessService', 'user'
 	, function($scope, $http, bussinessService, user) {
 
 	//Persisted information

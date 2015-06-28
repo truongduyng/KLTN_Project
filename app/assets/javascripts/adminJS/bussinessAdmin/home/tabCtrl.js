@@ -1,4 +1,4 @@
-bussinessAdmin.controller('tabCtrl', ['$scope', function ($scope) {
+app.controller('tabCtrl', ['$scope', function ($scope) {
 	$scope.tabSelected = 'profile';
 	$scope.changeTab = function(tab) {
 		$scope.tabSelected = tab;

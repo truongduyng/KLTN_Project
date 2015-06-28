@@ -1,6 +1,6 @@
-var bussinessAdmin = angular.module('sportaBussinessAdmin', ["ui.router", 'templates', 'Devise', 'sporta.services', 'sporta.directives', 'sporta.filters', 'ngMap', 'ngStorage', 'ui.bootstrap', 'flash']);
+var app = angular.module('sportaBussinessAdmin', ["ui.router", 'templates', 'Devise', 'sporta.services', 'sporta.directives', 'sporta.filters', 'ngMap', 'ngStorage', 'ui.bootstrap', 'flash']);
 
-bussinessAdmin.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
     .state("home", {

@@ -1,4 +1,4 @@
-bussinessAdmin.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'logoFilter','BAbranchService', '$state', function($scope, geocodingService, logoFilter, branchService, $state){
+app.controller('BAnewBranchCtrl', ['$scope', 'geocodingService', 'logoFilter','BAbranchService', '$state', function($scope, geocodingService, logoFilter, branchService, $state){
 
   $scope.branch = {};
 

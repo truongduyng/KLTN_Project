@@ -1,4 +1,4 @@
-bussinessAdmin.controller('assetCtrl', ['$scope', 'assetService', 'Flash', '$modal', function($scope, assetService, Flash, $modal) {
+app.controller('assetCtrl', ['$scope', 'assetService', 'Flash', '$modal', function($scope, assetService, Flash, $modal) {
 
   for (var i = 0; i < $scope.assets.length; i++) {
     for (var j = 0; j < $scope.categories.length; j++) {
@@ -112,7 +112,7 @@ bussinessAdmin.controller('assetCtrl', ['$scope', 'assetService', 'Flash', '$mod
 
 }]);
 
-bussinessAdmin.controller('deleteAssetCtrl', function ($scope, $modalInstance) {
+app.controller('deleteAssetCtrl', function ($scope, $modalInstance) {
 
   $scope.ok = function () {
     $modalInstance.close();

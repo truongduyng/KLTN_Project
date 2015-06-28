@@ -1,5 +1,5 @@
-app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state', 'shareVenueService', 'Flash', 'geocodingService',
-	function($scope, FileUploader, $cookies, $state, shareVenueService, Flash, geocodingService) {
+app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state', 'shareVenueService', 'Flash', 'geocodingService', function($scope, FileUploader, $cookies, $state, shareVenueService, Flash, geocodingService) {
+
 		$scope.venue = {
 			name: '',
 			phone: '',
@@ -43,10 +43,7 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 
 		//Gui yeu cau
 		$scope.onSendVenue = function() {
-			// //Cho test do ko co mang de load map
-			// $scope.venue.latitude = '106.3405307';
-			// $scope.venue.longitude = '10.3581198';
-			// console.log("venue: ", $scope.venue);
+
 			console.log("venue before create: ", $scope.venue);
 			shareVenueService.create($scope.venue)
 				.success(function(data) {

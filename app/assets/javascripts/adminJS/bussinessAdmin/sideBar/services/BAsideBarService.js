@@ -1,4 +1,4 @@
-bussinessAdmin.factory('BAsideBarService', ['$http', function($http) {
+app.factory('BAsideBarService', ['$http', function($http) {
 	var o = {
 		branches: [],
 	};

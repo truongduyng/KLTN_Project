@@ -1,4 +1,4 @@
-bussinessAdmin.factory('BAbranchService', ['$http', function($http) {
+app.factory('BAbranchService', ['$http', function($http) {
 	var o = {};
 
 	o.create = function(branch) {

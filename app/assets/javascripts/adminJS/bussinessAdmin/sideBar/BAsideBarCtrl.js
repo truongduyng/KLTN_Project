@@ -1,4 +1,4 @@
-bussinessAdmin.controller('BAsideBarCtrl', ['$scope', 'BAsideBarService', function ($scope, sideBarService) {
+app.controller('BAsideBarCtrl', ['$scope', 'BAsideBarService', function ($scope, sideBarService) {
 	$scope.isLoadingBranches = true;
 	sideBarService.get_list_branches().success(function(data){
 		$scope.isLoadingBranches = false;

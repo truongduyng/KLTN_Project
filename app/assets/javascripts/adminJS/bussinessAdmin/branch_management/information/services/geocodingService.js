@@ -1,4 +1,4 @@
-bussinessAdmin.factory('geocodingService', function($localStorage, $q, $timeout) {
+app.factory('geocodingService', function($localStorage, $q, $timeout) {
 	var locations = $localStorage.locations ? JSON.parse($localStorage.locations) : {};
 
 	var queue = [];

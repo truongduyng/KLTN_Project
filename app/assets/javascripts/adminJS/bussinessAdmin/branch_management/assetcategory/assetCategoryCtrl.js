@@ -1,4 +1,4 @@
-bussinessAdmin.controller('assetCategoryCtrl', ['$scope', 'assetCategoryService', 'feeService', 'Flash', 'vndFilter', 'dateFilter', '$modal',
+app.controller('assetCategoryCtrl', ['$scope', 'assetCategoryService', 'feeService', 'Flash', 'vndFilter', 'dateFilter', '$modal',
   function($scope, assetCategoryService, feeService, Flash, vndFilter, dateFilter, $modal){
 
     $scope.open_new = function(){
@@ -81,7 +81,7 @@ bussinessAdmin.controller('assetCategoryCtrl', ['$scope', 'assetCategoryService'
 
 }]);
 
-bussinessAdmin.controller('deletecategoryCtrl', function ($scope, $modalInstance) {
+app.controller('deletecategoryCtrl', function ($scope, $modalInstance) {
 
   $scope.ok = function () {
     $modalInstance.close();

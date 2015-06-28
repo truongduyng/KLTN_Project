@@ -1,4 +1,4 @@
-bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', '$state',
+app.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', '$state',
 	'BAbranchService', '$modal',
 	function($scope, logoFilter, $location, $state, branchService, $modal) {
 
@@ -78,7 +78,7 @@ bussinessAdmin.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', 
 }]);
 
 
-bussinessAdmin.controller('BAdeleteBranchCtrl',
+app.controller('BAdeleteBranchCtrl',
  ['$scope', 'branch', '$modalInstance', 'BAbranchService',
  function($scope, branch, $modalInstance, branchService) {
 	$scope.branch = branch;
