@@ -8,7 +8,7 @@ user = User.create() do |u|
   u.password = '123456789'
   u.fullname = 'Nguyen Truong Duy'
   u.phone = "01633248188"
-  u.roles = [Role.find_by(name: "bussiness admin")]
+  u.roles = [Role.find_by(name: "bussiness admin"),Role.find_by(name: "system admin")]
 end
 
 
