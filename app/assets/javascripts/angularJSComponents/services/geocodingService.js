@@ -1,3 +1,4 @@
+console.log("reader geocodingFtry");
 app.factory('geocodingFtry', function($localStorage, $q, $timeout) {
 	console.log("begin geocodingFtry");
 
