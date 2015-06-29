@@ -71,6 +71,7 @@ class PostsController < ApplicationController
 			@photo = Photo.new(image: params[:file])
 			@post.photos ||=[]
 			@post.photos << @photo
+			@post.save
 			render json: @post.photos, status: :created
 		rescue Exception
 			render nothing: true, status: :bad_request, content_type: 'application/json'
