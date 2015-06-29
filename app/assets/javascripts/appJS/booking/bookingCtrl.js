@@ -58,7 +58,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
     var timenow = $scope.dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10)? tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes()) : $scope.dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)? 24 : 0 ;
 
-    if (((Auth._currentUser == null || Auth._currentUser.roles.indexOf('user') > -1) && (hour-timenow) < -10.0/60) || Auth._currentUser.roles.indexOf('bussiness admin') > -1 ) return false;
+    if (((Auth._currentUser == null || Auth._currentUser.roles.indexOf('user') > -1) && (hour-timenow) < -10.0/60) || (Auth._currentUser == null || Auth._currentUser.roles.indexOf('bussiness admin') > -1 )) return false;
 
     var max_time_length = hour + 4;
     for (var i = 0; i < tickets.tickets.length; i++) {
