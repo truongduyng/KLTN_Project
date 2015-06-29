@@ -1,4 +1,5 @@
 app.factory('geocodingFtry', function($localStorage, $q, $timeout) {
+	console.log("begin geocodingFtry");
 
 	var locations = $localStorage.locations ? JSON.parse($localStorage.locations) : {};
 
