@@ -1,5 +1,5 @@
 console.log("reader geocodingFtry");
-app.factory('geocodingFtry', function($localStorage, $q, $timeout) {
+app.factory('geocodingFtry', ['$localStorage', '$q', '$timeout',function($localStorage, $q, $timeout) {
 	console.log("begin geocodingFtry");
 
 	var locations = $localStorage.locations ? JSON.parse($localStorage.locations) : {};
@@ -121,4 +121,4 @@ app.factory('geocodingFtry', function($localStorage, $q, $timeout) {
 		addressFromLocation: addressFromLocation
 	};
 
-});
+}]);
