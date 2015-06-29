@@ -165,7 +165,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 	});
 
 	$stateProvider.state('booking', {
-		url: '/:branch_url_alias',
+		url: '/{branch_url_alias}',
 		templateUrl: 'appJS/booking/_booking.html',
 		controller: 'bookingCtrl',
 		resolve: {
@@ -178,7 +178,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 	});
 
 	$stateProvider.state('club', {
-		url: '/club/:club_id/:club_post_id',
+		url: '/club/{club_id}/{club_post_id}',
 		templateUrl: 'appJS/club/_club.html',
 		controller: 'clubCtrl',
 		resolve: {
@@ -197,7 +197,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 	});
 
 	$stateProvider.state('search', {
-		url: '/search/:search_word',
+		url: '/search/{search_word}',
 		templateUrl: 'appJS/search/search.html',
 		controller: 'searchCtrl',
 		resolve: {
