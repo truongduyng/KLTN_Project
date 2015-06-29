@@ -1,4 +1,3 @@
-#Cho chung thuc private channel
 class AuthorizationController < WebsocketRails::BaseController
   def authorize_channels
     if user_signed_in? || current_user.can_subcribe_channel?(message[:channel])

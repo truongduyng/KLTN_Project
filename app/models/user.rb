@@ -159,16 +159,13 @@ class User
   #Tao ra channel vs name la id cho moi user.
   #Do do nguoi dung chi co the subcribe toi channel ma co user.id == channel_name
   def can_subcribe_channel? channel_name
-    # if channel_name == 'notifications'
-    #   true
-    # else
-    #   false
-    # end
+
     if self.id == channel_name
       true
     else
       false
     end
+
   end
 
   private
