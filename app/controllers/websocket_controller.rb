@@ -1,5 +1,5 @@
 class WebsocketController < WebsocketRails::BaseController
-
+  before_action :authenticate_user!
   def create_ticket
     ticket = message();
     WebsocketRails[ticket[:branch_id][:$oid]].trigger 'create_ticket', ticket
