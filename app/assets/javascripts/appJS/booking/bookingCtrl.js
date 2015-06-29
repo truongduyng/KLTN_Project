@@ -1,3 +1,4 @@
+console.log("register branch booking");
 app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','branch', '$interval','Flash', function($scope, $http, Auth, $modal, tickets, branch, $interval, Flash){
   console.log("begin branch");
   $scope.signedIn = Auth.isAuthenticated;
