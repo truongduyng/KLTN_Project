@@ -1,4 +1,4 @@
-app.controller('newclubmodalCtrl', function($scope, $modalInstance, $http){
+app.controller('newclubmodalCtrl',['$scope','$modalInstance','$http', function($scope, $modalInstance, $http){
 
   $scope.club={
     name: "",
@@ -42,7 +42,7 @@ app.controller('newclubmodalCtrl', function($scope, $modalInstance, $http){
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
-});
+}]);
 
 app.controller('sidebarCtrl',['$scope', '$modal', 'clubsFtry', '$state', 'Auth', function($scope, $modal, clubsFtry, $state, Auth){
 
