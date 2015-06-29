@@ -170,9 +170,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		controller: 'bookingCtrl',
 		resolve: {
 			branch: function($http, $stateParams) {
-				return $http.get("/" + $stateParams.branch_url_alias).success(function(data) {
-					return data;
-				});
+				return $http.get("/" + $stateParams.branch_url_alias);
 			}
 		}
 	});
@@ -184,13 +182,9 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		resolve: {
 			club: function($http, $stateParams) {
 				if(!$stateParams.club_post_id){
-					return $http.get("/clubs/" + $stateParams.club_id + ".json").success(function(data) {
-						return data;
-					});
+					return $http.get("/clubs/" + $stateParams.club_id + ".json");
 				}else{
-					return $http.get("/clubs/" + $stateParams.club_id + "/" + $stateParams.club_post_id + ".json").success(function(data) {
-						return data;
-					});
+					return $http.get("/clubs/" + $stateParams.club_id + "/" + $stateParams.club_post_id + ".json");
 				}
 			}
 		}
@@ -202,14 +196,10 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		controller: 'searchCtrl',
 		resolve: {
 			branches: function($http, $stateParams) {
-				return $http.get("/searchnameadd/"+ $stateParams.search_word).success(function(data){
-					return data;
-				});
+				return $http.get("/searchnameadd/"+ $stateParams.search_word);
 			},
 			posts: function($http, $stateParams){
-				return $http.get("posts/search/"+ $stateParams.search_word).success(function(data){
-					return data;
-				});
+				return $http.get("posts/search/"+ $stateParams.search_word);
 			}
 		}
 	});
