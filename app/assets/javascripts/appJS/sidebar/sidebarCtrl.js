@@ -22,10 +22,10 @@ app.controller('newclubmodalCtrl',['$scope','$modalInstance','$http', function($
     }
   }
 
-  $scope.add_to_members = function(user){
+  $scope.add_to_members = function(user_name){
 
-    if($scope.club.members.indexOf(user) == -1){
-      $scope.club.members.push(user.fullname);
+    if($scope.club.members.indexOf(user_name) == -1){
+      $scope.club.members.push(user_name);
     }
     $scope.users_list = [];
     $scope.user_find = "";
