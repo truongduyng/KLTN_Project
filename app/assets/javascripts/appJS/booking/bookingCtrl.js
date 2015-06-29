@@ -12,6 +12,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   $scope.td_height = 20; //height of td
 
   if (branch.data != null){
+
     console.log("found branch");
     $scope.branch = branch.data;
     tickets.channel =  tickets.dispatcher.subscribe($scope.branch.branch._id.$oid);

@@ -17,6 +17,7 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
       angular.copy(data, object.tickets);
 
       for (var i = 0; i < object.tickets.length; i++) {
+        console.log(object.tickets[i].status);
         object.viewTicket(object.tickets[i]);
       };
 
@@ -175,7 +176,7 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
       var ticket_td = $('td#td_'+begintime+'_'+ticket.asset_id.$oid)[0]
     }
 
-    $('.calendar_content').append($("<div id='"+ ticket._id.$oid + "' class='ticket ticket_new'><span> "+ ticket.customer_name + " </span><br><span class='private_info' style = 'display: none;'>" + ticket.customer_phone + "<br></span><span>" + ticket.begin_use_time.slice(11,16) + ' - '+ ticket.end_use_time.slice(11,16) + "</span>,<span> Gia: " + ticket.price + "</span></div>").click(function(event){
+    $('.calendar_content').append($("<div id='"+ ticket._id.$oid + "' class='ticket'><span> "+ ticket.customer_name + " </span><br><span class='private_info' style = 'display: none;'>" + ticket.customer_phone + "<br></span><span>" + ticket.begin_use_time.slice(11,16) + ' - '+ ticket.end_use_time.slice(11,16) + "</span>,<span> Gia: " + ticket.price + "</span></div>").click(function(event){
       $('#minibooking').css('display','none');
       $('div#ticket_temp').removeClass('ticket_new');
       $('#miniedit').css('display','inline');
@@ -191,6 +192,7 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
       {
         eventoffsetY = event.offsetY;
       }
+
       var edit_top = event.pageY - $(window).scrollTop()- $('#miniedit').height() - eventoffsetY -10;
 
       var edit_right = $(window).width() - event.pageX - $('#miniedit').width()/2;
@@ -206,6 +208,7 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
     height: ticket_td.offsetHeight*4*(endtime-begintime)-3
   });
 
+  console.log(Auth._currentUser, ticket);
   if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 ){
     $('div#' + ticket._id.$oid + ' span.private_info').css('display', 'inline');
   }
@@ -229,16 +232,17 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
           left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
         });
       }
+      console.log("new status");
       $('div#'+ticket._id.$oid).addClass('ticket_new');
-    break;
+      break;
 
     case "doing":
-    $('div#'+ticket._id.$oid).addClass('ticket_doing');
-    break;
+      $('div#'+ticket._id.$oid).addClass('ticket_doing');
+      break;
 
     case "over":
-    $('div#'+ticket._id.$oid).addClass('ticket_over');
-    break;
+      $('div#'+ticket._id.$oid).addClass('ticket_over');
+      break;
 
     case "waiting":
       if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 ){
@@ -258,11 +262,11 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
           });
         }
       $('div#'+ticket._id.$oid).addClass('ticket_waiting');
-    break;
+      break;
 
     case "done":
-    $('div#'+ticket._id.$oid).addClass('ticket_done');
-    break;
+      $('div#'+ticket._id.$oid).addClass('ticket_done');
+      break;
   }
   };
 

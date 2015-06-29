@@ -1,5 +1,4 @@
 class AuthorizationController < WebsocketRails::BaseController
-  before_action :authenticate_user!
 
   def authorize_channels
     if current_user

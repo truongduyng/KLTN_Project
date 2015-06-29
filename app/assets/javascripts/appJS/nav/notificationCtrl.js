@@ -45,6 +45,7 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 			// B2: Dk channel private cho user, de cap nhat notification
 			dispatcher = new WebSocketRails('128.199.176.52:3001/websocket');
 			console.log(dispatcher);
+
 			dispatcher.on_open = function(data) {
 
 			};
