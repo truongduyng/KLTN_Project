@@ -44,7 +44,7 @@ class CommentsController < ApplicationController
 				render json: @comment.errors, status: :bad_request
 			end
 		rescue Exception => e
-			render nothing: true, status: :not_found
+			render nothing: true, status: :not_found, content_type: "application/json"
 		end
 
 	end
