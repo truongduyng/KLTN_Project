@@ -45,7 +45,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
   }
 
 
-  $('ul.list_recommend').width('293');
+  $('ul#list_add_member').width('293');
 
   $scope.users_list= [];
 
