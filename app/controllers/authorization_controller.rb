@@ -9,7 +9,7 @@ class AuthorizationController < WebsocketRails::BaseController
     #   deny_channel({:message => 'authorization failed!'})
     # end
 
-    deny_channel({:message => "#{user_signed_in?}-----#{session["warden.user.user.key"][0]}-----authorization failed!"})
+    deny_channel({:message => "#{user_signed_in?}-----#{session.to_json}-----authorization failed!"})
   end
 
 end

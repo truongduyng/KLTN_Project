@@ -13,7 +13,7 @@ class ClubPostsController < ApplicationController
     @clubpost.club = @club
 
     if @clubpost.save
-      render template: 'club_posts/_show.json.jbuilder', status: :created
+      render template: 'club_posts/_show.json.jbuilder', status: :created, locals: { :clubpost => @clubpost}
     else
       render json: @clubpost.errors, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class ClubPostsController < ApplicationController
         end
       end
 
-      render template: 'club_posts/_show.json.jbuilder', status: :ok
+      render template: 'club_posts/_show.json.jbuilder', status: :ok, locals: { :clubpost => @clubpost}
 
     else
       render json: @post.errors, status: :unprocessable_entity
