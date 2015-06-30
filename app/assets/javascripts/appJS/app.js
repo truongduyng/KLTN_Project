@@ -223,5 +223,5 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 	});
 
 	//Khoi phuc
-	$urlRouterProvider.otherwise('/');
+	// $urlRouterProvider.otherwise('/');
 }]);
