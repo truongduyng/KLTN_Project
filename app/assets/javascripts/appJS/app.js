@@ -39,6 +39,33 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		}
 	});
 
+	$stateProvider.state('booking', {
+		url: '/{branch_url_alias}/',
+		templateUrl: 'appJS/booking/_booking.html',
+		controller: 'bookingCtrl',
+		resolve: {
+			branch: function($http, $stateParams) {
+				console.log("resolve branch booking");
+				return $http.get("/" + $stateParams.branch_url_alias);
+			}
+		}
+	});
+
+	$stateProvider.state('club', {
+		url: '/club/{club_id}/{club_post_id}',
+		templateUrl: 'appJS/club/_club.html',
+		controller: 'clubCtrl',
+		resolve: {
+			club: function($http, $stateParams) {
+				if(!$stateParams.club_post_id){
+					return $http.get("/clubs/" + $stateParams.club_id + ".json");
+				}else{
+					return $http.get("/clubs/" + $stateParams.club_id + "/" + $stateParams.club_post_id + ".json");
+				}
+			}
+		}
+	});
+
 	$stateProvider.state("dangBai", {
 		url: "/dang-bai/",
 		templateUrl: 'appJS/dangBai/_dangBai.html',
@@ -161,33 +188,6 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 			notificationChange: ['thongBaoService', '$stateParams', function(thongBaoService, $stateParams) {
 				return thongBaoService.getNotificationChange($stateParams.notificationChangeId);
 			}]
-		}
-	});
-
-	$stateProvider.state('booking', {
-		url: '/{branch_url_alias}/',
-		templateUrl: 'appJS/booking/_booking.html',
-		controller: 'bookingCtrl',
-		resolve: {
-			branch: function($http, $stateParams) {
-				console.log("resolve branch booking");
-				return $http.get("/" + $stateParams.branch_url_alias);
-			}
-		}
-	});
-
-	$stateProvider.state('club', {
-		url: '/club/{club_id}/{club_post_id}',
-		templateUrl: 'appJS/club/_club.html',
-		controller: 'clubCtrl',
-		resolve: {
-			club: function($http, $stateParams) {
-				if(!$stateParams.club_post_id){
-					return $http.get("/clubs/" + $stateParams.club_id + ".json");
-				}else{
-					return $http.get("/clubs/" + $stateParams.club_id + "/" + $stateParams.club_post_id + ".json");
-				}
-			}
 		}
 	});
 
