@@ -16,8 +16,8 @@ WebsocketRails.setup do |config|
   # Start the standalone server with rake websocket_rails:start_server
   # * Requires Redis
   config.standalone = true
-  # config.redis_options = {:host => 'localhost', :port => '6379'}
-  config.redis_options = {:host => '128.199.176.52', :port => '6379'}
+  config.redis_options = {:host => 'localhost', :port => '6379'}
+  # config.redis_options = {:host => '128.199.176.52', :port => '6379'}
   config.standalone_port = 3001
   # Uncomment and edit to point to a different redis instance.
   # Will not be used unless standalone or synchronization mode

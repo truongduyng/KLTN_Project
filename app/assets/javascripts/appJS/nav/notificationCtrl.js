@@ -43,8 +43,8 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 		var user_channel = null;
 		$scope.registerNotification = function() {
 			// B2: Dk channel private cho user, de cap nhat notification
-			// dispatcher = new WebSocketRails('localhost:3001/websocket');
-			dispatcher = new WebSocketRails('128.199.176.52:3001/websocket');
+			dispatcher = new WebSocketRails('localhost:3001/websocket');
+			// dispatcher = new WebSocketRails('128.199.176.52:3001/websocket');
 			console.log(dispatcher);
 
 			dispatcher.on_open = function(data) {
@@ -62,6 +62,9 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 			// });
 
 			user_channel = dispatcher.subscribe($scope.user._id.$oid);
+
+
+
 			//B3: Bind den su thich hop va lang nghe
 			//Su kien khi co 1 notification moi
 			user_channel.bind("on_new_notification", function(newNotification) {

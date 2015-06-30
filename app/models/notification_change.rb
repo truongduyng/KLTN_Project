@@ -91,6 +91,7 @@ class NotificationChange
 				ac = ActionController::Base.new()
 				#Giup chuyen notification_change thanh json object thich hop dung template show.json.jbuilder.
 				notification_change_json = ac.render_to_string( template: 'notifications/show.json.jbuilder', locals: { :@notification_change => notification_change})
+
 				WebsocketRails[target_user_id.to_s].trigger("on_update_notification", notification_change_json)
 			else
 				#TH2: Neu ko co notification change thoa man thi tao moi
@@ -107,6 +108,7 @@ class NotificationChange
 				#B5: Thong bao toi client realtime, Trigger thong bao 1 notification moi, can them vao ds notification
 				ac = ActionController::Base.new()
 				notification_change_json = ac.render_to_string( template: 'notifications/show.json.jbuilder', locals: { :@notification_change => notification_change})
+
 				WebsocketRails[target_user_id.to_s].trigger("on_new_notification", notification_change_json)
 			end
 		end
