@@ -59,26 +59,29 @@ class Branch
 
   def self.search(param_search)
     # byebug
-    if param_search[:lat]
+    begin
+      if param_search[:lat]
 
       return Branch.near([param_search[:lat].to_f, param_search[:lng].to_f], param_search[:distance].to_f, order:"distance")
-    end
-
-    if param_search[:search_query]
-      # result = Branch.near(param_search[:search_query], 2, order:"distance").to_a + Branch.any_of(
-      #   {name: /#{param_search[:search_query]}/i},
-      #   {address: /#{param_search[:search_query]}/i}).limit(7).to_a
-
-      results = Branch.near(param_search[:search_query], 2, order:"distance").to_a
-      Branch.text_search(param_search[:search_query]).to_a.each do |b|
-        if !results.include? b
-          results << b
-        end
       end
 
-      return results
-    end
+      if param_search[:search_query]
+        # result = Branch.near(param_search[:search_query], 2, order:"distance").to_a + Branch.any_of(
+        #   {name: /#{param_search[:search_query]}/i},
+        #   {address: /#{param_search[:search_query]}/i}).limit(7).to_a
 
+        results = Branch.near(param_search[:search_query], 2, order:"distance").to_a
+        Branch.text_search(param_search[:search_query]).to_a.each do |b|
+          if !results.include? b
+            results << b
+          end
+        end
+
+        return results
+      end
+    rescue Exception => e
+      return nil
+    end
     return nil
   end
 end
