@@ -24,7 +24,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     templateUrl: 'adminJS/bussinessAdmin/tickets_management/_ticket.html',
     controller: 'ticketManageCtrl',
     resolve: {
-      branch: ['#http','#stateParams',function($http, $stateParams) {
+      branch: ['$http','$stateParams',function($http, $stateParams) {
         return $http.get("/" + $stateParams.branch_url_alias).success(function(data) {
           return data;
         });
@@ -37,7 +37,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     templateUrl: 'adminJS/bussinessAdmin/branch_management/_branch_management.html',
     controller: 'branchManageCtrl',
     resolve: {
-      branch: ['#http','#stateParams', function($http, $stateParams) {
+      branch: ['$http','$stateParams', function($http, $stateParams) {
         return $http.get("/" + $stateParams.branch_url_alias).success(function(data) {
           return data;
         });
@@ -50,4 +50,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     templateUrl: 'adminJS/bussinessAdmin/branch_management/information/new/_new.html',
     controller: 'BAnewBranchCtrl',
   });
+
+  $urlRouterProvider.otherwise('');
 }]);
