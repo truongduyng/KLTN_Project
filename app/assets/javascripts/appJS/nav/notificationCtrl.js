@@ -43,7 +43,8 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 		var user_channel = null;
 		$scope.registerNotification = function() {
 			// B2: Dk channel private cho user, de cap nhat notification
-			dispatcher = new WebSocketRails('localhost:3001/websocket');
+			// dispatcher = new WebSocketRails('localhost:3001/websocket');
+			dispatcher = new WebSocketRails('128.199.176.52:3001/websocket');
 			console.log(dispatcher);
 
 			dispatcher.on_open = function(data) {
