@@ -165,7 +165,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 	});
 
 	$stateProvider.state('booking', {
-		url: '/{branch_url_alias}',
+		url: '/{branch_url_alias}/',
 		templateUrl: 'appJS/booking/_booking.html',
 		controller: 'bookingCtrl',
 		resolve: {
@@ -223,5 +223,5 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 	});
 
 	//Khoi phuc
-	// $urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/');
 }]);
