@@ -8,9 +8,7 @@ class AuthorizationController < WebsocketRails::BaseController
     # else
     #   deny_channel({:message => 'authorization failed!'})
     # end
-    if valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
-      puts "authenticity pass"
-    end
+
     deny_channel({:message => "#{user_signed_in?}-----#{current_user}-----authorization failed!"})
   end
 
