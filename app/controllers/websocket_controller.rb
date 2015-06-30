@@ -15,7 +15,4 @@ class WebsocketController < WebsocketRails::BaseController
     WebsocketRails[ticket[:branch_id][:$oid]].trigger 'delete_ticket', ticket
   end
 
-  def trigger channel_name, event_name, data
-    WebsocketRails[channel_name].trigger(event_name, data)
-  end
 end
