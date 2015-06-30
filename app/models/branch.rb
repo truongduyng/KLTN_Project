@@ -70,7 +70,7 @@ class Branch
       #   {address: /#{param_search[:search_query]}/i}).limit(7).to_a
 
       results = Branch.near(param_search[:search_query], 2, order:"distance").to_a
-      Branch.where({ :$text => { :$search => param_search[:search_query], $language: "vi"}}).to_a.each do |b|
+      Branch.where({ :$text => { :$search => param_search[:search_query]}}).to_a.each do |b|
         if !results.include? b
           results << b
         end
