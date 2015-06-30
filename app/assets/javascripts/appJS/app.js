@@ -44,25 +44,25 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		templateUrl: 'appJS/booking/_booking.html',
 		controller: 'bookingCtrl',
 		resolve: {
-			branch: function($http, $stateParams) {
+			branch: ['$http', '$stateParams',function($http, $stateParams) {
 				console.log("resolve branch booking");
 				return $http.get("/" + $stateParams.branch_url_alias);
-			}
+			}]
 		}
 	});
 
 	$stateProvider.state('club', {
-		url: '/club/{club_id}?club_post_id',
+		url: '/club/{club_id}/club_post_id',
 		templateUrl: 'appJS/club/_club.html',
 		controller: 'clubCtrl',
 		resolve: {
-			club: function($http, $stateParams) {
+			club: ['$http', '$stateParams',function($http, $stateParams) {
 				if(!$stateParams.club_post_id){
 					return $http.get("/clubs/" + $stateParams.club_id + ".json");
 				}else{
 					return $http.get("/clubs/" + $stateParams.club_id + "/" + $stateParams.club_post_id + ".json");
 				}
-			}
+			}]
 		}
 	});
 
@@ -196,12 +196,12 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		templateUrl: 'appJS/search/search.html',
 		controller: 'searchCtrl',
 		resolve: {
-			branches: function($http, $stateParams) {
+			branches:['$http','$stateParams', function($http, $stateParams) {
 				return $http.get("/searchnameadd/"+ $stateParams.search_word);
-			},
-			posts: function($http, $stateParams){
+			}],
+			posts:['$http','$stateParams', function($http, $stateParams){
 				return $http.get("posts/search/"+ $stateParams.search_word);
-			}
+			}]
 		}
 	});
 
@@ -216,9 +216,9 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		templateUrl: 'appJS/venue/venueDetail/_venueDetail.html',
 		controller: 'venueDetailCtrl',
 		resolve: {
-			venue: function(venueDetailService, $stateParams){
+			venue: ['venueDetailService', '$stateParams',function(venueDetailService, $stateParams){
 				return venueDetailService.show($stateParams.id);
-			}
+			}]
 		}
 	});
 
