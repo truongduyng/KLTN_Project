@@ -52,7 +52,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 	});
 
 	$stateProvider.state('club', {
-		url: '/club/{club_id}/{club_post_id}',
+		url: '/club/{club_id}?club_post_id',
 		templateUrl: 'appJS/club/_club.html',
 		controller: 'clubCtrl',
 		resolve: {
