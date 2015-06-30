@@ -51,17 +51,17 @@ app.controller('notificationCtrl', ['$scope', 'notificationService', 'Auth',
 
 			};
 
-			// user_channel = dispatcher.subscribe_private($scope.user._id.$oid, function(user) {
-			// 	// success callback
-			// 	// console.log("on subscribe_private success:", user);
-			// 	// console.log(user._id.$oid + "Has joined the channel");
-			// }, function(reason) {
-			// 	// failure callback
-			// 	console.log("on subscribe_private fail");
-			// 	console.log("Authorization failed because " + reason.message);
-			// });
+			user_channel = dispatcher.subscribe_private($scope.user._id.$oid, function(user) {
+				// success callback
+				// console.log("on subscribe_private success:", user);
+				// console.log(user._id.$oid + "Has joined the channel");
+			}, function(reason) {
+				// failure callback
+				console.log("on subscribe_private fail");
+				console.log("Authorization failed because " + reason.message);
+			});
 
-			user_channel = dispatcher.subscribe($scope.user._id.$oid);
+			// user_channel = dispatcher.subscribe($scope.user._id.$oid);
 			//B3: Bind den su thich hop va lang nghe
 			//Su kien khi co 1 notification moi
 			user_channel.bind("on_new_notification", function(newNotification) {
