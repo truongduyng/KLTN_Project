@@ -8,6 +8,7 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '
 	$scope.signedIn = Auth.isAuthenticated;
 
 	$rootScope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams) {
+		console.log("$stateChangeStart: ", toState, fromState);
 		//Kiem tra trang thai cua route hay page co yeu cau login hay ko
 		//Sau do goi form login, va dua vao thuoc tinh co load lai trang hay de biet cach load trang
 		if (toState.access != null && !toState.access.free && !Auth.isAuthenticated()) {
@@ -31,6 +32,7 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '
 
 
 	$rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+		console.log("$stateChangeError: ", toState, fromState, error);
 		if (error.status == '404') {
 			$state.go('notFound')
 		}
@@ -38,7 +40,7 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '
 	});
 
 	$rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams, error) {
-
+		console.log("$stateChangeSuccess: ", toState, fromState);
 		if (toState.name === "booking"){
 			$('#sidebar').css({display: 'none'});
 			$('#sidebar').removeClass('col-sm-2');
