@@ -3,7 +3,7 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
   var object = {
     tickets: [],
     // dispatcher: new WebSocketRails('localhost:3001/websocket'),
-    dispatcher: new WebSocketRails('128.199.176.52:3001/websocket'),
+    dispatcher: new WebSocketRails('localhost:3001/websocket'),
     channel: null
   };
 
