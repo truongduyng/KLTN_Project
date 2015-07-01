@@ -29,7 +29,8 @@ gem 'capistrano-passenger'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
-  gem 'thin'
+  # gem 'thin'
+  gem 'passenger'
   gem 'byebug'
   gem 'web-console'
   gem 'spring'

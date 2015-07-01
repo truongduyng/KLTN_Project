@@ -2,8 +2,8 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
 
   var object = {
     tickets: [],
-    // dispatcher: new WebSocketRails('localhost:3001/websocket'),
-    dispatcher: new WebSocketRails('128.199.176.52:3001/websocket'),
+    dispatcher: new WebSocketRails('localhost:3001/websocket'),
+    // dispatcher: new WebSocketRails('128.199.176.52:3001/websocket'),
     channel: null
   };
 
@@ -41,8 +41,7 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
   };
 
   object.delete = function(ticket_id){
-    return $http.delete('/tickets/'+ ticket_id)
-    .success(function(data){
+    return $http.delete('/tickets/'+ ticket_id).success(function(data){
 
       if (data.errors == null) {
 
@@ -58,7 +57,7 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
       }
     })
     .error(function(data){
-      var message = '<strong>Gruh!</strong> Khong the xoa ve o trang thai nay.';
+      var message = '<strong>Gruh!</strong> Không thể xóa vé ở trạng thái này!';
       Flash.create('danger', message, 'myalert');
     });
   };

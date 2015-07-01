@@ -13,7 +13,6 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
   if (branch.data != null){
 
-    console.log("found branch");
     $scope.branch = branch.data;
     tickets.channel =  tickets.dispatcher.subscribe($scope.branch.branch._id.$oid);
     tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
@@ -27,7 +26,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     timeline();
   } else {
     $scope.isfounddata = false;
-    console.log("not found branch");
+
   }
 
   $scope.date_change = function(){

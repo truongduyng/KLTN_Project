@@ -56,8 +56,8 @@ app.controller('ticket_updateCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 
   var hour_begin = tickets.change_time_to_float($scope.ticket.begin_use_time.slice(11,16));
   var hour_end = tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16));
 
-  var min_begin_time = 0;
-  var max_end_time = 24;
+  var min_begin_time = tickets.change_time_to_float($scope.branch.branch.begin_work_time);
+  var max_end_time = tickets.change_time_to_float($scope.branch.branch.end_work_time);
   for (var i = 0; i < tickets.tickets.length; i++) {
 
     if(tickets.tickets[i].asset_id.$oid == $scope.ticket.asset_id.$oid && tickets.tickets[i]._id.$oid != $scope.ticket._id.$oid){
