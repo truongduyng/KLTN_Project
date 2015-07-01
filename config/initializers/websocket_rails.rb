@@ -17,8 +17,8 @@ WebsocketRails.setup do |config|
   # * Requires Redis
   config.standalone = false
   # config.redis_options = {:host => 'localhost', :port => '6379'}
-  config.redis_options = {:host => '128.199.176.52', :port => '6379'}
-  config.standalone_port = 3001
+  # config.redis_options = {:host => '128.199.176.52', :port => '6379'}
+  # config.standalone_port = 3001
   # Uncomment and edit to point to a different redis instance.
   # Will not be used unless standalone or synchronization mode
   # is enabled.
@@ -28,7 +28,7 @@ WebsocketRails.setup do |config|
   # Change to true to enable channel synchronization between
   # multiple server instances.
   # * Requires Redis.
-  config.synchronize = true
+  config.synchronize = false
 
   # Prevent Thin from daemonizing (default is true)
   config.daemonize = true
