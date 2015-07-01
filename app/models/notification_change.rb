@@ -74,7 +74,7 @@ class NotificationChange
 		trigger = NotificationChangeTrigger.find_or_create(trigger_user, trigger_source)
 		#B2: Lap qua ds target_users va gui thong bao den tung nguoi
 		target_user_ids.each do |target_user_id|
-			byebug
+			# byebug
 			#B2: Tim notification cua target_user vs target_object
 			notification = Notification.find_or_create(target_user_id, target_object)
 			#Tim notification_change cho target_object, target_user va category va no chua dc xem. Neu dc xem rui thi tao ra 1 notification change moi
