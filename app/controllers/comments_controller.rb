@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
 
 	def create
 		begin
-			# byebug
+			byebug
 			@comment = Comment.new(comment_params[:comment])
 			@comment.user = current_user
 

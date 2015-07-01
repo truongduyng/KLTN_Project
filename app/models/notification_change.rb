@@ -29,6 +29,7 @@ class NotificationChange
 	#va 1 nguoi xem sau unlike mong muon ko thay thong bao like cua nguoi do
 	def self.create_notification target_user, target_object, trigger_user, trigger_source, notification_category
 		#B1: Tim hoac tao notification
+		# byebug
 		notification = Notification.find_or_create(target_user, target_object)
 		#Tim notification_change cho target_object, target_user va category va no chua dc xem. Neu dc xem rui thi tao ra 1 notification change moi
 		notification_change = NotificationChange.all_of(notification_id: notification.id, notification_category_id: notification_category.id, is_new: true).first
@@ -69,12 +70,11 @@ class NotificationChange
 
 	#Tao ra notification cho nhieu nguoi
 	def self.create_notifications target_user_ids, target_object, trigger_user, trigger_source, notification_category
-
 		#B1: Tao ra trigger (chu y trigger nay neu da ton tai thi tai su dung lai)
 		trigger = NotificationChangeTrigger.find_or_create(trigger_user, trigger_source)
 		#B2: Lap qua ds target_users va gui thong bao den tung nguoi
 		target_user_ids.each do |target_user_id|
-			# byebug
+			byebug
 			#B2: Tim notification cua target_user vs target_object
 			notification = Notification.find_or_create(target_user_id, target_object)
 			#Tim notification_change cho target_object, target_user va category va no chua dc xem. Neu dc xem rui thi tao ra 1 notification change moi
@@ -91,8 +91,8 @@ class NotificationChange
 				ac = ActionController::Base.new()
 				#Giup chuyen notification_change thanh json object thich hop dung template show.json.jbuilder.
 				notification_change_json = ac.render_to_string( template: 'notifications/show.json.jbuilder', locals: { :@notification_change => notification_change})
-
-				WebsocketRails[target_user_id.to_s].trigger("on_update_notification", notification_change_json)
+				# WebsocketRails[target_user_id.to_s].trigger("on_update_notification", notification_change_json)
+				Fiber.new{WebsocketRails[target_user_id.to_s].trigger("on_update_notification", notification_change_json)}.resume
 			else
 				#TH2: Neu ko co notification change thoa man thi tao moi
 				#B1: Tao notification change
@@ -109,7 +109,8 @@ class NotificationChange
 				ac = ActionController::Base.new()
 				notification_change_json = ac.render_to_string( template: 'notifications/show.json.jbuilder', locals: { :@notification_change => notification_change})
 
-				WebsocketRails[target_user_id.to_s].trigger("on_new_notification", notification_change_json)
+				# WebsocketRails[target_user_id.to_s].trigger("on_new_notification", notification_change_json)
+				Fiber.new{WebsocketRails[target_user_id.to_s].trigger("on_new_notification", notification_change_json)}.resume
 			end
 		end
 
