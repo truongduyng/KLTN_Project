@@ -56,7 +56,7 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
   var timenow = dt.toJSON().slice(0,10) == dt_now? tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes()) : dt.toJSON().slice(0,10) < dt_now? 24 : 0 ;
 
   var hour_begin = tickets.change_time_to_float($scope.ticket.begin_use_time.slice(11,16));
-  var hour_end = tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16));
+  var hour_end = tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16))? tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16)) : 24;
 
   if (hour_begin-timenow < -10.0/60 ) {
     $scope.hour_begin_list.push(tickets.hourtoview(hour_begin));
@@ -66,7 +66,7 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
   } else {
     // build time data
     var min_begin_time = customroundtime(timenow);
-    var max_end_time = 24;
+    var max_end_time = tickets.change_time_to_float($scope.branch.branch.end_work_time);
     for (var i = 0; i < tickets.tickets.length; i++) {
 
       if(tickets.tickets[i].asset_id.$oid == $scope.ticket.asset_id.$oid && tickets.tickets[i]._id.$oid != $scope.ticket._id.$oid){
