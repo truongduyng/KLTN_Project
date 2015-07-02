@@ -16,9 +16,6 @@ gem 'geocoder'
 # gem 'websocket-rails'
 gem 'websocket-rails', github: 'moaa/websocket-rails', branch: 'sync_fixes'
 
-# gem 'websocket-rails',github: 'depili/websocket-rails', branch: 'channel_token_fix'
-
-
 # deploy
 gem 'capistrano'
 gem 'capistrano-bundler'
