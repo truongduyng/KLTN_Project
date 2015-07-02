@@ -51,8 +51,10 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, release_path.join('tmp/restart.txt')
     end
-    within release_path do
-      execute :rake, 'websocket_rails:start_server'
+    on roles(:app), in: :sequence, wait: 5 do
+      within release_path do
+        execute :rake, 'websocket_rails:start_server'
+      end
     end
   end
 
