@@ -62,10 +62,8 @@ class BranchesController < ApplicationController
   #Cho them, xoa, sua branch
   #POST /branches.json
   def create
-
     @branch = Branch.new branch_params.except(*[:lat, :lng]).merge(coordinates: [branch_params[:lng], branch_params[:lat]])
     @branch.bussiness_id = current_user.bussiness.id
-
     if @branch.save
       render 'show.json.jbuilder', status: :created
     else
@@ -86,6 +84,8 @@ class BranchesController < ApplicationController
     @branch.destroy
     render nothing: true, status: :ok, content_type: 'application/json'
   end
+
+
 
 
   private

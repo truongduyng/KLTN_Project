@@ -11,6 +11,12 @@ class Branch
   field :begin_work_time, type: String
   field :end_work_time, type: String
 
+  #Begin for venue
+  field :description, type: String
+  embeds_many :photos, as: :photoable
+  belongs_to :user
+  #End for venue
+
   geocoded_by :address do |obj,result|
     obj.coordinates = []
     if geo = result.first
@@ -33,16 +39,18 @@ class Branch
   validates :name, :url_alias, presence: true,  length: {maximum: 100}
   validates :address, presence: true, length: {maximum: 1000}
   validates :url_alias, uniqueness: true
-  validates :begin_work_time, :end_work_time, presence: true
+  validates :begin_work_time, :end_work_time, presence: true, if: :validate_for_branch?
+  #for venue
+  validates :description, presence: true, length: {maximum: 1000}, unless: :validate_for_branch?
 
   VALID_PHONE_REGEX = /[0]{1}[0-9]{9,10}/i
   validates :phone, presence: true, format: { with: VALID_PHONE_REGEX }
 
   time_valid = %w(0:00 0:30 1:00 1:30 2:00 2:30 3:00 3:30 4:00 4:30 5:00 5:30 6:00 6:30 7:00 7:30 8:00 8:30 9:00 9:30 10:00 10:30 11:00 11:30 12:00 12:30 13:00 13:30 14:00 14:30 15:00 15:30 16:00 16:30 17:00 17:30 18:00 18:30 19:00 19:30 20:00 20:30 21:00 21:30 22:00 22:30 23:00 23:30 24:00)
 
-  validates :begin_work_time, :end_work_time, inclusion: { in: time_valid, message: "%{value} is not a valid time."}
+  validates :begin_work_time, :end_work_time, inclusion: { in: time_valid, message: "%{value} is not a valid time."}, if: :validate_for_branch?
 
-  validate :check_time
+  validate :check_time, if: :validate_for_branch?
 
   def check_time
     bt = begin_work_time.split(":")
@@ -51,6 +59,11 @@ class Branch
       errors.add(:begin_work_time, "can't not be greater end_time")
       return false
     end
+  end
+
+  def validate_for_branch?
+    # byebug
+    !bussiness.nil?
   end
 
   # def address
