@@ -233,16 +233,16 @@ $scope.showtimeintd = function(hour,element,show){
     }
   });
 
-  tickets.channel.bind('delete_ticket', function(ticket) {
-    if ($scope.dt.toJSON().slice(0,10) == ticket.begin_use_time.slice(0,10)){
-      tickets.clearviewTicket(ticket._id.$oid);
-      for (var i = 0; i < tickets.tickets.length; i++) {
-        if (tickets.tickets[i]._id.$oid == ticket._id.$oid) {
-          tickets.tickets.splice(i,1);
-          break;
-        }
-      };
-    }
+  tickets.channel.bind('delete_ticket', function(ticket_id) {
+
+    tickets.clearviewTicket(ticket_id);
+    for (var i = 0; i < tickets.tickets.length; i++) {
+      if (tickets.tickets[i]._id.$oid == ticket_id) {
+        tickets.tickets.splice(i,1);
+        break;
+      }
+    };
+
   });
 
   //Timeline---------------------------------------------------------------

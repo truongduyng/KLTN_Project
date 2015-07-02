@@ -1,6 +1,5 @@
-console.log("register branch booking");
 app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','branch', '$interval','Flash', function($scope, $http, Auth, $modal, tickets, branch, $interval, Flash){
-  console.log("begin branch");
+
   $scope.signedIn = Auth.isAuthenticated;
 
   $scope.rate = 4;
@@ -14,7 +13,9 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   if (branch.data != null){
 
     $scope.branch = branch.data;
+
     tickets.channel =  tickets.dispatcher.subscribe($scope.branch.branch._id.$oid);
+
     tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
 
     $scope.work_time = []
@@ -170,14 +171,14 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
       if (user.roles.indexOf('user') > -1){
         if (hour_begin-timenow < -10.0/60) {
-          var message = '<strong>Gruh!</strong> Khong the xoa ve da qua.';
+          var message = '<strong>Gruh!</strong> Không thể xóa vé đã qua!';
           Flash.create('danger', message, 'myalert');
           $scope.close_miniedit();
           return false;
         }
 
         if(ticket_del.user_id == null || ticket_del.user_id.$oid != Auth._currentUser._id.$oid){
-          var message = '<strong>Gruh!</strong> Khong the xoa ve cua nguoi khac.';
+          var message = '<strong>Gruh!</strong> Không thể xóa vé của người khác!';
           Flash.create('danger', message, 'myalert');
           $scope.close_miniedit();
           return false;
@@ -269,17 +270,16 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     }
   });
 
-  tickets.channel.bind('delete_ticket', function(ticket) {
-    if ($scope.dt.toJSON().slice(0,10) == ticket.begin_use_time.slice(0,10)){
-      tickets.clearviewTicket(ticket._id.$oid);
-      for (var i = 0; i < tickets.tickets.length; i++) {
-        if (tickets.tickets[i]._id.$oid == ticket._id.$oid) {
-          tickets.tickets.splice(i,1);
-          console.log('realtime' + tickets.tickets.length);
-          break;
-        }
-      };
-    }
+  tickets.channel.bind('delete_ticket', function(ticket_id) {
+
+    tickets.clearviewTicket(ticket_id);
+    for (var i = 0; i < tickets.tickets.length; i++) {
+      if (tickets.tickets[i]._id.$oid == ticket_id) {
+        tickets.tickets.splice(i,1);
+        break;
+      }
+    };
+
   });
 
   //Timeline---------------------------------------------------------------

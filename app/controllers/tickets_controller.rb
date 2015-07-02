@@ -4,7 +4,7 @@ class TicketsController < ApplicationController
   before_action :check_right_ticket, only: [:update, :destroy]
 
   def show
-
+    # byebug
     tickets = Ticket.onday(ticket_param[:date],ticket_param[:branch_id])
     if tickets.present?
       render json: tickets, status: :ok
@@ -31,6 +31,7 @@ class TicketsController < ApplicationController
       create_param[:end_use_time] = create_param[:end_use_time].to_time + 7.days
     end
     if create_result.length > 0
+      Fiber.new{WebsocketRails[create_param[:branch_id]].trigger('create_ticket', create_result[0])}.resume
       render json: create_result[0], status: :created
     else
       render json: ticket.errors, status: :unprocessable_entity
@@ -40,18 +41,19 @@ class TicketsController < ApplicationController
   def update
 
     begin
-      ticket = Ticket.find(ticket_param[:ticket_id])
       if (ticket_param.except(:ticket_id).length == 1 && ticket_param.except(:ticket_id).include?(:status))
-        if ticket.update_attribute(:status, ticket_param.except(:ticket_id)[:status])
-          render json: ticket, status: :ok
+        if @ticket.update_attribute(:status, ticket_param.except(:ticket_id)[:status])
+          Fiber.new{WebsocketRails[@ticket.branch_id].trigger 'update_ticket', @ticket}.resume
+          render json: @ticket, status: :ok
         else
-          render json: ticket.errors, status: :unprocessable_entity
+          render json: @ticket.errors, status: :unprocessable_entity
         end
       else
-        if ticket.update_attributes(ticket_param.except(:ticket_id))
-          render json: ticket, status: :ok
+        if @ticket.update_attributes(ticket_param.except(:ticket_id))
+          Fiber.new{WebsocketRails[@ticket.branch_id].trigger 'update_ticket', @ticket}.resume
+          render json: @ticket, status: :ok
         else
-          render json: ticket.errors, status: :unprocessable_entity
+          render json: @ticket.errors, status: :unprocessable_entity
         end
       end
     rescue Exception => e
@@ -61,9 +63,9 @@ class TicketsController < ApplicationController
 
   def destroy
     begin
-      ticket = Ticket.find(ticket_param[:ticket_id])
-
-      if ticket.destroy
+      branch_id = @ticket.branch_id
+      if @ticket.destroy
+        Fiber.new{WebsocketRails[branch_id].trigger 'delete_ticket', ticket_param[:ticket_id]}.resume
         render nothing: true, status: :ok, content_type: 'application/json'
       else
         render nothing: true, status: :unprocessable_entity, content_type: 'application/json'
@@ -81,10 +83,15 @@ class TicketsController < ApplicationController
   end
 
   def check_right_ticket
-    if (!current_user.is_bussiness_admin?)
-      ticket = Ticket.find(ticket_param[:ticket_id])
 
-      if (ticket.user_id != current_user.id || ticket.status != 'new')
+    @ticket = Ticket.find(ticket_param[:ticket_id])
+    if (!current_user.is_bussiness_admin?)
+
+      if (@ticket.user_id != current_user.id || @ticket.status != Ticket::Status[:new])
+        render nothing: true, status: :unprocessable_entity, content_type: 'application/json'
+      end
+    else
+      if (@ticket.status == Ticket::Status[:doing])
         render nothing: true, status: :unprocessable_entity, content_type: 'application/json'
       end
     end

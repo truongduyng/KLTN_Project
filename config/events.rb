@@ -29,9 +29,9 @@ WebsocketRails::EventMap.describe do
     subscribe :subscribe_private, :to => AuthorizationController, :with_method => :authorize_channels
   end
 
-  namespace :tickets do
-    subscribe :create_ticket, :to => WebsocketController, :with_method => :create_ticket
-    subscribe :update_ticket, :to => WebsocketController, :with_method => :update_ticket
-    subscribe :delete_ticket, :to => WebsocketController, :with_method => :delete_ticket
-  end
+  # namespace :tickets do
+  #   subscribe :create_ticket, :to => WebsocketController, :with_method => :create_ticket
+  #   subscribe :update_ticket, :to => WebsocketController, :with_method => :update_ticket
+  #   subscribe :delete_ticket, :to => WebsocketController, :with_method => :delete_ticket
+  # end
 end

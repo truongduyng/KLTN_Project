@@ -54,10 +54,13 @@ app.controller('ticket_updateCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 
 
 
   var hour_begin = tickets.change_time_to_float($scope.ticket.begin_use_time.slice(11,16));
-  var hour_end = tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16));
+  var hour_end = tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16))? tickets.change_time_to_float($scope.ticket.end_use_time.slice(11,16)) : 24;
 
   var min_begin_time = tickets.change_time_to_float($scope.branch.branch.begin_work_time);
   var max_end_time = tickets.change_time_to_float($scope.branch.branch.end_work_time);
+
+  console.log(hour_begin, hour_end);
+
   for (var i = 0; i < tickets.tickets.length; i++) {
 
     if(tickets.tickets[i].asset_id.$oid == $scope.ticket.asset_id.$oid && tickets.tickets[i]._id.$oid != $scope.ticket._id.$oid){
@@ -71,13 +74,15 @@ app.controller('ticket_updateCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 
         max_end_time = begintime;
     }
   };
-
+  console.log(min_begin_time, max_end_time);
   for (var i = min_begin_time; i <= max_end_time -1; i+=0.25) {
     $scope.hour_begin_list.push(tickets.hourtoview(i));
   };
+
   if ($scope.hour_begin_list.length) {
     $scope.hour_begin = tickets.hourtoview(hour_begin);
   }
+
   $scope.update_hour_end(true);
 
   $scope.close_modal = function(){

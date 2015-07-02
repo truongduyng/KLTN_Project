@@ -1,4 +1,4 @@
-services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash){
+services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Auth, Flash,$state){
 
   var object = {
     tickets: [],
@@ -18,7 +18,7 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
       angular.copy(data, object.tickets);
 
       for (var i = 0; i < object.tickets.length; i++) {
-        console.log(object.tickets[i].status);
+        // console.log(object.tickets[i].status);
         object.viewTicket(object.tickets[i]);
       };
 
@@ -29,36 +29,25 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
 
   object.create = function(ticket){
     return $http.post('tickets.json', ticket).success(function(data){
-
-      object.dispatcher.trigger('tickets.create_ticket', data);
+      Flash.create('success', "Yeh! Đặt sân thành công.", 'myalert');
     });
   };
 
   object.update = function(ticket_update){
     return $http.post('tickets/update.json',ticket_update).success(function(data){
-      object.dispatcher.trigger('tickets.update_ticket', data);
+      Flash.create('success', "Yeh! Cập nhật thành công.", 'myalert');
+    })
+    .error(function(data){
+      Flash.create('danger', '<strong>Ops!</strong> Không thể cập nhật vé này.', 'myalert');
     });
   };
 
   object.delete = function(ticket_id){
     return $http.delete('/tickets/'+ ticket_id).success(function(data){
 
-      if (data.errors == null) {
-
-        for (var i = 0; i < object.tickets.length; i++) {
-          if (object.tickets[i]._id.$oid == ticket_id) {
-            object.dispatcher.trigger('tickets.delete_ticket', object.tickets[i]);
-            break;
-          }
-        };
-      }
-      else{
-        // console.log(data.e);
-      }
     })
     .error(function(data){
-      var message = '<strong>Gruh!</strong> Không thể xóa vé ở trạng thái này!';
-      Flash.create('danger', message, 'myalert');
+      Flash.create('danger', '<strong>Gruh!</strong> Không thể xóa vé ở trạng thái này!', 'myalert');
     });
   };
 
@@ -176,12 +165,14 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
       var ticket_td = $('td#td_'+begintime+'_'+ticket.asset_id.$oid)[0]
     }
 
-    $('.calendar_content').append($("<div id='"+ ticket._id.$oid + "' class='ticket'><span> "+ ticket.customer_name + " </span><br><span class='private_info' style = 'display: none;'>" + ticket.customer_phone + "<br></span><span>" + ticket.begin_use_time.slice(11,16) + ' - '+ ticket.end_use_time.slice(11,16) + "</span>,<span> Gia: " + ticket.price + "</span></div>").click(function(event){
+
+
+    $('.calendar_content').append($("<div id='"+ ticket._id.$oid + "' class='ticket'><span> "+ ticket.customer_name + "</span><br><span class='private_info' style = 'display: none;'>" +"SĐT: <strong>" +ticket.customer_phone + "</strong><br></span><span>" + ticket.begin_use_time.slice(11,16) + ' - '+ ticket.end_use_time.slice(11,16) + "</span>,<span> Giá: <strong>" + ticket.price + "</strong></span></div>").click(function(event){
       $('#minibooking').css('display','none');
       $('div#ticket_temp').removeClass('ticket_new');
       $('#miniedit').css('display','inline');
       $('span#time_ticket').html(ticket.begin_use_time.slice(11,16)+ ' - '+ticket.end_use_time.slice(11,16));
-      $('p#price_ticket').html('Gia: '+ ticket.price);
+      $('p#price_ticket').html('Giá: '+ ticket.price);
       $('p#ticket_id_hidden').html(ticket._id.$oid);
 
       if(event.offsetY == undefined) // this works for Firefox
@@ -201,79 +192,78 @@ services.factory('tickets',['$http','Auth', 'Flash', function($http, Auth, Flash
       $('#miniedit').css({top: edit_top, right: edit_right});
     }))
 
-  $('div#' + ticket._id.$oid).css({
-    top: ticket_td.offsetTop+2,
-    width: ticket_td.offsetWidth-3,
-    left: ticket_td.offsetLeft,
-    height: ticket_td.offsetHeight*4*(endtime-begintime)-3
-  });
+$('div#' + ticket._id.$oid).css({
+  top: ticket_td.offsetTop+2,
+  width: ticket_td.offsetWidth-3,
+  left: ticket_td.offsetLeft,
+  height: ticket_td.offsetHeight*4*(endtime-begintime)-3
+});
 
-  console.log(Auth._currentUser, ticket);
-  if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 ){
-    $('div#' + ticket._id.$oid + ' span.private_info').css('display', 'inline');
-  }
+if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 ){
+  $('div#' + ticket._id.$oid + ' span.private_info').css('display', 'inline');
+}
 
-  switch(ticket.status) {
-    case "new":
+switch(ticket.status) {
+  case "new":
+    // console.log($state.current);
+    if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 && $state.current.name ==='ticket_management'){
 
-      if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1){
+      $('.calendar_content').append(
+        $("<i class='fa fa-arrow-circle-o-right ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
+          object.update({
+            ticket_id: ticket._id.$oid,
+            status: "doing"
+          });
+        })
+        );
 
-        $('.calendar_content').append(
-          $("<i class='fa fa-arrow-circle-o-right ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
-            object.update({
-              ticket_id: ticket._id.$oid,
-              status: "doing"
-            });
-          })
-          );
-
-        $('i#' + ticket._id.$oid + '_i').css({
-          top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
-          left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
-        });
-      }
-      console.log("new status");
-      $('div#'+ticket._id.$oid).addClass('ticket_new');
-      break;
+      $('i#' + ticket._id.$oid + '_i').css({
+        top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
+        left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
+      });
+    }
+    console.log("new status----------------------------------------");
+    $('div#'+ticket._id.$oid).addClass('ticket_new');
+    break;
 
     case "doing":
-      $('div#'+ticket._id.$oid).addClass('ticket_doing');
-      break;
+    $('div#'+ticket._id.$oid).addClass('ticket_doing');
+    break;
 
     case "over":
-      $('div#'+ticket._id.$oid).addClass('ticket_over');
-      break;
+    $('div#'+ticket._id.$oid).addClass('ticket_over');
+    break;
 
     case "waiting":
-      if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 ){
+    if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 && $state.current.name ==='ticket_management'){
 
-          $('.calendar_content').append(
-            $("<i class='fa fa-check-circle-o ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
-              object.update({
-                ticket_id: ticket._id.$oid,
-                status: "done"
-              });
-            })
-            );
-
-          $('i#' + ticket._id.$oid + '_i').css({
-            top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
-            left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
+      $('.calendar_content').append(
+        $("<i class='fa fa-check-circle-o ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
+          object.update({
+            ticket_id: ticket._id.$oid,
+            status: "done"
           });
-        }
-      $('div#'+ticket._id.$oid).addClass('ticket_waiting');
-      break;
+        })
+        );
+
+      $('i#' + ticket._id.$oid + '_i').css({
+        top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
+        left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
+      });
+    }
+    $('div#'+ticket._id.$oid).addClass('ticket_waiting');
+    break;
 
     case "done":
-      $('div#'+ticket._id.$oid).addClass('ticket_done');
-      break;
+    $('div#'+ticket._id.$oid).addClass('ticket_done');
+    break;
   }
-  };
+};
 
-  object.clearviewTicket = function(ticket_id){
-    $('div#'+ ticket_id).remove();
-    $('i#'+ ticket_id +'_i').remove();
-  };
+object.clearviewTicket = function(ticket_id){
+  $('div#'+ ticket_id).remove();
+  $('i#'+ ticket_id +'_i').remove();
+};
 
-  return object;
+return object;
 }]);

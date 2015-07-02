@@ -107,14 +107,14 @@ app.controller('ticketCtrl', ['$scope', '$http', 'tickets', 'ticket_id', 'branch
 
       if (user.role_name == 'user'){
         if ( hour_begin-timenow < -10.0/60) {
-          var message = '<strong>Hey!</strong> Khong the cap nhat ve da qua.';
+          var message = '<strong>Hey!</strong> Không thể xóa vé đã qua!';
           Flash.create('danger', message, 'myalert');
           $scope.close_modal();
           return false;
         }
 
         if($scope.ticket.user_id == null || $scope.ticket.user_id.$oid != Auth._currentUser._id.$oid){
-          var message = '<strong>Hey!</strong> Khong the cap nhat ve cua ng khac.';
+          var message = '<strong>Hey!</strong> Không thể xóa vé của người khác!';
           Flash.create('danger', message, 'myalert');
           $scope.close_modal();
           return false;

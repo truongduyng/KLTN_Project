@@ -1,6 +1,6 @@
 <div class="modal-header">
   <button type="button" class="close" aria-hidden="true" ng-click="close_modal()">&times;</button>
-  <h3>Chi tiet </h3>
+  <h3>Chi tiết</h3>
 </div>
 <div class="modal-body row">
   <div class="col-lg-12">
@@ -12,7 +12,7 @@
     <span style="display:inline">{{branch.branch.name}} tai {{branch.branch.address}}</span>
 
     <br><i class="fa fa-user fa-2x marginbot10"></i>
-    <img src="" alt="ava">
+    <img ng-src="" alt="ava">
     <span style="display:inline">{{ticket.customer_name}} , Số ĐT: <strong style="color: #0078ad">{{ticket.customer_phone}}</strong></span>
     <br><i class="fa fa-bell fa-2x marginbot10"></i>
     <input type="radio" value="taisan" checked>Thanh toán tại sân
@@ -20,6 +20,6 @@
     <br><i class="fa fa-money fa-2x marginbot10"></i>
     <span>{{price}}.000 VND</span>
     <br>
-    <button class="btn btn-theme margintop10 pull-left" ng-click="update_ticket(hour_begin, hour_end)">Cap nhat</button>
+    <button class="btn btn-theme margintop10 pull-left" ng-click="update_ticket(hour_begin, hour_end)">Cập nhật</button>
   </div>
 </div>

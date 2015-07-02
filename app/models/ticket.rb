@@ -6,6 +6,9 @@ class Ticket
   field :end_use_time, type: Time
   field :price, type: Float
   field :status, type: String
+
+  Status = {new: "new", doing: "doing", waiting: "waiting", over: "over", done: "done"}
+
   field :customer_name, type: String
   field :customer_phone, type: String
 
