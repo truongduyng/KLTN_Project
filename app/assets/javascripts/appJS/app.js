@@ -216,8 +216,8 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		templateUrl: 'appJS/venue/venueDetail/_venueDetail.html',
 		controller: 'venueDetailCtrl',
 		resolve: {
-			venue: ['venueDetailService', '$stateParams',function(venueDetailService, $stateParams){
-				return venueDetailService.show($stateParams.id);
+			venue: ['VenueService', '$stateParams',function(VenueService, $stateParams){
+				return VenueService.show($stateParams.id);
 			}]
 		}
 	});

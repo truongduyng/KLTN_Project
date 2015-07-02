@@ -29,12 +29,24 @@
             </div>
           </form>
 
-          <ul ng-show="show_recommend_result()" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()" >
-            <li ng-repeat = "result in results" ng-click="showresult(result)">
-              <strong>{{result.name}}</strong>
-              <p>{{result.address}}</p>
-            </li>
-          </ul>
+          <div ng-show="search_query && isfocus">
+
+            <ul ng-hide="show_recommend_result()" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()" style="text-align: center;">
+              <li>
+                <span ng-hide="show_recommend_result()" class="fa fa-spinner fa-pulse fa-fw"></span>
+              </li>
+              <!-- <li ng-click="search()">
+                Xem tất cả
+              </li> -->
+            </ul>
+
+            <ul ng-show="show_recommend_result()" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()" >
+              <li ng-repeat = "result in results" ng-click="showresult(result)">
+                <strong>{{result.name}}</strong>
+                <p>{{result.address}}</p>
+              </li>
+            </ul>
+          </div>
 
         </div>
 

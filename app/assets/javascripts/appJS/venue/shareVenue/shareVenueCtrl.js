@@ -1,4 +1,4 @@
-app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state', 'shareVenueService', 'Flash', 'geocodingFtry', function($scope, FileUploader, $cookies, $state, shareVenueService, Flash, geocodingFtry) {
+app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state', 'VenueService', 'Flash', 'geocodingFtry', function($scope, FileUploader, $cookies, $state, VenueService, Flash, geocodingFtry) {
 
 		$scope.venue = {
 			name: '',
@@ -45,7 +45,7 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 		$scope.onSendVenue = function() {
 
 			console.log("venue before create: ", $scope.venue);
-			shareVenueService.create($scope.venue)
+			VenueService.create($scope.venue)
 				.success(function(data) {
 					//Sau khi tao ra venue,kiem tra xem co image hay ko
 					//neu co thi tien hanh upload

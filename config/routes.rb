@@ -101,8 +101,7 @@ Rails.application.routes.draw do
   get 'search(/:lat/:lng/:distance)' => 'branches#search', constraints:{ lat: /[0-9\.]+/, lng: /[0-9\.]+/, distance: /[0-9\.]+/ }
   get 'searchnameadd(/:search_query)' => 'branches#search'
 
-  resources :assets do
-  end
+  resources :assets
 
   resources :clubs, except: [:show] do
     member do

@@ -1,4 +1,4 @@
-app.controller('venueDetailCtrl', ['$scope', 'venueDetailService','$modal', 'Flash', 'logoFilter','Auth', '$state', function ($scope, venueDetailService, $modal, Flash, logoFilter, Auth, $state) {
+app.controller('venueDetailCtrl', ['$scope', 'VenueService','$modal', 'Flash', 'logoFilter','Auth', '$state', function ($scope, VenueService, $modal, Flash, logoFilter, Auth, $state) {
 
 		$scope.signedIn = Auth.isAuthenticated;
 
@@ -27,7 +27,7 @@ app.controller('venueDetailCtrl', ['$scope', 'venueDetailService','$modal', 'Fla
 		});
 
 
-		$scope.venue = venueDetailService.venue;
+		$scope.venue = VenueService.venue;
 
 		$scope.showImage = function(photo) {
 			var modalInstance = $modal.open({
@@ -76,7 +76,7 @@ app.controller('venueDetailCtrl', ['$scope', 'venueDetailService','$modal', 'Fla
 
 		//Xoa venue
 		$scope.onDeleteVenue = function(){
-			venueDetailService.destroy($scope.venue).success(function(){
+			VenueService.destroy($scope.venue).success(function(){
 				Flash.create('success',"Xóa thành công chia sẻ địa điểm chơi thể thao", 'myalert');
 				$state.go("home");
 			});
