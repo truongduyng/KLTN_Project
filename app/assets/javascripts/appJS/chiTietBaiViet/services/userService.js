@@ -1,6 +1,6 @@
-app.factory('userService', ['Auth', function (Auth) {
+app.factory('userService', [function () {
 	o = {
-		currentUser:{},
+		currentUser: null,
 	};
 
 	return o;

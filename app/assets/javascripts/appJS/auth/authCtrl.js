@@ -1,5 +1,4 @@
-app.controller('authCtrl', ['$scope', 'Auth', '$state', '$modal', '$rootScope', 'Flash',
-	function($scope, Auth, $state, $modal, $rootScope, Flash) {
+app.controller('authCtrl', ['$scope', 'Auth', '$state', '$modal', '$rootScope', 'Flash', 'userService', function($scope, Auth, $state, $modal, $rootScope, Flash, userService) {
 
 		$scope.user = {};
 
@@ -13,10 +12,10 @@ app.controller('authCtrl', ['$scope', 'Auth', '$state', '$modal', '$rootScope', 
 		};
 
 		$scope.login = function() {
-			Auth.login($scope.user).then(function() {
+			Auth.login($scope.user).then(function(user) {
 
 				$scope.close_modal();
-				$scope.error = "";
+				userService.currentUser = user;
 				$state.reload();
 
 			}, function() {
@@ -28,6 +27,7 @@ app.controller('authCtrl', ['$scope', 'Auth', '$state', '$modal', '$rootScope', 
 			Auth.register($scope.user).then(function() {
 
 				$scope.close_modal();
+				userService.currentUser = user;
 				$state.reload();
 
 			}, function(e) {

@@ -1,10 +1,10 @@
-app.controller('mapCtrl', ['$scope', '$http', 'Auth', 'mapFtry', function($scope, $http, Auth, mapFtry){
+app.controller('mapCtrl', ['$scope', '$http', 'mapFtry', 'userService', function($scope, $http, mapFtry, userService){
 
-  Auth.currentUser().then(function(user) {
-    $scope.username = user.username;
-  }, function(error) {
+  if (userService.currentUser) {
+    $scope.username = userService.currentUser.username;
+  }else {
     $scope.username = "User"
-  });
+  };
 
   $scope.image = mapFtry.image;
   $scope.shape = mapFtry.shape;

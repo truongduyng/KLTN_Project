@@ -1,10 +1,9 @@
-app.controller('venueDetailCtrl', ['$scope', 'VenueService','$modal', 'Flash', 'logoFilter','Auth', '$state', function ($scope, VenueService, $modal, Flash, logoFilter, Auth, $state) {
+app.controller('venueDetailCtrl', ['$scope', 'VenueService','$modal', 'Flash', 'logoFilter', '$state', 'userService',  function ($scope, VenueService, $modal, Flash, logoFilter, $state, userService) {
 
-		$scope.signedIn = Auth.isAuthenticated;
+	$scope.signedIn = userService.currentUser;
 
-		Auth.currentUser().then(function(user){
-			$scope.currentUser = user;
-		});
+	$scope.currentUser = userService.currentUser;
+
 
 		//Update tinh trang user de xet cac quyen them xoa sua
 		$scope.$on('devise:new-session', function(e, user) {

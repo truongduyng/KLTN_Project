@@ -1,4 +1,4 @@
-services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Auth, Flash,$state){
+services.factory('tickets',['$http','userService', 'Flash','$state', function($http, userService, Flash,$state){
 
   var object = {
     tickets: [],
@@ -16,7 +16,7 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
     return $http.get('/tickets/'+ticket_query.date+'/'+ticket_query.branch_id).success(function(data){
 
       angular.copy(data, object.tickets);
-
+      console.log("tickets", data);
       for (var i = 0; i < object.tickets.length; i++) {
         // console.log(object.tickets[i].status);
         object.viewTicket(object.tickets[i]);
@@ -145,27 +145,30 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
   };
 
   object.viewTicket = function(ticket){
+
     var begintime = object.change_time_to_float(ticket.begin_use_time.slice(11,16));
-    if (ticket.begin_use_time.slice(0,10) == ticket.end_use_time.slice(0,10))
+
+    if (ticket.begin_use_time.slice(0,10) == ticket.end_use_time.slice(0,10)){
       var endtime = object.change_time_to_float(ticket.end_use_time.slice(11,16));
-    else
+    }
+    else{
       var endtime = 24.0;
+    }
 
     switch(begintime-Math.floor(begintime)){
       case 0.5:
-      var ticket_td = $('td#td_'+Math.floor(begintime)+'_30_'+ticket.asset_id.$oid)[0]
+      var ticket_td = $('td#td_'+Math.floor(begintime)+'_30_'+ticket.asset_id.$oid)[0];
       break;
       case 0.25:
-      var ticket_td = $('td#td_'+Math.floor(begintime)+'_15_'+ticket.asset_id.$oid)[0]
+      var ticket_td = $('td#td_'+Math.floor(begintime)+'_15_'+ticket.asset_id.$oid)[0];
       break;
       case 0.75:
-      var ticket_td = $('td#td_'+Math.floor(begintime)+'_45_'+ticket.asset_id.$oid)[0]
+      var ticket_td = $('td#td_'+Math.floor(begintime)+'_45_'+ticket.asset_id.$oid)[0];
       break;
       default:
-      var ticket_td = $('td#td_'+begintime+'_'+ticket.asset_id.$oid)[0]
-    }
-
-
+      var ticket_td = $('td#td_'+begintime+'_'+ticket.asset_id.$oid)[0];
+    };
+    console.log("ticket_td" ,ticket_td.offsetTop);
 
     $('.calendar_content').append($("<div id='"+ ticket._id.$oid + "' class='ticket'><span> "+ ticket.customer_name + "</span><br><span class='private_info' style = 'display: none;'>" +"SĐT: <strong>" +ticket.customer_phone + "</strong><br></span><span>" + ticket.begin_use_time.slice(11,16) + ' - '+ ticket.end_use_time.slice(11,16) + "</span>,<span> Giá: <strong>" + ticket.price + "</strong></span></div>").click(function(event){
       $('#minibooking').css('display','none');
@@ -175,22 +178,25 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
       $('p#price_ticket').html('Giá: '+ ticket.price);
       $('p#ticket_id_hidden').html(ticket._id.$oid);
 
-      if(event.offsetY == undefined) // this works for Firefox
-      {
-        eventoffsetY = event.pageY-$('div#' + ticket._id.$oid).offset().top;
-      }
-      else
-      {
-        eventoffsetY = event.offsetY;
-      }
+        if(event.offsetY == undefined) // this works for Firefox
+        {
+          eventoffsetY = event.pageY-$('div#' + ticket._id.$oid).offset().top;
+        }
+        else
+        {
+          eventoffsetY = event.offsetY;
+        }
 
-      var edit_top = event.pageY - $(window).scrollTop()- $('#miniedit').height() - eventoffsetY -10;
+        var edit_top = event.pageY - $(window).scrollTop()- $('#miniedit').height() - eventoffsetY -10;
 
-      var edit_right = $(window).width() - event.pageX - $('#miniedit').width()/2;
-      edit_top = edit_top>0? edit_top : 0;
-      edit_right = edit_right>0? edit_right : 0;
-      $('#miniedit').css({top: edit_top, right: edit_right});
-    }))
+        var edit_right = $(window).width() - event.pageX - $('#miniedit').width()/2;
+        edit_top = edit_top>0? edit_top : 0;
+        edit_right = edit_right>0? edit_right : 0;
+        $('#miniedit').css({top: edit_top, right: edit_right});
+      })
+    );
+
+console.log(ticket_td.offsetTop, ticket_td.offsetWidth, ticket_td.offsetLeft, ticket_td.offsetHeight*4*(endtime-begintime)-3);
 
 $('div#' + ticket._id.$oid).css({
   top: ticket_td.offsetTop+2,
@@ -199,14 +205,17 @@ $('div#' + ticket._id.$oid).css({
   height: ticket_td.offsetHeight*4*(endtime-begintime)-3
 });
 
-if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 ){
-  $('div#' + ticket._id.$oid + ' span.private_info').css('display', 'inline');
-}
+console.log($('div#' + ticket._id.$oid));
+
+if(userService.currentUser != null){
+  if (userService.currentUser.roles.indexOf("bussiness admin") > -1 )
+    $('div#' + ticket._id.$oid + ' span.private_info').css('display', 'inline');
+};
 
 switch(ticket.status) {
   case "new":
-    // console.log($state.current);
-    if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 && $state.current.name ==='ticket_management'){
+
+    if(userService.currentUser != null && userService.currentUser.roles.indexOf("bussiness admin") > -1 && $state.current.name ==='ticket_management'){
 
       $('.calendar_content').append(
         $("<i class='fa fa-arrow-circle-o-right ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
@@ -221,49 +230,52 @@ switch(ticket.status) {
         top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
         left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
       });
-    }
+    };
+
     console.log("new status----------------------------------------");
     $('div#'+ticket._id.$oid).addClass('ticket_new');
     break;
 
     case "doing":
-    $('div#'+ticket._id.$oid).addClass('ticket_doing');
-    break;
+      //doing
+      $('div#'+ticket._id.$oid).addClass('ticket_doing');
+      break;
 
-    case "over":
-    $('div#'+ticket._id.$oid).addClass('ticket_over');
-    break;
+      case "over":
+      $('div#'+ticket._id.$oid).addClass('ticket_over');
+      break;
 
-    case "waiting":
-    if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 && $state.current.name ==='ticket_management'){
+      case "waiting":
+      if(userService.currentUser != null && userService.currentUser.roles.indexOf("bussiness admin") > -1 && $state.current.name ==='ticket_management'){
 
-      $('.calendar_content').append(
-        $("<i class='fa fa-check-circle-o ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
-          object.update({
-            ticket_id: ticket._id.$oid,
-            status: "done"
-          });
-        })
-        );
+        $('.calendar_content').append(
+          $("<i class='fa fa-check-circle-o ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
+            object.update({
+              ticket_id: ticket._id.$oid,
+              status: "done"
+            });
+          })
+          );
 
-      $('i#' + ticket._id.$oid + '_i').css({
-        top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
-        left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
-      });
+        $('i#' + ticket._id.$oid + '_i').css({
+          top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
+          left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
+        });
+      }
+      $('div#'+ticket._id.$oid).addClass('ticket_waiting');
+      break;
+
+      case "done":
+      $('div#'+ticket._id.$oid).addClass('ticket_done');
+      break;
+      default: break;
     }
-    $('div#'+ticket._id.$oid).addClass('ticket_waiting');
-    break;
+  };
 
-    case "done":
-    $('div#'+ticket._id.$oid).addClass('ticket_done');
-    break;
-  }
-};
+  object.clearviewTicket = function(ticket_id){
+    $('div#'+ ticket_id).remove();
+    $('i#'+ ticket_id +'_i').remove();
+  };
 
-object.clearviewTicket = function(ticket_id){
-  $('div#'+ ticket_id).remove();
-  $('i#'+ ticket_id +'_i').remove();
-};
-
-return object;
+  return object;
 }]);

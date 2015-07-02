@@ -32,7 +32,7 @@
       <div ng-show="venue.photos != null && venue.photos.length >= 1" data-comment='hinh-anh'>
        <p style="">Một số hình ảnh về: <b>{{venue.name}}</b></p>
        <div class="detail-post-images" style="text-align: center; margin-top: 20px;">
-         <a ng-click="showImage(photo)" ng-repeat="photo in venue.photos"><img src="{{photo.image.url | logo}}" width="220px" height="220px"></a>
+         <a ng-click="showImage(photo)" ng-repeat="photo in venue.photos"><img ng-src="{{photo.image.url | logo}}" width="220px" height="220px"></a>
        </div>
      </div>
 

@@ -1,6 +1,12 @@
 app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','branch', '$interval','Flash', function($scope, $http, Auth, $modal, tickets, branch, $interval, Flash){
 
   $scope.signedIn = Auth.isAuthenticated;
+  $scope.$on('$viewContentLoaded',function(event){
+    $('#sidebar').css({display: 'none'});
+    $('#sidebar').removeClass('col-sm-2');
+    $('#main-content').removeClass('col-sm-10');
+    $('#main-content').addClass('col-sm-12');
+  });
 
   $scope.rate = 4;
   $scope.isReadonly = false;
@@ -13,21 +19,19 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   if (branch.data != null){
 
     $scope.branch = branch.data;
+    $scope.work_time = [];
+    for (var i = tickets.change_time_to_float($scope.branch.branch.begin_work_time); i < tickets.change_time_to_float($scope.branch.branch.end_work_time); i++) {
+      $scope.work_time.push(i);
+    };
+    $scope.isfounddata = true;
+    timeline();
 
     tickets.channel =  tickets.dispatcher.subscribe($scope.branch.branch._id.$oid);
 
     tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
 
-    $scope.work_time = []
-    for (var i = tickets.change_time_to_float($scope.branch.branch.begin_work_time); i < tickets.change_time_to_float($scope.branch.branch.end_work_time); i++) {
-      $scope.work_time.push(i);
-    };
-
-    $scope.isfounddata = true;
-    timeline();
   } else {
     $scope.isfounddata = false;
-
   }
 
   $scope.date_change = function(){
@@ -196,13 +200,12 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
       tickets.delete($('p#ticket_id_hidden').html());
       $scope.close_miniedit();
-    },function(error) {
+    },function(error){
       $modal.open({
         templateUrl: 'appJS/auth/_login.html',
         controller: 'authCtrl'
       });
-    }
-    );
+    });
 };
 
 $scope.ticket_edit = function(){
@@ -294,8 +297,8 @@ $scope.hoveringOver = function(value) {
   //Timeline---------------------------------------------------------------
   function timeline(){
 
-    if($scope.branch.assets.length * 170 < $('.calendar_content').width()*$('div#wrapper div.container div.row').width()/100){
-      $('.tablebooking').css({width: $('.calendar_content').width()*$('div#wrapper div.container div.row').width()/100});
+    if($scope.branch.assets.length * 170 < $('.calendar_content').width()){
+      $('.tablebooking').css({width: $('.calendar_content').width()});
     }else{
       $('.tablebooking').css({width: 50 + $scope.branch.assets.length * 170});
     }

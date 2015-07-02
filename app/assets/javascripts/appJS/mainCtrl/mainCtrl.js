@@ -41,19 +41,19 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'Flash', '
 
 	$rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams, error) {
 		// console.log("$stateChangeSuccess: ", toState, fromState);
-		if (toState.name === "booking"){
-			$('#sidebar').css({display: 'none'});
-			$('#sidebar').removeClass('col-sm-2');
-			$('#main-content').removeClass('col-sm-10');
-			$('#main-content').addClass('col-sm-12');
-		}
+		// if (toState.name === "booking"){
+		// 	$('#sidebar').css({display: 'none'});
+		// 	$('#sidebar').removeClass('col-sm-2');
+		// 	$('#main-content').removeClass('col-sm-10');
+		// 	$('#main-content').addClass('col-sm-12');
+		// }
 
-		if (fromState.name === "booking" && toState.name !== "booking"){
-			$('#sidebar').css({display: 'inline'});
-			$('#sidebar').addClass('col-sm-2');
-			$('#main-content').removeClass('col-sm-12');
-			$('#main-content').addClass('col-sm-10');
-		}
+		// if (fromState.name === "booking" && toState.name !== "booking"){
+		// 	$('#sidebar').css({display: 'inline'});
+		// 	$('#sidebar').addClass('col-sm-2');
+		// 	$('#main-content').removeClass('col-sm-12');
+		// 	$('#main-content').addClass('col-sm-10');
+		// }
 
 	});
 

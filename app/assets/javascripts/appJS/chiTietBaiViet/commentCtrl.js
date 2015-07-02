@@ -6,6 +6,10 @@ app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userServ
 	$scope.isEditing = false;
 
 	$scope.addComment = function(post) {
+		if($scope.currentUser == null){
+			Flash.create("danger", "Bạn cần đăng nhập để bình luận!", "myalert");
+			return null;
+		}
 
 		$scope.isCommenting = true;
 

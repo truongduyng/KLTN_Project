@@ -21,7 +21,7 @@
     <div class="container">
       <div class="row">
 
-        <div ng-show="signedIn()">
+        <div ng-if="signedIn()">
 
           <div class="col-sm-2" id="sidebar">
             <div ng-include="'appJS/sidebar/_side_bar.html'"></div>
@@ -33,7 +33,7 @@
 
         </div>
 
-        <div ng-hide="signedIn()">
+        <div ng-if="!signedIn()">
 
           <div class="col-sm-12">
             <ui-view></ui-view>

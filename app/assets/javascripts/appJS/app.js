@@ -48,6 +48,12 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 				console.log("resolve branch booking");
 				return $http.get("/" + $stateParams.branch_url_alias);
 			}]
+		},
+		onExit: function(){
+			$('#sidebar').css({display: 'inline'});
+			$('#sidebar').addClass('col-sm-2');
+			$('#main-content').removeClass('col-sm-12');
+			$('#main-content').addClass('col-sm-10');
 		}
 	});
 
