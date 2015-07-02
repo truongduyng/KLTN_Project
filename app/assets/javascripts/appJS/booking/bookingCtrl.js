@@ -59,7 +59,13 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
     var timenow = $scope.dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10)? tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes()) : $scope.dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)? 24 : 0 ;
 
-    if (((Auth._currentUser == null || Auth._currentUser.roles.indexOf('user') > -1) && (hour-timenow) < -10.0/60) || (Auth._currentUser == null || Auth._currentUser.roles.indexOf('bussiness admin') > -1 )) return false;
+    if(Auth._currentUser != null){
+      if (((Auth._currentUser.roles.indexOf('user') > -1) && (hour-timenow) < -10.0/60)) return false;
+      if (Auth._currentUser.roles.indexOf('bussiness admin') > -1 ){
+        Flash.create("danger", "Hãy vào trang quản lý để đặt, sửa hay xóa lịch đặt trong doanh nghiệp của bạn.", "myalert");
+        return false;
+      }
+    }
 
     var max_time_length = hour + 4;
     for (var i = 0; i < tickets.tickets.length; i++) {
@@ -94,10 +100,13 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       };
       $scope.showtimeintd(hour, element, false); //clear content in td
 
+      $scope.close_miniedit();
+
       $('div#ticket_temp').css({'top': element.currentTarget.offsetTop,'width': element.currentTarget.offsetWidth-3, 'left': element.currentTarget.offsetLeft,'height': $scope.td_height*4-3});
+
       $('div#ticket_temp').addClass('ticket_new');
       $('#minibooking').css('display','inline');
-      $scope.close_miniedit();
+
 
       var booking_height = $('#minibooking').height()>0? $('#minibooking').height(): 165;
       var booking_top = element.pageY - $(window).scrollTop()- booking_height - 30;
@@ -196,56 +205,56 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     );
 };
 
-  $scope.ticket_edit = function(){
-    var ticket_update = $modal.open({
-      templateUrl: "appJS/ticket/_ticket_update.html",
-      controller: "ticketCtrl",
-      resolve: {
-        ticket_id: function(){
-          return $('p#ticket_id_hidden').html();
-        },
-        branch: function(){
-          return $scope.branch;
-        },
-        dt: function(){
-          return $scope.dt;
-        }
+$scope.ticket_edit = function(){
+  var ticket_update = $modal.open({
+    templateUrl: "appJS/ticket/_ticket_update.html",
+    controller: "ticketCtrl",
+    resolve: {
+      ticket_id: function(){
+        return $('p#ticket_id_hidden').html();
+      },
+      branch: function(){
+        return $scope.branch;
+      },
+      dt: function(){
+        return $scope.dt;
       }
-    });
-  };
-
-  $scope.open = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    $scope.opened = true;
-  };
-
-  $scope.viewweekbooking = function(){
-    if ($scope.iseveryweek)
-      $('div.everyweek').css('display', 'inline');
-    else
-      $('div.everyweek').css('display', 'none');
-  }
-
-  var previouscolor = '';
-  $scope.showtimeintd = function(hour,element,show){
-    $td = $(element.currentTarget);
-    $th = $td.closest('table').find('th').eq($td.index()+1);
-    if(show){
-      previouscolor = $(element.currentTarget).css('background-color');
-      $(element.currentTarget).css('background-color','#cee0f4');
-      $(element.currentTarget).html('<strong>'+ $th.html() +'</strong>'+', '+'<strong>'+ tickets.hourtoview(hour) + '</strong>');
     }
-    else{
-      $(element.currentTarget).css('background-color',previouscolor);
-      $(element.currentTarget).html("");
-    }
-  }
+  });
+};
 
-  $scope.hoveringOver = function(value) {
-    $scope.overstar = value;
-    $scope.ishoverstar = true;
-  };
+$scope.open = function($event) {
+  $event.preventDefault();
+  $event.stopPropagation();
+  $scope.opened = true;
+};
+
+$scope.viewweekbooking = function(){
+  if ($scope.iseveryweek)
+    $('div.everyweek').css('display', 'inline');
+  else
+    $('div.everyweek').css('display', 'none');
+}
+
+var previouscolor = '';
+$scope.showtimeintd = function(hour,element,show){
+  $td = $(element.currentTarget);
+  $th = $td.closest('table').find('th').eq($td.index()+1);
+  if(show){
+    previouscolor = $(element.currentTarget).css('background-color');
+    $(element.currentTarget).css('background-color','#cee0f4');
+    $(element.currentTarget).html('<strong>'+ $th.html() +'</strong>'+', '+'<strong>'+ tickets.hourtoview(hour) + '</strong>');
+  }
+  else{
+    $(element.currentTarget).css('background-color',previouscolor);
+    $(element.currentTarget).html("");
+  }
+}
+
+$scope.hoveringOver = function(value) {
+  $scope.overstar = value;
+  $scope.ishoverstar = true;
+};
 
   //Real time -------------------------------------------------------------
   tickets.channel.bind('create_ticket', function(ticket) {
@@ -285,8 +294,8 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   //Timeline---------------------------------------------------------------
   function timeline(){
 
-    if($scope.branch.assets.length * 170 < $('.calendar_content').width()){
-      $('.tablebooking').css({width: $('.calendar_content').width()});
+    if($scope.branch.assets.length * 170 < $('.calendar_content').width()*$('div#wrapper div.container div.row').width()/100){
+      $('.tablebooking').css({width: $('.calendar_content').width()*$('div#wrapper div.container div.row').width()/100});
     }else{
       $('.tablebooking').css({width: 50 + $scope.branch.assets.length * 170});
     }

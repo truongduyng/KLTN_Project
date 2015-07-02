@@ -299,8 +299,8 @@ i:hover{
 .myalert{
 	height: 50px !important;
 	margin: 0 0 10px 0 !important;
-	z-index: 100;
-	position: absolute;
+	z-index: 10000 !important;
+	position: fixed;
 	bottom: 80%;
 	right: 20px;
 }
@@ -379,15 +379,6 @@ ul.list_recommend li:hover{
 	list-style-type: none;
 	padding-left: 0px;
 	width: 100%;
-}
-
-.myalert{
-	height: 50px !important;
-	margin: 0 0 10px 0 !important;
-	z-index: 10000 !important;
-	position: fixed;
-	bottom: 80%;
-	right: 20px;
 }
 
 .club_name{
