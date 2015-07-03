@@ -1,7 +1,6 @@
-<div ng-show = "isfounddata">
 
-  <div class="marginbot30 margintop10">
-    <h1 style="display:inline;">{{branch.branch.name}}</h1>
+<div class="marginbot30 margintop10">
+  <h1 style="display:inline;">{{branch.branch.name}}</h1>
     <!-- <rating ng-model="rate" readonly="isReadonly" ng-hover="hoveringOver(value)" on-leave="ishoverstar = false"></rating>
     <span ng-hide = "ishoverstar">({{rate}}/5)</span>
     <span ng-show = "ishoverstar">({{overstar}}/5)</span>
@@ -80,7 +79,7 @@
       <input type="checkbox" ng-model="iseveryweek" ng-change="viewweekbooking()">Đặt hàng tuần<br>
       <div class="everyweek">
         <p class="input-group">
-        <input type="text" show-weeks = "false" placeholder="Ngày kết thúc..." class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="dt_end_everyweek_booking" is-open="opened" min-date="dt" close-text="Tắt" clear-text = "xóa" current-text="hôm nay" readonly="true" ng-click="open($event)"/>
+          <input type="text" show-weeks = "false" placeholder="Ngày kết thúc..." class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="dt_end_everyweek_booking" is-open="opened" min-date="dt" close-text="Tắt" clear-text = "xóa" current-text="hôm nay" readonly="true" ng-click="open($event)"/>
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
@@ -98,8 +97,3 @@
     <button class="btn btn-primary pull-left marginright20" type="submit" ng-click="ticket_edit()">Xem chi tiết</button>
     <button class="btn btn-danger pull-right marginright20" type="submit" ng-click="ticket_delete()">Xóa</button>
   </div>
-</div>
-
-<div ng-hide="isfounddata">
-  <h3>Không tồn tại địa điểm bạn đang tìm kiếm.</h3>
-</div>

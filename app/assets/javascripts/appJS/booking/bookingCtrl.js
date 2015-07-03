@@ -16,23 +16,18 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   $scope.showtimeline = true;
   $scope.td_height = 20; //height of td
 
-  if (branch.data != null){
 
-    $scope.branch = branch.data;
-    $scope.work_time = [];
-    for (var i = tickets.change_time_to_float($scope.branch.branch.begin_work_time); i < tickets.change_time_to_float($scope.branch.branch.end_work_time); i++) {
-      $scope.work_time.push(i);
-    };
-    $scope.isfounddata = true;
-    timeline();
+  $scope.branch = branch.data;
+  $scope.work_time = [];
+  for (var i = tickets.change_time_to_float($scope.branch.branch.begin_work_time); i < tickets.change_time_to_float($scope.branch.branch.end_work_time); i++) {
+    $scope.work_time.push(i);
+  };
+  timeline();
 
-    tickets.channel =  tickets.dispatcher.subscribe($scope.branch.branch._id.$oid);
+  tickets.channel =  tickets.dispatcher.subscribe($scope.branch.branch._id.$oid);
 
-    tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
+  tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
 
-  } else {
-    $scope.isfounddata = false;
-  }
 
   $scope.date_change = function(){
     $scope.close_minibooking();

@@ -39,24 +39,6 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		}
 	});
 
-	$stateProvider.state('booking', {
-		url: '/{branch_url_alias}',
-		templateUrl: 'appJS/booking/_booking.html',
-		controller: 'bookingCtrl',
-		resolve: {
-			branch: ['$http', '$stateParams',function($http, $stateParams) {
-				console.log("resolve branch booking");
-				return $http.get("/" + $stateParams.branch_url_alias);
-			}]
-		},
-		onExit: function(){
-			$('#sidebar').css({display: 'inline'});
-			$('#sidebar').addClass('col-sm-2');
-			$('#main-content').removeClass('col-sm-12');
-			$('#main-content').addClass('col-sm-10');
-		}
-	});
-
 	$stateProvider.state('club', {
 		url: '/club/{club_id}/{club_post_id}',
 		templateUrl: 'appJS/club/_club.html',
@@ -163,9 +145,9 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 				});
 			}]
 		},
-		// access: {
-		// 	free: false,
-		// }
+		access: {
+			free: false,
+		}
 	});
 
 	//trang nay cung can phai yeu cau login
@@ -225,6 +207,24 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 			venue: ['VenueService', '$stateParams',function(VenueService, $stateParams){
 				return VenueService.show($stateParams.id);
 			}]
+		}
+	});
+
+	$stateProvider.state('booking', {
+		url: '/{branch_url_alias}',
+		templateUrl: 'appJS/booking/_booking.html',
+		controller: 'bookingCtrl',
+		resolve: {
+			branch: ['$http', '$stateParams',function($http, $stateParams) {
+				console.log("resolve branch booking");
+				return $http.get("/" + $stateParams.branch_url_alias);
+			}]
+		},
+		onExit: function(){
+			$('#sidebar').css({display: 'inline'});
+			$('#sidebar').addClass('col-sm-2');
+			$('#main-content').removeClass('col-sm-12');
+			$('#main-content').addClass('col-sm-10');
 		}
 	});
 
