@@ -1,7 +1,7 @@
 <div class="row">
     <ul class="media-list">
          <li class="media">
-               <h4 class="media-heading" style="text-align: center; font-size: 22px;margin-bottom: 5px;margin-top: 5px;">Sân bóng đá Sporta     </h4>
+               <h4 class="media-heading" style="text-align: center; font-size: 22px;margin-bottom: 5px;margin-top: 5px;">{{venue.name}}</h4>
                 <div style="" >
                     <p><i class="fa fa-phone" style="margin-right:5px;"></i>{{venue.phone}}</p>
                     <p><i class="fa fa-location-arrow" style="margin-right:5px;"></i>{{venue.address}}</p>
@@ -31,7 +31,7 @@
                       {{venue.description}}
                     </div>
                     <div class="col-xs-2">
-                      <a ui-sref="trangCaNhan({id: venue.user.$oid._id})" style="float: right;">
+                      <a tooltip ="{{venue.user.fullname}}" ui-sref="trangCaNhan({username: venue.user.username})" style="float: right;">
                        <img class="img-circle img-responsive profile-picture" class="media-object" fallback-src="sportaLogo"  ng-src="{{venue.user.avatar.url | logo}}" 
                        alt="Generic placeholder image" width="64px" height="64px" style="min-width: 44px; min-height: 44px;">
                       </a>

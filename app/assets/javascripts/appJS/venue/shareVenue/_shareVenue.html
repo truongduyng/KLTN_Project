@@ -16,7 +16,7 @@
 
           <div class="form-group">
             <label for="address">Số điện thoại:</label>
-            <input  ng-model="venue.phone" name="phone" type="text" class="form-control" id="address" placeholder="Số điện thoại của nơi chơi" ng-pattern="/[0]{1}[0-9]{9,10}/i">
+            <input  ng-model="venue.phone" name="phone" type="text" class="form-control" id="address" placeholder="Số điện thoại của nơi chơi" ng-pattern="/^[0]{1}[0-9]{9,10}$/">
             <div ng-show="shareVenueForm.phone.$dirty && shareVenueForm.phone.$invalid">
               <span style="color:#FF0000" ng-show="shareVenueForm.phone.$error.pattern">Định dạng hợp lệ cho số điện thoại: 01279012790, 0948993995</span>
             </div>
