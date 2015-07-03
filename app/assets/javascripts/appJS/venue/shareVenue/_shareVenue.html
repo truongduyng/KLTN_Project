@@ -18,27 +18,40 @@
             <label for="address">Số điện thoại:</label>
             <input  ng-model="venue.phone" name="phone" type="text" class="form-control" id="address" placeholder="Số điện thoại của nơi chơi"></textarea>
           </div>
-
           <div class="form-group">
-            <label for="address">Địa chỉ*:</label>
-            <input  ng-model="venue.address" required name="address" type="text" class="form-control" id="address" placeholder="Địa chỉ"></textarea>
-            <div ng-show="shareVenueForm.address.$dirty && shareVenueForm.address.$invalid">
-              <span style="color:#FF0000" ng-show="shareVenueForm.address.$error.required">Nhập địa chỉ của nơi chơi bạn muốn chia sẽ</span>
+            <label for="address">Giờ làm việc*:</label>
+            
+            <div>
+              <label style="margin-top:40px;" class="control-label col-sm-1" for="begin_time">Từ:</label>
+              <div class="col-sm-3"><timepicker ng-init="venue.begin_time=new Date()" ng-model="venue.begin_time" hour-step="1" minute-step="10" show-meridian="true"></timepicker></div>
+              
+              <label style="margin-top:40px;" class="control-label col-sm-1" for="end_time">Tới:</label>
+              <div class="col-sm-3"><timepicker ng-init="venue.end_time=new Date()" ng-model="venue.end_time" hour-step="1" minute-step="10" show-meridian="true"></timepicker></div>
             </div>
+           <!--  <div class="form-horizontal form-group">
+              <label class="control-label col-sm-2" for="email">Email:</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="email" placeholder="Enter email">
+              </div>
+            </div> -->
+            
           </div>
-
-          
+          <p style="clear: both;"></p>
           <div class="form-group">
-            <label for="description">Vị trí nơi chơi trên bản đồ*: <img  class="help-icon" src="application/myimg/help-icon.png" width="34px" height="34px" data-toggle="popover" popover="Thông tin này sẽ giúp mọi người dễ dàng tìm kiếm nơi chơi bạn chia sẽ hơn thông qua sporta." popover-title="Thông tin thêm"></label>
+            <label for="description">Địa chỉ và vị trí*: <img  class="help-icon" src="application/myimg/help-icon.png" width="34px" height="34px" data-toggle="popover" popover="Thông tin này sẽ giúp mọi người dễ dàng tìm kiếm nơi chơi bạn chia sẽ hơn thông qua sporta." popover-title="Thông tin thêm"></label>
             <form name="positionForm" role="form" novalidate>
               <div class="row">
                 <div class="col-lg-12">
                   <div class="input-group">
-                    <input ng-model="address" name="addressForPosition" type="text" class="form-control" placeholder="Địa chỉ...">
+                    <input  ng-model="venue.address" required name="address" type="text" class="form-control" id="address" placeholder="Địa chỉ">
+                    
                     <span class="input-group-btn">
-                      <button ng-click="onSearchPosition()" data-ng-disabled="positionForm.$invalid"  class="btn btn-default" type="button">Tìm kiếm  <span ng-if="isFinding" class="fa fa-spinner fa-spin"></span></button>
+                      <button ng-click="onSearchPosition()" data-ng-disabled="shareVenueForm.address.$invalid"  class="btn btn-default" type="button">Tìm kiếm  <span ng-if="isFinding" class="fa fa-spinner fa-spin"></span></button>
                     </span>
                   </div>
+                  <div ng-show="shareVenueForm.address.$dirty && shareVenueForm.address.$invalid">
+                      <span style="color:#FF0000" ng-show="shareVenueForm.address.$error.required">Nhập địa chỉ của nơi chơi bạn muốn chia sẽ</span>
+                    </div>
                   <span style="color:#FD2A00;">{{error}}</span>
                   <!-- <div flash-message="5000"></div> -->
                 </div>
@@ -78,7 +91,7 @@
 
               <div class="post-form-bottom">
                 <div style="float:right; margin: 5px 5px;" aria-label="... " role="group" class="btn-group">
-                  <button class="btn btn-primary" id="addImageBtn"><span aria-hidden="true" class="fa fa-picture" ></span> Thêm ảnh</button>
+                  <button data-ng-disabled="uploader.isUploading" class="btn btn-primary" id="addImageBtn"><span aria-hidden="true" class="fa fa-picture" ></span> Thêm ảnh</button>
                   <input style="display:none;" id="addImageInput" type="file" nv-file-select uploader="uploader" multiple>
                 </div>
               </div>
@@ -86,7 +99,7 @@
             </div>
           </div>
 
-          <button  ng-click="onSendVenue()" data-ng-disabled="shareVenueForm.$invalid || !venue.latitude || !venue.longitude" type="submit" class="btn btn-success btn-block">Gửi</button>
+          <button  ng-click="onSendVenue()" data-ng-disabled="shareVenueForm.$invalid || !venue.latitude || !venue.longitude"  type="submit" class="btn btn-success btn-block">Gửi</button>
 
         </form>
       </div>
@@ -106,7 +119,7 @@
 <style type="text/css">
   #map map{
     width: 100%;
-    height: 500px;
+    height: 350px;
   }
 
   .form-bai-viet{

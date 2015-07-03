@@ -5,8 +5,16 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 			phone: '',
 			address: '',
 			description: '',
+			begin_time: new Date(),
+			end_time: new Date(),
 		};
-
+		//BEGIN Khoi tao h mac dinh
+		$scope.venue.begin_time.setHours(7);
+		$scope.venue.begin_time.setMinutes(0);
+		$scope.venue.end_time.setHours(21);
+		$scope.venue.end_time.setMinutes(0);
+		//END Khoi tao h mac dinh
+		
 		$scope.uploader = new FileUploader();
 
 		//filter for image
@@ -43,7 +51,6 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 
 		//Gui yeu cau
 		$scope.onSendVenue = function() {
-
 			console.log("venue before create: ", $scope.venue);
 			VenueService.create($scope.venue)
 				.success(function(data) {
@@ -72,7 +79,7 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 
 		$scope.onSearchPosition = function() {
 			$scope.isFinding = true;
-			geocodingFtry.latLngForAddress($scope.address).then(function(position) {
+			geocodingFtry.latLngForAddress($scope.venue.address).then(function(position) {
 				$scope.isFinding = false;
 				$scope.error = "";
 				setMarker(position);
