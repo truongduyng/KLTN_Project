@@ -32,7 +32,7 @@ class Branch
 
   belongs_to :bussiness
 
-  has_many :assets, dependent: :destroy
+  # has_many :assets, dependent: :destroy
   has_many :asset_categories, dependent: :destroy
   has_many :tickets, dependent: :destroy
 
@@ -64,6 +64,16 @@ class Branch
   def validate_for_branch?
     # byebug
     !bussiness.nil?
+  end
+
+  def assets
+    result = []
+    self.asset_categories.each do |asset_category|
+      asset_category.assets.each do |asset|
+        result << asset
+      end
+    end
+    return result
   end
 
   # def address

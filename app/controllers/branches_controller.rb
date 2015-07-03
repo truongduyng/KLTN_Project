@@ -24,6 +24,7 @@ class BranchesController < ApplicationController
 
   def branch_details
     begin
+      # byebug
       @branch_details= {}
       if branch = Branch.find_by(url_alias: branch_params[:branch_url_alias])
         @branch_details[:branch]= branch
