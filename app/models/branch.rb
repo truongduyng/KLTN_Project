@@ -39,7 +39,7 @@ class Branch
   validates :name, :url_alias, presence: true,  length: {maximum: 100}
   validates :address, presence: true, length: {maximum: 1000}
   validates :url_alias, uniqueness: true
-  validates :begin_work_time, :end_work_time, presence: true, if: :validate_for_branch?
+  validates :begin_work_time, :end_work_time, presence: true
   #for venue
   validates :description, presence: true, length: {maximum: 1000}, unless: :validate_for_branch?
 
@@ -50,7 +50,7 @@ class Branch
 
   validates :begin_work_time, :end_work_time, inclusion: { in: time_valid, message: "%{value} is not a valid time."}, if: :validate_for_branch?
 
-  validate :check_time, if: :validate_for_branch?
+  validate :check_time
 
   def check_time
     bt = begin_work_time.split(":")

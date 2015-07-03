@@ -41,7 +41,7 @@ class VenuesController < ApplicationController
 
 	private
 		def venue_params
-			params.permit(:name, :phone, :address, :description, :latitude, :longitude)
+			params.permit(:name, :phone, :address, :description, :latitude, :longitude, :begin_work_time, :end_work_time)
 		end
 
 		#for show

@@ -5,6 +5,7 @@
                 <div style="" >
                     <p><i class="fa fa-phone" style="margin-right:5px;"></i>{{venue.phone}}</p>
                     <p><i class="fa fa-location-arrow" style="margin-right:5px;"></i>{{venue.address}}</p>
+                    <p><i class="fa fa-clock-o houricon" style="margin-right:5px;"></i>Từ {{venue.begin_work_time }} tới {{venue.end_work_time}} giờ</p>
                     
                     <div class="myMap" map-lazy-load="http://maps.google.com/maps/api/js">
                         <map style="width:100%; height:300px; border:5px solid; border-radius: 5px; border-color: #DFDFDF;"  zoom="17" center="{{venue.coordinates[1]}},{{venue.coordinates[0]}}" item="{{venue}}">
