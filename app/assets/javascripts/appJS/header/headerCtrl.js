@@ -42,7 +42,12 @@ app.controller('headerCtrl', ['$scope', '$http','$state', function($scope, $http
   }
 
   $scope.showresult = function(result){
-    $state.go('booking', {branch_url_alias: result.url});
+    if (result.isvenue){
+      $state.go('venueDetail', {id: result.url});
+    }else{
+      $state.go('booking', {branch_url_alias: result.url});
+    }
+
     $scope.results = [];
     $scope.search_query = "";
   }
