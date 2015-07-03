@@ -66,6 +66,7 @@ class Branch
     !bussiness.nil?
   end
 
+
   def assets
     result = []
     self.asset_categories.each do |asset_category|
