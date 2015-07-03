@@ -24,7 +24,7 @@ app.controller('authCtrl', ['$scope', 'Auth', '$state', '$modal', '$rootScope', 
 		};
 
 		$scope.register = function() {
-			Auth.register($scope.user).then(function() {
+			Auth.register($scope.user).then(function(user) {
 
 				$scope.close_modal();
 				userService.currentUser = user;

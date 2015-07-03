@@ -39,7 +39,7 @@ class User
   has_many :clubposts, class_name: 'ClubPost', inverse_of: :user
   has_and_belongs_to_many :followed_clubposts, class_name: 'ClubPost', inverse_of: :followers
 
-  has_many :venues
+  has_many :branches
 
   #My field
   field :fullname, type: String

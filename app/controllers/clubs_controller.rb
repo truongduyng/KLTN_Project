@@ -129,7 +129,7 @@ class ClubsController < ApplicationController
   end
 
   def removeadmin
-    byebug
+    # byebug
     begin
       admin =  User.find(club_params[:admin_id])
       if @club.members.include?(admin) && @club.admins.include?(admin.id)

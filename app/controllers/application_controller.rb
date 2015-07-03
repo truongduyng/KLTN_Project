@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   protected
     def configure_permitted_parameters
       devise_parameter_sanitizer.for(:sign_up) << [:username, :fullname, :phone]
-      devise_parameter_sanitizer.for(:account_update) << [:username, :fullname, :phone, :role_name]
+      devise_parameter_sanitizer.for(:account_update) << [:username, :fullname, :phone, :roles]
     end
 
     def verified_request?

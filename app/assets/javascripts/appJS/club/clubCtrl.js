@@ -2,8 +2,36 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
 
   $scope.club = club.data;
 
+  Auth.currentUser().then(function(user){
+    userService.currentUser = user;
+    $scope.user = user;
+  });
+
+  $scope.$on('devise:new-session', function(e, user) {
+    $scope.user = user;
+    angular.copy(user, userService.currentUser);
+
+  });
+
+  $scope.$on('devise:new-registration', function(e, user) {
+    $scope.user = user;
+    angular.copy(user, userService.currentUser);
+
+  });
+
+  $scope.$on('devise:login', function(e, user) {
+    $scope.user = user;
+    angular.copy(user, userService.currentUser);
+
+  });
+
+  $scope.$on('devise:logout', function(e, user) {
+    $scope.user = {};
+    angular.copy({}, userService.currentUser);
+  });
+
   $scope.user = userService.currentUser;
-  console.log(club.data);
+  console.log(club.data, $scope.user);
 
   $scope.signedIn = Auth.isAuthenticated;
 
@@ -232,7 +260,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
 }]);
 
 
-app.controller('lastmemberCtrl', function($scope, $modalInstance, $http){
+app.controller('lastmemberCtrl', ['$scope','$modalInstance','$http', function($scope, $modalInstance, $http){
 
   $scope.ok = function () {
     $modalInstance.close();
@@ -241,7 +269,7 @@ app.controller('lastmemberCtrl', function($scope, $modalInstance, $http){
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
-});
+}]);
 
 app.controller('lastadminCtrl',['$scope', '$modalInstance', '$http', 'club_id', function($scope, $modalInstance, $http, club_id){
 

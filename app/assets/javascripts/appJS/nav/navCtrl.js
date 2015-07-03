@@ -69,6 +69,7 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', 'ti
 
   $scope.$on('onChangeUserProfile', function(event, user){
     angular.copy(user, $scope.user);
+    userService.currentUser = user;
   });
 
 }]);
