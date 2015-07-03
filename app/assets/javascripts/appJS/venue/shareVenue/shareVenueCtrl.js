@@ -5,28 +5,32 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 			phone: '',
 			address: '',
 			description: '',
+			begin_work_time: "",
+			end_work_time: "",
+		};
+		//BEGIN THEM MOI THOI GIAN
+		$scope.timeError = false;
+		$scope.time = {
 			begin_work_time: new Date(),
 			end_work_time: new Date(),
 		};
-		$scope.timeError = false;
-		//BEGIN Khoi tao h mac dinh
-		$scope.venue.begin_work_time.setHours(7);
-		$scope.venue.begin_work_time.setMinutes(0);
-		$scope.venue.end_work_time.setHours(21);
-		$scope.venue.end_work_time.setMinutes(0);
-		//END Khoi tao h mac dinh
+		$scope.time.begin_work_time.setHours(7);
+		$scope.time.begin_work_time.setMinutes(0);
+		$scope.time.end_work_time.setHours(21);
+		$scope.time.end_work_time.setMinutes(0);
+		
 		$scope.onChangeTime = function(){
 			console.log("onChangeTime");
-			console.log("begin_work_time: ", $scope.venue.begin_work_time);
-
-			if($scope.venue.begin_work_time >= $scope.venue.end_work_time){
+			console.log("begin_work_time: ", $scope.time.begin_work_time);
+			if($scope.time.begin_work_time >= $scope.time.end_work_time){
 				console.log("ok");
 				$scope.timeError = true;
 			}else{
 				$scope.timeError = false;
 			}
 		};
-		
+		//END THEM MOI THOI GIAN
+
 		$scope.uploader = new FileUploader();
 
 		//filter for image
@@ -63,8 +67,8 @@ app.controller('shareVenueCtrl', ['$scope', 'FileUploader', '$cookies', '$state'
 
 		//Gui yeu cau
 		$scope.onSendVenue = function() {
-			$scope.venue.begin_work_time = ("0"+ $scope.venue.begin_work_time.getHours()).slice(-2) + ":" + ("0" + $scope.venue.begin_work_time.getMinutes()).slice(-2);
-			$scope.venue.end_work_time = ("0" + $scope.venue.end_work_time.getHours()).slice(-2) + ":" + ("0" + $scope.venue.end_work_time.getMinutes()).slice(-2);
+			$scope.venue.begin_work_time = ("0"+ $scope.time.begin_work_time.getHours()).slice(-2) + ":" + ("0" + $scope.time.begin_work_time.getMinutes()).slice(-2);
+			$scope.venue.end_work_time = ("0" + $scope.time.end_work_time.getHours()).slice(-2) + ":" + ("0" + $scope.time.end_work_time.getMinutes()).slice(-2);
 
 			console.log("venue before create: ", $scope.venue);
 			VenueService.create($scope.venue)
