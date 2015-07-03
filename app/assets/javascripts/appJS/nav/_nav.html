@@ -3,11 +3,11 @@
   <!--  <button class="btn btn-success" ng-click="loadNotifications()">Load notification</button> -->
 
 
-  <li ng-hide="signedIn()" style="margin: 0 5px 0 5px;"><a href="" ng-click= "open_signin()" >Đăng nhập</a></li>
-  <li ng-hide="signedIn()" style="margin: 0 5px 0 5px;"><a href="" ng-click= "open_signup()" >Đăng kí</a></li>
+  <li ng-hide="signedIn()" style="margin: 0 5px 0 5px;"><a class="whitecolor" href="" ng-click= "open_signin()" >Đăng nhập</a></li>
+  <li ng-hide="signedIn()" style="margin: 0 5px 0 5px;"><a class="whitecolor" href="" ng-click= "open_signup()" >Đăng kí</a></li>
 
   <li ng-controller="notificationCtrl" ng-if="signedIn()" dropdown>
-    <a ng-click="onDisplayNotifications()" href class="dropdown-toggle" dropdown-toggle>
+    <a class="whitecolor" ng-click="onDisplayNotifications()" href class="dropdown-toggle" dropdown-toggle>
       Thông báo <span class="badge" ng-class="{badge: true, 'blue-badge': newNotificationsCount >= 1}">{{newNotificationsCount}}</span> <span ng-if="isLoading" class="fa fa-spinner fa-pulse fa-fw"></span>
     </a>
     <div class="dropdown-menu notifications" role="menu" aria-labelledby="dropdownMenu1">
@@ -350,7 +350,7 @@
   </li>
 
   <li ng-show = "signedIn()">
-    <a ui-sref="trangCaNhan({username: user.username})">{{user.fullname}}</a>
+    <a class="whitecolor" ui-sref="trangCaNhan({username: user.username})">{{user.fullname}}</a>
   </li>
 
 
