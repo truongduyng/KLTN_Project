@@ -6,9 +6,9 @@
     </span>
     <ul class="list-club margintop10">
 
-      <li ng-hide="isbussinessadmin()" ui-sref="khTkDoanhNghiep"><a>Đăng ký doanh nghiệp</a></li>
-      <li ng-show="isbussinessadmin()"><a href="/bussiness-admin">Quản lý doanh nghiệp</a></li>
-      <li ng-show="isSystemAdmin()"><a href="/system-admin">Quản lý sporta</a></li>
+      <li ng-if="!isbussinessadmin()" ui-sref="khTkDoanhNghiep"><a>Đăng ký doanh nghiệp</a></li>
+      <li ng-if="isbussinessadmin()"><a href="/bussiness-admin">Quản lý doanh nghiệp</a></li>
+      <li ng-if="isSystemAdmin()"><a href="/system-admin">Quản lý sporta</a></li>
       <li ui-sref="dangBai"><a><span class="fa fa-plus"></span> Viết bài</a></li>
       <li ui-sref="shareVenue"><a><span class="fa fa-plus"></span> Chia sẻ địa điểm</a></li>
     </ul>
