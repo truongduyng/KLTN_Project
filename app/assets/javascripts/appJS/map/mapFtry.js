@@ -46,11 +46,15 @@ app.factory('mapFtry', ['$http', function($http) {
 
       google.maps.event.addListener(marker,"click",(function(marker,i){
         return function(){
-         o.infowindow.setContent('<div id="info-window"><a href="#/'+data[i].url+'">'+data[i].name+'</a><br><span>'+data[i].address.substring(0,20)+'...</span></div>');
-         o.infowindow.open(map,marker);
-         map.setCenter(marker.getPosition());
-       }
-     })(marker,i));
+          if (data[i].isvenue){
+            o.infowindow.setContent('<div id="info-window"><a href="#/dia-diem-chia-se/'+data[i].url+'/">'+data[i].name+'</a><br><span>'+data[i].address.substring(0,20)+'...</span></div>');
+          }else{
+            o.infowindow.setContent('<div id="info-window"><a href="#/'+data[i].url+'">'+data[i].name+'</a><br><span>'+data[i].address.substring(0,20)+'...</span></div>');
+          }
+          o.infowindow.open(map,marker);
+          map.setCenter(marker.getPosition());
+        }
+      })(marker,i));
 
       o.markers.push(marker);
       o.bounds.extend(marker.getPosition());

@@ -53,7 +53,8 @@ class BranchesController < ApplicationController
           picture:  "http://i.imgur.com/BBk3iBl.png",
           name: branch.name,
           address: branch.address,
-          url: branch.url_alias
+          url: branch.url_alias,
+          isvenue: branch.user_id != nil
         }
       end
     end
