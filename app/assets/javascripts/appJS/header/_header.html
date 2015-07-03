@@ -33,11 +33,11 @@
 
             <ul ng-hide="show_recommend_result()" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()" style="text-align: center;">
               <li>
-                <span ng-hide="show_recommend_result()" class="fa fa-spinner fa-pulse fa-fw"></span>
+                <span ng-show="isloading" class="fa fa-spinner fa-pulse fa-fw"></span>
               </li>
-              <!-- <li ng-click="search()">
-                Xem tất cả
-              </li> -->
+              <li ng-hide="isloading && results != []">
+                Không có kết quả nào
+              </li>
             </ul>
 
             <ul ng-show="show_recommend_result()" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()" >

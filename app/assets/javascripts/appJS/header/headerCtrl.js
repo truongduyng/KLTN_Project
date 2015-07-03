@@ -7,7 +7,9 @@ app.controller('headerCtrl', ['$scope', '$http','$state', function($scope, $http
 
   $scope.search_fast = function(){
     $scope.results = [];
+    $scope.isloading = true;
     $http.get("/searchnameadd/"+ $scope.search_query).success(function(data){
+      $scope.isloading = false;
       $scope.results = data;
     });
   };
