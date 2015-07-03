@@ -27,7 +27,7 @@ class Ticket
   end
 
   def check_time
-    byebug
+    # byebug
     tickets = Ticket.where(:begin_use_time => (begin_use_time.beginning_of_day.. begin_use_time.end_of_day),branch_id: branch_id, asset_id: asset_id).to_a
 
     tickets.delete_if {|ticket| ticket._id == _id}
