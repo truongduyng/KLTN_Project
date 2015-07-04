@@ -4,7 +4,7 @@ class VenuesController < ApplicationController
 	before_action :find_venue, only: [:show]
 
 	def create
-		# byebug
+
 		@venue = Branch.new(venue_params.except(*[:latitude, :longitude]).merge(coordinates: [venue_params[:longitude], venue_params[:latitude]]))
 		@venue.user = current_user
 		@venue.url_alias = @venue.id.to_s

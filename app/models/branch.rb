@@ -18,11 +18,11 @@ class Branch
   #End for venue
 
   geocoded_by :address do |obj,result|
-    obj.coordinates = []
-    if geo = result.first
-      obj.coordinates[0] = geo.longitude
-      obj.coordinates[1] = geo.latitude
-    end
+    # obj.coordinates = []
+    # if geo = result.first
+    #   obj.coordinates[0] = geo.longitude
+    #   obj.coordinates[1] = geo.latitude
+    # end
   end
 
   after_validation :geocode
@@ -82,7 +82,6 @@ class Branch
   # end
 
   def self.search(param_search)
-    # byebug
     begin
       if param_search[:lat]
 
@@ -108,4 +107,5 @@ class Branch
     end
     return nil
   end
+
 end

@@ -64,6 +64,7 @@ class BranchesController < ApplicationController
   #Cho them, xoa, sua branch
   #POST /branches.json
   def create
+
     @branch = Branch.new branch_params.except(*[:lat, :lng]).merge(coordinates: [branch_params[:lng], branch_params[:lat]])
     @branch.bussiness_id = current_user.bussiness.id
     if @branch.save
@@ -87,18 +88,13 @@ class BranchesController < ApplicationController
     render nothing: true, status: :ok, content_type: 'application/json'
   end
 
-
-
-
   private
-
   def branch_params
     params.permit(:id, :lat,:lng, :distance, :search_query, :branch_url_alias, :name, :phone, :address, :begin_work_time, :end_work_time, :url_alias)
   end
 
   def find_branch
     @branch = Branch.find(params[:id])
-      #KO dc chinh sua chi nhanh cua nguoi khac
       if @branch.bussiness.id != current_user.bussiness.id
         render nothing: true, status: :not_found, content_type: 'application/json'
       end
