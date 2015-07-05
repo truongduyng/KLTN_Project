@@ -170,7 +170,6 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
       default:
       var ticket_td = $('td#td_'+begintime+'_'+ticket.asset_id.$oid)[0];
     };
-    console.log("ticket_td" ,ticket_td.offsetTop);
 
     $('.calendar_content').append($("<div id='"+ ticket._id.$oid + "' class='ticket'><span> "+ ticket.customer_name + "</span><br><span class='private_info' style = 'display: none;'>" +"SĐT: <strong>" +ticket.customer_phone + "</strong><br></span><span>" + ticket.begin_use_time.slice(11,16) + ' - '+ ticket.end_use_time.slice(11,16) + "</span>,<span> Giá: <strong>" + ticket.price + "</strong></span></div>").click(function(event){
       $('#minibooking').css('display','none');
