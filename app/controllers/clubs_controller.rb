@@ -24,7 +24,7 @@ class ClubsController < ApplicationController
       @club.admins = [current_user.id]
       if @club.save
         @club.members = User.where(:fullname.in => (club_params[:members] << current_user.fullname))
-        render json: @club, status: :ok
+        render template: "clubs/show.json.jbuilder", status: :ok
       end
     rescue Exception => e
       render nothing: true, status: :bad_request
@@ -87,6 +87,7 @@ class ClubsController < ApplicationController
         if @club.members.count == 0
           @club.destroy
           render json: nil, status: :ok
+          return
         end
 
         if @club.admins.include? @member.id

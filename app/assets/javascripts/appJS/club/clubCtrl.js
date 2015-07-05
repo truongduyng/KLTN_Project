@@ -117,47 +117,47 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
         })
       }, function () {
       });
-    };
+    } else {
+      if ($scope.club.members.length == 1) {
+        var last_member_modal = $modal.open({
+          templateUrl: 'appJS/club/_last_member.html',
+          controller: 'lastmemberCtrl'
+        });
 
-    if ($scope.club.members.length == 1) {
-      var last_member_modal = $modal.open({
-        templateUrl: 'appJS/club/_last_member.html',
-        controller: 'lastmemberCtrl'
-      });
+        last_member_modal.result.then(function () {
+          clubsFtry.removemember($scope.club.id.$oid, $scope.user._id.$oid, null).success(function(result){
 
-      last_member_modal.result.then(function () {
-        clubsFtry.removemember($scope.club.id.$oid, $scope.user._id.$oid, null).success(function(result){
+            for (var i = 0; i < clubsFtry.clubs.length; i++) {
+              if (clubsFtry.clubs[i].id.$oid == $scope.club.id.$oid) {
+                clubsFtry.clubs.splice(i,1);
+                break;
+              }
+            };
 
-          for (var i = 0; i < clubsFtry.clubs.length; i++) {
-            if (clubsFtry.clubs[i].id.$oid == $scope.club.id.$oid) {
-              clubsFtry.clubs.splice(i,1);
-              break;
-            }
-          };
+            $state.go('home');
+          })
+          .error(function(){
+          })
+        }, function () {
+        });
+      } else {
+        if ($scope.club.admins.length >= 1 && $scope.club.members.length > 1) {
+          clubsFtry.removemember($scope.club.id.$oid, $scope.user._id.$oid, null).success(function(result){
 
-          $state.go('home');
-        })
-        .error(function(){
-        })
-      }, function () {
-      });
-    };
+            for (var i = 0; i < clubsFtry.clubs.length; i++) {
+              if (clubsFtry.clubs[i].id.$oid == $scope.club.id.$oid) {
+                clubsFtry.clubs.splice(i,1);
+                break;
+              }
+            };
 
-    if ($scope.club.admins.length >= 1 && $scope.club.members.length > 1) {
-      clubsFtry.removemember($scope.club.id.$oid, $scope.user._id.$oid, null).success(function(result){
-
-        for (var i = 0; i < clubsFtry.clubs.length; i++) {
-          if (clubsFtry.clubs[i].id.$oid == $scope.club.id.$oid) {
-            clubsFtry.clubs.splice(i,1);
-            break;
-          }
+            $state.go('home');
+          })
+          .error(function(){
+          })
         };
-
-        $state.go('home');
-      })
-      .error(function(){
-      })
-    };
+      }
+    }
 
   }
 
@@ -302,7 +302,7 @@ app.controller('lastadminCtrl',['$scope', '$modalInstance', '$http', 'club_id', 
     $scope.club.members.splice($scope.admins.indexOf(admin),1);
   }
 
-  $scope.ok = function () {
+  $scope.ok = function (){
     $modalInstance.close($scope.admins);
   };
 

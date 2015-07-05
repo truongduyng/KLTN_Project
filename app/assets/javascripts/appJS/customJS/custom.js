@@ -48,20 +48,29 @@ $(document).ready(function() {
   });
 
   var $table = $('table.tablebooking'),
-    $bodyCells = $table.find('tbody tr:first').children(),
-    colWidth;
+  $bodyCells = $table.find('tbody tr:first').children(),
+  colWidth;
 
   // Adjust the width of thead cells when window resizes
   $(window).resize(function() {
     // Get the tbody columns width array
     colWidth = $bodyCells.map(function() {
-        return $(this).width();
+      return $(this).width();
     }).get();
 
     // Set the width of thead columns
     $table.find('thead tr').children().each(function(i, v) {
-        $(v).width(colWidth[i]);
+      $(v).width(colWidth[i]);
     });
   }).resize();
+
+  if (window.location && window.location.hash) {
+    if (window.location.hash === '#_=_') {
+      window.location.hash = '';
+      return;
+    }
+    var facebookFubarLoginHash = RegExp('_\=_', 'g');
+    window.location.hash = window.location.hash.replace(facebookFubarLoginHash,     '');
+  }
 
 });

@@ -89,7 +89,7 @@ app.controller('sidebarCtrl',['$scope', '$modal', 'clubsFtry', '$state', 'Auth',
 
     newclubmodal.result.then(function (club) {
       clubsFtry.create(club).success(function(result){
-        $state.go('club',{club_id: result._id.$oid, club_post_id: null});
+        $state.go('club',{club_id: result.id.$oid, club_post_id: null});
       });
     }, function () {
     });

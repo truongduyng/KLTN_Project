@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  # get '/_=_' => 'application#home'
+
   resources :venues do
     member do
       post 'add_photo'
