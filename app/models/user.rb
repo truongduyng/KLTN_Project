@@ -35,7 +35,7 @@ class User
   #1 nguoi co nhieu image (test)
   has_many :images
 
-  has_and_belongs_to_many :clubs, class_name: 'Club'
+  has_and_belongs_to_many :clubs, class_name: 'Club', inverse_of: :members
   has_many :clubposts, class_name: 'ClubPost', inverse_of: :user
   has_and_belongs_to_many :followed_clubposts, class_name: 'ClubPost', inverse_of: :followers
 

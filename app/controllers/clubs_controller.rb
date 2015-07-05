@@ -5,6 +5,7 @@ class ClubsController < ApplicationController
   before_action :is_member?, only: [:show]
 
   def index
+    # byebug
     @clubs = current_user.clubs
   end
 
@@ -20,10 +21,15 @@ class ClubsController < ApplicationController
 
   def create
     begin
+      # byebug
       @club = Club.new(club_params.except(:members))
       @club.admins = [current_user.id]
       if @club.save
-        @club.members = User.where(:fullname.in => (club_params[:members] << current_user.fullname))
+        User.where(:fullname.in => (club_params[:members] << current_user.fullname)).each do |member|
+          @club.members << member
+          member.clubs << @club
+        end
+        @club.save
         render template: "clubs/show.json.jbuilder", status: :ok
       end
     rescue Exception => e

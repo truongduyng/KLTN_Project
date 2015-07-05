@@ -78,6 +78,7 @@ app.controller('sidebarCtrl',['$scope', '$modal', 'clubsFtry', '$state', 'Auth',
   $scope.loadClubs = function(){
     clubsFtry.index().success(function(data){
       $scope.clubs = data;
+      console.log(data);
     })
   }
 

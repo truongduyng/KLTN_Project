@@ -6,7 +6,7 @@ class Club
   field :description, type: String
   field :admins, type: Array
 
-  has_and_belongs_to_many :members, class_name: "User"
+  has_and_belongs_to_many :members, class_name: "User", inverse_of: :clubs
   has_one :cover_image, class_name: 'Image'
   has_many :club_posts
 
