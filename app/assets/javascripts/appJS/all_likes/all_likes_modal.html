@@ -13,7 +13,7 @@
   <h5 style="text-align: center;" ng-if="allLikes.length == 0">Chưa có ai thích bài viết này</h5>
   <div class="list-person-like" style="max-height:500px; overflow-y: auto;">
     <div  class="person-like" ng-repeat="like in allLikes">
-      <a ui-sref="trangCaNhan({username:like.user.username})">
+      <a ng-click="go_to_user_page()">
         <img ng-src="{{like.user.avatar.url | logo}}" class="pull-left img-circle" width="64px" height="64px">
         <div class="pull-left person-info" style="margin-left: 20px">
           <strong>{{like.user.fullname}}</strong>
