@@ -1,4 +1,4 @@
-services.factory('tickets',['$http','userService', 'Flash','$state', function($http, userService, Flash,$state){
+services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Auth, Flash,$state){
 
   var object = {
     tickets: [],
@@ -196,47 +196,45 @@ services.factory('tickets',['$http','userService', 'Flash','$state', function($h
       })
     );
 
-console.log(ticket_td.offsetTop, ticket_td.offsetWidth, ticket_td.offsetLeft, ticket_td.offsetHeight*4*(endtime-begintime)-3);
-
 $('div#' + ticket._id.$oid).css({
   top: ticket_td.offsetTop+2,
   width: ticket_td.offsetWidth-3,
   left: ticket_td.offsetLeft,
   height: ticket_td.offsetHeight*4*(endtime-begintime)-3
 });
+console.log("dsadsadas", Auth._currentUser);
 
-console.log($('div#' + ticket._id.$oid));
+if(Auth._currentUser != null){
 
-if(userService.currentUser != null){
-  if (userService.currentUser.roles.indexOf("bussiness admin") > -1 )
+  if (Auth._currentUser.roles.indexOf("bussiness admin") > -1 )
     $('div#' + ticket._id.$oid + ' span.private_info').css('display', 'inline');
 };
 
 switch(ticket.status) {
   case "new":
 
-    if(userService.currentUser != null && userService.currentUser.roles.indexOf("bussiness admin") > -1 && $state.current.name ==='ticket_management'){
+  if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 && $state.current.name ==='ticket_management'){
 
-      $('.calendar_content').append(
-        $("<i class='fa fa-arrow-circle-o-right ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
-          object.update({
-            ticket_id: ticket._id.$oid,
-            status: "doing"
-          });
-        })
-        );
+    $('.calendar_content').append(
+      $("<i class='fa fa-arrow-circle-o-right ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
+        object.update({
+          ticket_id: ticket._id.$oid,
+          status: "doing"
+        });
+      })
+      );
 
-      $('i#' + ticket._id.$oid + '_i').css({
-        top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
-        left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
-      });
-    };
+    $('i#' + ticket._id.$oid + '_i').css({
+      top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
+      left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
+    });
+  };
 
-    console.log("new status----------------------------------------");
-    $('div#'+ticket._id.$oid).addClass('ticket_new');
-    break;
+  console.log("new status----------------------------------------");
+  $('div#'+ticket._id.$oid).addClass('ticket_new');
+  break;
 
-    case "doing":
+  case "doing":
       //doing
       $('div#'+ticket._id.$oid).addClass('ticket_doing');
       break;
@@ -246,7 +244,7 @@ switch(ticket.status) {
       break;
 
       case "waiting":
-      if(userService.currentUser != null && userService.currentUser.roles.indexOf("bussiness admin") > -1 && $state.current.name ==='ticket_management'){
+      if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 && $state.current.name ==='ticket_management'){
 
         $('.calendar_content').append(
           $("<i class='fa fa-check-circle-o ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
