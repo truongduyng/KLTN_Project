@@ -14,6 +14,7 @@ class TicketsController < ApplicationController
   end
 
   def create
+    # byebug
     create_param = ticket_param
     create_result = []
     while (create_param[:begin_use_time].to_time.to_i < create_param[:date_end_everyweek_booking].to_time.to_i)
