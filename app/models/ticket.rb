@@ -19,7 +19,7 @@ class Ticket
   index({begin_use_time: 1})
 
   validates :begin_use_time, :end_use_time, :price, :status, :customer_phone, presence: true
-  validates :asset, uniqueness: {scope: [:begin_use_time, :end_use_time]}
+
   validates_format_of :customer_phone, with: /\A\d{10,11}\z/
   validate :check_time
 
@@ -31,10 +31,8 @@ class Ticket
     # byebug
     tickets = Ticket.where(:begin_use_time => (begin_use_time.beginning_of_day.. begin_use_time.end_of_day),branch_id: branch_id, asset_id: asset_id).to_a
 
-    tickets.delete_if {|ticket| ticket._id == _id}
-
     tickets.each do |ticket|
-      if((ticket.begin_use_time < begin_use_time && begin_use_time < ticket.end_use_time) ||(ticket.begin_use_time < end_use_time && end_use_time < ticket.end_use_time))
+      if((ticket.begin_use_time <= begin_use_time && begin_use_time < ticket.end_use_time) ||(ticket.begin_use_time < end_use_time && end_use_time <= ticket.end_use_time))
         errors.add(:begin_time, "can't not be greater end_time")
         return false
       end
