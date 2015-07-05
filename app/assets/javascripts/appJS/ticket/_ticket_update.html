@@ -5,7 +5,8 @@
 <div class="modal-body row">
   <div class="col-lg-12">
     <i class="fa fa-clock-o fa-2x marginbot10"></i>
-    <span>{{ dt | date:'dd-MM-yyyy'}},</span>
+    <!-- <span>{{ dt | date:'dd-MM-yyyy'}},</span> -->
+    <span>{{ new Date(ticket.begin_use_time) | date:'dd-MM-yyyy'}},</span>
     <select ng-options = "hour_begin for hour_begin in hour_begin_list" ng-model= 'hour_begin' ng-change='update_hour_end(false)'/>
     <select ng-options = "hour_end for hour_end in hour_end_list" ng-model= 'hour_end' ng-change='update_price()'/>
     <br><i class="fa fa-futbol-o fa-2x marginbot10"></i>
