@@ -18,7 +18,7 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
       angular.copy(data, object.tickets);
       console.log("tickets", data);
       for (var i = 0; i < object.tickets.length; i++) {
-        // console.log(object.tickets[i].status);
+        console.log(object.tickets[i]);
         object.viewTicket(object.tickets[i]);
       };
 

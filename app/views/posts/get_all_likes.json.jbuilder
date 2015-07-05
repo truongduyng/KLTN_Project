@@ -6,5 +6,6 @@ json.array! @likes do |like|
 			json.url like.user.avatar.url
 		end
 		json.fullname like.user.fullname
+    json.username like.user.username
 	end
 end
