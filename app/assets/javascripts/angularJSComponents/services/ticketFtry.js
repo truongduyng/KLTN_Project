@@ -31,7 +31,7 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
     return $http.post('tickets.json', ticket).success(function(data){
       Flash.create('success', "Yeh! Đặt sân thành công.", 'myalert');
     }).error(function(){
-      Flash.create('success', "Sân này đã được đặt bởi người khác hoặc quá trình thất bại. Xin thử lại!", 'myalert');
+      Flash.create('danger', "Sân này đã được đặt bởi người khác hoặc quá trình thất bại. Xin thử lại!", 'myalert');
     });
   };
 
@@ -39,7 +39,7 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
     return $http.post('tickets/update.json',ticket_update).success(function(data){
       Flash.create('success', "Yeh! Cập nhật thành công.", 'myalert');
     })
-    .error(function(data){
+    .error(function(){
       Flash.create('danger', '<strong>Ops!</strong> Không thể cập nhật vé này.', 'myalert');
     });
   };
