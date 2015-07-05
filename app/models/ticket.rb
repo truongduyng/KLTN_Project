@@ -19,6 +19,7 @@ class Ticket
   index({begin_use_time: 1})
 
   validates :begin_use_time, :end_use_time, :price, :status, :customer_phone, presence: true
+  validates :asset, uniqueness: {scope: [:begin_use_time, :end_use_time]}
   validates_format_of :customer_phone, with: /\A\d{10,11}\z/
   validate :check_time
 
