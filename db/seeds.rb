@@ -8,25 +8,25 @@ user = User.create() do |u|
   u.password = '123456789'
   u.fullname = 'Nguyen Truong Duy'
   u.phone = "01633248188"
-  u.roles = [Role.find_by(name: "bussiness admin"),Role.find_by(name: "system admin")]
+  u.roles = [Role.find_by(name: "system admin")]
 end
+# Role.find_by(name: "bussiness admin"),
 
+# user = User.create() do |u|
+#   u.email = "trung_nh93@yahoo.com"
+#   u.username = 'trung_nh93'
+#   u.password = '123456789'
+#   u.fullname = 'Nguyen Huu Trung 1'
+#   u.phone = "01633248188"
+# end
 
-user = User.create() do |u|
-  u.email = "trung_nh93@yahoo.com"
-  u.username = 'trung_nh93'
-  u.password = '123456789'
-  u.fullname = 'Nguyen Huu Trung 1'
-  u.phone = "01633248188"
-end
-
-user = User.create() do |u|
-  u.email = "trungnguyenhuu@gmail.com"
-  u.username = 'trungnguyenhuu'
-  u.password = '123456789'
-  u.fullname = 'Nguyen Huu Trung 2'
-  u.phone = "01633248188"
-end
+# user = User.create() do |u|
+#   u.email = "trungnguyenhuu@gmail.com"
+#   u.username = 'trungnguyenhuu'
+#   u.password = '123456789'
+#   u.fullname = 'Nguyen Huu Trung 2'
+#   u.phone = "01633248188"
+# end
 
 #TAO RA CAC LOAI NOTIFICATION VA TEMPLATE CHO CHUNG
 #Duyet bai viet thanh cong
@@ -90,86 +90,86 @@ BussinessRequestStatus.create(name: 'Từ chối')
 NotificationCategory.create(name: 'Duyệt bài viết')
 
 
-user = User.first
-user.create_information(job: 'Thiet ke web', phone: '06824562')
+# user = User.first
+# user.create_information(job: 'Thiet ke web', phone: '06824562')
 
-bussiness = Bussiness.create(name: "Cong ty Sporta", user_id: user.id)
+# bussiness = Bussiness.create(name: "Cong ty Sporta", user_id: user.id)
 
-bussiness.branches << Branch.create(name: 'Chi nhanh 1', url_alias: "chinhanh1", address: '120 nguyen van cu, thanh pho Ho Chi Minh',begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
-bussiness.branches << Branch.create(name: 'San van dong Sporta', url_alias: "chinhanh2", address: '18 khuong viet, phu trung, tan phu, thanh pho Ho Chi Minh', begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
-bussiness.branches << Branch.create(name: 'Chi nhanh 3', url_alias: "chinhanh3", address: '30 khuong viet, phu trung, tan phu, thanh pho Ho Chi Minh', begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
-bussiness.branches << Branch.create(name: 'Chi nhanh 4', url_alias: "chinhanh4", address: '429 au co, phu trung, tan phu, thanh pho Ho Chi Minh', begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
-bussiness.branches << Branch.create(name: 'Chi nhanh 5', url_alias: "chinhanh5", address: '100 khuong viet, phu trung, tan phu, thanh pho Ho Chi Minh', begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
-bussiness.branches << Branch.create(name: 'Chi nhanh 6', url_alias: "chinhanh6", address: '225 nguyen van cu, Quan 5, thanh pho Ho Chi Minh', begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
-bussiness.branches << Branch.create(name: 'Chi nhanh 7', url_alias: "chinhanh7", address: '36 D3, Quan Binh Thanh, thanh pho Ho Chi Minh', begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
+# bussiness.branches << Branch.create(name: 'Chi nhanh 1', url_alias: "chinhanh1", address: '120 nguyen van cu, thanh pho Ho Chi Minh',begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
+# bussiness.branches << Branch.create(name: 'San van dong Sporta', url_alias: "chinhanh2", address: '18 khuong viet, phu trung, tan phu, thanh pho Ho Chi Minh', begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
+# bussiness.branches << Branch.create(name: 'Chi nhanh 3', url_alias: "chinhanh3", address: '30 khuong viet, phu trung, tan phu, thanh pho Ho Chi Minh', begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
+# bussiness.branches << Branch.create(name: 'Chi nhanh 4', url_alias: "chinhanh4", address: '429 au co, phu trung, tan phu, thanh pho Ho Chi Minh', begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
+# bussiness.branches << Branch.create(name: 'Chi nhanh 5', url_alias: "chinhanh5", address: '100 khuong viet, phu trung, tan phu, thanh pho Ho Chi Minh', begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
+# bussiness.branches << Branch.create(name: 'Chi nhanh 6', url_alias: "chinhanh6", address: '225 nguyen van cu, Quan 5, thanh pho Ho Chi Minh', begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
+# bussiness.branches << Branch.create(name: 'Chi nhanh 7', url_alias: "chinhanh7", address: '36 D3, Quan Binh Thanh, thanh pho Ho Chi Minh', begin_work_time: "7:00", end_work_time: "24:00", phone: "0123456789")
 
-branch = bussiness.branches[0]
+# branch = bussiness.branches[0]
 
-ac = AssetCategory.create(name: 'San 5 nguoi', branch_id: branch.id)
-ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 150)
-ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 250)
-Asset.create(name: "San 1", description: "San gan nhat", asset_category_id: ac.id)
-Asset.create(name: "San 2", description: "San gan nhi", asset_category_id: ac.id)
-Asset.create(name: "San 3", description: "San gan ba", asset_category_id: ac.id)
+# ac = AssetCategory.create(name: 'San 5 nguoi', branch_id: branch.id)
+# ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 150)
+# ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 250)
+# Asset.create(name: "San 1", description: "San gan nhat", asset_category_id: ac.id)
+# Asset.create(name: "San 2", description: "San gan nhi", asset_category_id: ac.id)
+# Asset.create(name: "San 3", description: "San gan ba", asset_category_id: ac.id)
 
-ac = AssetCategory.create(name: 'San 10 nguoi', branch_id: branch.id)
-ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 250)
-ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 450)
-Asset.create(name: "San 4", description: "San gan nhat", asset_category_id: ac.id)
-Asset.create(name: "San 5", description: "San gan nhi", asset_category_id: ac.id)
-Asset.create(name: "San 6", description: "San gan ba", asset_category_id: ac.id)
+# ac = AssetCategory.create(name: 'San 10 nguoi', branch_id: branch.id)
+# ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 250)
+# ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 450)
+# Asset.create(name: "San 4", description: "San gan nhat", asset_category_id: ac.id)
+# Asset.create(name: "San 5", description: "San gan nhi", asset_category_id: ac.id)
+# Asset.create(name: "San 6", description: "San gan ba", asset_category_id: ac.id)
 
-branch = bussiness.branches[1]
+# branch = bussiness.branches[1]
 
-ac = AssetCategory.create(name: 'San 5 nguoi', branch_id: branch.id)
-ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 150)
-ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 250)
-Asset.create(name: "San 1", description: "San gan nhat", asset_category_id: ac.id)
-
-
-ac = AssetCategory.create(name: 'San 10 nguoi', branch_id: branch.id)
-ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 250)
-ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 450)
-Asset.create(name: "San 2", description: "San gan nhat", asset_category_id: ac.id)
+# ac = AssetCategory.create(name: 'San 5 nguoi', branch_id: branch.id)
+# ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 150)
+# ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 250)
+# Asset.create(name: "San 1", description: "San gan nhat", asset_category_id: ac.id)
 
 
-branch = bussiness.branches[2]
-
-ac = AssetCategory.create(name: 'San 5 nguoi', branch_id: branch.id)
-ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 150)
-ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 250)
-Asset.create(name: "San 1", description: "San gan nhat", asset_category_id: ac.id)
-Asset.create(name: "San 2", description: "San gan nhi", asset_category_id: ac.id)
+# ac = AssetCategory.create(name: 'San 10 nguoi', branch_id: branch.id)
+# ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 250)
+# ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 450)
+# Asset.create(name: "San 2", description: "San gan nhat", asset_category_id: ac.id)
 
 
-ac = AssetCategory.create(name: 'San 10 nguoi', branch_id: branch.id)
-ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 250)
-ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 450)
-Asset.create(name: "San 3", description: "San gan nhat",  asset_category_id: ac.id)
-Asset.create(name: "San 4", description: "San gan nhi",  asset_category_id: ac.id)
+# branch = bussiness.branches[2]
+
+# ac = AssetCategory.create(name: 'San 5 nguoi', branch_id: branch.id)
+# ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 150)
+# ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 250)
+# Asset.create(name: "San 1", description: "San gan nhat", asset_category_id: ac.id)
+# Asset.create(name: "San 2", description: "San gan nhi", asset_category_id: ac.id)
 
 
-branch = bussiness.branches[3]
+# ac = AssetCategory.create(name: 'San 10 nguoi', branch_id: branch.id)
+# ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 250)
+# ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 450)
+# Asset.create(name: "San 3", description: "San gan nhat",  asset_category_id: ac.id)
+# Asset.create(name: "San 4", description: "San gan nhi",  asset_category_id: ac.id)
 
-ac = AssetCategory.create(name: 'San 5 nguoi', branch_id: branch.id)
-ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 150)
-ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 250)
-Asset.create(name: "San 1", description: "San gan nhat", asset_category_id: ac.id)
-Asset.create(name: "San 2", description: "San gan nhi", asset_category_id: ac.id)
-Asset.create(name: "San 3", description: "San gan ba", asset_category_id: ac.id)
-Asset.create(name: "San 4", description: "San gan nhat", asset_category_id: ac.id)
-Asset.create(name: "San 5", description: "San gan nhi", asset_category_id: ac.id)
-Asset.create(name: "San 6", description: "San gan ba", asset_category_id: ac.id)
 
-ac = AssetCategory.create(name: 'San 10 nguoi', branch_id: branch.id)
-ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 250)
-ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 450)
-Asset.create(name: "San 7", description: "San gan nhat", asset_category_id: ac.id)
-Asset.create(name: "San 8", description: "San gan nhi", asset_category_id: ac.id)
-Asset.create(name: "San 9", description: "San gan ba", asset_category_id: ac.id)
-Asset.create(name: "San 10", description: "San gan nhat", asset_category_id: ac.id)
-Asset.create(name: "San 11", description: "San gan nhi", asset_category_id: ac.id)
-Asset.create(name: "San 12", description: "San gan ba", asset_category_id: ac.id)
+# branch = bussiness.branches[3]
+
+# ac = AssetCategory.create(name: 'San 5 nguoi', branch_id: branch.id)
+# ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 150)
+# ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 250)
+# Asset.create(name: "San 1", description: "San gan nhat", asset_category_id: ac.id)
+# Asset.create(name: "San 2", description: "San gan nhi", asset_category_id: ac.id)
+# Asset.create(name: "San 3", description: "San gan ba", asset_category_id: ac.id)
+# Asset.create(name: "San 4", description: "San gan nhat", asset_category_id: ac.id)
+# Asset.create(name: "San 5", description: "San gan nhi", asset_category_id: ac.id)
+# Asset.create(name: "San 6", description: "San gan ba", asset_category_id: ac.id)
+
+# ac = AssetCategory.create(name: 'San 10 nguoi', branch_id: branch.id)
+# ac.fees << Fee.new(begin_time: "7:00", end_time: "10:00", price: 250)
+# ac.fees << Fee.new(begin_time: "10:00", end_time: "15:00", price: 450)
+# Asset.create(name: "San 7", description: "San gan nhat", asset_category_id: ac.id)
+# Asset.create(name: "San 8", description: "San gan nhi", asset_category_id: ac.id)
+# Asset.create(name: "San 9", description: "San gan ba", asset_category_id: ac.id)
+# Asset.create(name: "San 10", description: "San gan nhat", asset_category_id: ac.id)
+# Asset.create(name: "San 11", description: "San gan nhi", asset_category_id: ac.id)
+# Asset.create(name: "San 12", description: "San gan ba", asset_category_id: ac.id)
 
 
 # #TAO RE NHIEU POST DE TEST
