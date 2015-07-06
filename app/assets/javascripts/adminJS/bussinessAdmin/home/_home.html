@@ -3,9 +3,9 @@
   <div class="col-lg-12">
     <div class="profile-widget profile-widget-info">
       <div class="panel-body">
-        <div class="col-lg-3 col-sm-3">
-          <div class="follow-ava pull-left"> <img src="" alt=""> </div>
-          <h4>{{user.fullname}}</h4>
+        <div class="col-lg-5 col-sm-5">
+          <div class="follow-ava pull-left"> <img ng-src="{{user.avatar.url}}" alt=""> </div>
+          <h4 class="pull-left" style="margin-left: 10px">{{user.fullname}}</h4>
         </div>
         <div class="col-lg-4 col-sm-4 follow-info">
           <p>{{user.bussiness.short_desc}}</p>
@@ -31,9 +31,7 @@
           <!-- profile -->
           <div id="profile" class="tab-pane" data-ng-class="{active: tabSelected === 'profile'}">
             <section class="panel">
-              <div class="bio-graph-heading">{{user.bussiness.category}} </div>
               <div class="panel-body bio-graph-info">
-                <h1>Thông tin doanh nghiệp</h1>
                 <div class="row">
                   <div class="bio-row">
                     <p><span>Tên</span>: {{user.bussiness.name}} </p>
@@ -43,12 +41,6 @@
                   </div>
                   <div class="bio-row">
                     <p><span>Email </span>:{{user.email}}</p>
-                  </div>
-                  <div class="bio-row">
-                    <p><span>Điện thoại </span>: {{user.bussiness.phone}}</p>
-                  </div>
-                  <div class="bio-row">
-                    <p><span>Di động </span>:  TRONG</p>
                   </div>
                 </div>
               </div>
@@ -61,14 +53,12 @@
           <div id="edit-profile" class="tab-pane" data-ng-class="{active: tabSelected === 'edit-profile'}">
             <section class="panel">
               <div class="panel-body bio-graph-info">
-                <h1> Chỉnh sửa thông tin doanh nghiệp</h1>
                 <form class="form-horizontal" data-ng-submit="editBussiness()">
                   <!-- begin row cho thông tin chung và địa chỉ -->
                   <div class="row">
                     <!-- begin column cho thông tin chung -->
                     <div class="col-lg-6">
                       <section class="panel">
-                        <header class="panel-heading"> Chỉnh sửa thông tin chung </header>
                         <div class="panel-body">
                           <div class="form-group">
                             <label class="col-sm-2 control-label">Tên doanh nghiệp*</label>
@@ -82,20 +72,6 @@
                               <input type="text" class="form-control" data-ng-model="bussiness.category">
                             </div>
                           </div>
-                          <div class="form-group">
-                            <label class="col-sm-2 control-label">Điện thoại</label>
-                            <div class="col-sm-10">
-                              <input type="text" class="form-control" data-ng-model="bussiness.phone">
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <label class="col-sm-2 control-label">Mô tả ngắn gọn</label>
-                            <div class="col-sm-10">
-                              <textarea  rows="4" cols="50" class="form-control" data-ng-model="bussiness.short_desc">
-                              </textarea>
-                            </div>
-                          </div>
                         </div>
                       </section>
                     </div>
@@ -105,8 +81,7 @@
 
                   <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-10">
-                      <button type="submit" class="btn btn-primary">Save</button>
-                      <button type="button" class="btn btn-danger" data-ng-click="clear()">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Lưu</button>
                     </div>
                   </div>
                 </form>
@@ -119,8 +94,7 @@
           <div id="edit-account" class="tab-pane" data-ng-class="{active: tabSelected === 'edit-account'}">
             <section class="panel">
               <div class="panel-body bio-graph-info">
-                <h1> Chỉnh sửa thông tin tài khoản</h1>
-                <form class="form-horizontal" role="form">
+                <!-- <form class="form-horizontal" role="form">
                   <div class="form-group">
                     <label class="col-lg-2 control-label">Password hiện tại</label>
                     <div class="col-lg-6">
@@ -145,7 +119,7 @@
                       <button type="button" class="btn btn-danger" >Cancel</button>
                     </div>
                   </div>
-                </form>
+                </form> -->
               </div>
             </section>
           </div>

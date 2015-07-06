@@ -26,6 +26,7 @@ class BussinessesController < ApplicationController
   end
 
   def update
+    # byebug
     #create if current_user.bussiness = null
     if current_user.bussiness.update_attributes(bussiness_params)
       render json: current_user.bussiness, status: :ok
@@ -36,7 +37,7 @@ class BussinessesController < ApplicationController
 
   private
   def bussiness_params
-    params.require(:bussiness).permit(:name, :category, :description)
+    params.require(:bussiness).permit(:name, :category)
   end
 
 		#Da test
