@@ -6,6 +6,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     $('#sidebar').removeClass('col-sm-2');
     $('#main-content').removeClass('col-sm-10');
     $('#main-content').addClass('col-sm-12');
+    timeline();
   });
 
   $scope.rate = 4;
@@ -22,12 +23,10 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
   for (var i = tickets.change_time_to_float($scope.branch.branch.begin_work_time); i < tickets.change_time_to_float($scope.branch.branch.end_work_time); i++) {
     $scope.work_time.push(i);
   };
-  timeline();
 
   tickets.channel =  tickets.dispatcher.subscribe($scope.branch.branch._id.$oid);
 
   tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
-
 
   $scope.date_change = function(){
     $scope.close_minibooking();
@@ -303,7 +302,8 @@ $scope.hoveringOver = function(value) {
     var scrollheight = $scope.td_height * 4 * work_time_length;
     $('hr.timeline').css({width: $('.tablebooking').width()});
 
-    var top_timeline = 23 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()) - $scope.work_time[0]*60)*scrollheight/(60*work_time_length)); // 23 is height of th
+    // console.log("dsadasdas", $('table.tablebooking thead').height());
+    var top_timeline = 45 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()) - $scope.work_time[0]*60)*scrollheight/(60*work_time_length)); // 23 is height of th
 
     $('hr.timeline').animate({top: top_timeline},'fast');
 

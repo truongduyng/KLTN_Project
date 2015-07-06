@@ -6,22 +6,23 @@ app.controller('ticketManageCtrl', ['$scope', '$http', 'Auth', '$modal', 'ticket
   $scope.showtimeline = true;
   $scope.td_height = 20; //height of td
 
-  if (branch.data != null){
-    $scope.branch = branch.data;
-
-    tickets.channel =  tickets.dispatcher.subscribe($scope.branch.branch._id.$oid);
-    tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
-
-    $scope.work_time = []
-    for (var i = tickets.change_time_to_float($scope.branch.branch.begin_work_time); i < tickets.change_time_to_float($scope.branch.branch.end_work_time); i++) {
-      $scope.work_time.push(i);
-    };
-
-    $scope.isfounddata = true;
+  $scope.$on('$viewContentLoaded',function(event){
     timeline();
-  } else {
-    $scope.isfounddata = false;
-  }
+  });
+
+  $scope.branch = branch.data;
+
+  tickets.channel =  tickets.dispatcher.subscribe($scope.branch.branch._id.$oid);
+  tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
+
+  $scope.work_time = []
+  for (var i = tickets.change_time_to_float($scope.branch.branch.begin_work_time); i < tickets.change_time_to_float($scope.branch.branch.end_work_time); i++) {
+    $scope.work_time.push(i);
+  };
+
+  $scope.isfounddata = true;
+  timeline();
+
 
   $scope.date_change = function(){
     $scope.close_minibooking();
@@ -259,7 +260,7 @@ $scope.showtimeintd = function(hour,element,show){
     var scrollheight = $scope.td_height * 4 * work_time_length;
     $('hr.timeline').css({width: $('.tablebooking').width()});
 
-    var top_timeline = 23 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()) - $scope.work_time[0]*60)*scrollheight/(60*work_time_length)); // 23 is height of th
+    var top_timeline = 45 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()) - $scope.work_time[0]*60)*scrollheight/(60*work_time_length));
 
     $('hr.timeline').animate({top: top_timeline},'fast');
 
