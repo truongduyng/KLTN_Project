@@ -109,7 +109,7 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
         });
       }
 
-      if(object.tickets[i].status == 'doing' && now.getTime() > new Date(object.tickets[i].begin_use_time).getTime()){
+      if(object.tickets[i].status == 'doing' && now.getTime() > new Date(object.tickets[i].end_use_time).getTime()){
         object.update({
           ticket_id: object.tickets[i]._id.$oid,
           status: "waiting"
