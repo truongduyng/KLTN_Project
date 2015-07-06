@@ -13,7 +13,7 @@ app.controller('KhTkDoanhNghiepCtrl', ['$scope', 'currentUser', 'geocodingFtry',
 
 		$scope.onSearchPosition = function() {
 			$scope.isFinding = true;
-			geocodingFtry.latLngForAddress($scope.address).then(function(position) {
+			geocodingFtry.latLngForAddress($scope.bussinessRequest.address).then(function(position) {
 				$scope.isFinding = false;
 				$scope.error = "";
 				setMarker(position);

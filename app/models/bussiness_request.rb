@@ -1,11 +1,11 @@
 class BussinessRequest
 	include Mongoid::Document
 	include Mongoid::Timestamps
-	
+
 	field :name, type: String
 	field :address, type: String
 	field :category, type: String #Linh vuc
-	field :description, type: String
+
 	field :latitude, type: Float
 	field :longitude, type: Float
 	#relationship
@@ -20,7 +20,7 @@ class BussinessRequest
 	validates :name, presence: true
 	validates :address, presence: true
 	validates :category, presence: true
-	validates :description, presence: true
+
 	validates :latitude, presence: true
 	validates :longitude, presence: true
 	# validates :status_id, presence: true

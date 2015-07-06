@@ -27,56 +27,57 @@ json.notifications do
 		end
 
 		json.target_object do
-	if nc.notification.notificable_type == 'Post'
-		json.title nc.notification.notificable.title
-		json._id nc.notification.notificable.id
-	end
 
-	if nc.notification.notificable_type == 'ClubPost'
-		json._id nc.notification.notificable.id
-		json.club_name nc.notification.notificable.club.name
-		json.club_id nc.notification.notificable.club.id
-	end
+			if nc.notification.notificable_type == 'Post'
+				json.title nc.notification.notificable.title
+				json._id nc.notification.notificable.id
+			end
 
-	if nc.notification.notificable_type == 'BussinessRequest'
-		json.name nc.notification.notificable.name
-		json._id nc.notification.notificable.id
-	end
+			if nc.notification.notificable_type == 'ClubPost'
+				json._id nc.notification.notificable.id
+				json.club_name nc.notification.notificable.club.name
+				json.club_id nc.notification.notificable.club.id
+			end
 
-	if nc.notification.notificable_type == 'Comment'
+			if nc.notification.notificable_type == 'BussinessRequest'
+				json.name nc.notification.notificable.name
+				json._id nc.notification.notificable.id
+			end
 
-		json.comment_id nc.notification.notificable.id
-		json.content nc.notification.notificable.content
+			if nc.notification.notificable_type == 'Comment'
 
-		#id cua bai post chua comment
-		if nc.notification.notificable.post
-			json._id nc.notification.notificable.post.id
-			json.post_title  nc.notification.notificable.post.title
+				json.comment_id nc.notification.notificable.id
+				json.content nc.notification.notificable.content
+
+			#id cua bai post chua comment
+			if nc.notification.notificable.post
+				json._id nc.notification.notificable.post.id
+				json.post_title  nc.notification.notificable.post.title
+			end
+
+			if nc.notification.notificable.club_post
+				json._id nc.notification.notificable.club_post.id
+				json.club_id nc.notification.notificable.club_post.club.id
+			end
+
 		end
 
-		if nc.notification.notificable.club_post
-			json._id nc.notification.notificable.club_post.id
-			json.club_id nc.notification.notificable.club_post.club.id
+		#Do reply la embedded trong comment nen ko fetch reply trong notificable
+		if nc.notification.notificable_type == 'Reply'
+			json.content nc.notification.reply.content
+			json.comment_content nc.notification.reply.comment.content
+
+			if nc.notification.reply.comment.post
+				json._id nc.notification.reply.comment.post.id
+			end
+
+			if nc.notification.reply.comment.club_post
+				json._id nc.notification.reply.comment.club_post.id
+				json.club_id nc.notification.reply.comment.club_post.club.id
+			end
+			#id cua reply
+			json.reply_id nc.notification.notificable_id
 		end
-
-	end
-
-	#Do reply la embedded trong comment nen ko fetch reply trong notificable
-	if nc.notification.notificable_type == 'Reply'
-		json.content nc.notification.reply.content
-		json.comment_content nc.notification.reply.comment.content
-
-		if nc.notification.reply.comment.post
-			json._id nc.notification.reply.comment.post.id
-		end
-
-		if nc.notification.reply.comment.club_post
-			json._id nc.notification.reply.comment.club_post.id
-			json.club_id nc.notification.reply.comment.club_post.club.id
-		end
-		#id cua reply
-		json.reply_id nc.notification.notificable_id
-	end
 
 end
 		#Loai tac dong

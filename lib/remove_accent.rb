@@ -10,9 +10,10 @@ module RemoveAccent
       "y" => /[ỳýỵỷỹ]/,
       "d" => /[đ]/,
     }
+    result = data
     accent.each do |char, regex|
-      data.gsub!(regex,char)
+      result = result.gsub(regex,char)
     end
-    return data
+    return result
   end
 end
