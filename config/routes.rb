@@ -144,6 +144,12 @@ Rails.application.routes.draw do
   put 'bussinesses/update' => 'bussinesses#update'
   get 'bussinesses/show' => 'bussinesses#show'
 
+  resources :bussinesses do 
+    collection do
+      get 'thong_ke_toan_doanh_nghiep'
+    end
+  end
+
   post 'infomations/edit' => 'informations#edit'
   get 'informations/show' => 'informations#show'
 

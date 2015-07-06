@@ -1,4 +1,12 @@
-var app = angular.module('sportaBussinessAdmin', ["ui.router", 'templates', 'Devise', 'sporta.services', 'sporta.directives', 'sporta.filters', 'ngMap', 'ngStorage', 'ui.bootstrap', 'flash']);
+var app = angular.module('sportaBussinessAdmin', ["ui.router", 'templates', 'Devise', 'sporta.services', 'sporta.directives', 'sporta.filters', 'ngMap', 'ngStorage', 'ui.bootstrap', 'flash', 'chart.js']);
+
+// //config cho Angularj-chartjs
+// app.config(['ChartJsProvider', function (ChartJsProvider) {
+//     // Configure all charts
+//     ChartJsProvider.setOptions({
+//       colours: ['#FF5252', '#FF8A80']
+//     });
+// }]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
@@ -49,6 +57,20 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     url: '/them-moi-chi-nhanh',
     templateUrl: 'adminJS/bussinessAdmin/branch_management/information/new/_new.html',
     controller: 'BAnewBranchCtrl',
+  })
+
+  .state('thongKe', {
+    url: '/thong-ke',
+    templateUrl: 'adminJS/bussinessAdmin/thong_ke/_thong_ke.html',
+    controller: 'BAthongKeCtrl',
+    resolve: {
+      duLieuThongKe: ['BAthongKeService', function(BAthongKeService){
+        console.log("in resolve BAthongKeCtrl");
+        var currentMonth = (new Date()).getMonth() + 1;
+        var currentYear = (new Date()).getFullYear();
+        return BAthongKeService.getThongKeToanDoanhNghiep(currentMonth, currentYear);
+      }],
+    }
   });
 
   $urlRouterProvider.otherwise('');

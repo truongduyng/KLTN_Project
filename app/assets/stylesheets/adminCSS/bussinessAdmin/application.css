@@ -1,6 +1,7 @@
 /*
  *= require angular-flash-alert/src/angular-flash
  *= require_tree ../adminLTE
+ *= require angular-chart.js/dist/angular-chart.css
  *= require_tree .
  *= require_self
 */

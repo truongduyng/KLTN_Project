@@ -24,5 +24,7 @@
 //= require ./bussinessAdminApp.js
 //= require websocket_rails/main
 //= require ../../angular-locale_vi-vn
+//= require Chart.js/Chart.min.js
+//= require angular-chart.js/dist/angular-chart.min.js
 //= require_tree ../../angularJSComponents
 //= require_tree .
