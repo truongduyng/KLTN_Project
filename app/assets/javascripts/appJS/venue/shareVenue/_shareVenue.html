@@ -28,10 +28,10 @@
 
             <div>
               <label style="margin-top:40px;" class="control-label col-sm-1" for="begin_work_time">Từ:</label>
-              <div class="col-sm-3"><timepicker ng-change="onChangeTime()" ng-model="time.begin_work_time" hour-step="1" minute-step="10" show-meridian="true"></timepicker></div>
+              <div class="col-sm-3"><timepicker ng-change="onChangeTime()" ng-model="time.begin_work_time" hour-step="1" minute-step="10" show-meridian="false"></timepicker></div>
 
               <label style="margin-top:40px;" class="control-label col-sm-1" for="end_work_time">Tới:</label>
-              <div class="col-sm-3"><timepicker ng-change="onChangeTime()"  ng-model="time.end_work_time" hour-step="1" minute-step="10" show-meridian="true"></timepicker></div>
+              <div class="col-sm-3"><timepicker ng-change="onChangeTime()" ng-model="time.end_work_time" hour-step="1" minute-step="10" show-meridian="false"></timepicker></div>
             </div>
             <p style="clear: both;"></p>
             <div ng-show="timeError">
