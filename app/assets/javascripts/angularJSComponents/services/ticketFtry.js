@@ -203,7 +203,7 @@ $('div#' + ticket._id.$oid).css({
   left: ticket_td.offsetLeft,
   height: ticket_td.offsetHeight*4*(endtime-begintime)-3
 });
-console.log("dsadsadas", Auth._currentUser);
+
 
 if(Auth._currentUser != null){
 
