@@ -46,13 +46,7 @@
               <span style="color:#FF0000" ng-show="bussinessRequestForm.address.$error.required">Vui lòng nhập địa chỉ của doanh nghiệp</span>
             </div>
           </div>
-          <div class="form-group">
-            <label for="description">Mô tả*:</label>
-            <textarea  ng-model="bussinessRequest.description" required class="form-control" id="description" name="description" placeholder="Mô tả doanh nghiệp"></textarea>
-            <div ng-show="bussinessRequestForm.description.$dirty && bussinessRequestForm.description.$invalid">
-              <span style="color:#FF0000" ng-show="bussinessRequestForm.description.$error.required">Vui lòng nhập mô tả của doanh nghiệp</span>
-            </div>
-          </div>
+
           <div class="form-group">
             <label for="description">Vị trí doanh nghiệp của bạn*: <img  class="help-icon" src="application/myimg/help-icon.png" width="34px" height="34px" data-toggle="popover" popover="Thông tin vị trí này sẽ giúp chúng tôi xác định xác vị trí doanh nghiệp của bạn và giúp cho mọi thành viên tìm kiếm doanh nghiệp bạn thông qua khoảng cách." popover-title="Thông tin thêm"></label>
             <form name="positionForm" role="form" novalidate>
