@@ -3,6 +3,7 @@
 @import "font-awesome";
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import url('http://fonts.googleapis.com/css?family=Patrick+Hand+SC');
 /* ===================================
 1. General
 ==================================== */
@@ -15,7 +16,7 @@ html,body {
 body { padding-top: 70px; }
 
 body {
-	font-family:'Patrick Hand SC', Arial, sans-serif;
+	font-family:'Patrick Hand SC', arial, sans-serif;
 	font-size:14px;
 	font-weight:300;
 	line-height:1.6em;

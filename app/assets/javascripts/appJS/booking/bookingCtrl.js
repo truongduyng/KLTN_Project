@@ -308,13 +308,13 @@ $scope.hoveringOver = function(value) {
     $('hr.timeline').animate({top: top_timeline},'fast');
 
     $interval(function(){
-      top_timeline += Math.floor(5/(60*work_time_length)*scrollheight);
+      top_timeline += Math.floor(1/(60*work_time_length)*scrollheight);
 
       if (top_timeline >= scrollheight)
         top_timeline = scrollheight;
       $('hr.timeline').animate({top: top_timeline},'fast');
       tickets.check_td_in_past(new Date().toJSON().slice(0,10));
       // tickets.check_ticket_status(new Date());
-    },1000*60*5);
+    },1000*60);
   }
 }]);
