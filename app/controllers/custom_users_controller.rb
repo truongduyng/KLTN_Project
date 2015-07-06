@@ -1,19 +1,19 @@
 class CustomUsersController < ApplicationController
 	before_action :authenticate_user!, only: [:update, :change_password, :change_avatar]
 	before_action :find_user_and_check_with_current_user, only: [:update]
-	
+
 	#Neu la tai khoan facebook thi ko the doi password
 	before_action :is_account_facebook?, only: [:change_password]
-	
+
 	#get /custom_users/:username.json
 	def get_user_by_username
 		if params.has_key?(:username)
-			@user = User.where(username: params[:username]).first
+			@user = User.find_by(username: params[:username])
 			if @user
-				#render json: @user, status: :ok
+				# render json: @user, status: :ok
 			else
 				render nothing: true, status: :not_found, content_type: 'application/json'
-			end		
+			end
 		else
 			render nothing: true, status: :bad_request, content_type: 'application/json'
 		end
@@ -21,6 +21,7 @@ class CustomUsersController < ApplicationController
 
 	#PUT /custom_users/:id.json
 	def update
+		# byebug
 		if @user.update_attributes(user_params)
 			#render json: @user, status: :ok
 			render 'get_user_by_username.json.jbuilder'
@@ -44,7 +45,7 @@ class CustomUsersController < ApplicationController
 	end
 
 
-	#POST /custom_users/change_avatar.json 
+	#POST /custom_users/change_avatar.json
 	def change_avatar
 		#Them dinh dang .png cho doi tuong blob de whilelist no la image
 		if params[:file].try(:original_filename) == 'blob'

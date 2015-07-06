@@ -177,7 +177,7 @@ class User
 
     def check_gender
       #Gender phai la nam hoac nu
-      if !self.gender.nil? && (!self.gender.strip || self.gender != 'Nam' || self.gender != 'Nữ')
+      if !self.gender.nil? && (!self.gender.strip || (self.gender != 'Nam' && self.gender != 'Nữ'))
         self.gender = '';
       end
 

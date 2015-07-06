@@ -2,15 +2,16 @@ app.factory('trangCaNhanService', ['$http', function($http) {
 	var o = {
 		user:{},
 	};
-	
+
 	o.show = function(username){
 		var url = "/custom_users/" + username + ".json";
 		return $http.get(url).success(function(data){
+			console.log(data);
 			angular.copy(data, o.user);
 		});
 	};
 
-	
+
 	o.editProfile = function(user) {
 		var id = user._id.$oid;
 		var url = "/custom_users/" + id + ".json";
@@ -24,6 +25,6 @@ app.factory('trangCaNhanService', ['$http', function($http) {
 		return promise;
 	};
 
-	
+
 	return o;
 }])
