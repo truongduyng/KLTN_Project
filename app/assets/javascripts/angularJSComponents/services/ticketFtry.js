@@ -16,9 +16,9 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
     return $http.get('/tickets/'+ticket_query.date+'/'+ticket_query.branch_id).success(function(data){
 
       angular.copy(data, object.tickets);
-      console.log("tickets", data);
+      object.check_ticket_status(new Date());
+
       for (var i = 0; i < object.tickets.length; i++) {
-        console.log(object.tickets[i]);
         object.viewTicket(object.tickets[i]);
       };
 
