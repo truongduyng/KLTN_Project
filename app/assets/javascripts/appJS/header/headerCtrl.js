@@ -15,7 +15,7 @@ app.controller('headerCtrl', ['$scope', '$http','$state', function($scope, $http
   };
 
   $scope.search = function(){
-
+    $scope.overred = false;
     $state.go('search',{search_word: $scope.search_query});
   };
 

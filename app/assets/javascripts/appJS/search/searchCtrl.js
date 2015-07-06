@@ -31,7 +31,12 @@ app.controller('searchCtrl', ['$scope', '$http','$state', 'branches', 'posts', '
   });
 
   $scope.showresult = function(branch){
-    $state.go('booking', {branch_url_alias: branch.url});
+    if (branch.isvenue) {
+      $state.go('venueDetail', {id: branch.url});
+    }else{
+      $state.go('booking', {branch_url_alias: branch.url});
+    }
+
     $scope.search_query = "";
   }
 

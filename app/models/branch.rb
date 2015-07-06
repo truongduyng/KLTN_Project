@@ -2,6 +2,7 @@ class Branch
   include Mongoid::Document
   include Geocoder::Model::Mongoid
   include Mongoid::Timestamps
+  include RemoveAccent
 
   field :name, type: String
   field :phone, type: String
@@ -17,18 +18,14 @@ class Branch
   belongs_to :user
   #End for venue
 
-  geocoded_by :address do |obj,result|
-    # obj.coordinates = []
-    # if geo = result.first
-    #   obj.coordinates[0] = geo.longitude
-    #   obj.coordinates[1] = geo.latitude
-    # end
-  end
+  field :name_search
+  field :address_search
+  after_save :build_search_field
 
   after_validation :geocode
 
   index({ coordinates: "2d" }, { min: -180, max: 180 })
-  index({name: "text", address: "text", url_alias: "text"}, {weights: {name: 10, address: 5, url_alias: 2}, name: "BranchIndex"})
+  index({name_search: "text", address_search: "text", url_alias: "text"}, {weights: {name_search: 10, address_search: 5, url_alias: 2}, name: "branch_search"})
 
   belongs_to :bussiness
 
@@ -85,14 +82,13 @@ class Branch
     begin
       if param_search[:lat]
 
-      return Branch.near([param_search[:lat].to_f, param_search[:lng].to_f], param_search[:distance].to_f, order:"distance")
+        return Branch.near([param_search[:lat].to_f, param_search[:lng].to_f], param_search[:distance].to_f, order:"distance")
       end
 
       if param_search[:search_query]
         # result = Branch.near(param_search[:search_query], 2, order:"distance").to_a + Branch.any_of(
         #   {name: /#{param_search[:search_query]}/i},
         #   {address: /#{param_search[:search_query]}/i}).limit(7).to_a
-
         results = Branch.text_search(param_search[:search_query]).to_a
         Branch.near(param_search[:search_query], 2, order:"distance").to_a.each do |b|
           if !results.include? b
@@ -108,23 +104,19 @@ class Branch
     return nil
   end
 
-end
+  protected
+  def build_search_field
+    if(self.name_search != remove_accent(self.name.downcase()))
+      self.update_attributes(name_search: remove_accent(self.name.downcase()), address_search: remove_accent(self.address.downcase()))
+    end
+  end
 
-# function change_alias( alias )
-# {
-#     var str = alias;
-#     str= str.toLowerCase();
-#     str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
-#     str= str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
-#     str= str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
-#     str= str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ  |ợ|ở|ỡ/g,"o");
-#     str= str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
-#     str= str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
-#     str= str.replace(/đ/g,"d");
-#     str= str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g,"-");
-#     /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
-#     str= str.replace(/-+-/g,"-"); //thay thế 2- thành 1-
-#     str= str.replace(/^\-+|\-+$/g,"");
-#     //cắt bỏ ký tự - ở đầu và cuối chuỗi
-#     return str;
-# }
+  geocoded_by :address do |obj,result|
+    # obj.coordinates = []
+    # if geo = result.first
+    #   obj.coordinates[0] = geo.longitude
+    #   obj.coordinates[1] = geo.latitude
+    # end
+  end
+
+end
