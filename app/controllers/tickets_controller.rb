@@ -92,7 +92,7 @@ class TicketsController < ApplicationController
         render nothing: true, status: :unprocessable_entity, content_type: 'application/json'
       end
     else
-      if (@ticket.status == Ticket::Status[:doing])
+      if (@ticket.status == Ticket::Status[:done])
         render nothing: true, status: :unprocessable_entity, content_type: 'application/json'
       end
     end
