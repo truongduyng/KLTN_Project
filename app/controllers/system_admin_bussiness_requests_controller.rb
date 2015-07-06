@@ -38,8 +38,7 @@ class SystemAdminBussinessRequestsController < SystemAdminController
 				branch = Branch.new
 				branch.name = @bussiness_request.name
 				branch.address = @bussiness_request.address
-				# branch.latitude = @bussiness_request.latitude
-				# branch.longitude = @bussiness_request.longitude
+				branch.phone = @bussiness_request.phone
 				branch.coordinates = [@bussiness_request.longitude, @bussiness_request.latitude]
 				branch.bussiness_id = bussiness.id
 				#tao url_alias tam
@@ -47,7 +46,7 @@ class SystemAdminBussinessRequestsController < SystemAdminController
 				branch.begin_work_time = "7:00"
 				branch.end_work_time = "24:00"
 
-				if branch.save(validate: false)
+				if branch.save
 
 					@bussiness_request.status_id =  BussinessRequestStatus.da_duyet_status.id
 					@bussiness_request.timeless.save

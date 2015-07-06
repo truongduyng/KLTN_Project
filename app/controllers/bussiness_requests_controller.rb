@@ -23,7 +23,7 @@ class BussinessRequestsController < ApplicationController
 
 	private
 		def request_params
-			params.require(:bussiness_request).permit(:name, :address, :category, :latitude, :longitude)
+			params.require(:bussiness_request).permit(:name, :address, :category, :latitude, :longitude, :phone)
 		end
 		#Neu da la tai khoan bussines ko cho gui yeu cau nhieu nua
 		def check_bussiness_role

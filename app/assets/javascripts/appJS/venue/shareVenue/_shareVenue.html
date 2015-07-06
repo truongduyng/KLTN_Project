@@ -14,8 +14,8 @@
           </div>
 
           <div class="form-group">
-            <label for="address">Số điện thoại*:</label>
-            <input  ng-model="venue.phone" name="phone" type="text" class="form-control" id="address" placeholder="Số điện thoại của nơi chơi" ng-pattern="/^[0]{1}[0-9]{9,10}$/" required>
+            <label for="phone">Số điện thoại*:</label>
+            <input  ng-model="venue.phone" name="phone" type="text" class="form-control" id="phone" placeholder="Số điện thoại của nơi chơi" ng-pattern="/^[0]{1}[0-9]{9,10}$/" required>
             <div ng-show="shareVenueForm.phone.$dirty && shareVenueForm.phone.$invalid">
               <span style="color:#FF0000" ng-show="shareVenueForm.phone.$error.pattern">Định dạng hợp lệ cho số điện thoại: 01279012790, 0948993995</span>
             </div>
@@ -35,7 +35,7 @@
             </div>
             <p style="clear: both;"></p>
             <div ng-show="timeError">
-                <span style="color:#FF0000" ng-show="timeError">Thời gian làm việc phải nhỏ hơn thời gian kết thúc</span>
+              <span style="color:#FF0000" ng-show="timeError">Thời gian làm việc phải nhỏ hơn thời gian kết thúc</span>
             </div>
            <!--  <div class="form-horizontal form-group">
               <label class="control-label col-sm-2" for="email">Email:</label>
@@ -60,8 +60,8 @@
                     </span>
                   </div>
                   <div ng-show="shareVenueForm.address.$dirty && shareVenueForm.address.$invalid">
-                      <span style="color:#FF0000" ng-show="shareVenueForm.address.$error.required">Nhập địa chỉ của nơi chơi bạn muốn chia sẻ</span>
-                    </div>
+                    <span style="color:#FF0000" ng-show="shareVenueForm.address.$error.required">Nhập địa chỉ của nơi chơi bạn muốn chia sẻ</span>
+                  </div>
                   <span style="color:#FD2A00;">{{error}}</span>
                   <!-- <div flash-message="5000"></div> -->
                 </div>

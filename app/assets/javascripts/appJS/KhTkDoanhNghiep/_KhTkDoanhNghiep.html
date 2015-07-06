@@ -41,7 +41,18 @@
           </div>
 
           <div class="form-group">
-          <label for="description">Địa chỉ*: <img  class="help-icon" src="application/myimg/help-icon.png" width="34px" height="34px" data-toggle="popover" popover="Thông tin vị trí này sẽ giúp chúng tôi xác định xác vị trí doanh nghiệp của bạn và giúp cho mọi thành viên tìm kiếm doanh nghiệp bạn thông qua khoảng cách." popover-title="Thông tin thêm"></label>
+            <label for="phone">Số điện thoại*:</label>
+            <input ng-model="bussinessRequest.phone" name="phone" type="text" class="form-control" id="phone" placeholder="012790xxxx" ng-pattern="/^[0]{1}[0-9]{9,10}$/" required>
+            <div ng-show="bussinessRequestForm.phone.$dirty && bussinessRequestForm.phone.$invalid">
+              <span style="color:#FF0000" ng-show="bussinessRequestForm.phone.$error.pattern">Định dạng hợp lệ cho số điện thoại: 01279012790, 0948993995</span>
+            </div>
+            <div ng-show="bussinessRequestForm.phone.$dirty && bussinessRequestForm.phone.$invalid">
+              <span style="color:#FF0000" ng-show="bussinessRequestForm.phone.$error.required">Vui lòng cung cấp số điện thoại để giúp mọi người tiện liên lạc với chủ sân</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Địa chỉ*: <img  class="help-icon" src="application/myimg/help-icon.png" width="34px" height="34px" data-toggle="popover" popover="Thông tin vị trí này sẽ giúp chúng tôi xác định xác vị trí doanh nghiệp của bạn và giúp cho mọi thành viên tìm kiếm doanh nghiệp bạn thông qua khoảng cách." popover-title="Thông tin thêm"></label>
             <form name="positionForm" role="form" novalidate>
               <div class="row">
                 <div class="col-lg-12">
