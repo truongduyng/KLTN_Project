@@ -62,8 +62,11 @@ app.controller('BAthongKeCtrl', ['$scope', 'BAthongKeService', function($scope, 
 		barValueSpacing : 25,
 		multiTooltipTemplate: function(label){
 			return label.datasetLabel + ': ' + thongKeService.vndFilter(label.value);
-		}
+		},
+		colours:['#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
 	};
+
+	
 }]);
 
 
