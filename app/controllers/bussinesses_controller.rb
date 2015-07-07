@@ -76,6 +76,38 @@ class BussinessesController < ApplicationController
   end
 
 
+  def thong_ke_theo_ngay_trong_tuan
+    # render json: params, status: :ok
+    # byebug
+    from_day = params[:from].to_time.beginning_of_day; to_day = params[:to].to_time.end_of_day
+    @result = {chi_nhanh: [], doanh_thu: []} #format:     {chi nhanh: [chi nhanh 1, chi nhanh 2, chi nhanh 3], doanh_thu: [[], [], []]}
+    #Lay danh sach chi nhanh
+    branches = current_user.bussiness.branches
+    @result[:chi_nhanh] = branches.map(&:name)
+    #Lap qua moi chi nhanh de tinh doanh thu theo tung thang cua  moi chi nhanh
+    branches.each do |branch|
+      # byebug
+      tickets = []
+      branch.tickets.where(status: 'done').asc(:end_use_time).each do |ticket|
+        # byebug
+        tickets << ticket if ticket.end_use_time >= from_day && ticket.end_use_time <= to_day
+      end
+      # #=> {1 => [], 2 => {}, 3 => {}, ...}
+      tickets_group_by_day = tickets.group_by {|ticket| ticket.end_use_time.day}    #=> hash theo thang
+      ##Voi moi thang tinh tong doanh thu
+      doanh_thu_theo_ngay = Array.new(to_day.day - from_day.day + 1, 0) #Khoi tao vs doanh thu mac dinh la ko
+      tickets_group_by_day.each do |day, tickets_in_a_day| 
+        # byebug
+        doanh_thu_theo_ngay[day - from_day.day] = tickets_in_a_day.inject(0) {|sum, item| sum +  item.price} 
+      end
+
+      #Them doanh thu cua chi nhanh doa vao mang @result
+      @result[:doanh_thu] << doanh_thu_theo_ngay
+    end
+    render 'thong_ke_toan_doanh_nghiep.json.jbuilder'
+  end
+
+
   private
   def bussiness_params
     params.require(:bussiness).permit(:name, :category)

@@ -147,6 +147,7 @@ Rails.application.routes.draw do
   resources :bussinesses do 
     collection do
       get 'thong_ke_toan_doanh_nghiep'
+      get 'thong_ke_theo_ngay_trong_tuan'
     end
   end
 

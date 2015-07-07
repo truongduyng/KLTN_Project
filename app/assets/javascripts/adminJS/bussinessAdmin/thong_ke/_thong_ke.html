@@ -3,7 +3,7 @@
               <!-- AREA CHART -->
               <div class="box box-primary">
                 <div class="box-header">
-                  <h3 class="box-title">Doanh thu toàn doanh nghiệp</h3>
+                  <h3 class="box-title">Doanh thu theo tháng</h3>
                   <div>
                   	Cong cu o day
                   </div>
@@ -19,14 +19,14 @@
               <!-- DONUT CHART -->
               <div class="box box-primary">
                 <div class="box-header">
-                  <h3 class="box-title">Doanh thu theo chi nhánh</h3>
+                  <h3 class="box-title">Doanh thu theo theo ngày trong tuần</h3>
                   <div>
-                  	Cong cu o day
+                  	{{thongKeTheoNgayTrongTuan.title}}
                   </div>
                 </div>
                 <div class="box-body">
                   <div class="chart">
-                    <canvas id="bar" class="chart chart-bar" data="branch.data" labels="branch.labels" legend="true" series="branch.series"
+                     <canvas id="bar" class="chart chart-bar" data="thongKeTheoNgayTrongTuan.data" labels="thongKeTheoNgayTrongTuan.labels" legend="true" series="thongKeTheoNgayTrongTuan.series"
                      width="512" style="width: 512px; height: 290px;" id="areaChart" height="290" ></canvas>
                   </div>
                 </div><!-- /.box-body -->

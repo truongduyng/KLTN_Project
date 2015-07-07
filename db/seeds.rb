@@ -418,10 +418,16 @@
 
 
 
-trung = User.where(email: 'trung_nh93@yahoo.com.vn').first
-bussiness = trung.bussiness
-branch1 = bussiness.branches[0]
-# asset_category1.fees.create(begin_time: '7:00', end_time: '10:00', price: '250')
-# asset_category1.fees.create(begin_time: '10:00', end_time: '15:00', price: '150')
-# asset_category1.fees.create(begin_time: '15:00', end_time: '17:00', price: '250')
-# asset_category1.fees.create(begin_time: '17:00', end_time: '21:00', price: '300')
+# trung = User.where(email: 'trung_nh93@yahoo.com.vn').first
+# bussiness = trung.bussiness
+# branch1 = bussiness.branches[0]
+# # asset_category1.fees.create(begin_time: '7:00', end_time: '10:00', price: '250')
+# # asset_category1.fees.create(begin_time: '10:00', end_time: '15:00', price: '150')
+# # asset_category1.fees.create(begin_time: '15:00', end_time: '17:00', price: '250')
+# # asset_category1.fees.create(begin_time: '17:00', end_time: '21:00', price: '300')
+
+
+Ticket.all.each do |ticket|
+	ticket.status = 'done'
+	ticket.save(validate: false)
+end

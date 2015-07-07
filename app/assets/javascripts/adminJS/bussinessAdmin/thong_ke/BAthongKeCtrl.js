@@ -1,7 +1,6 @@
 app.controller('BAthongKeCtrl', ['$scope', 'BAthongKeService', function($scope, thongKeService) {
 	console.log("in BAthongKeCtrl");
-
-
+	
 	// $scope.labels = ['Chi nhanh 1', 'Chi nhanh 2', 'Chi nhanh 3', 'Chi nhanh 4', 'Chi nhanh 5', ];
 	// $scope.series = ['Doanh thu'];
 	// $scope.data = [
@@ -14,12 +13,22 @@ app.controller('BAthongKeCtrl', ['$scope', 'BAthongKeService', function($scope, 
 	months = ['Tháng 1', 'Tháng 2','Tháng 3', 'Tháng 4', 'Tháng 5','Tháng 6', 'Tháng 7', 'Tháng 8','Tháng 9', 'Tháng 10','Tháng 11', 'Tháng 12'];
 	var now = new Date();
 	var currentMonth = now.getMonth() + 1; 
+	
 	$scope.bussiness = {
 		labels: months.slice(0, currentMonth),
 		series: thongKeService.branchesData.chi_nhanh,
 		data: thongKeService.branchesData.doanh_thu,
 	};
-	
+
+	days = ['Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7','Chủ nhật'];
+	var to = new Date();
+    var from = thongKeService.getMonday(to);
+	$scope.thongKeTheoNgayTrongTuan = {
+		title: "Từ " + from.toDateString() + " tới " + to.toDateString(),
+		labels: days.slice(0, (now.getDay() == 0 ? days.length : now.getDay()) ),
+		series: thongKeService.thongKeTheoNgayTrongTuan.chi_nhanh,
+		data: thongKeService.thongKeTheoNgayTrongTuan.doanh_thu,
+	};
 
 
 	// $scope.labels = 

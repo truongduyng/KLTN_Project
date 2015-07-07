@@ -70,6 +70,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         var currentYear = (new Date()).getFullYear();
         return BAthongKeService.getThongKeToanDoanhNghiep(currentMonth, currentYear);
       }],
+      duLieuThongKeTheoNgayTrongTuan: ['BAthongKeService', function(BAthongKeService){
+        var to = new Date();
+        var from = BAthongKeService.getMonday(to);
+        return BAthongKeService.getThongKeTheoNgayTrongTuan(from, to);
+      }],
     }
   });
 
