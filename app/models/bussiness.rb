@@ -12,6 +12,6 @@ class Bussiness
   ##BN
 
   belongs_to :user
-  has_many :branches
+  has_many :branches, dependent: :destroy
 end
 

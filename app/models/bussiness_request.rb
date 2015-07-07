@@ -1,11 +1,13 @@
 class BussinessRequest
 	include Mongoid::Document
 	include Mongoid::Timestamps
-	
+
 	field :name, type: String
 	field :address, type: String
 	field :category, type: String #Linh vuc
-	field :description, type: String
+	field :phone, type: String
+
+
 	field :latitude, type: Float
 	field :longitude, type: Float
 	#relationship
@@ -20,10 +22,12 @@ class BussinessRequest
 	validates :name, presence: true
 	validates :address, presence: true
 	validates :category, presence: true
-	validates :description, presence: true
+
 	validates :latitude, presence: true
 	validates :longitude, presence: true
-	# validates :status_id, presence: true
+	VALID_PHONE_REGEX = /[0]{1}[0-9]{9,10}/i
+  validates :phone, presence: true, format: { with: VALID_PHONE_REGEX }
+
 
 	#Scope
 	#Danh sach cac request chua duyet

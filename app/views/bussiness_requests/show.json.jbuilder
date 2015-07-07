@@ -1,1 +1,1 @@
-json.extract! @bussiness_request, :_id, :name, :address, :category, :description, :latitude, :longitude, :user, :status, :created_at
+json.extract! @bussiness_request, :_id, :name, :address, :category, :latitude, :longitude, :user, :status, :created_at

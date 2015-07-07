@@ -210,6 +210,18 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		}
 	});
 
+	$stateProvider.state("about", {
+		url: '/chung-toi-la',
+		templateUrl: 'appJS/about/about.html',
+		controller: 'aboutCtrl',
+		onExit: function(){
+			$('#sidebar').css({display: 'inline'});
+			$('#sidebar').addClass('col-sm-2');
+			$('#main-content').removeClass('col-sm-12');
+			$('#main-content').addClass('col-sm-10');
+		}
+	});
+
 	$stateProvider.state('booking', {
 		url: '/{branch_url_alias}',
 		templateUrl: 'appJS/booking/_booking.html',

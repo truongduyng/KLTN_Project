@@ -18,11 +18,8 @@ class TicketsController < ApplicationController
     create_param = ticket_param
     create_result = []
     while (create_param[:begin_use_time].to_time.to_i < create_param[:date_end_everyweek_booking].to_time.to_i)
-      if (current_user.is_bussiness_admin?)
-        ticket =  Ticket.new(create_param.except(:date_end_everyweek_booking));
-      else
-        ticket = Ticket.new(create_param.merge({user_id: current_user.id, customer_name: current_user.fullname, customer_phone: current_user.phone}).except(:date_end_everyweek_booking))
-      end
+
+      ticket =  Ticket.new(create_param.except(:date_end_everyweek_booking));
 
       if ticket.valid?
         ticket.save

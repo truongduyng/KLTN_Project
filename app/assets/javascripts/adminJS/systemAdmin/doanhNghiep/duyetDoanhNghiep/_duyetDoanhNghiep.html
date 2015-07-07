@@ -12,7 +12,6 @@
                <th>STT</th>
                <th>Tên doanh nghiệp</th>
                <th>Lĩnh vực </th>
-               <th>Mô tả ngắn</th>
                <th>Thành viên</th>
                <th>Ngày yêu cầu</th>
                <th>Chi tiết</th>
@@ -23,7 +22,6 @@
               <td>{{index + 1}}</td>
               <td style="max-width:250px;">{{item.name}}</td>
               <td style="max-width:250px;">{{item.category}}</td>
-              <td>{{item.description | shortDesc}}</td>
               <td>{{item.user.fullname}}</td>
               <td>{{item.created_at| date:'dd/mm/yyyy, h:mm a'}}</td>
               <td>
@@ -69,7 +67,6 @@
       <div class="row">
         <div class="col-lg-12" ng-repeat="item in addedBussinessRequests">
           <section class="panel" >
-            <header class="panel-heading">{{item.name}}</header>
             <div class="panel-body">
               <table class="table table-hover table-detail-bussiness-request">
                 <tbody><tr>
@@ -80,10 +77,7 @@
                   <th>Lĩnh vực </th>
                   <td>{{item.category}}</td>
                 </tr>
-                <tr>
-                  <th>Mô tả</th>
-                  <td>{{item.description}}</td>
-                </tr>
+
                 <tr>
                   <th>Địa chỉ</th>
                   <td>{{item.address}}</td>

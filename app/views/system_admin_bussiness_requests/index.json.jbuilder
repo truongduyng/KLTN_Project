@@ -3,7 +3,6 @@ json.bussiness_requests @bussiness_requests do |br|
 	json.name br.name
 	json.address br.address
 	json.category br.category
-	json.description br.description
 	json.latitude br.latitude
 	json.longitude br.longitude
 	json.status br.status
