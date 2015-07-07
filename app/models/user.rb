@@ -96,8 +96,8 @@ class User
   #My validation
   validates :username, :email, presence: true, uniqueness: true
   validates :fullname, presence: true
-  VALID_PHONE_REGEX = /[0]{1}[0-9]{9,10}/i
-  validates :phone, presence: true, format: { with: VALID_PHONE_REGEX }
+  # VALID_PHONE_REGEX = /[0]{1}[0-9]{9,10}/i
+  # validates :phone, presence: true, format: { with: VALID_PHONE_REGEX }
   ## Database authenticatable
   field :email,              type: String, default: ""
   field :encrypted_password, type: String, default: ""
