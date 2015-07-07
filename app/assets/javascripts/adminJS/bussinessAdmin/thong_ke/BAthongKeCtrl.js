@@ -1,61 +1,60 @@
 app.controller('BAthongKeCtrl', ['$scope', 'BAthongKeService', function($scope, thongKeService) {
-	console.log("in BAthongKeCtrl");
-	
-	// $scope.labels = ['Chi nhanh 1', 'Chi nhanh 2', 'Chi nhanh 3', 'Chi nhanh 4', 'Chi nhanh 5', ];
-	// $scope.series = ['Doanh thu'];
-	// $scope.data = [
-	// 	[65, 59, 80, 81, 56]
-	// ];
-
-
+	console.log("in BAthongKeCtrl: ", Date.today().next().friday());
 
 	//Series la cac chi nhanh, labels la theo thang
-	months = ['Tháng 1', 'Tháng 2','Tháng 3', 'Tháng 4', 'Tháng 5','Tháng 6', 'Tháng 7', 'Tháng 8','Tháng 9', 'Tháng 10','Tháng 11', 'Tháng 12'];
+	months = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
 	var now = new Date();
-	var currentMonth = now.getMonth() + 1; 
-	
+	var currentMonth = now.getMonth() + 1;
+
 	$scope.bussiness = {
 		labels: months.slice(0, currentMonth),
 		series: thongKeService.branchesData.chi_nhanh,
 		data: thongKeService.branchesData.doanh_thu,
 	};
 
-	days = ['Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7','Chủ nhật'];
-	var to = new Date();
-    var from = thongKeService.getMonday(to);
-	$scope.thongKeTheoNgayTrongTuan = {
-		title: "Từ " + from.toDateString() + " tới " + to.toDateString(),
-		labels: days.slice(0, (now.getDay() == 0 ? days.length : now.getDay()) ),
-		series: thongKeService.thongKeTheoNgayTrongTuan.chi_nhanh,
-		data: thongKeService.thongKeTheoNgayTrongTuan.doanh_thu,
+	$scope.from = thongKeService.getMonday(new Date());
+	$scope.to = thongKeService.getSunday(new Date());
+
+	$scope.thongKeTheoNgayTrongTuan = thongKeService.thongKeTheoNgayTrongTuan;
+
+	$scope.isLoading = false;
+	$scope.previousWeek = function() {
+		$scope.isLoading = true;
+		//Neu ko phai la ngay thu 2, thi last 2 lan moi ve ngay thu 2 tuan truoc
+		if (!$scope.from.is().monday()) {
+			$scope.from.last().monday();
+		}
+		$scope.from.last().monday();
+		$scope.to.last().sunday();
+		console.log("from: ", $scope.from);
+		console.log("to: ", $scope.to);
+
+		thongKeService.getThongKeTheoNgayTrongTuan($scope.from, $scope.to)
+			.success(function() {
+				$scope.isLoading = false;
+			}).error(function() {
+				$scope.isLoading = false;
+			});
 	};
 
+	$scope.nextWeek = function() {
+		$scope.isLoading = true;
+		$scope.from.next().monday();
+		//Neu ko phai la ngay chu nhat thi next 2 lan moi toi chu nhat tuan toi
+		if (!$scope.to.is().sunday()) {
+			$scope.to.next().sunday();
+		}
+		$scope.to.next().sunday();
 
-	// $scope.labels = 
-	// $scope.series = ['Chi nhanh 1', 'Chi nhanh 2', 'Chi nhanh 3', 'Chi nhanh 4', 'Chi nhanh 5'];
-	// $scope.data = [
-	// 	[65, 59, 80, 81, 56, 60, 65, 59, 80, 81, 56, 60],
-	// 	[65, 59, 80, 81, 56, 60, 65, 59, 80, 81, 56, 60],
-	// 	[65, 59, 80, 81, 56, 60, 65, 59, 80, 81, 56, 60],
-	// 	[65, 59, 80, 81, 56, 60, 65, 59, 80, 81, 56, 60],
-	// 	[65, 59, 80, 81, 56, 60, 65, 59, 80, 81, 56, 60],
-	// ];
-
-	//Doanh thu
-	//Chi nhanh, asset, ve
-	//Time: month, year
-
-	// //Doanh thu theo chi nhanh
-	// $scope.branch = {
-	// 	labels: ['Tháng 1', 'Tháng 2','Tháng 3', 'Tháng 4', 'Tháng 5','Tháng 6', 'Tháng 7', 'Tháng 8','Tháng 9', 'Tháng 10','Tháng 11', 'Tháng 12'],
-	// 	series: ['Sân bóng đá 1', 'Sân bóng đá 2', 'Sân bóng đá 3', 'Sân bóng đá 4', 'Sân bóng đá 5'],
-	// 	data: [[65, 59, 80, 81, 56, 60, 65, 59, 80, 81, 56, 60],
-	// 	[65, 59, 80, 81, 56, 60, 65, 59, 80, 81, 56, 60],
-	// 	[65, 59, 80, 81, 56, 60, 65, 59, 80, 81, 56, 60],
-	// 	[65, 59, 80, 81, 56, 60, 65, 59, 80, 81, 56, 60],
-	// 	[65, 59, 80, 81, 56, 60, 65, 59, 80, 81, 56, 60]],
-	// }
-
+		console.log("from: ", $scope.from);
+		console.log("to: ", $scope.to);
+		thongKeService.getThongKeTheoNgayTrongTuan($scope.from, $scope.to)
+			.success(function() {
+				$scope.isLoading = false;
+			}).error(function() {
+				$scope.isLoading = false;
+			});
+	};
 
 }]);
 

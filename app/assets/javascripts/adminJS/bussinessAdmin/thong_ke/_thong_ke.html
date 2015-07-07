@@ -1,27 +1,18 @@
 <div class="row">
 	<div class="col-md-12">
-              <!-- AREA CHART -->
-              <div class="box box-primary">
-                <div class="box-header">
-                  <h3 class="box-title">Doanh thu theo tháng</h3>
-                  <div>
-                  	Cong cu o day
-                  </div>
-                </div>
-                <div class="box-body">
-                  <div class="chart">
-                    <canvas id="bar" class="chart chart-bar" data="bussiness.data" labels="bussiness.labels" legend="true" series="bussiness.series"
-                     width="512" style="width: 512px; height: 290px;" id="areaChart" height="290" ></canvas>
-                  </div>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-
               <!-- DONUT CHART -->
               <div class="box box-primary">
                 <div class="box-header">
-                  <h3 class="box-title">Doanh thu theo theo ngày trong tuần</h3>
-                  <div>
-                  	{{thongKeTheoNgayTrongTuan.title}}
+                  <h3 class="box-title" style="display:block; text-align: center;">DOANH THU THEO TUẦN</h3>
+                 
+                  <div class="date-status" style="display:block; text-align: center; align:center;">
+                    {{from.toDateString()}} <i class="fa fa-long-arrow-right"></i> {{to.toDateString()}}
+                  </div>
+                  <div class="pull pull-right" style="margin-top:-40px;">
+                      <a ng-show="isLoading"><i class="fa fa-spinner fa-spin fa-2x"></i></a>
+                      <a ng-click="previousWeek()"><i class="fa fa-arrow-circle-left fa-2x"></i></a>
+                      <a ng-click="nextWeek()"><i class="fa fa-arrow-circle-right fa-2x"></i></a>
+
                   </div>
                 </div>
                 <div class="box-body">
@@ -31,6 +22,29 @@
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header">
+                  <h3 class="box-title" style="display:block; text-align: center;">DOANH THU THEO THÁNG</h3>
+                </div>
+                <div class="box-body">
+                  <div class="chart">
+                    <canvas id="bar" class="chart chart-bar" data="bussiness.data" labels="bussiness.labels" legend="true" series="bussiness.series"
+                     width="512" style="width: 512px; height: 290px;" id="areaChart" height="290" ></canvas>
+                  </div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+
+              
             
 	</div>
 </div>
+<style type="text/css">
+  .box-title{
+    display: block;
+    margin: 0px auto;
+  }
+  .date-status{
+    margin: 0px auto;
+  }
+</style>

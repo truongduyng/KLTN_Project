@@ -70,10 +70,10 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         var currentYear = (new Date()).getFullYear();
         return BAthongKeService.getThongKeToanDoanhNghiep(currentMonth, currentYear);
       }],
-      duLieuThongKeTheoNgayTrongTuan: ['BAthongKeService', function(BAthongKeService){
-        var to = new Date();
-        var from = BAthongKeService.getMonday(to);
-        return BAthongKeService.getThongKeTheoNgayTrongTuan(from, to);
+      duLieuThongKeTheoNgayTrongTuan: ['BAthongKeService', function(thongKeService){
+        var from = thongKeService.getMonday(new Date());
+        var to = thongKeService.getSunday(new Date());
+        return thongKeService.getThongKeTheoNgayTrongTuan(from, to);
       }],
     }
   });
