@@ -1,38 +1,46 @@
 app.controller('authCtrl', ['$scope', 'Auth', '$state', '$modal', '$rootScope', 'Flash', 'userService', function($scope, Auth, $state, $modal, $rootScope, Flash, userService) {
 
-		$scope.user = {};
+	$scope.user = {};
 
-		$scope.close_modal = function() {
-			$scope.$close();
-		};
+	$scope.close_modal = function() {
+		$scope.$close();
+	};
 
-		$scope.open_signup_onsignin = function() {
+	$scope.open_signup_onsignin = function() {
+		$scope.close_modal();
+		$scope.open_signup();
+	};
+
+	$scope.login = function() {
+		Auth.login($scope.user).then(function(user) {
+
 			$scope.close_modal();
-			$scope.open_signup();
-		};
+			userService.currentUser = user;
+			$state.reload();
 
-		$scope.login = function() {
-			Auth.login($scope.user).then(function(user) {
+		}, function() {
+			$scope.error = "Email hoặc mật khẩu không đúng. Vui lòng thử lại!";
+		});
+	};
 
-				$scope.close_modal();
-				userService.currentUser = user;
-				$state.reload();
+	$scope.register = function() {
+		Auth.register($scope.user).then(function(user) {
 
-			}, function() {
-				$scope.error = "Email hoặc mật khẩu không đúng. Vui lòng thử lại!";
-			});
-		};
+			$scope.close_modal();
+			userService.currentUser = user;
+			$state.reload();
 
-		$scope.register = function() {
-			Auth.register($scope.user).then(function(user) {
+		}, function(e) {
+			$scope.error = "what error";
+		});
+	};
 
-				$scope.close_modal();
-				userService.currentUser = user;
-				$state.reload();
-
-			}, function(e) {
-				$scope.error = "what error";
-			});
-		};
+	$scope.open_signup_onsignin = function(){
+		$scope.close_modal();
+		$modal.open({
+			templateUrl: 'appJS/auth/_register.html',
+      controller: 'authCtrl'
+		})
 	}
-	]);
+}
+]);

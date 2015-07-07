@@ -54,7 +54,7 @@ class User
   devise :omniauthable, :omniauth_providers => [:facebook]
   def self.from_omniauth(auth)
       # byebug
-      identity = Identity.where(provider: auth.provider, uid: auth.uid).first
+      identity = Identity.find_by(provider: auth.provider, uid: auth.uid)
       #Neu da login it 1 lan thi lay nguoi dung do
       if identity
         user = identity.user
@@ -63,11 +63,9 @@ class User
         #Neu chua login lan nao thi tao nguoi dung moi
         user = User.new
         user.password = Devise.friendly_token[0,20]
-        ##BC
-        # user.firstname = auth.info.first_name   # assuming the user model has a name
-        # user.lastname = auth.info.last_name   # assuming the user model has a name
+
         user.fullname = auth.info.first_name + " " + auth.info.last_name
-        ##EC
+
         user.username = auth.uid
         user.identity = identity
         user.save(validate: false)
@@ -98,7 +96,8 @@ class User
   #My validation
   validates :username, :email, presence: true, uniqueness: true
   validates :fullname, presence: true
-  validates :phone, presence: true
+  VALID_PHONE_REGEX = /[0]{1}[0-9]{9,10}/i
+  validates :phone, presence: true, format: { with: VALID_PHONE_REGEX }
   ## Database authenticatable
   field :email,              type: String, default: ""
   field :encrypted_password, type: String, default: ""

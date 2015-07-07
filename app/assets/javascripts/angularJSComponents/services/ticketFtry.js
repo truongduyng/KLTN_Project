@@ -30,7 +30,8 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
   object.create = function(ticket){
     return $http.post('tickets.json', ticket).success(function(data){
       Flash.create('success', "Yeh! Đặt sân thành công.", 'myalert');
-    }).error(function(){
+    }).error(function(errors){
+      console.log(errors);
       Flash.create('danger', "Sân này đã được đặt bởi người khác hoặc quá trình thất bại. Xin thử lại!", 'myalert');
     });
   };

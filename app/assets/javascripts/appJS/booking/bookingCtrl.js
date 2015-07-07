@@ -95,6 +95,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     if(hour < 23.5){
       if (Auth._currentUser != null) {
         $scope.customer_name = Auth._currentUser.fullname;
+        $scope.customer_phone = Auth._currentUser.phone;
       };
       $scope.showtimeintd(hour, element, false); //clear content in td
 
@@ -145,7 +146,9 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
         status: "new",
         branch_id: $scope.branch.branch._id.$oid,
         asset_id: $scope.asset_id,
-        date_end_everyweek_booking: $scope.dt_end_everyweek_booking
+        date_end_everyweek_booking: $scope.dt_end_everyweek_booking,
+        customer_name: $scope.customer_name,
+        customer_phone: $scope.customer_phone
       });
 
       $scope.close_minibooking();

@@ -69,11 +69,21 @@
 
   <div id='minibooking' class="boxbooking">
     <button type="button" class="close" style="color: red" aria-hidden="true" ng-click="close_minibooking()">&times;</button><br>
-    <form ng-enter="ticket_create(dt,hour_begin,hour_end)">
+    <form ng-enter="ticket_create(dt,hour_begin,hour_end)" name="bookingForm" role="form" novalidate>
       <p class="marginbot5">Thời gian: {{ dt | date:'dd-MM-yyyy'}}, {{hour_begin}} - <select ng-options = "hour_end for hour_end in hour_end_list" ng-model= 'hour_end' ng-change='update_hour_end()'/></p>
       <p class="marginbot5">Địa điểm: <a href="">{{branch.branch.name}}</a></p>
 
-      <div ng-show="signedIn()"><p class="marginbot5">Đặt bởi: <a href="">{{customer_name}}</a></p></div>
+      <div ng-show="signedIn()">
+        <p class="marginbot5">Đặt bởi:
+          <input class="customer" placeholder= 'tên liên hệ' ng-model='customer_name' autofocus></input>
+        </p>
+        <p> SĐT:
+          <input style="margin-left: 16px;" name="phone" class="customer" placeholder= 'số đt liên hệ' ng-model='customer_phone' ng-pattern="/^[0]{1}[0-9]{9,10}$/" required></input>
+          <div ng-show="bookingForm.phone.$dirty && bookingForm.phone.$invalid">
+            <span style="color:#FF0000" ng-show="bookingForm.phone.$error.pattern">Định dạng hợp lệ cho số điện thoại: 01279012790, 0948993995</span>
+          </div>
+        </p>
+      </div>
 
       <p class="marginbot5">Giá: {{price}} (.000 VND)</p>
       <input type="checkbox" ng-model="iseveryweek" ng-change="viewweekbooking()">Đặt hàng tuần<br>
@@ -85,7 +95,7 @@
           </span>
         </p>
       </div>
-      <button class="btn btn-default" ng-click="ticket_create(dt,hour_begin,hour_end)">Đặt</button>
+      <button data-ng-disabled="bookingForm.$invalid" class="btn btn-default" ng-click="ticket_create(dt,hour_begin,hour_end)" type="submit">Đặt</button>
     </form>
   </div>
 

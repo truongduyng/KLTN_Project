@@ -21,8 +21,6 @@ app.controller('ticketManageCtrl', ['$scope', '$http', 'Auth', '$modal', 'ticket
   };
 
   $scope.isfounddata = true;
-  timeline();
-
 
   $scope.date_change = function(){
     $scope.close_minibooking();
