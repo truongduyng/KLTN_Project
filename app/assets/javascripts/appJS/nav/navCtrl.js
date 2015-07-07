@@ -30,6 +30,7 @@ app.controller('navCtrl', ['$scope', 'Auth', '$http', 'notificationService', 'ti
   $scope.$on('devise:logout', function(e, user) {
     $scope.user = {};
     angular.copy({}, userService.currentUser);
+    $state.go('home');
   });
 
   $scope.open_signin = function() {

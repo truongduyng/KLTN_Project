@@ -20,6 +20,7 @@ app.controller('editPostCtrl', ['$scope', 'editPostService', 'FileUploader', 'Fl
 						onPostComplete();
 					}
 					$scope.uploader.uploadAll();
+
 				}).error(function(data, status) {
 					if (status != '401') {
 							Flash.create("danger", "Lỗi xảy ra khi post, bạn vui lòng thử lại");

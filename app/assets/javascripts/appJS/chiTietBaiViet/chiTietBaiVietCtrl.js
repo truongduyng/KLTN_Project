@@ -1,7 +1,7 @@
-app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'userService', '$state', '$modal', '$rootScope','Auth', 'commentService', function($scope, postDetailService, Flash, userService, $state, $modal, $rootScope, Auth, commentService) {
+app.controller('chiTietBaiVietCtrl', ['$scope', 'postDetailService', 'Flash', 'Auth', '$state', '$modal', '$rootScope','Auth', 'commentService', function($scope, postDetailService, Flash, Auth, $state, $modal, $rootScope, Auth, commentService) {
 
 	$scope.signedIn = Auth.isAuthenticated;
-	$scope.currentUser = userService.currentUser;
+	$scope.currentUser = Auth._currentUser;
 
 	$scope.post = postDetailService.post;
 

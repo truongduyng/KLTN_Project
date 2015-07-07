@@ -31,7 +31,6 @@ class PostsController < ApplicationController
 
 	#GET /posts/:id.json
 	def edit
-
 	end
 
 	#PUT /posts/:id/update.json
@@ -50,6 +49,8 @@ class PostsController < ApplicationController
 					end
 				end
 			end
+			@post.post_status = PostStatus.not_published_status
+			@post.save
 			render :show, status: :ok, location: @post
 		else
 			render json: @post.errors, status: :unprocessable_entity
