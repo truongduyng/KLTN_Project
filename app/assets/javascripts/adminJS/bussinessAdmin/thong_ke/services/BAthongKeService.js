@@ -56,5 +56,68 @@ app.factory('BAthongKeService', ['$http', function ($http) {
 		}
 		return d;
 	}
+
+	o.vndFilter = function(price){
+		//1 => 1.000 VND
+		//20 => 20.000 VND
+		//200 => 200.000 VND
+		price = price.toString();
+		if(price.length >=1 && price.length <= 3){
+			price = price + ".000" + " VND"; 
+			return price;
+		}
+
+		//0 => 0 
+		//1000 => 1.000.000 VND
+		//10000 => 10.000.000 VND
+		//100000 => 100.000.000 VND
+		// if(price.length == 4){
+		// 	price = price.slice(0, 1) + "." + price.slice(1, price.length) + ".000" + "VND";
+		// 	return price;
+		// }
+		// if(price.length == 5){
+		// 	price = price.slice(0, 2) + "." + price.slice(2, 2+3) + ".000" + "VND";
+		// 	return price;
+		// }
+		// if(price.length == 6){
+		// 	price = price.slice(0, 3) + "." + price.slice(3, 3+3) + ".000" + "VND";
+		// 	return price;
+		// }
+		if(price.length == 1 && price == '0'){
+			return price + ".000" + " VND";
+		}
+		if(price.length >= 4 && price.length <= 6){
+			price = price.slice(0, price.length - 3) + "." + price.slice(price.length - 3, price.length) + ".000" + " VND";
+			return price;
+		}
+
+		//1000000 => 1.000.000.000 VND
+		//10000000 => 10.000.000.000 VND
+		//100000000 => 100.000.000.000 VND
+		if(price.length == 7){
+			price = price.slice(0,1) + "." + price.slice(1, 3) + "." + price.slice(1 + 3, 3) + ".000" + " VND";
+			return price;
+		}
+		if(price.length == 8){
+			price = price.slice(0,2) + "." + price.slice(2,3) + "." + price.slice(2 + 3, 3) + ".000" + " VND";
+			return price;
+		}
+		
+	}
+
+	function chuyenDoanhThuSangVND(doanhThu){
+		doanhThu =  _.map(doanhThu, function(array){
+			array = _.map(array, function(item){
+				item = vndFilter(item);
+				console.log("chuyen: ", item);
+				return item;
+			});
+			console.log("array dc chuyen: ", array);
+			return array;
+		});
+
+		console.log("Doanh thu: ", doanhThu);
+		return doanhThu;
+	};
 	return o;
 }])

@@ -6,7 +6,8 @@
                   <h3 class="box-title" style="display:block; text-align: center;">DOANH THU THEO TUẦN</h3>
                  
                   <div class="date-status" style="display:block; text-align: center; align:center;">
-                    {{from.toDateString()}} <i class="fa fa-long-arrow-right"></i> {{to.toDateString()}}
+                    <p>{{from.toDateString()}} <i class="fa fa-long-arrow-right"></i> {{to.toDateString()}}</p>
+                    <p  style="margin-top: -10px;">Đơn vị: Ngàn/VND</p>
                   </div>
                   <div class="pull pull-right" style="margin-top:-40px;">
                       <a ng-show="isLoading"><i class="fa fa-spinner fa-spin fa-2x"></i></a>
@@ -18,7 +19,7 @@
                 <div class="box-body">
                   <div class="chart">
                      <canvas id="bar" class="chart chart-bar" data="thongKeTheoNgayTrongTuan.data" labels="thongKeTheoNgayTrongTuan.labels" legend="true" series="thongKeTheoNgayTrongTuan.series"
-                     width="512" style="width: 512px; height: 290px;" id="areaChart" height="290" ></canvas>
+                     width="512" style="width: 512px; height: 290px;" id="areaChart" height="290" options="options" ></canvas>
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
@@ -26,11 +27,14 @@
               <div class="box box-primary">
                 <div class="box-header">
                   <h3 class="box-title" style="display:block; text-align: center;">DOANH THU THEO THÁNG</h3>
+                  <div class="date-status" style="display:block; text-align: center; align:center;">
+                    <p>Đơn vị: Ngàn/VND</p>
+                  </div>
                 </div>
                 <div class="box-body">
                   <div class="chart">
                     <canvas id="bar" class="chart chart-bar" data="bussiness.data" labels="bussiness.labels" legend="true" series="bussiness.series"
-                     width="512" style="width: 512px; height: 290px;" id="areaChart" height="290" ></canvas>
+                     width="512" style="width: 512px; height: 290px;" id="areaChart" height="290" options="options"></canvas>
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

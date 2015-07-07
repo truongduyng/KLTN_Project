@@ -1,12 +1,13 @@
 var app = angular.module('sportaBussinessAdmin', ["ui.router", 'templates', 'Devise', 'sporta.services', 'sporta.directives', 'sporta.filters', 'ngMap', 'ngStorage', 'ui.bootstrap', 'flash', 'chart.js']);
 
+
 // //config cho Angularj-chartjs
-// app.config(['ChartJsProvider', function (ChartJsProvider) {
-//     // Configure all charts
-//     ChartJsProvider.setOptions({
-//       colours: ['#FF5252', '#FF8A80']
-//     });
-// }]);
+app.config(['ChartJsProvider', function (ChartJsProvider) {
+    // Configure all charts
+    ChartJsProvider.setOptions({
+      colours: ['#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']
+    });
+}]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 

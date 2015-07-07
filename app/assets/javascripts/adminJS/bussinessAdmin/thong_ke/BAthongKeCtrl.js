@@ -56,6 +56,14 @@ app.controller('BAthongKeCtrl', ['$scope', 'BAthongKeService', function($scope, 
 			});
 	};
 
+	$scope.options ={
+		barShowStroke : true,
+		barStrokeWidth : 2,
+		barValueSpacing : 25,
+		multiTooltipTemplate: function(label){
+			return label.datasetLabel + ': ' + thongKeService.vndFilter(label.value);
+		}
+	};
 }]);
 
 
