@@ -61,7 +61,17 @@ class PostsController < ApplicationController
 	def destroy
 		#xoa tat ca bai viet yeu thich gan voi post nay
 		FavoritePost.where(post_id: @post.id).destroy_all
-		#Neu photo ko embeded in post thi xoa lun photo
+		# Neu photo ko embeded in post thi xoa lun photo
+		NotificationChange.delete_notification_change @post.user, @post, current_user, @post, NotificationCategory.tu_choi_bai_viet
+		NotificationChange.delete_notification_change @post.user, @post, current_user, @post, NotificationCategory.duyet_bai_viet
+
+		notification = Notification.all_of(target_user_id: current_user.id, notificable_id: @post.id).first
+
+		if notification
+			notification.notification_changes.destroy_all
+			notification.destroy
+		end
+
 		@post.destroy
 		render nothing: true, status: :ok, content_type: 'application/json'
 	end
