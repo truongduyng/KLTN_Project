@@ -1,6 +1,6 @@
-app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'userService', 'replyService', 'commentService', '$modal', 'clubpostFtry', function($scope, postDetailService, Flash, userService, replyService, commentService, $modal, clubpostFtry) {
+app.controller('commentCtrl', ['$scope', 'postDetailService', 'Flash', 'Auth', 'replyService', 'commentService', '$modal', 'clubpostFtry', function($scope, postDetailService, Flash, Auth, replyService, commentService, $modal, clubpostFtry) {
 
-	$scope.currentUser = userService.currentUser;
+	$scope.currentUser = Auth._currentUser;
 	$scope.comment = {};
 	$scope.isCommenting = false;
 	$scope.isEditing = false;
