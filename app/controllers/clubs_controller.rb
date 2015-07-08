@@ -74,6 +74,7 @@ class ClubsController < ApplicationController
       member =  User.find(club_params[:member_id])
       if !@club.members.include? member
         @club.members << member
+        member.clubs << @club
         render nothing: true, status: :ok
       else
         render nothing: true, status: :bad_request
