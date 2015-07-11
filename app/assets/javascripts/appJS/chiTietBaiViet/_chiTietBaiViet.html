@@ -31,7 +31,7 @@
           </div>
           <div class="clearfix"></div>
           <h3 style="margin:0px; padding:0px;margin-bottom: 10px;">{{post.title}}</h3>
-          <div>{{post.body}}</div>
+          <div class="angular-with-newlines">{{post.body}}</div>
           <div class="detail-post-images" style="text-align: center; margin-top: 20px;">
             <a ng-click="showImage(photo)" ng-repeat="photo in post.photos"><img ng-src="{{photo.image.url | logo}}" width="120px" height="120px"></a>
           </div>
@@ -82,5 +82,9 @@
     float: left;
     padding-left: 10px;
     width: 85%;
+  }
+  /* in the css file or in a style block */
+  .angular-with-newlines {
+      white-space: pre-wrap;
   }
 </style>
