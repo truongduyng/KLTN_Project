@@ -2,6 +2,7 @@ class Post
 	include Mongoid::Document
 	include Mongoid::Timestamps
 	include Mongoid::Paranoia
+	include RemoveAccent
 
 	field :title, type: String
 	field :body, type: String
@@ -20,7 +21,11 @@ class Post
 	#followers
 	has_and_belongs_to_many :followers, class_name: 'User', inverse_of: :followed_posts
 
-	index({title: "text", body: "text"}, {weights: {title: 10, body: 2}, name: "PostIndex"})
+	field :title_search, type: String
+	field :body_search, type: String
+	after_save :build_search_field
+
+	index({title_search: "text", body_search: "text"}, {weights: {title_search: 10, body_search: 2}, name: "PostIndex"})
 
 	#scope
 	#Get published post
@@ -49,6 +54,13 @@ class Post
 	def published?
 		self.post_status.name == 'Đã duyệt'
 	end
+
+	protected
+  def build_search_field
+    if(self.title_search != remove_accent(self.title.downcase()) || self.body_search != remove_accent(self.body.downcase()))
+      self.update_attributes(title_search: remove_accent(self.title.downcase()), body_search: remove_accent(self.body.downcase()))
+    end
+  end
 
 	private
 	def init_post_status

@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+	include RemoveAccent
+
 	before_action :authenticate_user!, only: [:create, :add_photo, :delete_photo, :like, :unlike, :edit, :update, :destroy, :follow, :unfollow]
 	before_action :find_published_post, only: [:like, :unlike, :get_k_first_like, :get_all_likes, :follow, :unfollow]
 	before_action :find_and_check_post_with_user, only: [:add_photo, :destroy]
@@ -12,7 +14,7 @@ class PostsController < ApplicationController
 	end
 
 	def search
-		@posts = Post.published.desc(:updated_at).text_search(params[:search_word]).to_a
+		@posts = Post.published.desc(:updated_at).text_search(remove_accent(params[:search_word].downcase()))
 		render 'index.json.jbuilder'
 	end
 
@@ -204,7 +206,7 @@ class PostsController < ApplicationController
 					@all_posts = user.posts.desc(:updated_at).paginate(page: page, per_page: per_page);
 					@total = user.posts.count
 				else
-					@all_posts = user.posts.desc(:updated_at).text_search(params[:text_search])
+					@all_posts = user.posts.desc(:updated_at).text_search(remove_accent(params[:text_search].downcase()))
 				end
 			else
 				#lay chi nhung post da publish
@@ -213,7 +215,7 @@ class PostsController < ApplicationController
 					@all_posts = user.posts.where(post_status_id: publishedStatus.id).desc(:updated_at).paginate(page: page, per_page: per_page)
 					@total = user.posts.where(post_status_id: publishedStatus.id).count
 				else
-					@all_posts = user.posts.where(post_status_id: publishedStatus.id).desc(:updated_at).text_search(params[:text_search])
+					@all_posts = user.posts.where(post_status_id: publishedStatus.id).desc(:updated_at).text_search(remove_accent(params[:text_search].downcase()))
 				end
 			end
 			render 'get_posts_by_username.json.jbuilder', status: :ok
@@ -234,7 +236,7 @@ class PostsController < ApplicationController
 				@total = user.favorite_posts.count
 				render 'get_favorite_posts_by_username.json.jbuilder', status: :ok
 			else
-				@all_fav_posts = Post.where(:id.in => user.favorite_posts.collect{|fav_post| fav_post.post_id.to_s}).text_search(params[:text_search])
+				@all_fav_posts = Post.where(:id.in => user.favorite_posts.collect{|fav_post| fav_post.post_id.to_s}).text_search(remove_accent(params[:text_search].downcase()))
 				render 'search_fav_posts.json.jbuilder', status: :ok
 			end
 

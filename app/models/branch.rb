@@ -89,7 +89,7 @@ class Branch
         # result = Branch.near(param_search[:search_query], 2, order:"distance").to_a + Branch.any_of(
         #   {name: /#{param_search[:search_query]}/i},
         #   {address: /#{param_search[:search_query]}/i}).limit(7).to_a
-        results = Branch.text_search(param_search[:search_query]).to_a
+        results = Branch.text_search(remove_accent(param_search[:search_query].downcase())).to_a
         Branch.near(param_search[:search_query], 2, order:"distance").to_a.each do |b|
           if !results.include? b
             results << b
@@ -106,7 +106,7 @@ class Branch
 
   protected
   def build_search_field
-    if(self.name_search != remove_accent(self.name.downcase()))
+    if(self.name_search != remove_accent(self.name.downcase()) || self.address_search != remove_accent(self.address.downcase()))
       self.update_attributes(name_search: remove_accent(self.name.downcase()), address_search: remove_accent(self.address.downcase()))
     end
   end
