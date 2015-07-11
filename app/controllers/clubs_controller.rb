@@ -25,15 +25,15 @@ class ClubsController < ApplicationController
       @club = Club.new(club_params.except(:members))
       @club.admins = [current_user.id]
 
-      club_params_id = []
+      club_params_member_id = []
       club_params[:members].each do |member|
-        club_params_id << member[:id]
+        club_params_member_id << member[:id]
       end
 
       if @club.save
         @club.members << current_user
         current_user.clubs << @club
-        User.where(:id.in => club_params_id).each do |member|
+        User.where(:id.in => club_params_member_id).each do |member|
           @club.members << member
           member.clubs << @club
         end
@@ -109,15 +109,17 @@ class ClubsController < ApplicationController
           @club.admins.delete(@member.id)
 
           if @club.admins.count == 0
-            User.where(:fullname.in => club_params[:admins]).each do |admin|
+            club_params_admin_id = []
+            club_params[:admins].each do |admin|
+              club_params_admin_id << admin[:id]
+            end
+            User.where(:id.in => club_params_admin_id).each do |admin|
               @club.admins << admin.id
             end
-            @club.save
           end
-
-          @club.save
         end
 
+        @club.save
         render nothing: true, status: :ok
 
       else
@@ -163,7 +165,7 @@ class ClubsController < ApplicationController
   private
   def club_params
     params[:members] ||= []
-    params.permit(:id, :name, :description, :admin_id, :member_id, :club_post_id, :admins => [], :members => [:id, :fullname])
+    params.permit(:id, :name, :description, :admin_id, :member_id, :club_post_id, :admins => [:id, :fullname], :members => [:id, :fullname])
   end
 
   def is_member?

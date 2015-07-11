@@ -22,16 +22,28 @@ app.controller('newclubmodalCtrl',['$scope','$modalInstance','$http', function($
   }
 
   $scope.add_to_members = function(user){
-    console.log(user);
-    if($scope.club.members.indexOf({id: user.id.$oid, fullname: user.fullname}) == -1){
-      $scope.club.members.push({id: user.id.$oid, fullname: user.fullname});
-    }
+
+    for (var i = 0; i < $scope.club.members.length; i++) {
+      if ($scope.club.members[i].id == user.id.$oid){
+        $scope.users_list = [];
+        $scope.user_find = "";
+        return false;
+      }
+    };
+
+    $scope.club.members.push({id: user.id.$oid, fullname: user.fullname});
     $scope.users_list = [];
     $scope.user_find = "";
   }
 
   $scope.remove_member = function(member){
-    $scope.club.members.splice($scope.club.members.indexOf(member),1);
+
+    for (var i = 0; i < $scope.club.members.length; i++) {
+      if ($scope.club.members[i].id == member.id){
+        $scope.club.members.splice(i,1);
+        return true;
+      }
+    };
   }
 
   $scope.ok = function () {
