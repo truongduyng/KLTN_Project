@@ -98,6 +98,7 @@ class ClubsController < ApplicationController
       if @club.members.include? @member
 
         @club.members.delete(@member)
+        @member.clubs.delete(@club)
 
         if @club.members.count == 0
           @club.destroy
