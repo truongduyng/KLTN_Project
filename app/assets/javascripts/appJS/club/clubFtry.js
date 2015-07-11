@@ -8,7 +8,6 @@ services.factory('clubsFtry',['$http', function($http){
       o.clubs = results;
     })
     .error(function(){
-
     })
   }
 

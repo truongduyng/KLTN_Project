@@ -11,7 +11,6 @@ user = User.create() do |u|
   u.roles = [Role.find_by(name: "system admin")]
 end
 
-
 #TAO RA CAC LOAI NOTIFICATION VA TEMPLATE CHO CHUNG
 #Duyet bai viet thanh cong
 NotificationCategory.create(name: 'Duyệt bài viết')

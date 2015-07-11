@@ -8,7 +8,6 @@ class UsersController < ApplicationController
 
       @results =  User.any_of({fullname: /#{params[:username]}/i}).limit(7).to_a
       @results.delete(current_user)
-
     rescue Exception => e
       render json: ""
     end

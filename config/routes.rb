@@ -53,9 +53,7 @@ Rails.application.routes.draw do
     end
   end
 
-
   get 'custom_users/:username' => 'custom_users#get_user_by_username'
-
 
   resources :custom_users do
     collection do
@@ -144,7 +142,7 @@ Rails.application.routes.draw do
   put 'bussinesses/update' => 'bussinesses#update'
   get 'bussinesses/show' => 'bussinesses#show'
 
-  resources :bussinesses do 
+  resources :bussinesses do
     collection do
       get 'thong_ke_toan_doanh_nghiep'
       get 'thong_ke_theo_ngay_trong_tuan'
