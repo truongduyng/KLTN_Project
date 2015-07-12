@@ -2,24 +2,25 @@ app.controller('neworeditassetcategoryCtrl', ['$scope', 'assetCategoryService', 
 
   if (assetCategory) {
     $scope.newCategory = assetCategory;
-    if ($scope.newCategory.fees == null)
+    if ($scope.newCategory.fees == null){
       $scope.newCategory.fees = [];
+    }
     $scope.isnew = false;
+    $scope.time_list = [];
   }else {
     $scope.newCategory = {
       fees: [],
     };
     $scope.isnew = true;
+    $scope.time_list = [];
+    for (var i = tickets.change_time_to_float(branch.begin_work_time); i <= tickets.change_time_to_float(branch.end_work_time); i+=0.5) {
+      $scope.time_list.push(tickets.hourtoview(i));
+    };
+
+    $scope.begin_time = $scope.time_list[0];
+    $scope.end_time = $scope.time_list[2];
+    $scope.price = null;
   }
-
-  $scope.time_list = [];
-  for (var i = tickets.change_time_to_float(branch.begin_work_time); i <= tickets.change_time_to_float(branch.end_work_time); i+=0.5) {
-    $scope.time_list.push(tickets.hourtoview(i));
-  };
-
-  $scope.begin_time = $scope.time_list[0];
-  $scope.end_time = $scope.time_list[2];
-  $scope.price = null;
 
   $scope.createAssetCategory = function() {
 
@@ -50,6 +51,11 @@ app.controller('neworeditassetcategoryCtrl', ['$scope', 'assetCategoryService', 
       return false;
     }
 
+    if(tickets.change_time_to_float($scope.begin_time) >= tickets.change_time_to_float($scope.end_time)){
+      Flash.create('danger', 'Giờ kết thúc phải lớn hơn giờ bắt đầu!', 'myalert');
+      return false;
+    }
+
     $scope.newCategory.fees.push({
       begin_time: $scope.begin_time,
       end_time: $scope.end_time,
@@ -69,14 +75,22 @@ app.controller('neworeditassetcategoryCtrl', ['$scope', 'assetCategoryService', 
     var index = $scope.newCategory.fees.indexOf(fee);
     if(index > -1){
       $scope.newCategory.fees.splice(index, 1);
-      for (var i = tickets.change_time_to_float(fee.begin_time); i < tickets.change_time_to_float(fee.end_time); i+=0.5) {
-        $scope.time_list.push(tickets.hourtoview(i));
+      for (var i = tickets.change_time_to_float(fee.begin_time); i <= tickets.change_time_to_float(fee.end_time); i+=0.5) {
+        if($scope.time_list.indexOf(tickets.hourtoview(i)) < 0){
+          $scope.time_list.push(tickets.hourtoview(i));
+        }
       }
       $scope.time_list.sort(function(a,b){ return tickets.change_time_to_float(a) - tickets.change_time_to_float(b)});
     }
   };
 
   $scope.updateAssetCategory = function(){
+
+    if($scope.time_list.length > 1){
+      Flash.create('danger', 'Bạn cần thêm giá phí cho toàn bộ thời gian hoạt động.', 'myalert');
+      return false;
+    }
+
     assetCategoryService.update($scope.newCategory)
 
     .success(function(data){
