@@ -18,7 +18,7 @@
     <div class="form-group" >
       <label class="control-label col-sm-2" for="phone">Số điện thoại:</label>
       <div class="col-sm-10">
-        <input type="number"  ng-minlength="10" ng-maxlength="11" class="form-control" id="phone" name="phone" placeholder="Số điện thoại của bạn" ng-model="user.phone" required>
+        <input type="text"  ng-minlength="10" ng-maxlength="11" class="form-control" id="phone" name="phone" placeholder="Số điện thoại của bạn" ng-model="user.phone" required>
         <div class="has-error" data-ng-show="register_form.phone.$dirty && register_form.phone.$invalid">
           <span class="help-block" ng-show="register_form.phone.$error.required">Vui lòng cung cấp số điện thoại.</span>
         </div>

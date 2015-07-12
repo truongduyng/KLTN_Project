@@ -135,6 +135,7 @@ Rails.application.routes.draw do
   get 'tickets/:date/:branch_id' => 'tickets#show'
   post 'tickets' => 'tickets#create'
   post 'tickets/update' => 'tickets#update'
+  post 'tickets/update_status' => 'tickets#update_status'
   delete 'tickets/:ticket_id' => 'tickets#destroy'
 
   get 'dang-ky-doanh-nghiep' => 'bussinesses#new'

@@ -2,8 +2,8 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
 
   var object = {
     tickets: [],
-    // dispatcher: new WebSocketRails('localhost:3001/websocket'),
-    dispatcher: new WebSocketRails('128.199.176.52:3001/websocket'),
+    dispatcher: new WebSocketRails('localhost:3001/websocket'),
+    // dispatcher: new WebSocketRails('128.199.176.52:3001/websocket'),
     channel: null
   };
 
@@ -38,6 +38,15 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
 
   object.update = function(ticket_update){
     return $http.post('tickets/update.json',ticket_update).success(function(data){
+      Flash.create('success', "Yeh! Cập nhật thành công.", 'myalert');
+    })
+    .error(function(){
+      Flash.create('danger', '<strong>Ops!</strong> Không thể cập nhật vé này.', 'myalert');
+    });
+  };
+
+  object.update_status = function(ticket_update){
+    return $http.post('tickets/update_status.json',ticket_update).success(function(data){
       Flash.create('success', "Yeh! Cập nhật thành công.", 'myalert');
     })
     .error(function(){
@@ -104,14 +113,14 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
     for (var i = 0; i < object.tickets.length; i++) {
 
       if(object.tickets[i].status == 'new' && now.getTime() > new Date(object.tickets[i].begin_use_time).getTime() + 1000*60*10){
-        object.update({
+        object.update_status({
           ticket_id: object.tickets[i]._id.$oid,
           status: "over"
         });
       }
 
       if(object.tickets[i].status == 'doing' && now.getTime() > new Date(object.tickets[i].end_use_time).getTime()){
-        object.update({
+        object.update_status({
           ticket_id: object.tickets[i]._id.$oid,
           status: "waiting"
         });
@@ -219,7 +228,7 @@ switch(ticket.status) {
 
     $('.calendar_content').append(
       $("<i class='fa fa-arrow-circle-o-right ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
-        object.update({
+        object.update_status({
           ticket_id: ticket._id.$oid,
           status: "doing"
         });
@@ -232,7 +241,6 @@ switch(ticket.status) {
     });
   };
 
-  console.log("new status----------------------------------------");
   $('div#'+ticket._id.$oid).addClass('ticket_new');
   break;
 
@@ -250,7 +258,7 @@ switch(ticket.status) {
 
         $('.calendar_content').append(
           $("<i class='fa fa-check-circle-o ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
-            object.update({
+            object.update_status({
               ticket_id: ticket._id.$oid,
               status: "done"
             });

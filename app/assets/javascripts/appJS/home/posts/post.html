@@ -6,7 +6,7 @@
       <img ng-show="post.photos[0]" ng-src="{{post.photos[0].image.large_thumb.url}}" width="100%">
     </div>
     <div class="content">
-      <p>{{post.body | shortContent: 30}}</p>
+      <p class="angular-with-newlines">{{post.body | shortContent: 30}}</p>
     </div>
   </div>
 
@@ -25,3 +25,9 @@
   </div>
 
 </div>
+
+<style type="text/css">
+  .angular-with-newlines {
+      white-space: pre-wrap;
+  }
+</style>

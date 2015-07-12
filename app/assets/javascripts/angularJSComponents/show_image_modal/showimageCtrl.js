@@ -1,11 +1,11 @@
-app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$interval', function($scope, listPhotos, photo, $interval) {
+app.controller('showImageModalCtrl', ['$scope', 'listPhotos', 'photo', '$modalInstance', function($scope, listPhotos, photo, $modalInstance){
 
   $scope.listPhotos = listPhotos;
   $scope.photo = photo;
   var currentIndex = $scope.listPhotos.indexOf(photo);
 
   $scope.previous = function() {
-    console.log("in previous");
+
     if (currentIndex >= 1) {
       currentIndex--;
     } else {

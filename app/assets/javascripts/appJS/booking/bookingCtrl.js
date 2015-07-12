@@ -96,6 +96,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       if (Auth._currentUser != null) {
         $scope.customer_name = Auth._currentUser.fullname;
         $scope.customer_phone = Auth._currentUser.phone;
+        console.log(Auth._currentUser.phone, $scope.customer_phone);
       };
       $scope.showtimeintd(hour, element, false); //clear content in td
 
@@ -317,7 +318,6 @@ $scope.hoveringOver = function(value) {
         top_timeline = scrollheight;
       $('hr.timeline').animate({top: top_timeline},'fast');
       tickets.check_td_in_past(new Date().toJSON().slice(0,10));
-      // tickets.check_ticket_status(new Date());
     },1000*60);
   }
 }]);

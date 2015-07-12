@@ -2,6 +2,7 @@ class TicketsController < ApplicationController
 
   before_action :authenticate_user!, only: [:create, :update, :destroy]
   before_action :check_right_ticket, only: [:update, :destroy]
+  before_action :check_bussiness_owner, only: [:update_status]
 
   def show
     # byebug
@@ -37,22 +38,28 @@ class TicketsController < ApplicationController
   end
 
   def update
-
     begin
-      if (ticket_param.except(:ticket_id).length == 1 && ticket_param.except(:ticket_id).include?(:status))
-        if @ticket.update_attribute(:status, ticket_param.except(:ticket_id)[:status])
-          Fiber.new{WebsocketRails[@ticket.branch_id].trigger 'update_ticket', @ticket}.resume
-          render json: @ticket, status: :ok
-        else
-          render json: @ticket.errors, status: :unprocessable_entity
-        end
+      # byebug
+      puts @ticket
+      if @ticket.update_attributes(ticket_param.except(:ticket_id))
+        Fiber.new{WebsocketRails[@ticket.branch_id].trigger 'update_ticket', @ticket}.resume
+        render json: @ticket, status: :ok
       else
-        if @ticket.update_attributes(ticket_param.except(:ticket_id))
-          Fiber.new{WebsocketRails[@ticket.branch_id].trigger 'update_ticket', @ticket}.resume
-          render json: @ticket, status: :ok
-        else
-          render json: @ticket.errors, status: :unprocessable_entity
-        end
+        render json: @ticket.errors, status: :unprocessable_entity
+      end
+
+    rescue Exception => e
+      render json: e, status: :unprocessable_entity
+    end
+  end
+
+  def update_status
+    begin
+      if @ticket.update_attribute(:status, ticket_param[:status])
+        Fiber.new{WebsocketRails[@ticket.branch_id].trigger 'update_ticket', @ticket}.resume
+        render json: @ticket, status: :ok
+      else
+        render json: @ticket.errors, status: :unprocessable_entity
       end
     rescue Exception => e
       render json: e, status: :unprocessable_entity
@@ -83,15 +90,18 @@ class TicketsController < ApplicationController
   def check_right_ticket
 
     @ticket = Ticket.find(ticket_param[:ticket_id])
-    if (!current_user.is_bussiness_admin?)
+    if (current_user.id != @ticket.branch.bussiness.user_id)
+      if (@ticket.user_id != current_user.id)
+        render nothing: true, status: :unprocessable_entity, content_type: 'application/json'
+      end
+    end
+  end
 
-      if (@ticket.user_id != current_user.id || @ticket.status != Ticket::Status[:new])
-        render nothing: true, status: :unprocessable_entity, content_type: 'application/json'
-      end
-    else
-      if (@ticket.status == Ticket::Status[:done])
-        render nothing: true, status: :unprocessable_entity, content_type: 'application/json'
-      end
+  def check_bussiness_owner
+    # byebug
+    @ticket = Ticket.find(ticket_param[:ticket_id])
+    if (current_user.id != @ticket.branch.bussiness.user_id)
+      render nothing: true, status: :bad_request, content_type: 'application/json'
     end
   end
 
