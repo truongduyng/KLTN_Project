@@ -1,4 +1,4 @@
-var app = angular.module('sportaSystemAdmin', ["ui.router", 'templates', 'Devise', 'sporta.services', 'sporta.directives', 'sporta.filters','flash', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging', 'infinite-scroll','ngAnimate', 'ngMap', 'ckeditor', 'ngCookies', 'ngSanitize']);
+var app = angular.module('sportaSystemAdmin', ["ui.router", 'templates', 'Devise', 'sporta.services', 'sporta.directives', 'sporta.filters','flash', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging', 'infinite-scroll', 'ngMap', 'ckeditor', 'ngCookies', 'ngSanitize']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 

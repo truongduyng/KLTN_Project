@@ -27,7 +27,6 @@
 //= require underscore
 //= require angular-cookies
 //= require angular-sanitize
-//= require angular-animate
 //= require ngmap
 //= require angular-ckeditor
 //= require ./systemAdminApp.js
