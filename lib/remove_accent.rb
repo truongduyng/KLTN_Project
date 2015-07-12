@@ -1,6 +1,5 @@
-
 module RemoveAccent
-  def remove_accent(data)
+  def self.remove_accent(data)
     accent = {
       "a" => /[àáạảãâầấậẩẫăằắặẳẵ]/,
       "e" => /[èéẹẻẽêềếệểễ]/,

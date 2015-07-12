@@ -48,14 +48,13 @@ app.controller('venueDetailCtrl', ['$scope', 'VenueService','$modal', 'Flash', '
 		$scope.$on('mapInitialized', function(event, map) {
 			console.log("mapInitialized");
 			//Lay anh dai dien cho marker, lua chon 1 trong nhung tam anh nguoi dung up
-			var avatar = "notKnow";
+			var avatar = "application/placeholder/sporta_icon.png";
 			if(map.item.photos != null && map.item.photos.length >= 1){
 				avatar = map.item.photos[0].image.thumb.url;
 			}
 
 			var marker = createMarker(map.item.coordinates[1], map.item.coordinates[0], avatar);
 			marker.setMap(map);
-			console.log("marker: ", marker);
 			map.setCenter(marker.getPosition());
 		});
 
