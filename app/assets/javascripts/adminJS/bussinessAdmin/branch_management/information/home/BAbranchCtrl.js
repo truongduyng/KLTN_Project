@@ -9,7 +9,7 @@ app.controller('BAbranchCtrl', ['$scope', 'logoFilter', '$location', '$state',
 			return;
 		}
 
-		var marker = createMarker(map.branch.coordinates[1], map.branch.coordinates[0], "notKnow");
+		var marker = createMarker(map.branch.coordinates[1], map.branch.coordinates[0], "application/placeholder/sporta_icon.png");
 		marker.setMap(map);
 		map.setCenter(marker.getPosition());
 	});

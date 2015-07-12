@@ -88,7 +88,7 @@ app.controller('BAeditBranchCtrl', ['$scope', 'geocodingFtry', 'logoFilter',
 			marker.setMap(null);
 		}
 		//Tao ra marker tai vi tri moi
-		marker = createMarker(position.lat, position.lng, "notKnow");
+		marker = createMarker(position.lat, position.lng, "application/placeholder/sporta_icon.png");
 		marker.setMap($scope.map);
 		$scope.map.setCenter(marker.getPosition());
 		$scope.map.setZoom(17);

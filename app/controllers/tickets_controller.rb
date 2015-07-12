@@ -22,7 +22,7 @@ class TicketsController < ApplicationController
       end
 
     else
-      render nothing: true, status: :bad_request
+      render nothing: true
     end
   end
 
