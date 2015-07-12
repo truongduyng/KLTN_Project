@@ -13,6 +13,7 @@ app.controller('ticketManageCtrl', ['$scope', '$http', 'Auth', '$modal', 'ticket
   $scope.branch = branch.data;
 
   tickets.channel =  tickets.dispatcher.subscribe($scope.branch.branch._id.$oid);
+  tickets.bussiness_owner = $scope.branch.owner.$oid;
   tickets.getTickets({date: $scope.dt.toJSON().slice(0,10), branch_id: $scope.branch.branch._id.$oid});
 
   $scope.work_time = []
@@ -20,7 +21,6 @@ app.controller('ticketManageCtrl', ['$scope', '$http', 'Auth', '$modal', 'ticket
     $scope.work_time.push(i);
   };
 
-  $scope.isfounddata = true;
 
   $scope.date_change = function(){
     $scope.close_minibooking();

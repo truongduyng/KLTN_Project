@@ -129,5 +129,6 @@ app.controller('SAduyetBaiVietCtrl', ['$scope', 'SAduyetBaiVietService', '$modal
 				}
 			});
 		};
+
 	}
 ]);

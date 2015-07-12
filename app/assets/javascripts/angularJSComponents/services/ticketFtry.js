@@ -1,7 +1,8 @@
-services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Auth, Flash,$state){
+services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Auth, Flash, $state){
 
   var object = {
     tickets: [],
+    bussiness_owner: null,
     // dispatcher: new WebSocketRails('localhost:3001/websocket'),
     dispatcher: new WebSocketRails('128.199.176.52:3001/websocket'),
     channel: null
@@ -13,10 +14,9 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
       object.clearviewTicket(object.tickets[i]._id.$oid);
     };
 
-    return $http.get('/tickets/'+ticket_query.date+'/'+ticket_query.branch_id).success(function(data){
+    return $http.get('/tickets/'+ticket_query.date+'/'+ticket_query.branch_id + '.json').success(function(data){
 
       angular.copy(data, object.tickets);
-      object.check_ticket_status(new Date());
 
       for (var i = 0; i < object.tickets.length; i++) {
         object.viewTicket(object.tickets[i]);
@@ -38,6 +38,15 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
 
   object.update = function(ticket_update){
     return $http.post('tickets/update.json',ticket_update).success(function(data){
+      Flash.create('success', "Yeh! Cập nhật thành công.", 'myalert');
+    })
+    .error(function(){
+      Flash.create('danger', '<strong>Ops!</strong> Không thể cập nhật vé này.', 'myalert');
+    });
+  };
+
+  object.update_status = function(ticket_update){
+    return $http.post('tickets/update_status.json',ticket_update).success(function(data){
       Flash.create('success', "Yeh! Cập nhật thành công.", 'myalert');
     })
     .error(function(){
@@ -104,14 +113,14 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
     for (var i = 0; i < object.tickets.length; i++) {
 
       if(object.tickets[i].status == 'new' && now.getTime() > new Date(object.tickets[i].begin_use_time).getTime() + 1000*60*10){
-        object.update({
+        object.update_status({
           ticket_id: object.tickets[i]._id.$oid,
           status: "over"
         });
       }
 
       if(object.tickets[i].status == 'doing' && now.getTime() > new Date(object.tickets[i].end_use_time).getTime()){
-        object.update({
+        object.update_status({
           ticket_id: object.tickets[i]._id.$oid,
           status: "waiting"
         });
@@ -198,45 +207,46 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
       })
     );
 
-$('div#' + ticket._id.$oid).css({
-  top: ticket_td.offsetTop+2,
-  width: ticket_td.offsetWidth-3,
-  left: ticket_td.offsetLeft,
-  height: ticket_td.offsetHeight*4*(endtime-begintime)-3
-});
+    //
 
-
-if(Auth._currentUser != null){
-
-  if (Auth._currentUser.roles.indexOf("bussiness admin") > -1 )
-    $('div#' + ticket._id.$oid + ' span.private_info').css('display', 'inline');
-};
-
-switch(ticket.status) {
-  case "new":
-
-  if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 && $state.current.name ==='ticket_management'){
-
-    $('.calendar_content').append(
-      $("<i class='fa fa-arrow-circle-o-right ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
-        object.update({
-          ticket_id: ticket._id.$oid,
-          status: "doing"
-        });
-      })
-      );
-
-    $('i#' + ticket._id.$oid + '_i').css({
-      top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
-      left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
+    $('div#' + ticket._id.$oid).css({
+      top: ticket_td.offsetTop+2,
+      width: ticket_td.offsetWidth-3,
+      left: ticket_td.offsetLeft,
+      height: ticket_td.offsetHeight*4*(endtime-begintime)-3
     });
-  };
 
-  console.log("new status----------------------------------------");
-  $('div#'+ticket._id.$oid).addClass('ticket_new');
-  break;
 
-  case "doing":
+    if(Auth._currentUser != null){
+
+      if (Auth._currentUser._id.$oid == object.bussiness_owner)
+        $('div#' + ticket._id.$oid + ' span.private_info').css('display', 'inline');
+    };
+
+    switch(ticket.status) {
+      case "new":
+
+      if(Auth._currentUser != null && $state.current.name ==='ticket_management' && Auth._currentUser._id.$oid == object.bussiness_owner){
+
+        $('.calendar_content').append(
+          $("<i class='fa fa-arrow-circle-o-right ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
+            object.update_status({
+              ticket_id: ticket._id.$oid,
+              status: "doing"
+            });
+          })
+          );
+
+        $('i#' + ticket._id.$oid + '_i').css({
+          top: ticket_td.offsetTop + $('div#' + ticket._id.$oid).height() - $('i#' + ticket._id.$oid + '_i').height() + 3,
+          left: ticket_td.offsetLeft + $('div#' + ticket._id.$oid).width()- $('i#' + ticket._id.$oid + '_i').width()
+        });
+      };
+
+      $('div#'+ticket._id.$oid).addClass('ticket_new');
+      break;
+
+      case "doing":
       //doing
       $('div#'+ticket._id.$oid).addClass('ticket_doing');
       break;
@@ -246,11 +256,11 @@ switch(ticket.status) {
       break;
 
       case "waiting":
-      if(Auth._currentUser != null && Auth._currentUser.roles.indexOf("bussiness admin") > -1 && $state.current.name ==='ticket_management'){
+      if(Auth._currentUser != null && Auth._currentUser._id.$oid == object.bussiness_owner && $state.current.name ==='ticket_management'){
 
         $('.calendar_content').append(
           $("<i class='fa fa-check-circle-o ticket_status_icon' id='" + ticket._id.$oid + "_i'></i>").click(function(){
-            object.update({
+            object.update_status({
               ticket_id: ticket._id.$oid,
               status: "done"
             });
