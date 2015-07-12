@@ -6,21 +6,38 @@ class TicketsController < ApplicationController
 
   def show
     # byebug
-    tickets = Ticket.onday(ticket_param[:date],ticket_param[:branch_id])
-    if tickets.present?
-      render json: tickets, status: :ok
+    @tickets = Ticket.onday(ticket_param[:date],ticket_param[:branch_id])
+    if @tickets.present?
+
+      @tickets.each do |ticket|
+        if ticket.status == Ticket::Status[:new] && Time.now > ticket.begin_use_time + 10.minutes
+          ticket.status = Ticket::Status[:over]
+          ticket.save
+        end
+
+        if ticket.status == Ticket::Status[:doing] && Time.now > ticket.end_use_time
+          ticket.status = Ticket::Status[:waiting]
+          ticket.save
+        end
+      end
+
     else
-      render json: nil
+      render nothing: true, status: :bad_request
     end
   end
 
   def create
     # byebug
     create_param = ticket_param
+    bussiness_owner = Branch.find(ticket_param[:branch_id]).bussiness.user_id
     create_result = []
     while (create_param[:begin_use_time].to_time.to_i < create_param[:date_end_everyweek_booking].to_time.to_i)
 
       ticket =  Ticket.new(create_param.except(:date_end_everyweek_booking));
+
+      if current_user.id != bussiness_owner
+        ticket.user = current_user
+      end
 
       if ticket.valid?
         ticket.save
@@ -92,7 +109,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.find(ticket_param[:ticket_id])
     if (current_user.id != @ticket.branch.bussiness.user_id)
       if (@ticket.user_id != current_user.id)
-        render nothing: true, status: :unprocessable_entity, content_type: 'application/json'
+        render nothing: true, status: :bad_request, content_type: 'application/json'
       end
     end
   end

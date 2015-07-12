@@ -228,7 +228,6 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		controller: 'bookingCtrl',
 		resolve: {
 			branch: ['$http', '$stateParams',function($http, $stateParams) {
-				console.log("resolve branch booking");
 				return $http.get("/" + $stateParams.branch_url_alias);
 			}]
 		},

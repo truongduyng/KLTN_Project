@@ -30,6 +30,7 @@ class BranchesController < ApplicationController
         @branch_details[:branch]= branch
         @branch_details[:asset_categories] = branch.asset_categories
         @branch_details[:assets] = branch.assets
+        @branch_details[:owner] = branch.bussiness.user_id
         render json: @branch_details
       else
         render nothing: true, status: :not_found, content_type: 'application/json'
