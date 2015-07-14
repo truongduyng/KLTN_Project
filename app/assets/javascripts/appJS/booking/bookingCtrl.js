@@ -59,6 +59,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     var timenow = $scope.dt.toJSON().slice(0,10) == new Date().toJSON().slice(0,10)? tickets.change_time_to_float(new Date().getHours() + ':' + new Date().getMinutes()) : $scope.dt.toJSON().slice(0,10) < new Date().toJSON().slice(0,10)? 24 : 0 ;
 
     if(Auth._currentUser != null){
+
       if (((Auth._currentUser.roles.indexOf('user') > -1) && (hour-timenow) < -10.0/60)) return false;
       if (Auth._currentUser._id.$oid == tickets.bussiness_owner){
         Flash.create("danger", "Hãy vào trang quản lý để đặt, sửa hay xóa lịch đặt trong doanh nghiệp của bạn.", "myalert");
@@ -265,7 +266,6 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     if ($scope.dt.toJSON().slice(0,10) == ticket.begin_use_time.slice(0,10)){
       tickets.tickets.push(ticket);
       tickets.viewTicket(ticket);
-      console.log('realtime' + tickets.tickets.length);
     }
   });
 
@@ -279,7 +279,6 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
           break;
         }
       };
-      console.log('realtime' + tickets.tickets.length);
     }
   });
 
@@ -309,7 +308,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     var scrollheight = $scope.td_height * 4 * work_time_length;
     $('hr.timeline').css({width: $('.tablebooking').width()});
 
-    // console.log("dsadasdas", $('table.tablebooking thead').height());
+
     var top_timeline = 45 + Math.floor((parseInt($scope.dt.getHours())*60+parseInt($scope.dt.getMinutes()) - $scope.work_time[0]*60)*scrollheight/(60*work_time_length)); // 23 is height of th
 
     $('hr.timeline').animate({top: top_timeline},'fast');
