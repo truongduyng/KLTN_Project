@@ -1,7 +1,7 @@
 # KLTN_Project
 Repository chứa mã nguồn dự án Sporta.
 
-### Sporta [http://128.199.176.52](http://128.199.176.52/ target='_blank')
+### Sporta <a href="http://128.199.176.52/" target="_blank">http://128.199.176.52/</a>
 Sporta là mạng xã hội thể thao được xây dựng bằng Ruby on Rails, AngularJS và MongoDB. Sporta hỗ trợ người dùng:
 
 - Tìm kiếm và chia sẻ địa điểm tập luyện thể dục thể thao.
