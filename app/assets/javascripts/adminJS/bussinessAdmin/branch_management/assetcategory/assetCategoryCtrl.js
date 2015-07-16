@@ -35,7 +35,7 @@ app.controller('assetCategoryCtrl', ['$scope', 'assetCategoryService', 'feeServi
             return $scope.branch;
           },
           assetCategory: function(){
-            return cate;
+            return JSON.parse(JSON.stringify(cate));;
           }
         }
       });
@@ -47,7 +47,6 @@ app.controller('assetCategoryCtrl', ['$scope', 'assetCategoryService', 'feeServi
           }
         };
       }, function (){
-
       });
     }
 
@@ -81,7 +80,7 @@ app.controller('assetCategoryCtrl', ['$scope', 'assetCategoryService', 'feeServi
 
 }]);
 
-app.controller('deletecategoryCtrl', function ($scope, $modalInstance) {
+app.controller('deletecategoryCtrl',['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
   $scope.ok = function () {
     $modalInstance.close();
@@ -90,4 +89,4 @@ app.controller('deletecategoryCtrl', function ($scope, $modalInstance) {
   $scope.cancel = function () {
     $modalInstance.dismiss(false);
   };
-});
+}]);

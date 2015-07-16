@@ -1,52 +1,45 @@
 <div class="row">
-    <ul class="media-list">
-         <li class="media">
-               <h4 class="media-heading" style="text-align: center; font-size: 22px;margin-bottom: 5px;margin-top: 5px;">{{venue.name}}</h4>
-                <div style="" >
-                    <p><i class="fa fa-phone" style="margin-right:5px;"></i>{{venue.phone}}</p>
-                    <p><i class="fa fa-location-arrow" style="margin-right:5px;"></i>{{venue.address}}</p>
-                    <p><i class="fa fa-clock-o houricon" style="margin-right:5px;"></i>Từ {{venue.begin_work_time }} tới {{venue.end_work_time}} giờ</p>
-                    
-                    <div class="myMap" map-lazy-load="http://maps.google.com/maps/api/js">
-                        <map style="width:100%; height:300px; border:5px solid; border-radius: 5px; border-color: #DFDFDF;"  zoom="17" center="{{venue.coordinates[1]}},{{venue.coordinates[0]}}" item="{{venue}}">
-                        </map>
-                    </div>
-                   <!--  <div id-map="ban-do-o-day">
-                        <div id="map" style="width:100%; height:300px; border:5px solid; border-radius: 5px; border-color: #DFDFDF;">
-                        </div>
-                    </div> -->
-                </div>
+  <ul class="media-list">
+    <li class="media">
+      <h1 class="media-heading" style="text-align: center; margin-bottom: 5px;margin-top: 5px;">{{venue.name}}</h1>
+      <div>
+        <p style="font-size: 22px;"><i class="fa fa-phone" style="margin-right:5px;"></i>{{venue.phone}}</p>
+        <p style="font-size: 22px;"><i class="fa fa-location-arrow" style="margin-right:5px;"></i>{{venue.address}}</p>
+        <p style="font-size: 22px;"><i class="fa fa-clock-o houricon" style="margin-right:5px;"></i>Từ {{venue.begin_work_time }} tới {{venue.end_work_time}} giờ</p>
 
-                <div ng-if="venue.photos != null && venue.photos.length >= 1" data-id="phan-cho-hinh-anh-dia-diem">
-                    <hr>
-                    <p>Một số hình ảnh về: <b>{{venue.name}}</b></p>
-                    <div class="detail-post-images">
-                      <a ng-click="showImage(photo)" ng-repeat="photo in venue.photos"><img ng-src="{{photo.image.url | logo}}" width="120px" height="120px"></a>
-                    
-                    </div>
-                </div>
-                <hr>
-                <div class="row" style="height:auto; background-color: whitesmoke; padding:10px; border-radius: 15px;">
-                    <div class="col-xs-10">
-                      {{venue.description}}
-                    </div>
-                    <div class="col-xs-2">
-                      <a tooltip ="{{venue.user.fullname}}" ui-sref="trangCaNhan({username: venue.user.username})" style="float: right;">
-                       <img class="img-circle img-responsive profile-picture" class="media-object" fallback-src="sportaLogo"  ng-src="{{venue.user.avatar.url | logo}}" 
-                       alt="Generic placeholder image" width="64px" height="64px" style="min-width: 44px; min-height: 44px;">
-                      </a>
-                    </div>
-                </div>
-              
-         </li>
-    </ul>
+        <div class="myMap" map-lazy-load="http://maps.google.com/maps/api/js">
+          <map style="width:100%; height:300px; border:5px solid; border-radius: 5px; border-color: #DFDFDF;"  zoom="17" center="{{venue.coordinates[1]}},{{venue.coordinates[0]}}" item="{{venue}}">
+          </map>
+        </div>
+
+      </div>
+
+      <div ng-if="venue.photos != null && venue.photos.length >= 1" data-id="phan-cho-hinh-anh-dia-diem">
+        <hr>
+        <p>Một số hình ảnh về: <b>{{venue.name}}</b></p>
+        <div class="detail-post-images">
+          <a ng-click="showImage(photo)" ng-repeat="photo in venue.photos"><img ng-src="{{photo.image.url | logo}}" width="120px" height="120px"></a>
+
+        </div>
+      </div>
+      <hr>
+      <div class="row" style="height:auto; background-color: whitesmoke; padding:10px; border-radius: 15px;">
+        <div class="col-xs-10">
+          {{venue.description}}
+        </div>
+        <div class="col-xs-2">
+          <a tooltip ="{{venue.user.fullname}}" ui-sref="trangCaNhan({username: venue.user.username})" style="float: right;">
+           <img class="img-circle img-responsive profile-picture" class="media-object" fallback-src="sportaLogo"  ng-src="{{venue.user.avatar.url | logo}}"
+           alt="Generic placeholder image" width="64px" height="64px" style="min-width: 44px; min-height: 44px;">
+         </a>
+       </div>
+     </div>
+
+   </li>
+ </ul>
 
 </div>
 <!-- END MAIN COLUMN -->
-
-
-<!-- De cho chua khoang trong duoi day -->
-<div style="margin-bottom: 100px;"></div>
 
 <!-- BEGIN MODAL HIEN THI HINH ANH -->
 <script type="text/ng-template" id="showImageModal.html">

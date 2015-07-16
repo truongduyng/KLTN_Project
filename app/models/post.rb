@@ -57,8 +57,8 @@ class Post
 
 	protected
   def build_search_field
-    if(self.title_search != remove_accent(self.title.downcase()) || self.body_search != remove_accent(self.body.downcase()))
-      self.update_attributes(title_search: remove_accent(self.title.downcase()), body_search: remove_accent(self.body.downcase()))
+    if(self.title_search != RemoveAccent.remove_accent(self.title.downcase()) || self.body_search != RemoveAccent.remove_accent(self.body.downcase()))
+      self.update_attributes(title_search: RemoveAccent.remove_accent(self.title.downcase()), body_search: RemoveAccent.remove_accent(self.body.downcase()))
     end
   end
 

@@ -112,7 +112,7 @@ app.controller('assetCtrl', ['$scope', 'assetService', 'Flash', '$modal', functi
 
 }]);
 
-app.controller('deleteAssetCtrl', function ($scope, $modalInstance) {
+app.controller('deleteAssetCtrl', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
   $scope.ok = function () {
     $modalInstance.close();
@@ -121,4 +121,4 @@ app.controller('deleteAssetCtrl', function ($scope, $modalInstance) {
   $scope.cancel = function () {
     $modalInstance.dismiss(false);
   };
-});
+}]);

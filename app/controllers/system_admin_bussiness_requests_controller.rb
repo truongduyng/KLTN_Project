@@ -42,7 +42,7 @@ class SystemAdminBussinessRequestsController < SystemAdminController
 				branch.coordinates = [@bussiness_request.longitude, @bussiness_request.latitude]
 				branch.bussiness_id = bussiness.id
 				#tao url_alias tam
-				branch.url_alias = remove_accent(@bussiness_request.name).gsub(/ /,"")
+				branch.url_alias = RemoveAccent.remove_accent(@bussiness_request.name).gsub(/ /,"")
 				branch.begin_work_time = "7:00"
 				branch.end_work_time = "24:00"
 

@@ -12,23 +12,23 @@
                 <tbody>
                   <tr>
                     <th>Địa chỉ</th>
-                    <td>{{branch.address |notKnow }}</td>
+                    <td>{{branch.address | notKnow }}</td>
                   </tr>
                   <tr>
                     <th>Điện thoại</th>
-                    <td>{{branch.phone |notKnow }}</td>
+                    <td>{{branch.phone | notKnow }}</td>
                   </tr>
                   <tr>
                     <th>Địa chỉ </th>
-                    <td>{{branch.address |notKnow }}</td>
+                    <td>{{branch.address | notKnow }}</td>
                   </tr>
                   <tr>
                     <th>Địa chỉ đặt sân </th>
-                    <td><a target="_blank" href="<%=booking_address_path('')%>#{{branch.url_alias}}">sporta.vn/{{branch.url_alias |notKnow }}</a></td>
+                    <td><a target="_blank" href="<%=booking_address_path('')%>#{{branch.url_alias}}">sporta.vn/{{branch.url_alias | notKnow }}</a></td>
                   </tr>
                   <tr>
                     <th>Giờ làm việc </th>
-                    <td>{{branch.begin_work_time |notKnow}} tới {{branch.end_work_time |notKnow}}</td>
+                    <td>{{branch.begin_work_time | notKnow}} tới {{branch.end_work_time | notKnow}}</td>
                   </tr>
                 </tbody>
               </table>
