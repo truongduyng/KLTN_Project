@@ -53,7 +53,7 @@ class CustomUsersController < ApplicationController
 		end
 		#Gan avatar bang params[:file]
 		current_user.avatar = params[:file]
-		if current_user.save
+		if current_user.save(validate: false)
 			@user = current_user
 			#render json: @current_user, status: :ok
 			render 'get_user_by_username.json.jbuilder'

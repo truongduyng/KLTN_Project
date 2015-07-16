@@ -22,7 +22,7 @@
             <div class="col-sm-12">
               <p>Họ tên: <span class="fullname"><strong><span>{{currentUser.fullname}} </span></strong></p>
               <p>Giới tính: <span class="fullname">{{currentUser.gender | notKnow}}</span></p>
-              <p>Email: <span class="email">{{currentUser.email}}</span></p>
+              <p ng-if="!currentUser.is_login_facebook">Email: <span class="email">{{currentUser.email}}</span></p>
               <p>Địa chỉ: <span class="address">{{currentUser.address | notKnow}}</span></p>
               <p>Điện thoại : <span class="phone">{{currentUser.phone | notKnow}}</span></p>
               <a ng-if="permission.all" ng-click="showEditProfileModal()" class="btn btn-success" >Chỉnh sửa tài khoản</a>
