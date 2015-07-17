@@ -82,7 +82,7 @@
     <p class="marginbot5">Thời gian: {{ dt | date:'dd-MM-yyyy'}}, {{hour_begin}} - <select ng-options = "hour_end for hour_end in hour_end_list" ng-model= 'hour_end' ng-change='update_hour_end()'/></p>
     <p class="marginbot5">Địa điểm: <a href="">{{branch.branch.name}}</a></p>
 
-    <div ng-show="signedIn()">
+    <div ng-if="signedIn()">
       <p class="marginbot5">Đặt bởi:
         <input class="customer" placeholder= 'tên liên hệ' ng-model='customer_name' autofocus></input>
       </p>

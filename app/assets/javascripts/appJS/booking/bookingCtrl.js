@@ -160,6 +160,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       $scope.dt_end_everyweek_booking = $scope.dt;
 
     }, function(error) {
+      $scope.close_minibooking();
       $modal.open({
         templateUrl: 'appJS/auth/_login.html',
         controller: 'authCtrl'
