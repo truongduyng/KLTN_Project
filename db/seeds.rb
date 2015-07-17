@@ -71,3 +71,7 @@ BussinessRequestStatus.create(name: 'Từ chối')
 
 #Duyet bai viet thanh cong
 NotificationCategory.create(name: 'Duyệt bài viết')
+
+['football', 'badminton', 'gym'].each do |sport|
+  SportCategory.find_or_create_by({name: sport, icon: "application/sport_marker/" + sport + "_marker.png"})
+end

@@ -51,7 +51,7 @@ class BranchesController < ApplicationController
         result << {
           lat: branch.coordinates[1],
           lng: branch.coordinates[0],
-          picture:  "http://i.imgur.com/BBk3iBl.png",
+          picture:  "application/sport_marker/football_marker.png",
           name: branch.name,
           address: branch.address,
           url: branch.url_alias,

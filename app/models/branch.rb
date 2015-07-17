@@ -12,6 +12,8 @@ class Branch
   field :begin_work_time, type: String
   field :end_work_time, type: String
 
+  has_many :sport_categories
+
   #Begin for venue
   field :description, type: String
   embeds_many :photos, as: :photoable

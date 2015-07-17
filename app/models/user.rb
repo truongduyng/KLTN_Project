@@ -44,7 +44,7 @@ class User
   #My field
   field :fullname, type: String
   field :username, type: String
-  field :avatar, type: String
+  # field :avatar, type: String
   field :gender, type: String #can cho nam hoac nu
   field :address, type: String
   field :phone, type: String
