@@ -31,11 +31,16 @@ class TicketsController < ApplicationController
     create_param = ticket_param
     bussiness_owner = Branch.find(ticket_param[:branch_id]).bussiness.user_id
     create_result = []
+
     while (create_param[:begin_use_time].to_time.to_i < create_param[:date_end_everyweek_booking].to_time.to_i)
 
       ticket =  Ticket.new(create_param.except(:date_end_everyweek_booking));
 
       if current_user.id != bussiness_owner
+        if(create_param[:begin_use_time].to_time < Time.now)
+          render json: ticket.errors, status: :unprocessable_entity
+          return false
+        end
         ticket.user = current_user
       end
 
@@ -46,6 +51,7 @@ class TicketsController < ApplicationController
       create_param[:begin_use_time] = create_param[:begin_use_time].to_time + 7.days
       create_param[:end_use_time] = create_param[:end_use_time].to_time + 7.days
     end
+
     if create_result.length > 0
       Fiber.new{WebsocketRails[create_param[:branch_id]].trigger('create_ticket', create_result[0])}.resume
       render json: create_result[0], status: :created
