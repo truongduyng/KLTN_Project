@@ -67,6 +67,7 @@ class User
         user.fullname = auth.info.first_name + " " + auth.info.last_name
 
         user.username = auth.uid
+        user.email = auth.uid + "@facebook.com"
         user.identity = identity
         user.save(validate: false)
         identity.save
