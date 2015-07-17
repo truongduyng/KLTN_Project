@@ -1,7 +1,7 @@
 app.factory('mapFtry', ['$http', function($http) {
   var o = {
     branches: [],
-    map: {},
+    map: null,
     markers:[],
     bounds: new google.maps.LatLngBounds(),
     image: {
