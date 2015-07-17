@@ -19,7 +19,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
 
   $scope.branch = branch.data;
-
+  console.log($scope.branch.branch);
   $scope.work_time = [];
   for (var i = tickets.change_time_to_float($scope.branch.branch.begin_work_time); i < tickets.change_time_to_float($scope.branch.branch.end_work_time); i++) {
     $scope.work_time.push(i);
