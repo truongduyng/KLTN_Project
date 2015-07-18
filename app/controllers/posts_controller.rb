@@ -22,6 +22,7 @@ class PostsController < ApplicationController
 	end
 
 	def create
+		byebug
 		@post = Post.new(post_params)
 		@post.user = current_user
 		if @post.save
@@ -247,7 +248,7 @@ class PostsController < ApplicationController
 
 	private
 	def post_params
-		params.require(:post).permit(:title, :body)
+		params.require(:post).permit(:title, :body, tag: [])
 	end
 
 	def find_and_check_post_with_user

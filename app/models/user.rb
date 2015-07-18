@@ -24,6 +24,8 @@ class User
   has_many :favorite_posts
   #Moi nguoi co the co nhieu yeu cau, boi vi neu 1 yeu cau ko dc chap thuan thi co the gui yeu cau khac
   has_many :bussiness_requests
+  #Theo doi nhung bai viet thuoc tag
+  has_and_belongs_to_many :interests, class_name: 'Tag', inverse_of: nil
 
   #notification system
   #1 nguoi co nhieu thong bao
