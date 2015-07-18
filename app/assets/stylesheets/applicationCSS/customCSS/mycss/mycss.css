@@ -10,7 +10,7 @@
 	border:none;
 	border-radius:5px;
 	display:block;
-	overflow:hidden;
+	/*overflow:hidden;*/
 
 }
 .post-form .post-form-header{

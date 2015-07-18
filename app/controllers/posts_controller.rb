@@ -22,7 +22,7 @@ class PostsController < ApplicationController
 	end
 
 	def create
-		byebug
+		# byebug
 		@post = Post.new(post_params)
 		@post.user = current_user
 		if @post.save
@@ -38,6 +38,7 @@ class PostsController < ApplicationController
 
 	#PUT /posts/:id/update.json
 	def update
+		byebug
 		#Cap nhap cac thuoc tinh cua post va save
 		if @post.update_attributes(post_params)
 			#Lay mang danh sach id cua cac anh da bi xoa
@@ -248,7 +249,7 @@ class PostsController < ApplicationController
 
 	private
 	def post_params
-		params.require(:post).permit(:title, :body, tag: [])
+		params.require(:post).permit(:title, :body, tag_ids: [])
 	end
 
 	def find_and_check_post_with_user
