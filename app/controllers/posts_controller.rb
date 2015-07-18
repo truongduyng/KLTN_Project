@@ -38,7 +38,7 @@ class PostsController < ApplicationController
 
 	#PUT /posts/:id/update.json
 	def update
-		byebug
+		# byebug
 		#Cap nhap cac thuoc tinh cua post va save
 		if @post.update_attributes(post_params)
 			#Lay mang danh sach id cua cac anh da bi xoa

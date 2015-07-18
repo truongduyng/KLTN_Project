@@ -35,9 +35,15 @@
           <div class="detail-post-images" style="text-align: center; margin-top: 20px;">
             <a ng-click="showImage(photo)" ng-repeat="photo in post.photos"><img ng-src="{{photo.image.url | logo}}" width="120px" height="120px"></a>
           </div>
+          <div class="list-tags" style="overflow: hidden;">
+                    <img src="/assets/tag.png" width="44px" style="float: left"/>
+                    <div class="tags" style="padding: 10px;">
+                      <span style="margin-left: 5px;" ng-repeat="tag in post.tags" class="label label-primary">{{tag.name}}</span> 
+                    </div>
+          </div>
           <!-- BEGIN HIEN THI CHO BAI VIET KHONG DUOC PUBLISH -->
           <div section-id="for-not-published" ng-if="!post.published">
-            <div class="likes">
+            <div class="likes" style="margin-top: 10px;">
               <div role="group" class="btn-group pull-left">
                 <a class="btn btn-default" ui-sref="editPost({id: post._id.$oid})"><span class="fa fa-edit"></span> Sửa bài viết</a>
                 <a ng-confirm-click="Bạn có muốn xóa bài viết hay không ?" confirmed-click="delete()" class="btn btn-default"><span class="fa fa-trash"></span> Xóa bài viết</a>
@@ -49,7 +55,7 @@
 
           <!-- BEGIN HIEN THI CHO BAI VIET DUOC PUBLISH, CHO PHEP LIKE, COMMENT, ... -->
           <div section-id="for-published" ng-if="post.published">
-            <div class="likes">
+            <div class="likes"  style="margin-top: 10px;">
               <span tooltip="Thích" ng-hide="post.isLiked" class="fa fa-thumbs-up like-icon" ng-click="likePost()"></span>
               <span tooltip="Bỏ thích" ng-show="post.isLiked" class="fa fa-thumbs-down unlike-icon" ng-click="unlikePost()">
               </span>
