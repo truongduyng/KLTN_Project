@@ -75,4 +75,7 @@ app.controller('sidebarCtrl',['$scope', '$modal', 'clubsFtry', '$state', 'Auth',
       }
     };
 
+
+    
+
 }]);

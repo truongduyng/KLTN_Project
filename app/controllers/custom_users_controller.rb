@@ -1,6 +1,7 @@
 class CustomUsersController < ApplicationController
-	before_action :authenticate_user!, only: [:update, :change_password, :change_avatar]
+	before_action :authenticate_user!, only: [:update, :change_password, :change_avatar, :add_interest, :delete_interest]
 	before_action :find_user_and_check_with_current_user, only: [:update]
+	 before_action :find_tag_by_id, only: [:add_interest, :delete_interest]
 
 	#Neu la tai khoan facebook thi ko the doi password
 	before_action :is_account_facebook?, only: [:change_password]
@@ -62,6 +63,14 @@ class CustomUsersController < ApplicationController
 		end
 	end
 
+	def add_interest
+		current_user.interests << @tag
+	end
+
+	def delete_interest
+	    current_user.interests.delete @tag
+	end
+
 	private
 		def user_params
 			params.require(:custom_user).permit(:fullname, :gender, :address, :phone, :description)
@@ -88,5 +97,14 @@ class CustomUsersController < ApplicationController
 			end
 
 		end
+
+
+		def find_tag_by_id
+	      begin
+	        @tag = Tag.find(params[:id])
+	      rescue Mongoid::Errors::DocumentNotFound
+	        render nothing: true, status: :not_found, content_type: 'application/json'
+	      end
+	    end
 
 end

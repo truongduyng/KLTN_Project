@@ -1,4 +1,4 @@
-json.extract! current_user, :_id, :fullname, :username, :email, :gender, :address, :phone, :description
+json.extract! current_user, :_id, :fullname, :username, :email, :gender, :address, :phone, :description, :interests
 json.avatar do
   json.url current_user.avatar.url
 end

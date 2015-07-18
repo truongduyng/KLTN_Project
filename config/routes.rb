@@ -61,6 +61,8 @@ Rails.application.routes.draw do
     collection do
       put 'change_password'
       post 'change_avatar'
+      put 'add_interest'
+      put 'delete_interest'
     end
   end
 
