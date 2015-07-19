@@ -33,7 +33,103 @@
            alt="Generic placeholder image" width="64px" height="64px" style="min-width: 44px; min-height: 44px;">
          </a>
        </div>
-     </div>
+      </div>
+      <!-- BEGIN RATE AND REVIEW -->
+      <hr>
+      <div class="ratings-boxes">
+          <div class="your-rating">
+              <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+          </div>
+          <div class="rating-statics">
+              <div class="ratings-numbers">
+                  <a class="micro-home-staticask">
+                      <span style="padding-bottom:5px;display:block;"><b style="color: #cc0000; font-size:22px;">0</b></span>
+                      <span>Kém</span>
+                  </a>
+              </div>
+              <div class="ratings-numbers">
+                  <a class="micro-home-staticask">
+                      <span style="padding-bottom:5px;display:block;"><b style="color: #333; font-size:22px;">1</b></span>
+                      <span>Trung bình</span>
+                  </a>
+              </div>
+              <div class="ratings-numbers">
+                  <a class="micro-home-staticask">
+                      <span style="padding-bottom:5px;display:block;"><b style="color:#2933E8; font-size:22px;">4</b></span>
+                      <span>Khá tốt</span>
+                  </a>
+              </div>
+              <div class="ratings-numbers">
+                  <a class="micro-home-staticask">
+                      <span style="padding-bottom:5px;display:block;"><b style="color: #03ae03; font-size:22px;">4</b></span>
+                      <span>Tốt</span>
+                  </a>
+              </div>
+               <div class="ratings-numbers">
+                  <a class="micro-home-staticask">
+                      <span style="padding-bottom:5px;display:block;"><b style="color: #8E44AD; font-size: 22px;">0</b></span>
+                      <span>Tuyệt vời</span>
+                  </a>
+              </div>
+
+          </div>  
+      </div>
+      <hr>
+      <div class="comment-textarea">
+          <div class="input-group">
+             <textarea style="min-height: 64px; overflow: hidden; word-wrap: break-word; height: 64px;" class="form-control" placeholder="Chia sẻ cảm nghĩ của bạn về địa điểm trên" data-autosize-on="true"></textarea>
+             <span class="input-group-btn">
+                <button style="min-height: 64px; min-width: 80px;" class="btn btn-default" type="button">
+                   Gửi
+                </button>
+             </span>
+          </div>
+      </div>
+      <hr>
+      <div class="list-reviews">
+          <!-- MOT CAI REVIEWS BAO GOM CA HIEN THI VA CHINH SUA -->
+          <div class="review-with-edit-container">
+            <!-- PHAN NAY CHO CHINH SUA -->
+              <div class="comment-textarea" style="display:none;">
+                 <div class="input-group">
+                   <textarea style="min-height: 64px; overflow: hidden; word-wrap: break-word; height: 64px;" class="form-control" placeholder="Chia sẻ cảm nghĩ của bạn về địa điểm trên" data-autosize-on="true"></textarea>
+                   <span class="input-group-btn">
+                      <button style="min-height: 64px; min-width: 80px;" class="btn btn-default" type="button">
+                         Gửi
+                      </button>
+                   </span>
+                </div> 
+              </div>
+
+              <!-- PHAN NAY CHO HIEN THI -->
+              <div class="review-user row">
+                  <div class="review-user-content-col col-xs-10">
+                    <div class="review-content">
+                        This is some sample text. This is some sample text. 
+                        This is some sample text. This is some sample text.
+                        This is some sample text. This is some sample text. 
+                    </div>
+                    <div class="review-action">
+                       <a>Sửa</a>
+                       <a>Xóa</a>
+                    </div>
+                  </div>
+                  <div class="review-user-avatar-col col-xs-2">
+                    <a href="#" style="float: right;">
+                     <img class="img-circle img-responsive profile-picture" class="media-object" src="gallery/01.jpg" 
+                     alt="Generic placeholder image" width="64px" height="64px" style="min-width: 44px; min-height: 44px;">
+                    </a>
+                  </div>
+              </div>
+          </div>
+          <hr>
+      </div>
+      <!-- END RATE AND REVIEW -->
+
+
+
+
+
 
    </li>
  </ul>
@@ -84,3 +180,97 @@
       width: 85%;
     }
   </style>
+
+
+
+<style type="text/css">
+.review-point {
+   background: #009bcc none repeat scroll 0 0;
+    border-radius: 30px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.9;
+    padding: 8px 7px;
+    text-align: center;
+    cursor:pointer;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.ratings-boxes {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #eee;
+    border-radius: 2px;
+    overflow: hidden;
+    padding: 0;
+
+
+  
+}
+
+.rating-statics{
+  float: right;
+}
+.ratings-numbers {
+    float: left;
+    padding: 15px 0 10px;
+    text-align: center;
+    width: 118px;
+}
+.ratings-numbers:hover{
+  background-color: #f8f8f8;
+}
+.micro-home-staticask, .micro-home-staticask:hover{
+    cursor: pointer;
+     color: #333;
+    outline: 0 none;
+    text-decoration: none;
+
+
+}
+
+.your-rating {
+    float: left;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 40px;
+    margin-top: 20px;
+    margin-left:50px;
+
+
+}
+
+.rating-result {
+    float: right;
+    text-align: center;
+    font-size: 20px;
+}
+.review-user-content-col .review-action {
+  position: absolute;
+
+}
+.review-user-content-col .review-action a{
+  cursor:pointer;
+  margin-top:5px;
+
+  padding-left:5px;
+  padding-right:5px;
+  display: none;
+}
+.review-user{
+  position: relative;
+  height:auto; 
+  background-color: whitesmoke;
+  padding:10px;
+  border-radius: 15px;
+  padding-bottom:20px;
+  
+  
+}
+.review-user:hover .review-user-content-col .review-action a{
+  display: inline-block;
+
+}
+
+</style>
