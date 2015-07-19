@@ -78,27 +78,32 @@ class Branch
   # 	return self.street + self.district + self.city
   # end
 
-  def self.search(param_search)
+  def self.search_map(param_search)
     begin
       if param_search[:lat]
 
         return Branch.near([param_search[:lat].to_f, param_search[:lng].to_f], param_search[:distance].to_f, order:"distance")
       end
-
-      if param_search[:search_query]
-
-        results = Branch.text_search(RemoveAccent.remove_accent(param_search[:search_query].downcase())).to_a
-        Branch.near(param_search[:search_query], 2, order:"distance").to_a.each do |b|
-          if !results.include? b
-            results << b
-          end
-        end
-
-        return results[0..7]
-      end
     rescue Exception => e
       return nil
     end
+    return nil
+  end
+
+  def self.search(param_search)
+    results = []
+    begin
+      results = Branch.text_search(RemoveAccent.remove_accent(param_search.downcase())).to_a
+      Branch.near(param_search, 2, order:"distance").to_a.each do |b|
+        if !results.include? b
+          results << b
+        end
+      end
+      return results
+    end
+  rescue Exception => e
+    return nil
+
     return nil
   end
 

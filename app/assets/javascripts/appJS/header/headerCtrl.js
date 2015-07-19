@@ -1,22 +1,35 @@
 app.controller('headerCtrl', ['$scope', '$http','$state', function($scope, $http, $state){
 
-  $scope.results = [];
-  $scope.search_query = "";
 
-  $('ul.list_recommend').width($('div#search_box').width());
+  function init (){
+    $scope.results = {};
+    $scope.results.branches = [];
+    $scope.results.posts = [];
+    $scope.results.clubs = [];
+
+  }
+  $scope.search_query = "";
+  init();
+
+  $('div.search_result').width($('div#search_box').width());
 
   $scope.search_fast = function(){
-    $scope.results = [];
+    init();
     $scope.isloading = true;
-    $http.get("/searchnameadd/"+ $scope.search_query).success(function(data){
+    $http.get("/search/"+ $scope.search_query).success(function(data){
+      console.log(data);
       $scope.isloading = false;
-      $scope.results = data;
+      $scope.results.branches = data.branches;
+      $scope.results.posts = data.posts;
+      $scope.results.clubs = data.clubs;
     });
   };
 
   $scope.search = function(){
     $scope.overred = false;
-    $state.go('search',{search_word: $scope.search_query});
+    if($scope.search_query != ''){
+      $state.go('search',{search_word: $scope.search_query});
+    }
   };
 
   $scope.focused = function(){
@@ -38,17 +51,29 @@ app.controller('headerCtrl', ['$scope', '$http','$state', function($scope, $http
   }
 
   $scope.show_recommend_result = function(){
-    return ($scope.results.length > 0 && $scope.isfocus);
+    return ($scope.results.branches.length > 0 && $scope.isfocus);
   }
 
-  $scope.showresult = function(result){
+  $scope.showbranch = function(result){
     if (result.isvenue){
       $state.go('venueDetail', {id: result.url});
     }else{
       $state.go('booking', {branch_url_alias: result.url});
     }
-
-    $scope.results = [];
+    init();
     $scope.search_query = "";
   }
+
+  $scope.showpost = function(result){
+    $state.go('chiTietBaiViet', {id: result._id.$oid});
+    init();
+    $scope.search_query = "";
+  }
+
+  $scope.showclub = function(result){
+    $state.go('club', {club_id: result.id.$oid, club_post_id: null});
+    init();
+    $scope.search_query = "";
+  }
+
 }]);

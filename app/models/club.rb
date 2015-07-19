@@ -10,6 +10,18 @@ class Club
   has_one :cover_image, class_name: 'Image'
   has_many :club_posts
 
+  field :name_search, type: String
+  field :description_search, type: String
+  after_save :build_search_field
+
+  index({name_search: "text", description_search: "text"}, {weights: {name_search: 10, description_search: 2}, name: "ClubIndex"})
+
   validates :name, presence: true
 
+  protected
+  def build_search_field
+    if(self.name_search != RemoveAccent.remove_accent(self.name.downcase()) || self.description_search != RemoveAccent.remove_accent(self.description.downcase()))
+      self.update_attributes(name_search: RemoveAccent.remove_accent(self.name.downcase()), description_search: RemoveAccent.remove_accent(self.description.downcase()))
+    end
+  end
 end

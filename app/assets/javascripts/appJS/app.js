@@ -184,11 +184,8 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		templateUrl: 'appJS/search/search.html',
 		controller: 'searchCtrl',
 		resolve: {
-			branches:['$http','$stateParams', function($http, $stateParams) {
-				return $http.get("/searchnameadd/"+ $stateParams.search_word);
-			}],
-			posts:['$http','$stateParams', function($http, $stateParams){
-				return $http.get("posts/search/"+ $stateParams.search_word);
+			results:['$http','$stateParams', function($http, $stateParams) {
+				return $http.get("/search/"+ $stateParams.search_word);
 			}]
 		}
 	});

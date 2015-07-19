@@ -1,7 +1,7 @@
-app.controller('searchCtrl', ['$scope', '$http','$state', 'branches', 'posts', 'listPostService', 'mapFtry', function($scope, $http, $state, branches, posts, listPostService, mapFtry){
+app.controller('searchCtrl', ['$scope', '$http','$state', 'results', 'listPostService', 'mapFtry', function($scope, $http, $state, results, listPostService, mapFtry){
 
-  listPostService.posts = posts.data;
-  $scope.branches = branches.data;
+  listPostService.posts = results.data.posts;
+  $scope.branches = results.data.branches;
 
   $scope.$on('mapInitialized', function(e, map) {
 
@@ -20,7 +20,7 @@ app.controller('searchCtrl', ['$scope', '$http','$state', 'branches', 'posts', '
         mapFtry.markers = [];
         mapFtry.bounds = new google.maps.LatLngBounds();
 
-        $http.get("/search/"+latlng.A+"/"+latlng.F+"/"+$scope.distance).success(function(data){
+        $http.get("/search_map/"+latlng.A+"/"+latlng.F+"/"+$scope.distance).success(function(data){
           $scope.branches = data;
           mapFtry.setMarkers(mapFtry.map,data);
         });

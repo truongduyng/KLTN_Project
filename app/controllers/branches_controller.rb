@@ -43,7 +43,7 @@ class BranchesController < ApplicationController
   end
 
   def search
-    branches = Branch.search(branch_params)
+    branches = Branch.search_map(branch_params)
     result = []
     # byebug
     if branches.present?

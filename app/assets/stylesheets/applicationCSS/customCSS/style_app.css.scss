@@ -376,13 +376,20 @@ span.club-header{
 	width: inherit;
 }
 
-ul.list_recommend{
-	list-style-type: none !important;
-	padding-left: 0px !important;
+.search_result{
 	box-shadow: 2px 2px 2px #888888 !important;
 	background-color: #f5f5f5 !important;
 	position: absolute !important;
 	z-index: 5 !important;
+}
+
+ul.list_recommend{
+	list-style-type: none !important;
+	padding-left: 0px !important;
+	/*box-shadow: 2px 2px 2px #888888 !important;
+	background-color: #f5f5f5 !important;
+	position: absolute !important;
+	z-index: 5 !important;*/
 }
 
 ul.list_recommend li{

@@ -28,25 +28,79 @@
             </div>
           </form>
 
-          <div ng-show="search_query && isfocus">
+          <div ng-show="search_query && isfocus" class="search_result">
 
-            <ul ng-hide="show_recommend_result()" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()" style="text-align: center;">
-              <li>
-                <span ng-show="isloading" class="fa fa-spinner fa-pulse fa-fw"></span>
-              </li>
-              <li ng-hide="isloading && results != []">
-                Không tìm thấy địa điểm nào
-              </li>
-            </ul>
+            <div style="width: 30%; float: left; text-align: center;">
+              <ul class="list_recommend">
+                <li>Địa điểm</li>
+              </ul>
+            </div>
+            <div style="width: 70%; float: left;">
+              <ul ng-hide="show_recommend_result()" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()">
+                <li>
+                  <span ng-show="isloading" class="fa fa-spinner fa-pulse fa-fw"></span>
+                </li>
+                <li ng-hide="isloading || results.branches.length > 0">
+                  Không có kết quả nào
+                </li>
+              </ul>
 
-            <ul ng-show="show_recommend_result()" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()" >
-              <li ng-repeat = "result in results" ng-click="showresult(result)">
-                <strong>{{result.name}}</strong>
-                <p>{{result.address}}</p>
-              </li>
-            </ul>
+              <ul ng-show="show_recommend_result()" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()" >
+                <li ng-repeat = "result in results.branches" ng-click="showbranch(result)">
+                  <strong>{{result.name}}</strong>
+                  <p>{{result.address}}</p>
+                </li>
+              </ul>
+            </div>
+
+            <hr style="height: 1px; width: 100%; margin: 3px 0 3px 0; background-color: gray; ">
+
+            <div style="width: 30%; float: left; text-align: center;">
+              <ul class="list_recommend">
+                <li>Bài viết</li>
+              </ul>
+            </div>
+            <div style="width: 70%; float: left;">
+              <ul ng-hide="results.posts==[]" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()">
+                <li>
+                  <span ng-show="isloading" class="fa fa-spinner fa-pulse fa-fw"></span>
+                </li>
+                <li ng-hide="isloading || results.posts.length > 0">
+                  Không có kết quả nào
+                </li>
+              </ul>
+
+              <ul ng-show="results.posts" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()" >
+                <li ng-repeat = "post in results.posts" ng-click="showpost(post)">
+                  <strong>{{post.title}}</strong>
+                  <p>{{post.user.fullname}}</p>
+                </li>
+              </ul>
+            </div>
+            <hr style="height: 1px; width: 100%; margin: 3px 0 3px 0; background-color: gray; ">
+            <div style="width: 30%; float: left; text-align: center;">
+              <ul class="list_recommend">
+                <li>Câu lạc bộ</li>
+              </ul>
+            </div>
+            <div style="width: 70%; float: left;">
+              <ul ng-hide="results.clubs==[]" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()">
+                <li>
+                  <span ng-show="isloading" class="fa fa-spinner fa-pulse fa-fw"></span>
+                </li>
+                <li ng-hide="isloading || results.clubs.length > 0">
+                  Không có kết quả nào
+                </li>
+              </ul>
+
+              <ul ng-show="results.clubs" class="list_recommend" ng-mouseover="over_search()" ng-mouseout="out_search()" >
+                <li ng-repeat = "club in results.clubs" ng-click="showclub(club)">
+                  <strong>{{club.name}}</strong>
+                </li>
+              </ul>
+            </div>
+
           </div>
-
         </div>
 
         <!-- NAVIGATION HERE -->

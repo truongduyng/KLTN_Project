@@ -98,8 +98,8 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'search(/:lat/:lng/:distance)' => 'branches#search', constraints:{ lat: /[0-9\.]+/, lng: /[0-9\.]+/, distance: /[0-9\.]+/ }
-  get 'searchnameadd(/:search_query)' => 'branches#search'
+  get 'search_map/:lat/:lng/:distance' => 'branches#search', constraints:{ lat: /[0-9\.]+/, lng: /[0-9\.]+/, distance: /[0-9\.]+/ }
+  get 'search/:search_query' => 'search#search'
 
   resources :assets
 
