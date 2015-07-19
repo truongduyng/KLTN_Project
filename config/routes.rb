@@ -8,6 +8,9 @@ Rails.application.routes.draw do
     member do
       post 'add_photo'
       put 'delete_photo'
+      put 'rating'
+    end
+    resources :rates do 
     end
   end
 
