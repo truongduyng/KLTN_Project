@@ -24,12 +24,12 @@ class Ticket
   validate :check_time
 
   def self.onday(date, branch_id)
-    return Ticket.where(:begin_use_time => (date.to_time..(date+" 23:59:59").to_time),branch_id: branch_id)
+    return Ticket.where(:begin_use_time => (date.to_time..(date+" 23:59:59").to_time),branch_id: branch_id, :status.in =>[Status[:new],Status[:doing],Status[:waiting],Status[:done]])
   end
 
   def check_time
     # byebug
-    tickets = Ticket.where(:begin_use_time => (begin_use_time.beginning_of_day.. begin_use_time.end_of_day),branch_id: branch_id, asset_id: asset_id).to_a
+    tickets = Ticket.where(:begin_use_time => (begin_use_time.beginning_of_day.. begin_use_time.end_of_day),branch_id: branch_id, asset_id: asset_id, :status.in =>[Status[:new],Status[:doing],Status[:waiting],Status[:done]]).to_a
 
     tickets.delete(self)
 

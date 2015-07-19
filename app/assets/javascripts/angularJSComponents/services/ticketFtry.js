@@ -252,7 +252,7 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
       break;
 
       case "over":
-      $('div#'+ticket._id.$oid).addClass('ticket_over');
+      $('div#'+ticket._id.$oid).css('display','none');
       break;
 
       case "waiting":

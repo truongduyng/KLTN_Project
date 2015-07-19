@@ -19,7 +19,6 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
 
 
   $scope.branch = branch.data;
-
   $scope.work_time = [];
   for (var i = tickets.change_time_to_float($scope.branch.branch.begin_work_time); i < tickets.change_time_to_float($scope.branch.branch.end_work_time); i++) {
     $scope.work_time.push(i);
@@ -98,7 +97,6 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       if (Auth._currentUser != null) {
         $scope.customer_name = Auth._currentUser.fullname;
         $scope.customer_phone = Auth._currentUser.phone;
-        console.log(Auth._currentUser.phone, $scope.customer_phone);
       };
       $scope.showtimeintd(hour, element, false); //clear content in td
 
@@ -160,6 +158,7 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
       $scope.dt_end_everyweek_booking = $scope.dt;
 
     }, function(error) {
+      $scope.close_minibooking();
       $modal.open({
         templateUrl: 'appJS/auth/_login.html',
         controller: 'authCtrl'

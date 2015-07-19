@@ -18,7 +18,8 @@ app.controller('mapCtrl', ['$scope', '$http', 'mapFtry', 'userService', function
   $scope.$on('mapInitialized', function(e, map) {
     mapFtry.map = map;
     $scope.map = mapFtry.map;
-
+    mapFtry.markers = [];
+    mapFtry.bounds = new google.maps.LatLngBounds();
     google.maps.event.addListener(map, 'idle', (function(map) {
       return function(){
         mapFtry.map = map;

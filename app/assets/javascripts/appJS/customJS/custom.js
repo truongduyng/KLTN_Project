@@ -65,7 +65,6 @@ $(document).ready(function() {
   }).resize();
 
   if (window.location && window.location.hash) {
-    console.log(window.location, window.location.hash);
     // if (window.location.hash == '#_=_') {
     //   console.log("wwww");
     //   window.location.hash = '';

@@ -1,109 +1,117 @@
 
 <div class="marginbot30 margintop10">
-  <h1 style="display:inline;">{{branch.branch.name}}</h1>
-    <!-- <rating ng-model="rate" readonly="isReadonly" ng-hover="hoveringOver(value)" on-leave="ishoverstar = false"></rating>
-    <span ng-hide = "ishoverstar">({{rate}}/5)</span>
-    <span ng-show = "ishoverstar">({{overstar}}/5)</span>
-    <a href="#/{{branch.branch.name}}/review">Reviews</a> -->
-  </div>
+  <h1 style="display:inline; cursor: pointer;">{{branch.branch.name}}</h1>
+  <!-- <rating ng-model="rate" readonly="isReadonly" ng-hover="hoveringOver(value)" on-leave="ishoverstar = false"></rating>
+  <span ng-hide = "ishoverstar">({{rate}}/5)</span>
 
-  <div class="row margintop10">
-    <div class="col-lg-3 col-sm-4 col-xs-12">
-      <div style="display:inline-block; margin-bottom: -20px;">
-        <datepicker ng-model="dt" show-weeks="false" min-date = "mindate" class="well well-sm" ng-click="date_change()"></datepicker>
-      </div>
+  <span ng-show = "ishoverstar">({{overstar}}/5)</span>
+  <a href="#/{{branch.branch.name}}/review">Reviews</a> -->
 
-      <h4 class="marginbot5">Bảng phí</h4>
-      <div class="fee_content">
-        <ul>
-          <li class="marginbot10" ng-repeat= "asset_category in branch.asset_categories">
-            <span>{{asset_category.name}}</span>
-            <table border="1">
-              <tr>
-                <th class="text-center">Thời gian</th>
-                <th class="text-center">Giá(,000 VNĐ)</th>
-              </tr>
-              <tr ng-repeat= "fee in asset_category.fees">
-                <td class="text-center">{{fee.begin_time}} - {{fee.end_time}}</td>
-                <td class="text-center">{{fee.price}}</td>
-              </tr>
-            </table>
-          </li>
-        </ul>
-      </div>
+</div>
+
+<div class="row margintop10">
+  <div class="col-lg-3 col-sm-4 col-xs-12">
+    <div style="display:inline-block; margin-bottom: -20px;">
+      <datepicker ng-model="dt" show-weeks="false" min-date = "mindate" class="well well-sm" ng-click="date_change()"></datepicker>
     </div>
 
-    <div class="calendar_content col-lg-9 col-sm-8 col-xs-12">
-      <hr class="timeline" ng-show='showtimeline'>
-      <table class="tablebooking">
-        <thead>
-          <tr>
-            <th class="text-center" style="width: 50px !important; height: 45px !important">Thời gian</th>
-            <th class="text-center" ng-repeat= "asset in branch.assets">{{asset.name}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat-start= "hour in work_time">
-            <td class="padding10 text-center" rowspan="5" style="width:50px !important;">{{hour}}:00</td>
-          </tr>
-          <tr class="time_td" time="{{hour}}">
-            <td id= "td_{{hour}}_{{asset._id.$oid}}" ng-click = "fast_book_open(hour,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour,$event,true)" ng-mouseleave="showtimeintd(hour,$event,false)" ng-repeat= "asset in branch.assets"></td>
-          </tr>
-          <tr class="time_td" time="{{hour+0.25}}">
-            <td id="td_{{hour}}_15_{{asset._id.$oid}}" ng-click = "fast_book_open(hour+0.25,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour+0.25,$event,true)" ng-mouseleave="showtimeintd(hour+0.25,$event,false)" ng-repeat= "asset in branch.assets"></td>
-          </tr>
-          <tr class="time_td" time="{{hour+0.5}}">
-            <td id="td_{{hour}}_30_{{asset._id.$oid}}" ng-click = "fast_book_open(hour+0.5,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour+0.5,$event,true)" ng-mouseleave="showtimeintd(hour+0.5,$event,false)" ng-repeat= "asset in branch.assets"></td>
-          </tr>
-          <tr class="time_td" time="{{hour+0.75}}" ng-repeat-end>
-            <td id="td_{{hour}}_45_{{asset._id.$oid}}" ng-click = "fast_book_open(hour+0.75,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour+0.75,$event,true)" ng-mouseleave="showtimeintd(hour+0.75,$event,false)" ng-repeat= "asset in branch.assets"></td>
-          </tr>
-        </tbody>
-      </table>
-      <div id= "ticket_temp" class="ticket">
-        <span>{{hour_begin}} - {{hour_end}}</span><br>
-        <span>Giá: {{price}}</span>
-      </div>
+    <h4 class="marginbot5">Bảng phí</h4>
+    <div class="fee_content">
+      <ul>
+        <li class="marginbot10" ng-repeat= "asset_category in branch.asset_categories">
+          <span>{{asset_category.name}}</span>
+          <table border="1">
+            <tr>
+              <th class="text-center">Thời gian</th>
+              <th class="text-center">Giá(,000 VNĐ)</th>
+            </tr>
+            <tr ng-repeat= "fee in asset_category.fees">
+              <td class="text-center">{{fee.begin_time}} - {{fee.end_time}}</td>
+              <td class="text-center">{{fee.price}}</td>
+            </tr>
+          </table>
+        </li>
+      </ul>
     </div>
   </div>
 
-  <div id='minibooking' class="boxbooking">
-    <button type="button" class="close" style="color: red" aria-hidden="true" ng-click="close_minibooking()">&times;</button><br>
-    <form ng-enter="ticket_create(dt,hour_begin,hour_end)" name="bookingForm" role="form" novalidate>
-      <p class="marginbot5">Thời gian: {{ dt | date:'dd-MM-yyyy'}}, {{hour_begin}} - <select ng-options = "hour_end for hour_end in hour_end_list" ng-model= 'hour_end' ng-change='update_hour_end()'/></p>
-      <p class="marginbot5">Địa điểm: <a href="">{{branch.branch.name}}</a></p>
-
-      <div ng-show="signedIn()">
-        <p class="marginbot5">Đặt bởi:
-          <input class="customer" placeholder= 'tên liên hệ' ng-model='customer_name' autofocus></input>
-        </p>
-        <p> SĐT:
-          <input style="margin-left: 16px;" name="phone" class="customer" placeholder= 'số đt liên hệ' ng-model='customer_phone' ng-pattern="/^[0]{1}[0-9]{9,10}$/" required></input>
-          <div ng-show="bookingForm.phone.$dirty && bookingForm.phone.$invalid">
-            <span style="color:#FF0000" ng-show="bookingForm.phone.$error.pattern">Định dạng hợp lệ cho số điện thoại: 01279012790, 0948993995</span>
-          </div>
-        </p>
-      </div>
-
-      <p class="marginbot5">Giá: {{price}} (.000 VND)</p>
-      <input type="checkbox" ng-model="iseveryweek" ng-change="viewweekbooking()">Đặt hàng tuần<br>
-      <div class="everyweek">
-        <p class="input-group">
-          <input type="text" show-weeks = "false" placeholder="Ngày kết thúc..." class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="dt_end_everyweek_booking" is-open="opened" min-date="dt" close-text="Tắt" clear-text = "xóa" current-text="hôm nay" readonly="true" ng-click="open($event)"/>
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-          </span>
-        </p>
-      </div>
-      <button data-ng-disabled="bookingForm.$invalid" class="btn btn-default" ng-click="ticket_create(dt,hour_begin,hour_end)" type="submit">Đặt</button>
-    </form>
+  <div class="calendar_content col-lg-9 col-sm-8 col-xs-12">
+    <hr class="timeline" ng-show='showtimeline'>
+    <table class="tablebooking">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 50px !important; height: 45px !important">Thời gian</th>
+          <th class="text-center" ng-repeat= "asset in branch.assets">{{asset.name}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat-start= "hour in work_time">
+          <td class="padding10 text-center" rowspan="5" style="width:50px !important;">{{hour}}:00</td>
+        </tr>
+        <tr class="time_td" time="{{hour}}">
+          <td id= "td_{{hour}}_{{asset._id.$oid}}" ng-click = "fast_book_open(hour,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour,$event,true)" ng-mouseleave="showtimeintd(hour,$event,false)" ng-repeat= "asset in branch.assets"></td>
+        </tr>
+        <tr class="time_td" time="{{hour+0.25}}">
+          <td id="td_{{hour}}_15_{{asset._id.$oid}}" ng-click = "fast_book_open(hour+0.25,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour+0.25,$event,true)" ng-mouseleave="showtimeintd(hour+0.25,$event,false)" ng-repeat= "asset in branch.assets"></td>
+        </tr>
+        <tr class="time_td" time="{{hour+0.5}}">
+          <td id="td_{{hour}}_30_{{asset._id.$oid}}" ng-click = "fast_book_open(hour+0.5,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour+0.5,$event,true)" ng-mouseleave="showtimeintd(hour+0.5,$event,false)" ng-repeat= "asset in branch.assets"></td>
+        </tr>
+        <tr class="time_td" time="{{hour+0.75}}" ng-repeat-end>
+          <td id="td_{{hour}}_45_{{asset._id.$oid}}" ng-click = "fast_book_open(hour+0.75,asset._id.$oid, $event)" ng-mouseenter="showtimeintd(hour+0.75,$event,true)" ng-mouseleave="showtimeintd(hour+0.75,$event,false)" ng-repeat= "asset in branch.assets"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div id= "ticket_temp" class="ticket">
+      <span>{{hour_begin}} - {{hour_end}}</span><br>
+      <span>Giá: {{price}}</span>
+    </div>
   </div>
-
-  <div id='miniedit' class="boxbooking">
-    <button type="button" class="close" style="color: red" aria-hidden="true" ng-click="close_miniedit()">&times;</button><br>
-    <p class="marginbot5">Thời gian: {{dt | date: 'dd-MM-yyyy'}}, <span id='time_ticket'></span></p>
-    <p id='price_ticket' class="marginbot5"></p>
-    <p id='ticket_id_hidden' hidden= 'true'></p>
-    <button class="btn btn-primary pull-left marginright20" type="submit" ng-click="ticket_edit()">Xem chi tiết</button>
-    <button class="btn btn-danger pull-right marginright20" type="submit" ng-click="ticket_delete()">Xóa</button>
+  <div class="pull-right col-lg-9 col-sm-8 col-xs-12">
+    <i class="fa fa-square" style="color: rgb(57,116,216); margin-right: 5px; font-size: 18px">mới</i>
+    <i class="fa fa-square" style="color: rgb(123, 209, 72); margin-right: 5px; font-size: 18px">đang diễn ra</i>
+    <i class="fa fa-square" style="color: rgb(221, 75, 63); margin-right: 5px; font-size: 18px">chưa thanh toán</i>
+    <i class="fa fa-square" style="color: rgb(112, 113, 117); margin-right: 5px; font-size: 18px">đã xong</i>
   </div>
+</div>
+
+<div id='minibooking' class="boxbooking">
+  <button type="button" class="close" style="color: red" aria-hidden="true" ng-click="close_minibooking()">&times;</button><br>
+  <form ng-enter="ticket_create(dt,hour_begin,hour_end)" name="bookingForm" role="form" novalidate>
+    <p class="marginbot5">Thời gian: {{ dt | date:'dd-MM-yyyy'}}, {{hour_begin}} - <select ng-options = "hour_end for hour_end in hour_end_list" ng-model= 'hour_end' ng-change='update_hour_end()'/></p>
+    <p class="marginbot5">Địa điểm: <a href="">{{branch.branch.name}}</a></p>
+
+    <div ng-show="signedIn()">
+      <p class="marginbot5">Đặt bởi:
+        <input class="customer" placeholder= 'tên liên hệ' ng-model='customer_name' autofocus></input>
+      </p>
+      <p> SĐT:
+        <input style="margin-left: 16px;" name="phone" class="customer" placeholder= 'số đt liên hệ' ng-model='customer_phone' ng-pattern="/^[0]{1}[0-9]{9,10}$/" required></input>
+        <div ng-show="bookingForm.phone.$dirty && bookingForm.phone.$invalid">
+          <span style="color:#FF0000" ng-show="bookingForm.phone.$error.pattern">Định dạng hợp lệ cho số điện thoại: 01279012790, 0948993995</span>
+        </div>
+      </p>
+    </div>
+
+    <p class="marginbot5">Giá: {{price}} (.000 VND)</p>
+    <input type="checkbox" ng-model="iseveryweek" ng-change="viewweekbooking()">Đặt hàng tuần<br>
+    <div class="everyweek">
+      <p class="input-group">
+        <input type="text" show-weeks = "false" placeholder="Ngày kết thúc..." class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="dt_end_everyweek_booking" is-open="opened" min-date="dt" close-text="Tắt" clear-text = "xóa" current-text="hôm nay" readonly="true" ng-click="open($event)"/>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+    </div>
+    <button data-ng-disabled="bookingForm.$invalid" class="btn btn-default" ng-click="ticket_create(dt,hour_begin,hour_end)" type="submit">Đặt</button>
+  </form>
+</div>
+
+<div id='miniedit' class="boxbooking">
+  <button type="button" class="close" style="color: red" aria-hidden="true" ng-click="close_miniedit()">&times;</button><br>
+  <p class="marginbot5">Thời gian: {{dt | date: 'dd-MM-yyyy'}}, <span id='time_ticket'></span></p>
+  <p id='price_ticket' class="marginbot5"></p>
+  <p id='ticket_id_hidden' hidden= 'true'></p>
+  <button class="btn btn-primary pull-left marginright20" type="submit" ng-click="ticket_edit()">Xem chi tiết</button>
+  <button class="btn btn-danger pull-right marginright20" type="submit" ng-click="ticket_delete()">Xóa</button>
+</div>

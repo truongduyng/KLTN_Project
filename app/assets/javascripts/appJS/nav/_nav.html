@@ -360,11 +360,13 @@
     </a>
     <ul class="dropdown-menu" role="menu">
 
-      <li ng-hide="isbussinessadmin()"><a style="cursor:pointer;" ui-sref="khTkDoanhNghiep">Đăng ký doanh nghiệp</a></li>
-      <li ng-show="isbussinessadmin()"><a style="cursor:pointer;" href="/bussiness-admin">Quản lý doanh nghiệp</a></li>
-      <li ng-show="isSystemAdmin()"><a style="cursor:pointer;" href="/system-admin#/">Quản lý sporta</a></li>
-      <li ng-show="signedIn()"><a style="cursor:pointer;" ng-click="logout()">Thoát</a></li>
+      <li ng-if="!isbussinessadmin()"><a class="menuphonecolor" style="cursor:pointer;" ui-sref="khTkDoanhNghiep">Đăng ký doanh nghiệp</a></li>
+      <li ng-if="isbussinessadmin()"><a class="menuphonecolor" style="cursor:pointer;" href="/bussiness-admin">Quản lý doanh nghiệp</a></li>
+      <li ng-if="isSystemAdmin()"><a class="menuphonecolor" style="cursor:pointer;" href="/system-admin#/">Quản lý sporta</a></li>
 
+      <li ui-sref="dangBai"><a class="menuphonecolor"><span class="fa fa-plus"></span> Viết bài</a></li>
+      <li ui-sref="shareVenue"><a class="menuphonecolor"><span class="fa fa-plus"></span> Chia sẻ địa điểm</a></li>
+      <li ng-if="signedIn()"><a class="menuphonecolor" style="cursor:pointer;" ng-click="logout()">Thoát</a></li>
     </ul>
   </li>
 

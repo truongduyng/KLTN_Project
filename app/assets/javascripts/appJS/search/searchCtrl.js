@@ -6,7 +6,10 @@ app.controller('searchCtrl', ['$scope', '$http','$state', 'branches', 'posts', '
   $scope.$on('mapInitialized', function(e, map) {
 
     mapFtry.map = map;
+    mapFtry.markers = [];
+    mapFtry.bounds = new google.maps.LatLngBounds();
     $scope.map = mapFtry.map;
+
     mapFtry.setMarkers(mapFtry.map, $scope.branches);
     mapFtry.map.fitBounds(mapFtry.bounds);
 
