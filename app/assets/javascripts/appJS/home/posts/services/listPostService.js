@@ -9,7 +9,8 @@ app.factory('listPostService', ['$http', function($http) {
 		return $http.get(url + query).success(function(data) {
 
 			if (page == 1){
-				o.posts = data;
+				o.posts.splice(0,o.posts.length);
+				angular.copy(data, o.posts);
 			}else{
 				data.forEach(function(item){
 					o.posts.push(item);

@@ -84,7 +84,7 @@ app.controller('sidebarCtrl', ['$scope', '$modal', 'clubsFtry', '$state', 'Auth'
 
     //Cho so thich
     $scope.openInterestModal = function() {
-      var modalInstance = $modal.open({
+      var interestModalInstance = $modal.open({
         animation: true,
         templateUrl: 'modalIntereset.html',
         controller: 'InterestModalCtrl',
@@ -95,7 +95,15 @@ app.controller('sidebarCtrl', ['$scope', '$modal', 'clubsFtry', '$state', 'Auth'
           }
         }
       });
+      interestModalInstance.result.then(function() {
+        $scope.$root.$broadcast('onChangeInterestEvent');
+      }, function() {
+        $scope.$root.$broadcast('onChangeInterestEvent');
+      });
     };
+
+
+
   }
 ]);
 
@@ -123,11 +131,11 @@ app.controller('InterestModalCtrl', ['$scope', '$modalInstance', 'currentUser', 
 
       $scope.currentUser = currentUser;
       console.log("currentUser: ", $scope.currentUser);
-      
-      $scope.addInterest = function(tag){
+
+      $scope.addInterest = function(tag) {
         $scope.currentUser.interests.splice($scope.currentUser.interests.length, 0, tag);
 
-        deletedTag = _.find($scope.listTags, function(item){
+        deletedTag = _.find($scope.listTags, function(item) {
           return item._id.$oid == tag._id.$oid;
         });
         $scope.listTags.splice($scope.listTags.indexOf(deletedTag), 1);
@@ -135,7 +143,7 @@ app.controller('InterestModalCtrl', ['$scope', '$modalInstance', 'currentUser', 
         tagService.addInterest(tag);
       };
 
-      $scope.deleteInterest = function(tag){
+      $scope.deleteInterest = function(tag) {
         $scope.listTags.splice(0, 0, tag);
         $scope.currentUser.interests.splice($scope.currentUser.interests.indexOf(tag), 1);
         tagService.deleteInterest(tag);

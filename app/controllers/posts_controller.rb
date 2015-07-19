@@ -10,7 +10,18 @@ class PostsController < ApplicationController
 	#/posts.json
 	#Get all published post for display on home
 	def index
-		@posts = Post.published.desc(:updated_at).paginate(page: params[:page], per_page: 9)
+		# @posts = Post.published.desc(:updated_at).paginate(page: params[:page], per_page: 9)
+		# tim nhung bai viet co tag thuoc so thich cua  current_user
+		# byebug
+		#neu nguoi dung da dang nhap thi chon bai viet theo so thich cua ho
+		if user_signed_in? && !current_user.interests.blank?
+			interest_ids = current_user.interests.only(:_id).map(&:_id)
+			@posts = Post.published.any_in(tag_ids: interest_ids).desc(:updated_at).paginate(page: params[:page], per_page: 9)
+		else
+			# lay bai viet bat ki moi nhat
+			@posts = Post.published.desc(:updated_at).paginate(page: params[:page], per_page: 9)
+		end
+		
 	end
 
 	def search

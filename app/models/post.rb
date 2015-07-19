@@ -15,7 +15,7 @@ class Post
 	embeds_many :likes, as: :likeable
 	#cho loc bai viet theo so thich
 	# embeds_many :tabs, as: :tabeble
-	has_and_belongs_to_many :tags, inverse_of: nil
+	has_and_belongs_to_many :tags, inverse_of: nil, index: true
 	validates :tags, presence: :true
 	#Notification system
 	#Doi tuong nay co the duoc notification lien quan
