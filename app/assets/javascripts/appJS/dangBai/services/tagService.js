@@ -11,5 +11,20 @@ app.factory('tagService', ['$http', function($http) {
 		});
 		return promise;
 	}
+
+	o.addInterest = function(tag){
+		var url = "/custom_users/add_interest.json?tag_id=" + tag._id.$oid;
+		var promise = $http.put(url);
+		return promise;
+	};
+
+	o.deleteInterest = function(tag){
+		var url = "/custom_users/delete_interest.json?tag_id=" + tag._id.$oid;
+		var promise = $http.put(url);
+		return promise;
+	};
+
+	
+
 	return o;
 }]);

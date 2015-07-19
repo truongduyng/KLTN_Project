@@ -64,11 +64,16 @@ class CustomUsersController < ApplicationController
 	end
 
 	def add_interest
-		current_user.interests << @tag
+		# byebug
+		if !current_user.interests.include? @tag
+			current_user.interests << @tag
+		end
+		render nothing: true, status: :ok
 	end
 
 	def delete_interest
 	    current_user.interests.delete @tag
+	    render nothing: true, status: :ok
 	end
 
 	private
@@ -101,7 +106,7 @@ class CustomUsersController < ApplicationController
 
 		def find_tag_by_id
 	      begin
-	        @tag = Tag.find(params[:id])
+	        @tag = Tag.find(params[:tag_id])
 	      rescue Mongoid::Errors::DocumentNotFound
 	        render nothing: true, status: :not_found, content_type: 'application/json'
 	      end

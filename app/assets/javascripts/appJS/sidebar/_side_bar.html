@@ -35,10 +35,9 @@
   <div class="club margintop20" >
     <span class="club-header">Sở thích</span>
     <div style=" margin-top: 10px;">
-      <p style="font-size: 10px; display:inline-block;" class="label label-primary"><span style="float:left; display: inline-block; margin: 5px 10px 3px 3px;">Bóng đá</span>  <span class="close">×</button></p>
-      <p style="font-size: 10px; display:inline-block;" class="label label-primary"><span style="float:left; display: inline-block; margin: 5px 10px 3px 3px;">Bóng đá</span>  <span class="close">×</button></p>
-      <p style="font-size: 10px; display:inline-block;" class="label label-primary"><span style="float:left; display: inline-block; margin: 5px 10px 3px 3px;">Bóng đá</span>  <span class="close">×</button></p>
-      <p style="font-size: 10px; display:inline-block;" class="label label-primary"><span style="float:left; display: inline-block; margin: 5px 10px 3px 3px;">Bóng đá</span>  <span class="close">×</button></p>
+      <p ng-repeat="tag in user.interests" style="font-size: 10px; display:inline-block; margin-right: 5px;" class="label label-primary"><span style="float:left; display: inline-block; margin: 5px 10px 3px 3px;">{{tag.name}}</span></p>
+      <p ng-if="user.interests.length == 0" style="text-align: center;">Trống</p>
+
     </div>
     <button data-ng-click="openInterestModal()"  class="btn btn-block btn-success" type="button" style="margin-top:10px;"><span class="glyphicon glyphicon-plus"></span> Thêm sở thích</button>
 
@@ -65,6 +64,7 @@
               <div class="list-new-tags" style="max-height: 150px; overflow-y: auto; text-align: center;margin-top: 20px; text-align: justify; padding-right: 5px;">
                 <p ng-repeat="tag in listTags | filter:searchedText | orderBy:'name'" style="font-size: 10px; display:inline-block;margin-right: 5px;" class="label label-success"><span style="float:left; display: inline-block; margin: 5px 10px 3px 3px;">{{tag.name}}</span>  <button ng-click="addInterest(tag)" class="close">+</button></p>
                 <p ng-if="listTags.length == 0" style="text-align: center;">Trống</p>
+                <p ng-if="isLoading" style="text-align: center;"><i class="fa fa-spinner fa-spin fa-2x"></i></p>
               </div>
               
               <hr>
@@ -76,6 +76,6 @@
               
             </div>
           <div class="modal-footer">
-                  <button class="btn btn-success btn-block" ng-click="ok()">Xong</button>
+                  <button class="btn btn-success btn-block" ng-click="$dismiss()">Xong</button>
           </div>
     </script>

@@ -90,26 +90,22 @@ app.controller('sidebarCtrl', ['$scope', '$modal', 'clubsFtry', '$state', 'Auth'
         controller: 'InterestModalCtrl',
         size: "sm",
         resolve: {
-          // listTags: function() {
-          //   return $scope.listTags;
-          // },
           currentUser: function() {
             return $scope.user;
           }
         }
       });
     };
-
-    // tagService.index().success(function() {
-    //   $scope.listTags = tagService.tags;
-    // });
   }
 ]);
 
 app.controller('InterestModalCtrl', ['$scope', '$modalInstance', 'currentUser', 'tagService',
   function($scope, $modalInstance, currentUser, tagService) {
     $scope.searchedText = "";
+    $scope.isLoading = true;
     tagService.index().success(function() {
+
+      $scope.isLoading = false;
       listTags = tagService.tags;
       console.log("listTags: ", listTags);
       //chi lay dsanh sach tag ma nguoi dung chua co
@@ -135,14 +131,15 @@ app.controller('InterestModalCtrl', ['$scope', '$modalInstance', 'currentUser', 
           return item._id.$oid == tag._id.$oid;
         });
         $scope.listTags.splice($scope.listTags.indexOf(deletedTag), 1);
+
+        tagService.addInterest(tag);
       };
 
       $scope.deleteInterest = function(tag){
         $scope.listTags.splice(0, 0, tag);
         $scope.currentUser.interests.splice($scope.currentUser.interests.indexOf(tag), 1);
+        tagService.deleteInterest(tag);
       };
-
-
 
     });
 
