@@ -8,6 +8,7 @@ class ClubsController < ApplicationController
   end
 
   def show
+    # byebug
     @club = Club.find(params[:id])
     @member_requests = User.where(:id.in => @club.member_requests)
     if(club_params[:club_post_id])
@@ -26,6 +27,7 @@ class ClubsController < ApplicationController
       @club.admins = [current_user.id]
       @club.member_requests ||= []
       club_params_member_id = []
+
       club_params[:members].each do |member|
         club_params_member_id << member[:id]
       end

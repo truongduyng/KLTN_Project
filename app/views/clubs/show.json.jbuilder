@@ -22,8 +22,11 @@ json.member_requests @member_requests do |member_request|
   json.username member_request.username
   json.avatar member_request.avatar.url
 end
-
-json.member_requests_count @member_requests.count
+if @member_requests
+  json.member_requests_count @member_requests.count
+else
+  json.member_requests_count 0
+end
 
 if !@club_post
   json.clubposts @club.club_posts.desc(:updated_at) do |post|
