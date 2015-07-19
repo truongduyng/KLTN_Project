@@ -39,6 +39,8 @@
 //= require ngstorage
 //= require angular-facebook
 //= require bootstrap
+//= require ng-tags-input
+//= require angucomplete-alt
 //= require ./app.js
 //= require_tree ../angularJSComponents
 //= require websocket_rails/main

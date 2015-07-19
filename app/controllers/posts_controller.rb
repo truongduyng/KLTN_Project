@@ -10,7 +10,18 @@ class PostsController < ApplicationController
 	#/posts.json
 	#Get all published post for display on home
 	def index
-		@posts = Post.published.desc(:updated_at).paginate(page: params[:page], per_page: 9)
+		# @posts = Post.published.desc(:updated_at).paginate(page: params[:page], per_page: 9)
+		# tim nhung bai viet co tag thuoc so thich cua  current_user
+		# byebug
+		#neu nguoi dung da dang nhap thi chon bai viet theo so thich cua ho
+		if user_signed_in? && !current_user.interests.blank?
+			interest_ids = current_user.interests.only(:_id).map(&:_id)
+			@posts = Post.published.any_in(tag_ids: interest_ids).desc(:updated_at).paginate(page: params[:page], per_page: 9)
+		else
+			# lay bai viet bat ki moi nhat
+			@posts = Post.published.desc(:updated_at).paginate(page: params[:page], per_page: 9)
+		end
+		
 	end
 
 	def search
@@ -22,6 +33,7 @@ class PostsController < ApplicationController
 	end
 
 	def create
+		# byebug
 		@post = Post.new(post_params)
 		@post.user = current_user
 		if @post.save
@@ -37,6 +49,7 @@ class PostsController < ApplicationController
 
 	#PUT /posts/:id/update.json
 	def update
+		# byebug
 		#Cap nhap cac thuoc tinh cua post va save
 		if @post.update_attributes(post_params)
 			#Lay mang danh sach id cua cac anh da bi xoa
@@ -247,7 +260,7 @@ class PostsController < ApplicationController
 
 	private
 	def post_params
-		params.require(:post).permit(:title, :body)
+		params.require(:post).permit(:title, :body, tag_ids: [])
 	end
 
 	def find_and_check_post_with_user

@@ -1,5 +1,6 @@
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angularFileUpload',
-	'unsavedChanges', 'sporta.directives', 'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging','ngImgCrop', 'infinite-scroll', 'ngMap', 'ngStorage', 'ngSanitize']);
+	'unsavedChanges', 'sporta.directives', 'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging','ngImgCrop', 'infinite-scroll', 'ngMap', 'ngStorage'
+	, 'ngSanitize', 'ngTagsInput', 'angucomplete-alt']);
 
 //For intercept $http
 app.factory('myHttpInterceptor', ['$q', '$rootScope', function($q, $rootScope) {
@@ -58,6 +59,11 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		url: "/dang-bai/",
 		templateUrl: 'appJS/dangBai/_dangBai.html',
 		controller: 'dangBaiCtrl',
+		resolve: {
+			tags: ['tagService', function(tagService){
+				return tagService.index();
+			}]
+		}
 	});
 
 	$stateProvider.state("editPost", {
@@ -68,6 +74,9 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 			post: ['editPostService', '$stateParams', '$q', function(editPostService, $stateParams, $q) {
 				return editPostService.edit($stateParams.id);
 			}],
+			tags: ['tagService', function(tagService){
+				return tagService.index();
+			}]
 		}
 		// access: {
 		// 	free: false,

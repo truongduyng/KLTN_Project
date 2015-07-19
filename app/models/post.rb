@@ -13,6 +13,10 @@ class Post
 	belongs_to :user, class_name: 'User', inverse_of: :posts
 	has_many :comments, dependent: :destroy
 	embeds_many :likes, as: :likeable
+	#cho loc bai viet theo so thich
+	# embeds_many :tabs, as: :tabeble
+	has_and_belongs_to_many :tags, inverse_of: nil, index: true
+	validates :tags, presence: :true
 	#Notification system
 	#Doi tuong nay co the duoc notification lien quan
 	has_many :notifications, as: :notificable
@@ -50,7 +54,6 @@ class Post
 
 	#callback
 	before_create :init_post_status
-
 	def published?
 		self.post_status.name == 'Đã duyệt'
 	end

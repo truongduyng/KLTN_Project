@@ -1,5 +1,6 @@
-app.controller('editPostCtrl', ['$scope', 'editPostService', 'FileUploader', 'Flash', '$http', '$cookies', '$state', '$rootScope',
-	function($scope, editPostService, FileUploader, Flash, $http, $cookies, $state, $rootScope) {
+app.controller('editPostCtrl', ['$scope', 'editPostService', 'FileUploader', 'Flash', '$http',
+ '$cookies', '$state', '$rootScope', 'tagService',
+	function($scope, editPostService, FileUploader, Flash, $http, $cookies, $state, $rootScope, tagService) {
 		$scope.post = editPostService.post;
 
 		$scope.uploader = new FileUploader();
@@ -13,6 +14,13 @@ app.controller('editPostCtrl', ['$scope', 'editPostService', 'FileUploader', 'Fl
 		});
 
 		$scope.onPost = function() {
+			
+			console.log("tags: ", $scope.tags);
+			$scope.post.tag_ids = _.map($scope.tags, function(tag){
+				return tag._id.$oid;
+			});
+			console.log("post: ", $scope.post);
+			
 			editPostService.update($scope.post, $scope.deletedPhotos)
 				.success(function(data) {
 					$scope.post.id = data._id.$oid;
@@ -67,6 +75,13 @@ app.controller('editPostCtrl', ['$scope', 'editPostService', 'FileUploader', 'Fl
 			//Xoa bo nho ra de khoi hien thi
 			var index = $scope.post.photos.indexOf(photo);
 			$scope.post.photos.splice(index, 1);
+		};
+
+
+		$scope.tags = $scope.post.tags;
+		$scope.listTags = tagService.tags;
+		$scope.loadTags = function() {
+			return $scope.listTags;
 		};
 	}
 ]);

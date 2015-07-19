@@ -8,6 +8,7 @@
       <div class="panel panel-primary">
 
         <div class="panel-body form-bai-viet">
+        
           <form novalidate name="postForm" class="post-form ng-pristine ng-valid">
             <div class="post-form-header">
               <input  name="title" type="text" placeholder="Tiêu để" class="form-control" style="border:none; border-bottom:solid thin #F0EBEB; border-radius:0px;" ng-model="post.title" required >
@@ -32,6 +33,10 @@
               </div>
             </div>
 
+            <tags-input ng-model="tags" min-tags="1" add-on-paste="true" display-property="name" placeholder="Thêm ít nhất 1 tag tương ứng với thể loại bài viết*">
+              <auto-complete source="loadTags()" ></auto-complete>
+            </tags-input>
+
             <div class="post-form-bottom">
               <div style="float:right; margin: 5px 5px;" aria-label="... " role="group" class="btn-group">
                 <button class="btn btn-primary" id="addImageBtn" ng-click="onShowFileDialog()"><span aria-hidden="true" class="fa fa-picture" ></span> Thêm ảnh</button>
@@ -49,6 +54,18 @@
 </div>
 </div>
 
+<!-- TEMPLATE FOR TAG -->
+<!-- <script type="text/ng-template" id="my-custom-tag-template">
+      <div class="tag-template">
+        <div>
+          <img />
+        </div>
+        <div>
+          <span>{{$getDisplayText()}}</span>
+          <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+        </div>
+      </div>
+</script> -->
 <script type="text/javascript">
   autosize(document.querySelectorAll('textarea'));
 </script>
@@ -57,5 +74,15 @@
 <style type="text/css">
   .form-bai-viet{
     padding: 0px;
+  }
+  tags-input .host{
+    border-top: 1px solid #ccc;
+  }
+  tags-input .tags{
+    border: none !important;
+    margin-bottom: -6px;
+  }
+  tags-input.ng-invalid .tags, tags-input .tags.focused{
+    box-shadow: none;
   }
 </style>
