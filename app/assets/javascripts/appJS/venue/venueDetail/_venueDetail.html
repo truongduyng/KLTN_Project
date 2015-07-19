@@ -39,7 +39,7 @@
       <div class="ratings-boxes">
           <div class="your-rating">
               <!-- <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span> -->
-               <rating style="color:gold;" ng-model="rate.level" max="rate.max" readonly="false" on-hover="onHoveringRate(value)" on-leave="rate.overStar = null" readonly="currentUser == null"></rating>
+               <rating style="color:gold;" ng-model="rate.level" max="rate.max" on-hover="onHoveringRate(value)" on-leave="rate.overStar = null" readonly="currentUser == null"></rating>
                <span style="font-size: 10px; display:inline-block; margin-top: -20px;" ng-show="rate.overStar" class="label label-success">{{rate.status}}</span>
           </div>
           <div class="rating-statics">
