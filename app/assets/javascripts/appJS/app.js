@@ -1,6 +1,6 @@
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angularFileUpload',
 	'unsavedChanges', 'sporta.directives', 'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging','ngImgCrop', 'infinite-scroll', 'ngMap', 'ngStorage'
-	, 'ngSanitize', 'ngTagsInput']);
+	, 'ngSanitize', 'ngTagsInput', 'angucomplete-alt']);
 
 //For intercept $http
 app.factory('myHttpInterceptor', ['$q', '$rootScope', function($q, $rootScope) {

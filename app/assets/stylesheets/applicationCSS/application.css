@@ -15,6 +15,7 @@
  *= require bootstrap-social
  *= require_tree ./customCSS/semanticUI/
  *= require ng-tags-input
+ *= require angucomplete-alt
  *= require_tree .
  *= require_self
  */

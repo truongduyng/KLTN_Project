@@ -1,5 +1,5 @@
-app.controller('sidebarCtrl', ['$scope', '$modal', 'clubsFtry', '$state', 'Auth',
-  function($scope, $modal, clubsFtry, $state, Auth) {
+app.controller('sidebarCtrl', ['$scope', '$modal', 'clubsFtry', '$state', 'Auth', 'tagService',
+  function($scope, $modal, clubsFtry, $state, Auth, tagService) {
 
     Auth.currentUser().then(function(user) {
       $scope.user = user;
@@ -90,14 +90,61 @@ app.controller('sidebarCtrl', ['$scope', '$modal', 'clubsFtry', '$state', 'Auth'
         controller: 'InterestModalCtrl',
         size: "sm",
         resolve: {
-
+          // listTags: function() {
+          //   return $scope.listTags;
+          // },
+          currentUser: function() {
+            return $scope.user;
+          }
         }
       });
     };
 
+    // tagService.index().success(function() {
+    //   $scope.listTags = tagService.tags;
+    // });
   }
 ]);
 
-app.controller('InterestModalCtrl', function($scope, $modalInstance) {
+app.controller('InterestModalCtrl', ['$scope', '$modalInstance', 'currentUser', 'tagService',
+  function($scope, $modalInstance, currentUser, tagService) {
+    $scope.searchedText = "";
+    tagService.index().success(function() {
+      listTags = tagService.tags;
+      console.log("listTags: ", listTags);
+      //chi lay dsanh sach tag ma nguoi dung chua co
+      $scope.listTags = _.filter(listTags, function(newTag) {
+        findedTag = _.find(currentUser.interests, function(oldTag) {
+          if (oldTag._id.$oid == newTag._id.$oid) {
+            return true;
+          }
+        });
+        if (findedTag) {
+          return false;
+        }
+        return true;
+      });
 
-});
+      $scope.currentUser = currentUser;
+      console.log("currentUser: ", $scope.currentUser);
+      
+      $scope.addInterest = function(tag){
+        $scope.currentUser.interests.splice($scope.currentUser.interests.length, 0, tag);
+
+        deletedTag = _.find($scope.listTags, function(item){
+          return item._id.$oid == tag._id.$oid;
+        });
+        $scope.listTags.splice($scope.listTags.indexOf(deletedTag), 1);
+      };
+
+      $scope.deleteInterest = function(tag){
+        $scope.listTags.splice(0, 0, tag);
+        $scope.currentUser.interests.splice($scope.currentUser.interests.indexOf(tag), 1);
+      };
+
+
+
+    });
+
+  }
+]);
