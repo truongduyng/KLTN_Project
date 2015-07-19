@@ -24,7 +24,7 @@ class ClubsController < ApplicationController
       # byebug
       @club = Club.new(club_params.except(:members))
       @club.admins = [current_user.id]
-
+      @club.member_requests ||= []
       club_params_member_id = []
       club_params[:members].each do |member|
         club_params_member_id << member[:id]
