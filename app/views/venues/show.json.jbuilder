@@ -3,3 +3,8 @@ json.rates @rate_total_by_level do |rate|
 	json.level rate[0]
 	json.total rate[1]
 end
+if user_signed_in?
+	json.your_rate_level @your_level
+else
+	json.your_rate_level 2
+end

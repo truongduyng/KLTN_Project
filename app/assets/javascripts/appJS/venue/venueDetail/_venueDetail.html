@@ -38,36 +38,39 @@
       <hr>
       <div class="ratings-boxes">
           <div class="your-rating">
-              <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+              <!-- <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span> -->
+               <rating style="color:gold;" ng-model="rate.level" max="rate.max" readonly="false" on-hover="onHoveringRate(value)" on-leave="rate.overStar = null" readonly="currentUser == null"></rating>
+               <span style="font-size: 10px; display:inline-block; margin-top: -20px;" ng-show="rate.overStar" class="label label-success">{{rate.status}}</span>
           </div>
           <div class="rating-statics">
               <div class="ratings-numbers">
                   <a class="micro-home-staticask">
-                      <span style="padding-bottom:5px;display:block;"><b style="color: #cc0000; font-size:22px;">0</b></span>
+                     <span ng-if="venue.rates[0] == null" style="padding-bottom:5px;display:block;"><b style="color: #cc0000; font-size:22px;">0</b></span>
+                      <span style="padding-bottom:5px;display:block;"><b style="color: #cc0000; font-size:22px;">{{venue.rates[0].total}}</b></span>
                       <span>Kém</span>
                   </a>
               </div>
               <div class="ratings-numbers">
                   <a class="micro-home-staticask">
-                      <span style="padding-bottom:5px;display:block;"><b style="color: #333; font-size:22px;">1</b></span>
+                      <span style="padding-bottom:5px;display:block;"><b style="color: #333; font-size:22px;">{{venue.rates[1].total}}</b></span>
                       <span>Trung bình</span>
                   </a>
               </div>
               <div class="ratings-numbers">
                   <a class="micro-home-staticask">
-                      <span style="padding-bottom:5px;display:block;"><b style="color:#2933E8; font-size:22px;">4</b></span>
+                      <span style="padding-bottom:5px;display:block;"><b style="color:#2933E8; font-size:22px;">{{venue.rates[2].total}}</b></span>
                       <span>Khá tốt</span>
                   </a>
               </div>
               <div class="ratings-numbers">
                   <a class="micro-home-staticask">
-                      <span style="padding-bottom:5px;display:block;"><b style="color: #03ae03; font-size:22px;">4</b></span>
+                      <span style="padding-bottom:5px;display:block;"><b style="color: #03ae03; font-size:22px;">{{venue.rates[3].total}}</b></span>
                       <span>Tốt</span>
                   </a>
               </div>
                <div class="ratings-numbers">
                   <a class="micro-home-staticask">
-                      <span style="padding-bottom:5px;display:block;"><b style="color: #8E44AD; font-size: 22px;">0</b></span>
+                      <span style="padding-bottom:5px;display:block;"><b style="color: #8E44AD; font-size: 22px;">{{venue.rates[4].total}}</b></span>
                       <span>Tuyệt vời</span>
                   </a>
               </div>

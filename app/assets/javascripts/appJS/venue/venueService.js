@@ -26,5 +26,12 @@ app.factory('VenueService', ['$http', function($http) {
     return $http.delete(url);
   };
 
+  o.rating = function(venue, rate){
+    var id = venue._id.$oid;
+    var url =  "/venues/" + id + "/rating.json" + "?rate_level=" + rate.level;
+    var promise = $http.put(url);
+    return promise;
+  };
+
   return o;
 }]);
