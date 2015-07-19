@@ -239,12 +239,39 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
     })
   }
 
+  $scope.join_club_request = function(){
+
+    clubsFtry.new_request_member($scope.club.id.$oid, $scope.user._id.$oid).success(function(data){
+
+      Flash.create('success', "Gửi yêu cầu gia nhập CLB thành công. Xin chờ xác nhận của quản trị CLB!", 'myalert');
+
+    })
+    .error(function(){
+      Flash.create('danger', "Gửi yêu cầu thất bại!", 'myalert');
+    })
+  }
+
+  $scope.accept_request_member = function(member_request){
+    clubsFtry.accept_request_member($scope.club.id.$oid, member_request.id.$oid).success(function(data){
+      $scope.club.member_requests.splice($scope.club.member_requests.indexOf(member_request),1);
+      $scope.club.member_requests_count --;
+      Flash.create('success', "Cho phép " + $scope.user.fullname + " gia nhập CLB thành công!", 'myalert');
+    })
+    .error(function(){
+      Flash.create('danger', "Cho phép thất bại!", 'myalert');
+    })
+  }
+
   $scope.member_is_admin = function(member_id){
     return ismemberof($scope.club.admins, member_id);
   }
 
   $scope.current_user_is_admin = function(){
     return ismemberof($scope.club.admins, $scope.user._id.$oid);
+  }
+
+  $scope.current_user_is_member = function(){
+    return ismemberof($scope.club.members, $scope.user._id.$oid);
   }
 
   function ismemberof(array, user_id){

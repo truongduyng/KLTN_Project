@@ -2,6 +2,7 @@ app.controller('searchCtrl', ['$scope', '$http','$state', 'results', 'listPostSe
 
   listPostService.posts = results.data.posts;
   $scope.branches = results.data.branches;
+  $scope.clubs = results.data.clubs;
 
   $scope.$on('mapInitialized', function(e, map) {
 
@@ -41,6 +42,10 @@ app.controller('searchCtrl', ['$scope', '$http','$state', 'results', 'listPostSe
     }
 
     $scope.search_query = "";
+  }
+
+  $scope.showclub = function(club){
+    $state.go('club', {club_id: club.id.$oid, club_post_id: null});
   }
 
 }]);

@@ -40,7 +40,8 @@ class SearchController < ApplicationController
       clubs.each do |club|
         results[:clubs] << {
           id: club.id,
-          name: club.name
+          name: club.name,
+          description: club.description
         }
       end
     end

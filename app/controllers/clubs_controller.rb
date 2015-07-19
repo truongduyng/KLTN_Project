@@ -1,15 +1,15 @@
 class ClubsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :is_admin?, only: [:addmember, :makeadmin, :update, :add_cover, :removeadmin]
+  before_action :authenticate_user!, except: [:show]
+  before_action :is_admin?, only: [:addmember, :makeadmin, :update, :add_cover, :removeadmin, :accept_request_member]
   before_action :can_remove_member?, only: [:removemember]
-  before_action :is_member?, only: [:show]
 
   def index
-    # byebug
     @clubs = current_user.clubs
   end
 
   def show
+    @club = Club.find(params[:id])
+    @member_requests = User.where(:id.in => @club.member_requests)
     if(club_params[:club_post_id])
       begin
         @club_post = [@club.club_posts.find(club_params[:club_post_id])]
@@ -163,21 +163,40 @@ class ClubsController < ApplicationController
     end
   end
 
+  def new_request_member
+    begin
+      @club = Club.find(club_params[:id])
+      @club.member_requests ||= []
+      if !@club.member_requests.include? club_params[:member_id]
+        @club.member_requests << club_params[:member_id]
+        @club.save
+      end
+      render nothing: true, status: :ok
+    rescue Exception => e
+      render nothing: true, status: :not_found
+    end
+  end
+
+  def accept_request_member
+    begin
+      @club = Club.find(club_params[:id])
+      member =  User.find(club_params[:member_id])
+      if !@club.members.include? member
+        @club.members << member
+        member.clubs << @club
+      end
+      @club.member_requests.delete(club_params[:member_id])
+      @club.save
+      render nothing: true, status: :ok
+    rescue Exception => e
+      render nothing: true, status: :not_found
+    end
+  end
+
   private
   def club_params
     params[:members] ||= []
     params.permit(:id, :name, :description, :admin_id, :member_id, :club_post_id, :admins => [:id, :fullname], :members => [:id, :fullname])
-  end
-
-  def is_member?
-    begin
-      @club= Club.find(club_params[:id])
-      if !@club.members.include? current_user
-        render nothing: true, status: :bad_request
-      end
-    rescue Exception => e
-      render nothing: true, status: :not_found
-    end
   end
 
   def is_admin?

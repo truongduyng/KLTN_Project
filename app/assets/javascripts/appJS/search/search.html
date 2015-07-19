@@ -31,4 +31,15 @@
   </div>
 </tab>
 
+<tab heading="Câu lạc bộ">
+  <div class="margintop20">
+    <ul class="list-search-result">
+      <li ng-repeat='club in clubs' ng-click="showclub(club)" class="margintop20">
+      <strong style="color: #366378">{{club.name}}</strong>
+        <p>{{club.description}}</p>
+      </li>
+    </ul>
+  </div>
+</tab>
+
 </tabset>

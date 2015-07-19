@@ -58,5 +58,19 @@ services.factory('clubsFtry',['$http', function($http){
     })
   }
 
+  o.new_request_member = function(club_id, member_id){
+    return $http.post('clubs/' + club_id + '/new_request_member.json', {member_id: member_id}).success(function(){
+    })
+    .error(function(){
+    })
+  }
+
+  o.accept_request_member = function(club_id, member_id){
+    return $http.post('clubs/' + club_id + '/accept_request_member.json', {member_id: member_id}).success(function(){
+    })
+    .error(function(){
+    })
+  }
+
   return o;
 }]);

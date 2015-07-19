@@ -2,7 +2,8 @@
   <div class="col-lg-12 pull-right">
     <img class="coverimg" ng-src="{{club.cover_image}}" alt="anh dai dien">
     <a ui-sref="club({club_id: club.id.$oid, club_post_id: null})"><h3 class="club_name">{{club.name}}</h3></a>
-    <button class="btn btn-default leave_club_btn" ng-click="leave_club()" >Rời CLB</button>
+    <button ng-if="current_user_is_member()" class="btn btn-default leave_club_btn" ng-click="leave_club()" >Rời CLB</button>
+    <button ng-if="!current_user_is_member()" class="btn btn-default leave_club_btn" ng-click="join_club_request()" >Gia nhập CLB</button>
     <i ng-show="current_user_is_admin()" class="fa fa-picture-o fa-2x cover-icon" ng-click="choose_cover()"></i>
     <input id="choosecover" type="file" nv-file-select uploader="uploader" style="display:none;">
   </div>
@@ -14,7 +15,7 @@
 
       <div class="col-lg-8">
         <tabset>
-          <tab>
+          <tab ng-if="current_user_is_member()">
             <tab-heading>
             <i class="fa fa-pencil"></i> Thảo luận
           </tab-heading>
@@ -24,7 +25,7 @@
 
         </tab>
 
-        <tab ng-show="current_user_is_admin()">
+        <tab ng-if="current_user_is_admin()">
           <tab-heading>
           Chỉnh sửa
         </tab-heading>
@@ -52,52 +53,78 @@
         </div>
       </tab>
 
-    </tabset>
-  </div>
-
-
-  <div class="col-lg-4">
-
-    <div>
-      <label>Thành viên</label>
-      <label class="pull-right">{{club.members.length}}</label>
-
-      <input id="user_find" ng-show="current_user_is_admin()" type="text" placeholder=" + Thêm thành viên..." class="form-control" ng-model="user_find" ng-change="find_user()">
-
-      <ul ng-show="show_recommend_user()" class="list_recommend" id="list_add_member">
-        <li ng-repeat="user in users_list" ng-click= "add_to_members(user)">{{user.fullname}}</li>
-      </ul>
+      <tab ng-if="current_user_is_admin()">
+        <tab-heading>
+        Yêu cầu gia nhập - {{club.member_requests_count}}
+      </tab-heading>
 
       <ul class="list_user_choosen margintop10">
-        <li class="member_list" ng-repeat="member in club.members">
+        <li ng-repeat="member in club.member_requests">
           <span ng-show="current_user_is_admin()" class="dropdown" dropdown on-toggle="toggled(open)" >
             <a href class="dropdown-toggle" dropdown-toggle>
-              <i class="fa fa fa-cog" style="color: white;"></i>
+              <i class="fa fa fa-cog" style="color: #30445d;"></i>
             </a>
-            <ul class="dropdown-menu" style="z-index: 5; color: black;">
+            <ul class="dropdown-menu">
               <li>
-                <i class="fa fa-user-times" ng-click= "remove_member(member)"> Xóa thành viên</i>
-              </li>
-              <li ng-hide = 'member_is_admin(member.id.$oid)'>
-                <i class="fa fa-user-secret" ng-click= "make_admin(member)"> Chỉ định là quản trị</i>
-              </li>
-              <li ng-show = 'member_is_admin(member.id.$oid)'>
-                <i class="fa fa-user" ng-click= "remove_admin(member)"> Chỉ định là thành viên</i>
+                <i ng-click= "accept_request_member(member)">Chấp nhận</i>
               </li>
             </ul>
           </span>
-          <!-- <img style="width: 40px;" fallback-src="sportaLogo" ng-src="{{member.avatar|logo}}" class="profile-picture"> -->
-          {{member.fullname}}
+          <a ui-sref="trangCaNhan({username: user.username})" style="text-decoration: none">
+            <img style="width: 40px;" fallback-src="sportaLogo" ng-src="{{member.avatar|logo}}" class="profile-picture">
+            {{member.fullname}}
+          </a>
         </li>
       </ul>
-    </div>
 
-    <div class="about" style="width: 100%; float: left;">
-      <hr>
-      <label>Mô tả</label>
-      <p>{{club.description}}</p>
-    </div>
+    </tab>
+
+  </tabset>
+</div>
+
+
+<div class="col-lg-4">
+
+  <div>
+    <label>Thành viên</label>
+    <label class="pull-right">{{club.members.length}}</label>
+
+    <input id="user_find" ng-show="current_user_is_admin()" type="text" placeholder=" + Thêm thành viên..." class="form-control" ng-model="user_find" ng-change="find_user()">
+
+    <ul ng-show="show_recommend_user()" class="list_recommend" id="list_add_member">
+      <li ng-repeat="user in users_list" ng-click= "add_to_members(user)">{{user.fullname}}</li>
+    </ul>
+
+    <ul class="list_user_choosen margintop10">
+      <li class="member_list" ng-repeat="member in club.members">
+        <span ng-show="current_user_is_admin()" class="dropdown" dropdown on-toggle="toggled(open)" >
+          <a href class="dropdown-toggle" dropdown-toggle>
+            <i class="fa fa fa-cog" style="color: white;"></i>
+          </a>
+          <ul class="dropdown-menu" style="z-index: 5; color: black;">
+            <li>
+              <i class="fa fa-user-times" ng-click= "remove_member(member)"> Xóa thành viên</i>
+            </li>
+            <li ng-hide = 'member_is_admin(member.id.$oid)'>
+              <i class="fa fa-user-secret" ng-click= "make_admin(member)"> Chỉ định là quản trị</i>
+            </li>
+            <li ng-show = 'member_is_admin(member.id.$oid)'>
+              <i class="fa fa-user" ng-click= "remove_admin(member)"> Chỉ định là thành viên</i>
+            </li>
+          </ul>
+        </span>
+        <!-- <img style="width: 40px;" fallback-src="sportaLogo" ng-src="{{member.avatar|logo}}" class="profile-picture"> -->
+        {{member.fullname}}
+      </li>
+    </ul>
   </div>
+
+  <div class="about" style="width: 100%; float: left;">
+    <hr>
+    <label>Mô tả</label>
+    <p>{{club.description}}</p>
+  </div>
+</div>
 
 </div>
 </div>
