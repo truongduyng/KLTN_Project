@@ -1,0 +1,60 @@
+<section data-ng-controller="reviewsCtrl">
+
+<div class="comment-textarea">
+  <form novalidate name="newReviewForm">
+    <div class="input-group">
+
+       <textarea ng-model="newReview.content" name="content" required style="min-height: 64px; overflow: hidden; word-wrap: break-word; height: 64px;" class="form-control" placeholder="Chia sẻ cảm nghĩ của bạn về địa điểm trên" data-autosize-on="true"></textarea>
+       <span class="input-group-btn">
+          <button ng-click="addReview()" ng-disabled="newReviewForm.$invalid || isCreating" style="min-height: 64px; min-width: 80px;" class="btn btn-default" type="button">
+             Gửi
+          </button>
+       </span>
+    </div>
+  </form>
+</div>
+<hr>
+<div class="list-reviews">
+  <div ng-repeat="review in reviews | orderBy: '-created_at'">
+        <!-- MOT CAI REVIEWS BAO GOM CA HIEN THI VA CHINH SUA -->
+        <div class="review-with-edit-container" >
+          <!-- PHAN NAY CHO CHINH SUA -->
+            <div ng-if="review.isEditted" class="comment-textarea">
+                <form novalidate name="editReviewForm">
+                    <div class="input-group">
+                       <textarea ng-model="review.content" name="content" required style="min-height: 64px; overflow: hidden; word-wrap: break-word; height: 64px;" class="form-control" placeholder="Chia sẻ cảm nghĩ của bạn về địa điểm trên" data-autosize-on="true"></textarea>
+                       <span class="input-group-btn">
+                          <button  ng-click="editReview(review)" ng-disabled="editReviewForm.$invalid || review.isEditting" style="min-height: 64px; min-width: 80px;" class="btn btn-default" type="button">
+                             Gửi
+                          </button>
+                       </span>
+                    </div>
+                  </form>
+            </div>
+
+            <!-- PHAN NAY CHO HIEN THI -->
+            <div ng-if="!review.isEditted" class="review-user row">
+                <div class="review-user-content-col col-xs-10">
+                  <div class="review-content angular-with-newlines">
+                      {{review.content}}
+                  </div>
+                  <div class="review-action">
+                     <a ng-click="onEditReview(review)">Sửa</a>
+                     <a ng-confirm-click="Bạn có muốn xóa review hay không?" confirmed-click="deleteReview(review)">Xóa</a>
+                  </div>
+                </div>
+                <div class="review-user-avatar-col col-xs-2">
+                  <a tooltip="{{review.user.fullname}}" ui-sref="trangCaNhan({username: review.user.username})" style="float: right;">
+                   <img class="img-circle img-responsive profile-picture" class="media-object" ng-src="{{review.user.avatar.url | logo}}" fallback-src="sportaLogo"
+                       alt="Avatar" width="64px" height="64px" style="min-width: 44px; min-height: 44px;">
+                  </a>
+                </div>
+            </div>
+
+        </div>
+        <hr>
+  </div>
+
+</div>
+
+</section>

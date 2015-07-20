@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       put 'delete_photo'
       put 'rating'
     end
-    resources :rates do 
+    resources :reviews do 
     end
   end
 

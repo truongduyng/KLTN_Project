@@ -1,7 +1,5 @@
 class Rate
 	include Mongoid::Document
-	include Mongoid::Timestamps
-
 
 	field :level, type: Integer
 	belongs_to :user
