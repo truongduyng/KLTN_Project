@@ -269,7 +269,7 @@ $scope.showtimeintd = function(hour,element,show){
         top_timeline = scrollheight;
       $('hr.timeline').animate({top: top_timeline},'fast');
       tickets.check_td_in_past(new Date().toJSON().slice(0,10));
-      // tickets.check_ticket_status(new Date());
+      tickets.check_ticket_status(new Date());
     },1000*60);
   }
 }]);

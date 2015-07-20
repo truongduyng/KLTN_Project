@@ -111,7 +111,6 @@ class NotificationChange
 				ac = ActionController::Base.new()
 				notification_change_json = ac.render_to_string( template: 'notifications/show.json.jbuilder', locals: { :@notification_change => notification_change})
 
-				# WebsocketRails[target_user_id.to_s].trigger("on_new_notification", notification_change_json)
 				Fiber.new{WebsocketRails[target_user_id.to_s].trigger("on_new_notification", notification_change_json)}.resume
 			end
 		end
