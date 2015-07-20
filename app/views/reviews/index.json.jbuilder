@@ -9,4 +9,5 @@ json.array! @reviews do |review|
 	# 	json.
 	# end
 	json.updated_at review.updated_at
+	json.created_at review.created_at
 end

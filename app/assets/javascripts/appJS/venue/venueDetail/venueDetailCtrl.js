@@ -1,10 +1,10 @@
 app.controller('venueDetailCtrl', ['$scope', 'VenueService', '$modal', 'Flash', 'logoFilter',
-	'$state', 'userService',
-	function($scope, VenueService, $modal, Flash, logoFilter, $state, userService) {
+	'$state', 'currentUser',
+	function($scope, VenueService, $modal, Flash, logoFilter, $state, currentUser) {
 
-		$scope.signedIn = userService.currentUser;
+		$scope.signedIn = currentUser;
 
-		$scope.currentUser = userService.currentUser;
+		$scope.currentUser = currentUser;
 		//Update tinh trang user de xet cac quyen them xoa sua
 		$scope.$on('devise:new-session', function(e, user) {
 			angular.copy(user, $scope.currentUser);

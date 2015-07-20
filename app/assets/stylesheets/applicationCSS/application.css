@@ -35,3 +35,7 @@
     z-index: 1040;
 }*/
  /*END For angularjs-bootstrap*/
+/* in the css file or in a style block */
+.angular-with-newlines {
+  white-space: pre-wrap;
+}

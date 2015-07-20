@@ -15,7 +15,7 @@
 </div>
 <hr>
 <div class="list-reviews">
-  <div ng-repeat="review in reviews | orderBy: '-created_at'">
+  <div ng-repeat="review in reviews | orderBy: 'created_at'">
         <!-- MOT CAI REVIEWS BAO GOM CA HIEN THI VA CHINH SUA -->
         <div class="review-with-edit-container" >
           <!-- PHAN NAY CHO CHINH SUA -->
@@ -35,13 +35,12 @@
             <!-- PHAN NAY CHO HIEN THI -->
             <div ng-if="!review.isEditted" class="review-user row">
                 <div class="review-user-content-col col-xs-10">
-                  <div class="review-content angular-with-newlines">
-                      {{review.content}}
-                  </div>
-                  <div class="review-action">
+                  <div class="review-content angular-with-newlines">{{review.content}}</div>
+                  <div ng-if="currentUser._id.$oid == review.user._id.$oid" class="review-action">
                      <a ng-click="onEditReview(review)">Sửa</a>
                      <a ng-confirm-click="Bạn có muốn xóa review hay không?" confirmed-click="deleteReview(review)">Xóa</a>
                   </div>
+
                 </div>
                 <div class="review-user-avatar-col col-xs-2">
                   <a tooltip="{{review.user.fullname}}" ui-sref="trangCaNhan({username: review.user.username})" style="float: right;">

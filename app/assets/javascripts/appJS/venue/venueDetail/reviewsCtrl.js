@@ -1,4 +1,6 @@
 app.controller('reviewsCtrl', ['$scope', 'reviewService', function($scope, reviewService) {
+	
+	console.log("currentUser in reviewsCtrl: ", $scope.currentUser);
 	$scope.isLoading = true;
 	$scope.isCreating = false;
 	$scope.reviews = reviewService.reviews;
