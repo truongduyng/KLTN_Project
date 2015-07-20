@@ -6,5 +6,5 @@ end
 if user_signed_in?
 	json.your_rate_level @your_level
 else
-	json.your_rate_level 2
+	json.your_rate_level 0
 end

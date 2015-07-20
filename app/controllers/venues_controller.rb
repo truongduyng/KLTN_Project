@@ -37,7 +37,7 @@ class VenuesController < ApplicationController
 			if your_rate
 				@your_level = your_rate.level
 			else
-				@your_level = 2
+				@your_level = 0
 			end
 		end
 		
