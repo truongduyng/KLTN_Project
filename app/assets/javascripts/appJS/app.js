@@ -1,6 +1,6 @@
 var app = angular.module("sportApp", ["ui.router", 'templates', 'Devise', 'angularFileUpload',
-	'unsavedChanges', 'sporta.directives', 'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging','ngImgCrop', 'infinite-scroll', 'ngMap', 'ngStorage'
-	, 'ngSanitize', 'ngTagsInput', 'angucomplete-alt']);
+	'unsavedChanges', 'sporta.directives', 'sporta.services', 'sporta.filters', 'flash', 'ngCookies', 'ui.bootstrap', 'ngtimeago', 'brantwills.paging', 'ngImgCrop', 'infinite-scroll', 'ngMap', 'ngStorage', 'ngSanitize', 'ngTagsInput', 'angucomplete-alt'
+]);
 
 //For intercept $http
 app.factory('myHttpInterceptor', ['$q', '$rootScope', function($q, $rootScope) {
@@ -25,7 +25,7 @@ app.config(['$httpProvider', function($httpProvider) {
 }]);
 
 
-app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
 
 	// $locationProvider.html5Mode(true);
 
@@ -45,10 +45,10 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		templateUrl: 'appJS/club/_club.html',
 		controller: 'clubCtrl',
 		resolve: {
-			club: ['$http', '$stateParams',function($http, $stateParams) {
-				if(!$stateParams.club_post_id){
+			club: ['$http', '$stateParams', function($http, $stateParams) {
+				if (!$stateParams.club_post_id) {
 					return $http.get("/clubs/" + $stateParams.club_id + ".json");
-				}else{
+				} else {
 					return $http.get("/clubs/" + $stateParams.club_id + "/" + $stateParams.club_post_id + ".json");
 				}
 			}]
@@ -60,7 +60,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		templateUrl: 'appJS/dangBai/_dangBai.html',
 		controller: 'dangBaiCtrl',
 		resolve: {
-			tags: ['tagService', function(tagService){
+			tags: ['tagService', function(tagService) {
 				return tagService.index();
 			}]
 		}
@@ -74,7 +74,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 			post: ['editPostService', '$stateParams', '$q', function(editPostService, $stateParams, $q) {
 				return editPostService.edit($stateParams.id);
 			}],
-			tags: ['tagService', function(tagService){
+			tags: ['tagService', function(tagService) {
 				return tagService.index();
 			}]
 		}
@@ -123,14 +123,16 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 			}],
 
 			posts: ['baiVietCaNhanService', '$stateParams', '$rootScope',
-			function(baiVietCaNhanService, $stateParams, $rootScope) {
-				return baiVietCaNhanService.index($stateParams.username, null, 1, $rootScope.rootPageConfig.pageSize).promise;
-			}],
+				function(baiVietCaNhanService, $stateParams, $rootScope) {
+					return baiVietCaNhanService.index($stateParams.username, null, 1, $rootScope.rootPageConfig.pageSize).promise;
+				}
+			],
 
 			favoritePosts: ['baiVietYeuThichService', '$stateParams', '$rootScope',
-			function(baiVietYeuThichService, $stateParams, $rootScope) {
-				return baiVietYeuThichService.get($stateParams.username, null, 1, $rootScope.rootPageConfig.pageSize).promise;
-			}],
+				function(baiVietYeuThichService, $stateParams, $rootScope) {
+					return baiVietYeuThichService.get($stateParams.username, null, 1, $rootScope.rootPageConfig.pageSize).promise;
+				}
+			],
 
 			authenUser: ['Auth', function(Auth) {
 				return Auth.currentUser().then(function(user) {
@@ -166,9 +168,9 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		controller: 'chiTietKhTkDoanhNghiepCtrl',
 		resolve: {
 			bussinessRequest: ['KhTkDoanhNghiepService', '$stateParams',
-			function(KhTkDoanhNghiepService, $stateParams) {
-				return KhTkDoanhNghiepService.show($stateParams.id);
-			}
+				function(KhTkDoanhNghiepService, $stateParams) {
+					return KhTkDoanhNghiepService.show($stateParams.id);
+				}
 			]
 		},
 		// access: {
@@ -210,9 +212,16 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		templateUrl: 'appJS/venue/venueDetail/_venueDetail.html',
 		controller: 'venueDetailCtrl',
 		resolve: {
-			venue: ['VenueService', '$stateParams',function(VenueService, $stateParams){
+			venue: ['VenueService', '$stateParams', function(VenueService, $stateParams) {
 				return VenueService.show($stateParams.id);
-			}]
+			}],
+			currentUser: ['Auth', function(Auth) {
+				return Auth.currentUser().then(function(user) {
+					return user;
+				}, function() {
+					return null;
+				});
+			}],
 		}
 	});
 
@@ -220,8 +229,10 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		url: '/chung-toi-la',
 		templateUrl: 'appJS/about/about.html',
 		controller: 'aboutCtrl',
-		onExit: function(){
-			$('#sidebar').css({display: 'inline'});
+		onExit: function() {
+			$('#sidebar').css({
+				display: 'inline'
+			});
 			$('#sidebar').addClass('col-sm-2');
 			$('#main-content').removeClass('col-sm-12');
 			$('#main-content').addClass('col-sm-10');
@@ -233,12 +244,14 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function
 		templateUrl: 'appJS/booking/_booking.html',
 		controller: 'bookingCtrl',
 		resolve: {
-			branch: ['$http', '$stateParams',function($http, $stateParams) {
+			branch: ['$http', '$stateParams', function($http, $stateParams) {
 				return $http.get("/" + $stateParams.branch_url_alias);
 			}]
 		},
-		onExit: function(){
-			$('#sidebar').css({display: 'inline'});
+		onExit: function() {
+			$('#sidebar').css({
+				display: 'inline'
+			});
 			$('#sidebar').addClass('col-sm-2');
 			$('#main-content').removeClass('col-sm-12');
 			$('#main-content').addClass('col-sm-10');

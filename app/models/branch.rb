@@ -16,6 +16,8 @@ class Branch
   field :description, type: String
   embeds_many :photos, as: :photoable
   belongs_to :user
+  embeds_many :rates, inverse_of: :venue
+  has_many :reviews, inverse_of: :venue
   #End for venue
 
   field :name_search

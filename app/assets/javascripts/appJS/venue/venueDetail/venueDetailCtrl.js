@@ -1,10 +1,10 @@
-app.controller('venueDetailCtrl', ['$scope', 'VenueService','$modal', 'Flash', 'logoFilter', '$state', 'userService',  function ($scope, VenueService, $modal, Flash, logoFilter, $state, userService) {
+app.controller('venueDetailCtrl', ['$scope', 'VenueService', '$modal', 'Flash', 'logoFilter',
+	'$state', 'currentUser',
+	function($scope, VenueService, $modal, Flash, logoFilter, $state, currentUser) {
 
-	$scope.signedIn = userService.currentUser;
+		$scope.signedIn = currentUser;
 
-	$scope.currentUser = userService.currentUser;
-
-
+		$scope.currentUser = currentUser;
 		//Update tinh trang user de xet cac quyen them xoa sua
 		$scope.$on('devise:new-session', function(e, user) {
 			angular.copy(user, $scope.currentUser);
@@ -49,7 +49,7 @@ app.controller('venueDetailCtrl', ['$scope', 'VenueService','$modal', 'Flash', '
 			console.log("mapInitialized");
 			//Lay anh dai dien cho marker, lua chon 1 trong nhung tam anh nguoi dung up
 			var avatar = "application/placeholder/sporta_icon.png";
-			if(map.item.photos != null && map.item.photos.length >= 1){
+			if (map.item.photos != null && map.item.photos.length >= 1) {
 				avatar = map.item.photos[0].image.thumb.url;
 			}
 
@@ -63,7 +63,7 @@ app.controller('venueDetailCtrl', ['$scope', 'VenueService','$modal', 'Flash', '
 			//Gan anh cho html layout cua marker
 			$("#customMarker").find('.img-avatar').attr("src", logoFilter(image)).html();
 			//Lay html
-			var HtmlLayout =  $("#customMarker").html();
+			var HtmlLayout = $("#customMarker").html();
 			var marker = new RichMarker({
 				position: position,
 				flat: true,
@@ -73,10 +73,53 @@ app.controller('venueDetailCtrl', ['$scope', 'VenueService','$modal', 'Flash', '
 		};
 
 		//Xoa venue
-		$scope.onDeleteVenue = function(){
-			VenueService.destroy($scope.venue).success(function(){
-				Flash.create('success',"Xóa thành công chia sẻ địa điểm chơi thể thao", 'myalert');
+		$scope.onDeleteVenue = function() {
+			VenueService.destroy($scope.venue).success(function() {
+				Flash.create('success', "Xóa thành công chia sẻ địa điểm chơi thể thao", 'myalert');
 				$state.go("home");
 			});
 		};
-	}]);
+
+
+		// cho rating
+		$scope.rate = {
+			level: $scope.venue.your_rate_level,
+			max: 5,
+			status: 'Trung bình',
+			overStar: null,
+		};
+		$scope.onHoveringRate = function(value) {
+			$scope.rate.overStar = value;
+			if (value == 1) {
+				$scope.rate.status = 'Kém';
+			}
+			if (value == 2) {
+				$scope.rate.status = 'Trung bình';
+			}
+			if (value == 3) {
+				$scope.rate.status = 'Khá tốt';
+			}
+			if (value == 4) {
+				$scope.rate.status = 'Tốt';
+			}
+			if (value == 5) {
+				$scope.rate.status = 'Tuyệt vời';
+			}
+		};
+
+		$scope.$watch('rate.level', function(newValue, oldValue, scope) {
+			console.log("on watch rate level");
+			if (newValue != oldValue) {
+				console.log("on  rate level change");
+				$scope.onRating();
+			}
+
+		});
+
+
+		$scope.onRating = function() {
+
+			VenueService.rating($scope.venue, $scope.rate);
+		};
+	}
+]);

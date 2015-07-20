@@ -33,7 +33,58 @@
            alt="Generic placeholder image" width="64px" height="64px" style="min-width: 44px; min-height: 44px;">
          </a>
        </div>
-     </div>
+      </div>
+      <!-- BEGIN RATE AND REVIEW -->
+      <hr>
+      <div class="ratings-boxes">
+          <div class="your-rating">
+              <!-- <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span> -->
+               <rating style="color:gold;" ng-model="rate.level" max="rate.max" on-hover="onHoveringRate(value)" on-leave="rate.overStar = null" readonly="currentUser == null"></rating>
+               <span style="font-size: 10px; display:inline-block; margin-top: -20px;" ng-show="rate.overStar" class="label label-success">{{rate.status}}</span>
+          </div>
+          <div class="rating-statics">
+              <div class="ratings-numbers">
+                  <a class="micro-home-staticask">
+                     <span ng-if="venue.rates[0] == null" style="padding-bottom:5px;display:block;"><b style="color: #cc0000; font-size:22px;">0</b></span>
+                      <span style="padding-bottom:5px;display:block;"><b style="color: #cc0000; font-size:22px;">{{venue.rates[0].total}}</b></span>
+                      <span>Kém</span>
+                  </a>
+              </div>
+              <div class="ratings-numbers">
+                  <a class="micro-home-staticask">
+                      <span style="padding-bottom:5px;display:block;"><b style="color: #333; font-size:22px;">{{venue.rates[1].total}}</b></span>
+                      <span>Trung bình</span>
+                  </a>
+              </div>
+              <div class="ratings-numbers">
+                  <a class="micro-home-staticask">
+                      <span style="padding-bottom:5px;display:block;"><b style="color:#2933E8; font-size:22px;">{{venue.rates[2].total}}</b></span>
+                      <span>Khá tốt</span>
+                  </a>
+              </div>
+              <div class="ratings-numbers">
+                  <a class="micro-home-staticask">
+                      <span style="padding-bottom:5px;display:block;"><b style="color: #03ae03; font-size:22px;">{{venue.rates[3].total}}</b></span>
+                      <span>Tốt</span>
+                  </a>
+              </div>
+               <div class="ratings-numbers">
+                  <a class="micro-home-staticask">
+                      <span style="padding-bottom:5px;display:block;"><b style="color: #8E44AD; font-size: 22px;">{{venue.rates[4].total}}</b></span>
+                      <span>Tuyệt vời</span>
+                  </a>
+              </div>
+
+          </div>  
+      </div>
+      <hr>
+      <section ng-include="'appJS/venue/venueDetail/_listReviews.html'"></section>
+      <!-- END RATE AND REVIEW -->
+
+
+
+
+
 
    </li>
  </ul>
@@ -84,3 +135,97 @@
       width: 85%;
     }
   </style>
+
+
+
+<style type="text/css">
+.review-point {
+   background: #009bcc none repeat scroll 0 0;
+    border-radius: 30px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.9;
+    padding: 8px 7px;
+    text-align: center;
+    cursor:pointer;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.ratings-boxes {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #eee;
+    border-radius: 2px;
+    overflow: hidden;
+    padding: 0;
+
+
+  
+}
+
+.rating-statics{
+  float: right;
+}
+.ratings-numbers {
+    float: left;
+    padding: 15px 0 10px;
+    text-align: center;
+    width: 118px;
+}
+.ratings-numbers:hover{
+  background-color: #f8f8f8;
+}
+.micro-home-staticask, .micro-home-staticask:hover{
+    cursor: pointer;
+     color: #333;
+    outline: 0 none;
+    text-decoration: none;
+
+
+}
+
+.your-rating {
+    float: left;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 40px;
+    margin-top: 20px;
+    margin-left:50px;
+
+
+}
+
+.rating-result {
+    float: right;
+    text-align: center;
+    font-size: 20px;
+}
+/*.review-user-content-col .review-action {
+  position: absolute;
+
+}*/
+.review-user-content-col .review-action a{
+  cursor:pointer;
+  margin-top:5px;
+
+  padding-left:5px;
+  padding-right:5px;
+  display: none;
+}
+.review-user{
+  position: relative;
+  height:auto; 
+  background-color: whitesmoke;
+  padding:10px;
+  border-radius: 15px;
+  padding-bottom:20px;
+  
+  
+}
+.review-user:hover .review-user-content-col .review-action a{
+  display: inline-block;
+
+}
+
+</style>
