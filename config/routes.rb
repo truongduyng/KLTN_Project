@@ -3,14 +3,14 @@ Rails.application.routes.draw do
   # get '/_=_' => 'application#home'
 
   resources :tags
-  
+
   resources :venues do
     member do
       post 'add_photo'
       put 'delete_photo'
       put 'rating'
     end
-    resources :reviews do 
+    resources :reviews do
     end
   end
 
@@ -121,6 +121,7 @@ Rails.application.routes.draw do
       post 'add_cover'
       post 'new_request_member'
       post 'accept_request_member'
+      post 'deny_request_member'
     end
     resources :club_posts
   end

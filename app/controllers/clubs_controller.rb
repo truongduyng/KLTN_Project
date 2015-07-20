@@ -195,6 +195,17 @@ class ClubsController < ApplicationController
     end
   end
 
+  def deny_request_member
+    begin
+      @club = Club.find(club_params[:id])
+      @club.member_requests.delete(club_params[:member_id])
+      @club.save
+      render nothing: true, status: :ok
+    rescue Exception => e
+      render nothing: true, status: :not_found
+    end
+  end
+
   private
   def club_params
     params[:members] ||= []

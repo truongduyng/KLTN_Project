@@ -25,7 +25,7 @@
         <input type="text" placeholder= "Tìm kiếm thành viên..." class="form-control" ng-model="user_find" ng-change="find_user()">
 
 
-          <ul ng-show="show_recommend_user()" class="list_recommend" style="width: 419px;">
+          <ul ng-show="show_recommend_user()" class="list_recommend search_result" style="width: 419px;">
             <li ng-repeat="user in users_list" ng-click= "add_to_members(user)">{{user.fullname}}</li>
           </ul>
 

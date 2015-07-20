@@ -72,5 +72,12 @@ services.factory('clubsFtry',['$http', function($http){
     })
   }
 
+  o.deny_request_member = function(club_id, member_id){
+    return $http.post('clubs/' + club_id + '/deny_request_member.json', {member_id: member_id}).success(function(){
+    })
+    .error(function(){
+    })
+  }
+
   return o;
 }]);

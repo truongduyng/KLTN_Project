@@ -68,6 +68,9 @@
               <li>
                 <i ng-click= "accept_request_member(member)">Chấp nhận</i>
               </li>
+              <li>
+                <i ng-click= "deny_request_member(member)">Từ chối</i>
+              </li>
             </ul>
           </span>
           <a ui-sref="trangCaNhan({username: user.username})" style="text-decoration: none">
@@ -91,7 +94,7 @@
 
     <input id="user_find" ng-show="current_user_is_admin()" type="text" placeholder=" + Thêm thành viên..." class="form-control" ng-model="user_find" ng-change="find_user()">
 
-    <ul ng-show="show_recommend_user()" class="list_recommend" id="list_add_member">
+    <ul ng-show="show_recommend_user()" class="list_recommend search_result" id="list_add_member">
       <li ng-repeat="user in users_list" ng-click= "add_to_members(user)">{{user.fullname}}</li>
     </ul>
 

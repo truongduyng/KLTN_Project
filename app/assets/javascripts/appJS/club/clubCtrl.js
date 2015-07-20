@@ -262,6 +262,17 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
     })
   }
 
+  $scope.deny_request_member = function(member_request){
+    clubsFtry.deny_request_member($scope.club.id.$oid, member_request.id.$oid).success(function(data){
+      $scope.club.member_requests.splice($scope.club.member_requests.indexOf(member_request),1);
+      $scope.club.member_requests_count --;
+      Flash.create('success', "Từ chối " + $scope.user.fullname + " gia nhập CLB thành công!", 'myalert');
+    })
+    .error(function(){
+      Flash.create('danger', "Từ chối thất bại!", 'myalert');
+    })
+  }
+
   $scope.member_is_admin = function(member_id){
     return ismemberof($scope.club.admins, member_id);
   }
