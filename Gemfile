@@ -13,8 +13,8 @@ gem 'angular-rails-templates'
 gem 'angular_rails_csrf'
 gem 'devise'
 gem 'geocoder'
-# gem 'websocket-rails'
 gem 'websocket-rails', github: 'moaa/websocket-rails', branch: 'sync_fixes'
+gem 'rufus-scheduler'
 
 # deploy
 gem 'capistrano'

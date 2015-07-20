@@ -7,23 +7,6 @@ class TicketsController < ApplicationController
   def show
     # byebug
     @tickets = Ticket.onday(ticket_param[:date],ticket_param[:branch_id])
-    if @tickets.present?
-
-      @tickets.each do |ticket|
-        if ticket.status == Ticket::Status[:new] && Time.now > ticket.begin_use_time + 10.minutes
-          ticket.status = Ticket::Status[:over]
-          ticket.save
-        end
-
-        if ticket.status == Ticket::Status[:doing] && Time.now > ticket.end_use_time
-          ticket.status = Ticket::Status[:waiting]
-          ticket.save
-        end
-      end
-
-    else
-      render nothing: true
-    end
   end
 
   def create

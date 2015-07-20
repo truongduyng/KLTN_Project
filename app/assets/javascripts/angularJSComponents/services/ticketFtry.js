@@ -109,24 +109,24 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
     }
   }
 
-  object.check_ticket_status = function(now){
-    for (var i = 0; i < object.tickets.length; i++) {
+  // object.check_ticket_status = function(now){
+  //   for (var i = 0; i < object.tickets.length; i++) {
 
-      if(object.tickets[i].status == 'new' && now.getTime() > new Date(object.tickets[i].begin_use_time).getTime() + 1000*60*10){
-        object.update_status({
-          ticket_id: object.tickets[i]._id.$oid,
-          status: "over"
-        });
-      }
+  //     if(object.tickets[i].status == 'new' && now.getTime() > new Date(object.tickets[i].begin_use_time).getTime() + 1000*60*10){
+  //       object.update_status({
+  //         ticket_id: object.tickets[i]._id.$oid,
+  //         status: "over"
+  //       });
+  //     }
 
-      if(object.tickets[i].status == 'doing' && now.getTime() > new Date(object.tickets[i].end_use_time).getTime()){
-        object.update_status({
-          ticket_id: object.tickets[i]._id.$oid,
-          status: "waiting"
-        });
-      }
-    };
-  }
+  //     if(object.tickets[i].status == 'doing' && now.getTime() > new Date(object.tickets[i].end_use_time).getTime()){
+  //       object.update_status({
+  //         ticket_id: object.tickets[i]._id.$oid,
+  //         status: "waiting"
+  //       });
+  //     }
+  //   };
+  // }
 
   //Check time to change color of tr --------------------------------------
   object.check_td_in_past = function(date){
@@ -252,7 +252,7 @@ services.factory('tickets',['$http','Auth', 'Flash','$state', function($http, Au
       break;
 
       case "over":
-      $('div#'+ticket._id.$oid).css('display','none');
+      $('div#'+ticket._id.$oid).remove();
       break;
 
       case "waiting":
