@@ -33,14 +33,19 @@
   </div>
 
   <div class="club margintop20" >
-    <span class="club-header">Sở thích</span>
+    <span class="club-header">Sở thích
+      <div class="pull-right">
+        <a ng-click="openInterestModal()">
+          <i class="fa fa-plus"></i>
+        </a>
+      </div>
+    </span>
     <div style=" margin-top: 10px;">
       <p ng-repeat="tag in user.interests" style="font-size: 10px; display:inline-block; margin-right: 5px;" class="label label-primary"><span style="float:left; display: inline-block; margin: 5px 10px 3px 3px;">{{tag.name}}</span></p>
       <p ng-if="user.interests.length == 0" style="text-align: center;">Trống</p>
 
     </div>
-    <button data-ng-click="openInterestModal()"  class="btn btn-block btn-success" type="button" style="margin-top:10px;"><span class="glyphicon glyphicon-plus"></span> Thêm sở thích</button>
-
+    
   </div>
 
 </div>
