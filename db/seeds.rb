@@ -2,14 +2,14 @@
 #   Role.find_or_create_by({name: role})
 # end
 
-# user = User.create() do |u|
-#   u.email = "admin@sporta.vn"
-#   u.username = 'admin'
-#   u.password = '123456789'
-#   u.fullname = 'Admin'
-#   u.phone = "01633248188"
-#   u.roles = [Role.find_by(name: "system admin")]
-# end
+user = User.create() do |u|
+  u.email = "admin@sporta.vn"
+  u.username = 'admin'
+  u.password = '123456789'
+  u.fullname = 'Admin'
+  u.phone = "01633248188"
+  u.roles = [Role.find_by(name: "system admin")]
+end
 
 # #TAO RA CAC LOAI NOTIFICATION VA TEMPLATE CHO CHUNG
 # #Duyet bai viet thanh cong

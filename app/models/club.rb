@@ -7,7 +7,7 @@ class Club
   field :admins, type: Array
   field :member_requests, type: Array
 
-  has_and_belongs_to_many :members, class_name: "User", inverse_of: :clubs, dependent: :destroy
+  has_and_belongs_to_many :members, class_name: "User", inverse_of: :clubs
   has_one :cover_image, class_name: 'Image', dependent: :destroy
   has_many :club_posts, dependent: :destroy
 
