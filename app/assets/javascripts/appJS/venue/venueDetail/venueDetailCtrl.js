@@ -111,15 +111,47 @@ app.controller('venueDetailCtrl', ['$scope', 'VenueService', '$modal', 'Flash', 
 			console.log("on watch rate level");
 			if (newValue != oldValue) {
 				console.log("on  rate level change");
-				$scope.onRating();
-			}
+				$scope.onRating(oldValue);
 
+			}
 		});
 
+		$scope.onRating = function(oldValue) {
+			VenueService.rating($scope.venue, $scope.rate).success(function(){
 
-		$scope.onRating = function() {
+				if ($scope.rate.level == 1) {
+					$scope.venue.rates[0].total ++;
+				}
+				if ($scope.rate.level == 2) {
+					$scope.venue.rates[1].total ++;
+				}
+				if ($scope.rate.level == 3) {
+					$scope.venue.rates[2].total ++;
+				}
+				if ($scope.rate.level == 4) {
+					$scope.venue.rates[3].total ++;
+				}
+				if ($scope.rate.level == 5) {
+					$scope.venue.rates[4].total ++;
+				}
 
-			VenueService.rating($scope.venue, $scope.rate);
+				if (oldValue == 1) {
+					$scope.venue.rates[0].total --;
+				}
+				if (oldValue == 2) {
+					$scope.venue.rates[1].total --;
+				}
+				if (oldValue == 3) {
+					$scope.venue.rates[2].total --;
+				}
+				if (oldValue == 4) {
+					$scope.venue.rates[3].total --;
+				}
+				if (oldValue == 5) {
+					$scope.venue.rates[4].total --;
+				}
+
+			});
 		};
 	}
-]);
+	]);

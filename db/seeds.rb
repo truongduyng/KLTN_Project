@@ -76,11 +76,4 @@
 # Tag.create(name: 'Bóng chuyền')
 # Tag.create(name: 'Bóng rổ')
 # Tag.create(name: 'Cầu lông')
-#Neu load het bai thuoc tag nguoi dung quan tam thi moi load nhung bai thuoc tag khac
 # Tag.create(name: 'Khác')
-
-
-Post.all.each do |post|
-	post.post_status = PostStatus.publishedStatus
-	post.save
-end
