@@ -34,7 +34,7 @@
       <thead>
         <tr>
           <th class="text-center" style="width: 50px !important; height: 45px !important">Thời gian</th>
-          <th class="text-center" ng-repeat= "asset in branch.assets">{{asset.name}}</th>
+          <th class="text-center" ng-repeat= "asset in branch.assets">{{asset.name}} ({{asset_cate_details(asset.asset_category_id.$oid)}})</th>
         </tr>
       </thead>
       <tbody>

@@ -17,7 +17,7 @@
 
     <h4 class="marginbot5">Bảng phí</h4>
     <div class="fee_content">
-      <ul>
+      <ol type="1">
         <li class="marginbot10" ng-repeat= "asset_category in branch.asset_categories">
           <span>{{asset_category.name}}</span>
           <table border="1">
@@ -31,7 +31,7 @@
             </tr>
           </table>
         </li>
-      </ul>
+      </ol>
     </div>
   </div>
 
@@ -41,7 +41,7 @@
       <thead>
         <tr>
           <th class="text-center" style="width: 50px !important; height: 45px !important">Thời gian</th>
-          <th class="text-center" ng-repeat= "asset in branch.assets">{{asset.name}}</th>
+          <th class="text-center" ng-repeat= "asset in branch.assets">{{asset.name}} ({{asset_cate_details(asset.asset_category_id.$oid)}})</th>
         </tr>
       </thead>
       <tbody>

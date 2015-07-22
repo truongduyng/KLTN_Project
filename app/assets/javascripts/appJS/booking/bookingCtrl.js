@@ -50,6 +50,14 @@ app.controller('bookingCtrl', ['$scope', '$http', 'Auth', '$modal', 'tickets','b
     }
   };
 
+  $scope.asset_cate_details = function(asset_cate_id){
+    for(j=0; j< $scope.branch.asset_categories.length; j++){
+      if($scope.branch.asset_categories[j]._id.$oid == asset_cate_id){
+        return $scope.branch.asset_categories[j].name;
+      }
+    }
+  }
+
   function repair_data(hour, asset_id){
     $scope.asset_id = asset_id;
     $scope.hour_begin = tickets.hourtoview(hour);

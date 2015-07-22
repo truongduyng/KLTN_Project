@@ -21,6 +21,14 @@ app.controller('ticketManageCtrl', ['$scope', '$http', 'Auth', '$modal', 'ticket
     $scope.work_time.push(i);
   };
 
+  $scope.asset_cate_details = function(asset_cate_id){
+    for(j=0; j< $scope.branch.asset_categories.length; j++){
+      if($scope.branch.asset_categories[j]._id.$oid == asset_cate_id){
+        return $scope.branch.asset_categories[j].name;
+      }
+    }
+  }
+
 
   $scope.date_change = function(){
     $scope.close_minibooking();
