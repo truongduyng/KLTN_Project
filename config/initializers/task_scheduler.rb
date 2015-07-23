@@ -9,11 +9,13 @@ scheduler.every("1m") do
         if ticket.status == Ticket::Status[:new] && Time.now > ticket.begin_use_time + 10.minutes
           ticket.status = Ticket::Status[:over]
           ticket.save
+          Fiber.new{WebsocketRails[ticket.branch_id].trigger 'update_ticket', ticket}.resume
         end
 
         if ticket.status == Ticket::Status[:doing] && Time.now > ticket.end_use_time
           ticket.status = Ticket::Status[:waiting]
           ticket.save
+          Fiber.new{WebsocketRails[ticket.branch_id].trigger 'update_ticket', ticket}.resume
         end
 
       end
