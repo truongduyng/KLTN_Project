@@ -255,10 +255,10 @@ $scope.showtimeintd = function(hour,element,show){
   //Timeline---------------------------------------------------------------
   function timeline(){
 
-    if($scope.branch.assets.length * 170 < $('.calendar_content').width()){
+    if($scope.branch.assets.length * 190 < $('.calendar_content').width()){
       $('.tablebooking').css({width: $('.calendar_content').width()});
     }else{
-      $('.tablebooking').css({width: 50 + $scope.branch.assets.length * 170});
+      $('.tablebooking').css({width: 50 + $scope.branch.assets.length * 190});
     }
 
     var work_time_length = $scope.work_time[$scope.work_time.length-1]-$scope.work_time[0];
