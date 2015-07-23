@@ -22,7 +22,7 @@ app.controller('sidebarCtrl', ['$scope', '$modal', 'clubsFtry', '$state', 'Auth'
 
   $scope.$on('devise:logout', function(e, user) {
     $scope.user = {};
-    $scope.clubs = {};
+    $scope.clubs = [];
   });
 
   $scope.$on('onChangeUserProfile', function(event, user) {
@@ -31,29 +31,7 @@ app.controller('sidebarCtrl', ['$scope', '$modal', 'clubsFtry', '$state', 'Auth'
 
   $scope.loadClubs = function() {
     clubsFtry.index().success(function(data) {
-      $scope.clubs = data;
-    })
-  }
-
-
-  $scope.$on('devise:login', function(e, user) {
-    $scope.user = user;
-    $scope.loadClubs();
-  });
-
-  $scope.$on('devise:logout', function(e, user) {
-    $scope.user = {};
-    $scope.clubs = {};
-  });
-
-  $scope.$on('onChangeUserProfile', function(event, user) {
-    angular.copy(user, $scope.user);
-  });
-
-  $scope.loadClubs = function() {
-    clubsFtry.index().success(function(data) {
-      $scope.clubs = data;
-      console.log(data);
+      $scope.clubs = clubsFtry.clubs;
     })
   }
 
@@ -100,7 +78,6 @@ app.controller('sidebarCtrl', ['$scope', '$modal', 'clubsFtry', '$state', 'Auth'
       return false;
     }
   };
-
 
   //Cho so thich
   $scope.openInterestModal = function() {

@@ -4,6 +4,7 @@ app.controller('editProfileCtrl', ['$scope', 'currentUser', 'trangCaNhanService'
 		$scope.gender = ["Nam", 'Nữ'];
 		angular.copy(currentUser, $scope.user);
 		console.log("in editProfileCtrl", $scope.user);
+
 		$scope.update = function() {
 			trangCaNhanService.editProfile($scope.user).success(function(data) {
 				$scope.$root.$broadcast("onChangeUserProfile", data);

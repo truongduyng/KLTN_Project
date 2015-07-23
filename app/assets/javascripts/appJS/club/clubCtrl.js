@@ -31,7 +31,7 @@ app.controller('clubCtrl',['$scope', '$modal','club', 'clubsFtry', '$http', 'Fla
   });
 
   $scope.user = userService.currentUser;
-  console.log(club.data, $scope.user);
+
 
   $scope.signedIn = Auth.isAuthenticated;
 
