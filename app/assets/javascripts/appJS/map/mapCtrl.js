@@ -24,9 +24,10 @@ app.controller('mapCtrl', ['$scope', '$http', 'mapFtry', 'userService', function
       return function(){
         mapFtry.map = map;
         var latlng = mapFtry.map.getCenter();
+
         mapFtry.markers = [];
         mapFtry.bounds = new google.maps.LatLngBounds();
-        $http.get("/search_map/"+latlng.A+"/"+latlng.F+"/"+$scope.distance).success(function(data){
+        $http.get("/search_map/"+latlng.lat()+"/"+latlng.lng()+"/"+$scope.distance).success(function(data){
           mapFtry.setMarkers(mapFtry.map,data);
         });
       }})(map));
@@ -48,7 +49,7 @@ app.controller('mapCtrl', ['$scope', '$http', 'mapFtry', 'userService', function
     }
 
     setUserMarker($scope.map,latlng);
-    $http.get("/search_map/"+latlng.A+"/"+latlng.F+"/"+$scope.distance).success(function(data){
+    $http.get("/search_map/"+latlng.lat()+"/"+latlng.lng()+"/"+$scope.distance).success(function(data){
       if (data != null) {
         mapFtry.setMarkers($scope.map,data);
       };
