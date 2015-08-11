@@ -7,7 +7,7 @@ Sporta là mạng xã hội thể thao được xây dựng bằng Ruby on Rails
 - Tìm kiếm và chia sẻ địa điểm tập luyện thể dục thể thao.
 - Đặt sân chơi thể thao theo thời gian thực.
 - Viết bài chia sẻ kinh nghiệm, kiến thúc thể dục thể thao.
-- Tạo lập câu lạc bộ để các thành viên giao lư, hội họp với nhau.
+- Tạo lập câu lạc bộ để các thành viên giao lưu, hội họp với nhau.
 - Đăng ký và quản lý doanh nghiệp thể dục thể thao.
 .....
 
