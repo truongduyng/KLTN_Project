@@ -1,5 +1,5 @@
 [English below]
-### Sporta <a href="http://128.199.176.52/" target="_blank">http://128.199.176.52/</a>
+### Sporta
 Sporta là mạng xã hội thể thao được xây dựng bằng Ruby on Rails, AngularJS và MongoDB. Sporta hỗ trợ người dùng:
 
 - Tìm kiếm và chia sẻ địa điểm tập luyện thể dục thể thao.(demo: [https://www.youtube.com/watch?v=A6-FyJ_Xm2E](https://www.youtube.com/watch?v=A6-FyJ_Xm2E))
@@ -17,7 +17,7 @@ Sporta là mạng xã hội thể thao được xây dựng bằng Ruby on Rails
 Thực hiện dưới sự hướng dẫn của Th.S Nguyễn Huy Khánh, Khoa CNTT, Đại học Khoa học Tự Nhiên, Tp.HCM.
 
 [English version]
-### Sporta <a href="http://128.199.176.52/" target="_blank">http://128.199.176.52/</a>
+### Sporta
 Sporta is a social network for sport players built by Ruby on Rails, AngularJS and MongoDB. It allows users:
 
 - Searching and share venue or bussiness where you can play sports.o.(demo: [https://www.youtube.com/watch?v=A6-FyJ_Xm2E](https://www.youtube.com/watch?v=A6-FyJ_Xm2E))
